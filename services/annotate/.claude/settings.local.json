@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//data1/students/srijit/**)",
+      "Bash(python3 -c ' *)",
+      "Bash(python -c ' *)",
+      "Bash(python -c \"import json; json.load\\(open\\('/data1/students/srijit/annotate/prompts/prompts.json'\\)\\); print\\('JSON valid'\\)\")"
+    ]
+  }
+}

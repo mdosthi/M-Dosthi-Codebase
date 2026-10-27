@@ -1,0 +1,327 @@
+.patient-monitoring {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 28px;
+  background: linear-gradient(180deg, #f5f8fb 0%, #eef3f7 100%);
+  color: #263746;
+}
+
+.patient-monitoring .monitoring-header {
+  margin: -28px -28px 26px;
+  padding: 28px;
+  border-bottom: 1px solid #d9e4eb;
+  background: #ffffff;
+}
+
+.patient-monitoring .monitoring-header h2 {
+  margin: 0 0 8px;
+  color: #123f5a;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.patient-monitoring .monitoring-header p {
+  margin: 0;
+  font-size: 15px;
+}
+
+.patient-monitoring .monitoring-patient-context {
+  display: inline-block;
+  margin-top: 12px !important;
+  padding: 8px 12px;
+  border-left: 3px solid #337ab7;
+  background: #eef6fb;
+  color: #174a68;
+}
+
+.patient-monitoring .monitoring-list-summary {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 8px 12px;
+  border: 1px solid #d9e4eb;
+  border-radius: 6px;
+  background: #f5f9fb;
+  color: #174a68;
+}
+
+.patient-monitoring .monitoring-summary-label {
+  color: #637784;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.patient-monitoring .monitoring-list-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.patient-monitoring .monitoring-list-heading p {
+  margin: 5px 0 0;
+  color: #587080;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.patient-monitoring .monitoring-search {
+  position: relative;
+  width: 280px;
+  margin: 0;
+}
+
+.patient-monitoring .monitoring-search .glyphicon {
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  color: #6b7d88;
+}
+
+.patient-monitoring .monitoring-search input {
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 12px 8px 36px;
+  border: 1px solid #c8d6df;
+  border-radius: 5px;
+  color: #263746;
+  font-weight: 400;
+}
+
+.patient-monitoring .monitoring-search input:focus {
+  outline: 0;
+  border-color: #2384a8;
+  box-shadow: 0 0 0 3px rgba(35, 132, 168, .14);
+}
+
+.patient-monitoring .monitoring-patient-table {
+  margin-bottom: 0;
+}
+
+.patient-monitoring .monitoring-patient-table thead th {
+  padding: 14px 16px;
+  border-bottom: 0;
+  background: #174a68;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.patient-monitoring .monitoring-patient-table tbody td {
+  padding: 16px;
+  border-top: 1px solid #e6edf1;
+  color: #344b5a;
+  vertical-align: middle;
+}
+
+.patient-monitoring .monitoring-patient-table tbody tr:hover {
+  background: #f3f8fa;
+}
+
+.patient-monitoring .monitoring-patient-link {
+  color: #087f8c;
+  font-weight: 700;
+}
+
+.patient-monitoring .monitoring-open-button {
+  min-height: 34px;
+  margin: 0;
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 5px;
+  background: #087f8c;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.patient-monitoring .monitoring-open-button:hover,
+.patient-monitoring .monitoring-open-button:focus {
+  background: #066a75;
+}
+
+.patient-monitoring .monitoring-card {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 20px);
+  margin-bottom: 20px;
+  border: 1px solid #d8e1e8;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(35, 55, 70, .08);
+}
+
+.patient-monitoring .monitoring-card .panel-heading {
+  min-height: 52px;
+  padding: 16px 18px;
+  border: 0;
+  background: #e8f2f7;
+  color: #174a68;
+  font-weight: 600;
+}
+
+.patient-monitoring .monitoring-card .panel-title {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.patient-monitoring .monitoring-card .panel-body {
+  flex: 1;
+  padding: 22px;
+}
+
+.patient-monitoring form {
+  margin: 0;
+}
+
+.patient-monitoring .form-group {
+  min-height: 76px;
+  margin-bottom: 18px;
+}
+
+.patient-monitoring label {
+  display: block;
+  min-height: 20px;
+  margin-bottom: 7px;
+  color: #385466;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.patient-monitoring .form-control {
+  min-height: 42px;
+  border: 1px solid #c8d6df;
+  border-radius: 5px;
+  box-shadow: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.patient-monitoring .form-control:focus {
+  border-color: #2384a8;
+  box-shadow: 0 0 0 3px rgba(35, 132, 168, .14);
+}
+
+.patient-monitoring textarea.form-control {
+  min-height: 88px;
+  resize: vertical;
+}
+
+.patient-monitoring .btn {
+  min-height: 40px;
+  margin: 4px 8px 4px 0;
+  border-radius: 5px;
+  font-weight: 600;
+}
+
+.patient-monitoring .help-block {
+  min-height: 18px;
+  margin: 5px 0 0;
+  color: #b4443f;
+  font-size: 12px;
+}
+
+.patient-monitoring .monitoring-alert {
+  border-left: 4px solid #d9534f;
+}
+
+.patient-monitoring .monitoring-status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 3px;
+  background: #eef2f4;
+  font-weight: 600;
+}
+
+.patient-monitoring .monitoring-status.high {
+  background: #fbe9e7;
+  color: #a94442;
+}
+
+.patient-monitoring .monitoring-empty,
+.patient-monitoring .monitoring-error,
+.patient-monitoring .monitoring-loading {
+  padding: 18px;
+  color: #5d6d78;
+  text-align: center;
+}
+
+.patient-monitoring .monitoring-error {
+  color: #a94442;
+  background: #fbe9e7;
+}
+
+.patient-monitoring .monitoring-history {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #e2e9ee;
+}
+
+.patient-monitoring .monitoring-history td,
+.patient-monitoring .monitoring-history th {
+  vertical-align: middle;
+}
+
+.patient-monitoring .education-card {
+  height: 100%;
+  margin-bottom: 20px;
+}
+
+.patient-monitoring .education-card .panel-body {
+  padding: 20px;
+}
+
+.patient-monitoring .education-card h4 {
+  margin-top: 0;
+  color: #174a68;
+}
+
+@media (max-width: 767px) {
+  .patient-monitoring {
+    padding: 16px;
+  }
+
+  .patient-monitoring .monitoring-header {
+    margin: -16px -16px 20px;
+    padding: 20px 16px;
+  }
+
+  .patient-monitoring .monitoring-header h2 {
+    font-size: 23px;
+  }
+
+  .patient-monitoring .monitoring-card {
+    height: auto;
+  }
+
+  .patient-monitoring .monitoring-card .panel-body {
+    padding: 17px;
+  }
+
+  .patient-monitoring .monitoring-list-heading {
+    display: block;
+  }
+
+  .patient-monitoring .monitoring-search {
+    width: 100%;
+    margin-top: 14px;
+  }
+
+  .patient-monitoring .monitoring-patient-table thead th,
+  .patient-monitoring .monitoring-patient-table tbody td {
+    padding: 12px;
+  }
+
+  .patient-monitoring .radio-inline {
+    display: block;
+    margin: 0 0 10px;
+  }
+
+  .patient-monitoring .table-responsive {
+    border: 0;
+  }
+}

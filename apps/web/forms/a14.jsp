@@ -1,0 +1,459 @@
+<%@page language="java" import="imedix.cook,imedix.myDate,java.util.*" %>
+<%@ include file="..//includes/chkcook.jsp" %>
+<%
+	String id,dat="",cen="";
+	cook cookx = new cook();
+	id = cookx.getCookieValue("patid", request.getCookies());
+	cen = cookx.getCookieValue("center",request.getCookies());
+	//out.print("&nbsp;<B>Patient ID<BR>&nbsp;<FONT SIZE='-1' COLOR='#FF0000'>" + id + "</B></FONT><BR>");
+	dat = myDate.getCurrentDate("dmy",false);
+	long timestamp = new Date().getTime();
+%>
+
+<HTML>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/bootstrap-datetimepicker.min.css">
+	<script src="<%=request.getContextPath()%>/bootstrap/bootstrap-datetimepicker.min.js"></script>
+	<script src="<%=request.getContextPath()%>/bootstrap/bootstrap-datetimepicker.pt-BR.js"></script>
+	<script src="<%=request.getContextPath()%>/bootstrap/html2canvas.js" type="text/javascript"></script>
+	<SCRIPT LANGUAGE="JavaScript" SRC="../includes/script1.js"></SCRIPT>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/jquery-ui.css">
+<HEAD>
+
+
+<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+<!--
+	<script src="../bootstrap/jquery-2.2.1.min.js"></script>
+	<script src="../bootstrap/js/bootstrap.min.js"></script>
+-->
+   
+	<TITLE>Provisional Diagnosis</TITLE>
+<!--<link rel="stylesheet" type="text/css" href="../style/style2.css">-->
+<SCRIPT LANGUAGE="JavaScript" SRC="../includes/script1.jsp">
+var putdate,putmonth,putyear;
+</SCRIPT>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+	$(document).ready(function(){
+
+		arrItems=["5 Or More Joint Affected In Same Time","A Pink Like Rash","A Staining Spell","A Visible Swelling At The Base Of Neck","Abdominal Cramps","Abdominal Low Skin","Abdominal Pain","Abnormal Heart Rhythm","Abscess","Abuse","Acidic Gurgling Feeling In The Heart","Aggression","Aggressive","Agitation","Allergy","An Accompanying Stooped Posture","An Inability To Facial Expression","An Ongoing Cough","Anexity","Anorexia","Anxiety","Any Growth On Cervix","Apathetic","Apprehension","Arm","Auditory Hallucination","Back Chest Pain","Back Jow","Backache","Bad Breath","Bad Patches","Beeling","Belching","Bitots Spot","Bitter Test","Bitting of Tongue","Bleeding during Intercourse","Bleeding Easily","Bloating","Blood and Pus in Stool","Blood in Stool","Blood In Urine","Blurred Vision","Body Ache","Boils","Bones","Bradycardia","Breathing Difficulty","Breathing Problem","Breathing Through Mouth","Breathlessness","Brittle Nails","Brown Discharge","Brushing Easily","Bulging Soft Spot In Infant","Bumps Or Redness","Burning","Burning and Itching in Vulva","Burning in Urine","Burning Micturition","Burning Pain","Burning Sensation","Capitis","Cataract","Cellulitis","Chest Pain","Chileosis","Chill","Chronic Cough","Chronically Itching","Clammy Skin","Clicking Sensation in Joint","Cloudy Urine","Clubbing of Nails","Cold Sweat","Coma","Confusion","Confusion Pain","Congestion","Congestion ( Either In Lungs Or Nasal Sinuses ) Runny Nose","Constipation","Constipation","Convulsions","Corporis","Cough","Cough At Night","Cough During Exercise","Cough with Lot of Mucus","Coughing","Covered With Thick Silvery Scales","Cramping","Cramps","Craving Or Sweating","Crepitation","Cruris","Crying","Crying Easily","Curd Like Discharge","Dark Urine","Darkening Of Skin","Deformity","Dehydration","Dehydration No Mild Moderate Severe","Delayed Puberty Or Growth","Delirium","Delusion","Delusion of Grandeur","Delusion of lack of Self-worth","Delusion of Persecution","Dental Cavity","Dental Tartar","Depression","Diarrhoea","Difficulty Breathing","Difficulty Drinking Enough Fluid","Difficulty In Concentration","Difficulty In Eat And Drink","Disappear Of Rest","Discharge","Discharge from Cervix","Disfiguring Skin Sores","Disorientation in Person","Disorientation in Place","Disorientation in Time","Distended Abdomen","Dizziness","Drolling","Drooling","Dropping Eye","Drowsiness","Dry","Dry Cracked Skin That May Be Bleed","Dysphagia","Dysurea","Ear ache","Ear Discharge","Eczema","Edema ( Particularly Around Eye.Feet.Ankle )","Elbow","Emotional Flatness","Enlared Spleen","Enlarged Axillary Lymphnode","Enlarged Cervical Lymphnodes","Enlarged Inguinal Lymphnode","Enlarged Liver","Enlarged Others Lymphnode","Enlarged Tonsils","Epigastric Tenderness","Excess Sleepiness","Excess Sweating","Excessive Crying","Excessive Hunger","Excessive Salvation","Excessive Thrust","Excoriation","Extra Pyramidal Syndrome","Eye","Eye Pain","Face","Facial Pain","Faecal Incontinence","Fast","Fatigue","Fear","Feel Heart In Pounding Or Racing","Feel Short Breath Even At Rest","Feel Weak Or Dizzy","Feeling Cold","Feeling Down Or Depressed","Feeling Faint","Feeling Sad","Feeling Very Tired","Feet","Fever","Fever With Chills","Fishy Odor","Fishy Smell","Fissure","Fissures","Fistula","Flapping Tremor","Flatulence","Flatulence / Gas","Flu Like Symptom","Fluid Accumulation In Abdomen","Foaming Urine","Forming a Concentric Ring","Foul Odor","Foul Smelling Urine","Fracture Of Spine","Freezing Pain","Frequent Passing Of Loose Watery Faces","Frequent Urination","Frim Hard Lymph Node More Than 2 Cm","Frothing","Frothy Discharge","Fuild Filled","furuncles","Gagging","Generalized / Partial","Generalized Pain & Ache","Genital Irritation","Goitre","Gradual Loss Of Hight","Gradual Onset Of Numbness","Green Discharge","Greenish Discharge","Groin pain","Gum Bleeding","Haemoptysis","Hair Loss Or Dryness","Hallucination","Hallucination Auditory","Hallucination Visual","Hand","Head Pain","Headache","Heart Burn","Heat Intolerance",
+		"Heavy Uterine Bleeding","Hematuria","High Cholesterol","High Fever","Hip","Hoarseness Of Voice","Holes In The Surface Of A Tooth","Hot Flashes","Hydrophobia","Hyperactivity","Hypo Pigmented Patch","Icterus","Inability To Bear Weight","Incontinence","Increased infections","Indigestion","Infected","Insomnia","Insufficient Urine","Insufficient Urine Production..Flatulence","Inter-digital furrows","Intermittent Claudication","Intolerable Pain","Irrational","Irregular Bleeding","Irregular Heart Beat","Irregular Periods","Irregular Uterine Bleeding","Irritability","Itching","Itching in Vulva and Around Region","Itching Skin","Itching That Worse At Night","Jaundice","Jerk Arm And Leg ( Few Second To 15 Minute)","Jerk Movement","Joint","Joint Pain","Joint Pain","Joint Swelling","Jow","Knee","Koplik Spot","Lack of Interest","Leg","Legion","Lethargy","Lethargy","Leucorrhea","Leucorrhoea","Limb","Liver Abscess May Occur In Later","Locking of Joint","Lomb","Loose Skin","Loss of Appetite","Loss of Appetite","Loss Of Balance","Loss Of Consciousness","Loss Of Function","Loss Of Libido","Loss Of Sensation","Loss Of Smell","Low Blood Pressure","Low Grade Fever","Lower Abdomen Pain","Lumps Or Bumps","Lustful","Malaria","Manic Symptoms","May Be Dry Or With Phlegm","Mental Confusion","Mental Stats Change","Metallic Test","Mood Swing","Mostly In Skin Fold","Mouth","Mucus in Stool","Murmur","Muscles Ache","Muscles Pain","Muscles Weakness","Muscles Weakness","Nasal Congestion","Nasal Discharge","Nasal Discharge","Nausea","Nausea","Neck","Nervousness","Night Sweat","No Symptom","No Symptoms","Nodes For More Than 6 Week","Nose Bleeds","Numbness","Oncheriasis","One Side Of The Face Droop When Patient Smile","Oozing Pus When The Press Their Gums Or So Tender","Other","Pain","Pain and Burning during Urination","Pain Below Ribs","Pain Come & Go","Pain During And After Sex","Pain During Intercourse","Pain in Abdomen","Pain In Abdomen Chills","Pain In Back","Pain in Ear","Pain In Eye","Pain In Kidney Area","Pain in Moving","Pain In Pelvis","Pain In Side Or Back","Pain Muscles Or Abdomen","Pain Travel Into Shoulder","Pain When Chewing","Pain When Urination","Pain When You Pee","Pain Which Is Mild But May Be Intense","Pain With Or Without Inflammation","Pale Skin","Pallor","Palpitation","Panic Attack","Passing Frequent Small Amount Of Urine","Patient Rise Both Arm One Arm Drift Down Ward","Pedal Oedema","Pelvic Pain In Women","Persistent Sadness","Photo phobia","Piles","Pink Eye","Pitted Or Ridged Nail","Pleural Rub","Polydypsia","Polyphagia","Polyuria","Poor Appetite","Poor Feeding","Poor Feeding","Pop Up One Side Of Your Body Or Face","Premenstrual Symptoms","Pricking Or Tingling Sensation In Feet Or Hand","Problem In Coordination","Protrusion Of Eye","Puffy Eye","Puffy Face","Pus like Discharge","Pus Or Fluid Oozing From The Wound","Quarrelsome","Raised Border That Expand Out Ward","Rapid Dehydration","Rapidly Increase In Size","Rash","Rash Fuild Filled","Rash Or Red Spot","Rash That Spread From The Torso To Neck","Rashes","Rectum Prolapse","Red Patches Of Skin","Redness","Redness & Itching in Vulva","Redness Of Eye And Eye Lids","Redness Of Face During And After Periods Of Consumption","Redness Of Joint","Restlessness","Rhonchi","Rigor","Ringworm","Row of Blisters Along The Nerve","Row Of Raised Dots","Running Nose","Sadness on Face","Scales Or Blisters","Scaly And May Be Red","Scenes That Some Thing Wrong With Body","Scratched","Scrotal Swelling","Seizure","Seizures","Self Destructive Behavior","Self-Talk","Sense Of Incomplete Bladder Emptying","Sensitivity To Hot And Cold","Sensitivity To Light","Sever Headache","Several Time Urination In Night","Severe Low Back Pain","Sexual Dysfunction","Shakiness","Shivering","Short And Light Menstruation","Short Breath When Exert Your Self","Shoulder","Skin","Skin Rashes","Skin Sores Or Pale Colored","Skin Will Look Red In That Area","Sleep Disorder","Sleepiness","Slight Prolong Fever","Slow Heart Rate","Sluggishness",
+		"Slurred Speech","Small Scaling Spot","Smelling Urine","Smile Or Frowing Facial Weakness","Sore That Spreading","Sore Throat","Soreness","Speaking & Swallowing Difficulty","Specially One Side Of Body","Speech Disordes if Yes","Stiff Neck","Stomach Cramps","Stomach Pain","Strawberry Cervix","Stream Is Weak","Stream Sensation To Touch","Sudden Loss Of Consciousness","Suddenly Feeling To Warm","Suicidal Attempt","Suicidal Ideas","Sunken Eye","Sunken Eye","Super-added Bacterial Infection","Sweating","Swelling","Swelling in Joint","Swelling In Leg","Swelling In Legs","Swelling On Face Or Leg","Swelling Over Bone","Swollen Lymph Gland In The Neck","Swollen Skin Area Around The Sting","Swollen Throat","Symptoms like UTI","Syncope","Tachycardia","Temporary Confusion","Tenderness","Tenderness in Abdomen","Thick","Thick Discharge","Thick Ind Skin","Thick White Discharge","Thight Feeling In Throat","Thin White Discharge","Thirst","Throbbing Pain","Tingling and Numbness","Tingling Extremities","Tingling Felling In Or Under Skin","Tingling Hand","Tingling in Limbs","Tingling Sensation","Tiredness","Toes","Toothache","Tremor","Tremors","Trouble In Speaking And Understanding Seeing","Trouble Starting To Urinate","Ulcer","Unconscious","Unexplained Fever","Unusually Large Sores","Urgent Feeling Of Need To Urinate","Urinary Incontinence","Urinary Urgency","Usually Neck","Uterus Prolapse","Vaginal Dryness","Vertigo","Very Intense In Groin And Abdomen","Violent Behavior","Vision Difficulty","Vision Problem","Vision Problem","Visual Hallucination","Vomiting","Vomiting Blood","Warm Skin","Warmth Over Joint","Watery Diarrhea With Contain Mucus","Watery Discharge","Watery Eye Sensitivity to Light","Watery Stool","Weakness","Weight Gain","Weight Gain loss Of Appetite","Weight Loss","Whizzing","Worse Pain When Moved Or Pressure Applied","Wrist","Yeast Like Smell","Yellow Skin","Yellowish Dis Coloration A White Part Of Eye","Yellowish Discharge","You Have To Strain Or Push When You Pee"]
+		
+
+        		
+		$('#bsc-diagn').focus(function() {$(this).autocomplete("search", "");})
+		
+		$('.comp-c').autocomplete({
+   			 source: arrItems,
+			onSelect: function (suggestion) {
+				console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
+			}
+		});
+		per=["day","week","month","year"];
+		$('.period-c').autocomplete({
+   			 source: per,
+			onSelect: function (suggestion) {
+				console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
+			}
+		});
+		//$.getJSON('../includes/symptoms.json', function(jd) {
+		//var arrItems = [];      // THE ARRAY TO STORE JSON ITEMS.
+        //    $.each(jd, function (index, value) {
+        //        arrItems.push(value);       // PUSH THE VALUES INSIDE THE ARRAY.
+        //    });
+		//console.log("jd:"+arrItems);
+		// $('.comp1').autocomplete({
+   		// 	 source: arrItems,
+		// 	onSelect: function (suggestion) {
+		// 		console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
+		// 	}
+		// });	
+		// $('.comp2').autocomplete({
+   		// 	 source: arrItems,
+		// 	onSelect: function (suggestion) {
+		// 		console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
+		// 	}
+		// });	
+		// $('.comp3').autocomplete({
+   		// 	 source: arrItems,
+		// 	onSelect: function (suggestion) {
+		// 		console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
+		// 	}
+		// });		
+	//});
+});
+
+
+
+$(".add-comp-btn").click(function(){
+		
+		//console.log($("#drugname").val());
+		// if(repCnt==0)
+		// {
+		// 	cou = count(1);
+		// }
+		// else {
+		// 	//cou=$('.add-drug tr').length+1;
+		// 	cou=repCnt;
+		// 	repCnt=repCnt+1;
+		// }
+		
+		
+		var cou=$('#add-comp tr').length+1;
+		// var cou=$('.compTable tr').length;
+
+		var comp=$("#comp").val().trim();
+		var dur=$("#dur").val().trim();
+		var period=$("#period").val().trim();
+		
+		//var format=/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+		var format=/[!@#$^*\=\[\]{};':"\\|,<>?]+/;
+		
+		/*if(format.test(comp))
+		{
+			alert('Please enter a valid Complaint (Special Characters not allowed)');
+			$("#comp").val("");
+			$("#comp").focus();
+			return false;
+		}*/
+
+
+		if(comp.length==0)
+		{
+			alert('Please enter a Complaint');
+			$("#comp").focus();
+			return false;
+		}
+		else if(isNaN(dur) || dur.length==0)
+		{
+			alert('Please enter a valid Duration');
+			$("#dur").focus();
+			return false;
+		}		
+		else{
+		$("#add-comp").append("<tr style='background-color:#F7F3AC;' row='"+cou+"' class='row"+cou+"'><td ><textarea cols=15 class='comp"+cou+"' readonly>"+comp+"</textarea></td>"+
+		"<td ><textarea cols=10 class='dur"+cou+"' readonly>"+dur+"</textarea></td>"+
+		"<td ><textarea cols=10 class='period"+cou+"' readonly>"+period+"</textarea><span class='glyphicon glyphicon-remove comp-del pull-right' style='color:red;top:0px;'></span><br><span class='glyphicon glyphicon-edit comp-edit pull-right ' style='color:green;bottom:5px;' row='"+cou+"'></span></td></tr>");
+		}
+
+		$("#comp").val("");
+		$("#dur").val("");
+		//$("#period").val("");
+
+		$(".comp-del").click(function(){
+			$(this).parent().parent("tr").remove();
+			numOfRow=$('#add-comp tr').length;
+			// numOfRow=$('.compTable tr').length;
+			//console.log("TEST NUM-"+numOfRow);
+
+		});
+
+
+		$(".comp-edit").click(function(e){
+			console.log($(this).attr("row"));
+			e.stopImmediatePropagation();
+			$(" .comp"+$(this).attr("row")).removeAttr("readonly");
+			$(" .dur"+$(this).attr("row")).removeAttr("readonly");
+			$(" .period"+$(this).attr("row")).removeAttr("readonly");
+
+			if($(this).hasClass("glyphicon-ok")){
+				//$(".row"+$(this).parent("td").attr("row")+" textarea.description").hide();
+				//$(this).parent("td").prev("td").children("p").html($(this).parent("td").prev("td").children("textarea").val());
+				$(" .comp"+$(this).attr("row")).attr("readonly",true);
+				$(" .dur"+$(this).attr("row")).attr("readonly",true);
+				$(" .period"+$(this).attr("row")).attr("readonly",true);
+			}
+			$(this).toggleClass("glyphicon-ok");
+			$(this).toggleClass("glyphicon-edit");
+
+		});
+		
+	});
+	$("body").delegate(".comp-del", "click", function(){
+		//alert("Delete button clicked")
+		$(this).parent().parent("tr").remove();
+		//numOfRow=$('.add-comp tr').length;
+		
+	});
+	$("body").delegate(".comp-edit", "click", function(){
+		//alert("Edit button clicked")
+		console.log($(this).attr("row"));
+		//e.stopImmediatePropagation();
+		$(" .comp"+$(this).attr("row")).removeAttr("readonly");
+			$(" .dur"+$(this).attr("row")).removeAttr("readonly");
+			$(" .period"+$(this).attr("row")).removeAttr("readonly");
+
+			if($(this).hasClass("glyphicon-ok")){
+				//$(".row"+$(this).parent("td").attr("row")+" textarea.description").hide();
+				//$(this).parent("td").prev("td").children("p").html($(this).parent("td").prev("td").children("textarea").val());
+				$(" .comp"+$(this).attr("row")).attr("readonly",true);
+				$(" .dur"+$(this).attr("row")).attr("readonly",true);
+				$(" .period"+$(this).attr("row")).attr("readonly",true);
+			}
+		$(this).toggleClass("glyphicon-ok");
+		$(this).toggleClass("glyphicon-edit");
+	});
+function datentry(){
+dateentry();
+document.a14.entrydate.value=putdate+putmonth+putyear;
+}
+
+$("#compReport").change(function(){
+	$(".fileName-msg").html(this.files[0].name);
+	
+});
+
+$("form.a14-report").submit(function(e){
+	var url = "../jspfiles/a14_report_upload.jsp";
+	e.preventDefault();
+	$.ajax({
+			type:"POST",
+			url:url,
+			data:new FormData(this),
+			processData: false,
+            contentType: false,
+            cache: false,
+			success:function(data){
+				//alert(data.trim());
+				if(data.trim().length>0){
+					$(".fileName-timestamp").html("<INPUT type=hidden name='report_link' value='"+data.trim()+"' hidden/>");
+				}
+				$("form.a14").submit();
+				},
+			error:function(error){alert("File could not be submited !");}
+		
+		});
+});
+
+
+	$("form.a14").submit(function(e){
+
+		var numOfRow=$('#add-comp tr').length;
+		// var comp="",dur="",period="";
+		var comp=[],dur=[],period=[];
+		//console.log("numOfRow:"+numOfRow);
+		
+		$("#add-comp tr").each(function(row, tr) 
+		{
+ 		   //console.log($(this).attr("row"));
+			var row=$(this).attr("row");
+			// comp+=$(" .comp"+row).val()+"!";
+			// dur+=$(" .dur"+row).val()+"!";
+			// period+=$(" .period"+row).val()+"!";		
+
+			comp.push($(" .comp"+row).val());
+			dur.push($(" .dur"+row).val());
+			period.push($(" .period"+row).val());		
+		
+		});
+		// comp=JSON.stringify(comp);
+		// dur=JSON.stringify(dur);
+		// period=JSON.stringify(period);
+		console.log(comp);
+		console.log(dur);
+		console.log(period);
+
+
+	var url="../jspfiles/savefrm.jsp";
+	//var formData = new FormData($("#newPres"));	
+	var detailed_diagnosis = $("#detailed-diagn").val()
+	console.log("Here>> ",detailed_diagnosis)
+	var formData= $(".add-comp form").serialize()+"&comp1="+comp+"&dur1="+dur+"&hdmy1="+period+"&basicdiag="+detailed_diagnosis+"&dur2=&hdmy2=&comp3=&dur3=&hdmy3=";	 
+	console.log("formData: "+formData);
+	e.preventDefault();
+	$.ajax({
+		   type: "POST",
+		   url: url,
+		   data: formData, 
+		   success: function(data)
+		   {
+				alert("done");
+				$('#add_comp').modal('toggle');	
+				$(".modal-backdrop").remove();	
+				$("input[name='report_link']").remove();
+				if($('#patPres').hasClass('ui-dialog-content'))
+				{
+							$("#patPres" ).dialog( "close" );
+							$("#patPres").remove();
+				} 				
+				var ajax_load = "<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>";
+				$(".main-body").html(ajax_load).load("patientAlldata.jsp?id=<%=id%>");
+		   },
+		   error:function(erro)
+		   {
+				alert("From could not be submited !");
+			}
+		 });
+ 
+	});
+
+	
+</SCRIPT>
+<style>
+.ui-autocomplete { 
+	cursor:pointer; 
+	height:240px; 
+	overflow-y:scroll;
+}  
+
+	.ui-menu.ui-autocomplete{
+	overflow-y:auto;
+	max-height:200px;
+	}
+.ui-menu:hover{overflow-x:hidden;}
+.comp-upload-div{
+	border: 1px solid #ddd;
+    padding: 4px 12px;
+    border-radius: 4px;
+	position: absolute;
+    top: -50px;
+    right: 50px;
+}
+.upload-btn{margin:auto;display:block;}
+.comp-upload-div label{padding:5px;margin:0px;}
+.comp-upload-span{
+	border: 1px solid #ddd;
+    padding: 4px 12px;
+    font-size: 20px;
+    border-radius: 20px;
+    color: #4a93ea;
+    background: #e1e7ef;
+    cursor: pointer;
+}
+input[name="compReport"]{
+    position: absolute;
+    top: 0;
+    left: 0px;
+    float: right;
+    width: 60px;
+    opacity: 0;
+    display: inline-block;
+    overflow: hidden;
+}
+.fileName-msg{color:#4a93ea;}
+#compTable thead tr td{
+padding:4px;	
+}
+.diag-head span{
+	background: #2775FC;
+	color: #fff;
+	}
+</style>
+</HEAD>
+<BODY onload='datentry();'>
+<div class="container-fluid">
+
+<TABLE class='tableb table table-bordered'>
+<TR><TD>
+<FORM class="a14" role="form" METHOD=post ACTION="../jspfiles/savefrm.jsp" name="a14">
+<INPUT TYPE="hidden" name="frmnam" value="a14" >
+<INPUT TYPE="hidden" name="pat_id" value="<%=id%>">
+
+
+
+	<fieldset color=#66CCFF><legend><FONT SIZE="4"COLOR="RED"><b>Chief Complaints<B></FONT></legend>
+		
+		<div class="table-responsive" style="height: 300px;">
+
+			<table class="table table-bordered test-list-table" id="compTable">
+				<thead align='center' >
+					<tr style='background-color:#2775FC ;color:white;'><td>COMPLAINT</td><td >DURATION</td><td >PERIOD</td></tr>
+					<!-- <tr ><td><textarea id='comp' placeholder="Complaint" cols="15" class='form-control comp-c' /></td><td><textarea id='dur' type="number" placeholder="Duration" cols="10" /></td><td><textarea id='period' placeholder="Period" cols="10" class="period-c" /><span class="glyphicon glyphicon-plus pull-right add-comp-btn" style="color:blue;"></span></td></tr> -->
+					<tr ><td><textarea id='comp' placeholder="Complaint" cols="15" class='form-control comp-c' /></td><td><textarea class="form-control" id='dur' type="number" placeholder="Duration" cols="10" /></td><td>
+					<!-- <textarea id='period' placeholder="Period" cols="10" class="period-c" /> -->
+					<SELECT class="btn btn-lg" id='period' style="min-width:100px;" required>
+						<OPTION value="month" selected>month</OPTION>
+						<OPTION value="week">week</OPTION>
+						<OPTION value="day">day</OPTION>
+						<OPTION value="hour">hour</OPTION>
+					</SELECT>
+					<span class="glyphicon glyphicon-plus pull-right add-comp-btn" style="color:blue;"></span></td></tr>
+				</thead>
+				<tbody class="add-comp" id="add-comp">
+
+				</tbody>
+			</table>
+		</div>
+
+	<!-- <TABLE class="table">
+		<TR>
+		<TD>1.</TD>
+		<TD><textarea class="comp1" type="text" NAME=comp1 maxlength=150 style="min-width:100px;" required></textarea></TD>
+		<TD><FONT SIZE="3"COLOR="blue">Duration</FONT></TD>
+		<TD><INPUT class="form-control" NAME=dur1 maxlength=50 onblur='checkintObj(this);' style="min-width:100px;" required></INPUT></TD>
+		<TD>
+		<SELECT class="form-control" NAME=hdmy1 style="min-width:100px;" required>
+			<OPTION value="months" selected>months</OPTION>
+			<OPTION value="weeks">weeks</OPTION>
+			<OPTION value="days">days</OPTION>
+			<OPTION value="hours">hours</OPTION>
+		</SELECT>
+		</TD>
+	    </TR>
+
+		<TR>
+		<TD>2.</TD>
+		<TD><textarea class="comp2" type="text" NAME=comp2 maxlength=150 style="min-width:100px;"></textarea></TD>
+		<TD><FONT SIZE="3"COLOR="blue">Duration</FONT></TD>
+		<TD><INPUT class="form-control" NAME=dur2 maxlength=50 onblur='checkintObj(this);' style="min-width:100px;"></INPUT></TD>
+		<TD>
+		<SELECT class="form-control" NAME=hdmy2 style="min-width:100px;">
+			<OPTION value="months" selected>months</OPTION>
+			<OPTION value="weeks">weeks</OPTION>
+			<OPTION value="days">days</OPTION>
+			<OPTION value="hours">hours</OPTION>
+		</SELECT>
+		</TD>
+		</TR>
+
+		<TR>
+		<TD>3.</TD><TD><textarea class="comp3" type="text" NAME=comp3 maxlength=150 style="min-width:100px;"></textarea></TD>
+		<TD><FONT SIZE="3"COLOR="blue">Duration</FONT></TD>
+		<TD><INPUT class="form-control" NAME=dur3 maxlength=50 onblur='checkintObj(this);' style="min-width:100px;"></INPUT></TD>
+		<TD>
+		<SELECT class="form-control" NAME=hdmy3 style="min-width:100px;">
+			<OPTION value="months" selected>months</OPTION>
+			<OPTION value="weeks">weeks</OPTION>
+			<OPTION value="days">days</OPTION>
+			<OPTION value="hours">hours</OPTION>
+		</SELECT>
+		</TD>
+		</TR>
+	</TABLE> -->
+	</fieldset> 
+
+	
+	<fieldset><legend><FONT SIZE="4"COLOR="RED"><b>History and Notes<B></FONT></legend>
+	<TABLE class="table">
+		<TR>
+		<TD valign=middle><FONT SIZE="3" COLOR="blue">Records here:</font></TD>
+		<TD><TEXTAREA class="form-control" onkeypress="return txtlength(this,300)" onblur=chkpest(this,300) name=rh wrap=virtual cols=50 rows=7></TEXTAREA></TD>
+		</TR>
+	</TABLE>
+	</fieldset>
+
+
+<TABLE class="table">
+<TR>
+ <TD>Test date</TD><TD><INPUT class="form-control" id="testdate" NAME="testdate"  value=<%=dat%> maxlength=8></INPUT></TD>
+
+<TD><INPUT type=hidden name=entrydate></INPUT><span class="fileName-timestamp"></span>
+<INPUT class="btn btn-primary" type="hidden" value="Submit" onclick="return testdt(document.a14.testdate.value,'<%=dat%>')" style="background-color: '#D3CEC9'; color: '#000000'; font-weight:BOLD; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<!--<INPUT class="btn btn-warning" type="reset" value="Reset" style="background-color: '#D3CEC9'; color: '#000000'; font-weight:BOLD; ">--></TD>
+</TR>
+</TABLE>
+</FORM>
+<form class="a14-report" enctype="multipart/form-data" name="a14-report">
+	
+	<div class="comp-upload-div pull-right"><span class="fileName-msg"></span><label>Upload File : </label><span class="comp-upload-span glyphicon glyphicon-upload pull-right"><input type="file" name="compReport" id="compReport" /></span></div>
+<input class="btn btn-primary upload-btn" type="submit" name="submit" value="Submit" />
+</form>
+</td></tr>
+</table>
+
+</div>		<!-- "container-fluid" -->
+</BODY>
+</HTML>

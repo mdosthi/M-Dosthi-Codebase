@@ -1,0 +1,103 @@
+# Secrets and generated local configuration
+.env
+.env.*
+!.env.example
+*.keystore
+*.jks
+services/legacy/runtime/gblinfo.inf
+apps/web/config.info
+
+# Local-only material: runtimes, backups, data, old copies
+/tools/
+/local-archive/
+/database/backups/
+/database/snapshots/
+/Downloads/
+
+# OS and IDE files
+.DS_Store
+._*
+__MACOSX/
+.idea/
+.vscode/
+*.iml
+*.swp
+
+# Java / Maven
+*.class
+target/
+*.log
+*.out
+hs_err_pid*
+
+# Jars: ignored by default, but the legacy stack depends on these checked-in libraries
+*.jar
+*.war
+!services/legacy/external-lib/**/*.jar
+!services/legacy/runtime/lib/**/*.jar
+!services/legacy/runtime/*.jar
+!apps/web/WEB-INF/lib/**/*.jar
+!**/gradle/wrapper/*.jar
+!**/.mvn/wrapper/*.jar
+
+# Legacy runtime output
+services/legacy/runtime/SystemLog/
+services/legacy/runtime/GenSqlLog/
+services/legacy/runtime/temp/
+services/legacy/runtime/Backup/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.mypy_cache/
+*.egg-info/
+build/
+dist/
+services/annotate/annotate_logs/
+services/annotate/data/logs/
+
+# Flutter / Dart
+apps/mobile/.dart_tool/
+apps/mobile/build/
+apps/mobile/.flutter-plugins*
+apps/mobile/.packages
+apps/mobile/android/.gradle/
+apps/mobile/android/local.properties
+apps/mobile/ios/Pods/
+
+# Patient data and runtime files inside the web app
+apps/web/data/*
+!apps/web/data/.gitkeep
+apps/web/temp/*
+!apps/web/temp/.gitkeep
+apps/web/**/*.log
+
+# Legacy runtime leftovers and SQL logs
+services/legacy/**/*.sql
+services/legacy/**/*.inf
+!services/legacy/**/*.inf.template
+apps/mobile/lib/welbeing/SqlBackup/
+
+# Jars produced by scripts/legacy.sh build (ftp.jar has no sources and stays tracked)
+services/legacy/server-src/*.jar
+!services/legacy/server-src/ftp.jar
+services/legacy/servlet-src/**/*.jar
+services/legacy/runtime/iMediXBusinessLogic.jar
+services/legacy/runtime/lib/imedix.jar
+services/legacy/runtime/lib/telem.jar
+services/legacy/runtime/lib/tuberculosis.jar
+services/legacy/runtime/lib/phiv.jar
+services/legacy/runtime/lib/logger.jar
+services/legacy/runtime/lib/onlinegc.jar
+apps/web/WEB-INF/lib/imedix.jar
+apps/web/WEB-INF/lib/telem.jar
+apps/web/WEB-INF/lib/tuberculosis.jar
+apps/web/WEB-INF/lib/phiv.jar
+apps/web/WEB-INF/lib/onlinegc.jar
+apps/web/WEB-INF/lib/logger.jar
+apps/web/WEB-INF/lib/imedixservlets.jar
+apps/web/WEB-INF/classes/imedix/

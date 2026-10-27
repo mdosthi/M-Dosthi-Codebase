@@ -1,0 +1,409 @@
+import 'package:app_001/login_page.dart';
+import 'package:app_001/surveyor/hamburger_menu.dart';
+import 'package:app_001/surveyor/selectTimePeriodPage.dart';
+import 'package:app_001/surveyor/subject_register_page.dart';
+import 'package:app_001/surveyor/survery_page_util.dart';
+import 'package:app_001/surveyor/take_survey_page.dart';
+import 'package:app_001/utils/NetworkSpeedChecker.dart';
+import 'package:flutter/material.dart';
+import 'package:app_001/backend/database_helper.dart';
+import 'family_details.dart';
+import 'form_details.dart';
+
+class FamilyDataTablePage extends StatefulWidget {
+  final String nextPage;
+  final String village;
+  final FormDetails formName;
+  const FamilyDataTablePage(
+      {required this.formName,
+      required this.village,
+      required this.nextPage,
+      super.key});
+  @override
+  _FamilyDataTablePageState createState() => _FamilyDataTablePageState();
+}
+
+class _FamilyDataTablePageState extends State<FamilyDataTablePage> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  List<FamilyDetails> familyList = [];
+  List<FamilyDetails> filteredList = [];
+  TextEditingController searchController = TextEditingController();
+  String selectedCategory = 'Beneficiary Name';
+
+  @override
+  void initState() {
+    super.initState();
+    loadFamilyDetails();
+  }
+
+  Future<void> loadFamilyDetails() async {
+    final dbHelper = DatabaseHelper.instance;
+    await dbHelper.ba();
+    List<Map<String, Object?>> familyDetails;
+    if (widget.nextPage == 'survey') {
+      familyDetails = await dbHelper.getFamilyDetailsByFormAndVillage(
+          widget.formName.formName, widget.village);
+    } else if (widget.nextPage == 'service registration') {
+      // familyDetails = await dbHelper.getFamilyDetailsbyVillage(widget.village);
+      familyDetails = await dbHelper.getFamilyDetailsbyVillageAndNotRegistered(
+          widget.formName.formName, widget.village);
+    } else {
+      familyDetails = await dbHelper.getFamilyDetailsbyVillage(widget.village);
+    }
+    print('family details : $familyDetails');
+    setState(() {
+      if (widget.nextPage == 'survey') {
+        familyList = familyDetails
+            .map(
+              (family) => FamilyDetails(
+                subjectID: family['subject_id'].toString(),
+                subjectName: family['SubjectName'].toString(),
+                spouseName: family['SpouseName'].toString(),
+                childName: family['ChildName'].toString(),
+                mobile: family['Mobile'].toString(),
+                startDate: family['start_date'].toString(),
+                endDate: family['end_date'].toString(),
+              ),
+            )
+            .toList();
+        filteredList = familyList;
+      } else {
+        familyList = familyDetails
+            .map(
+              (family) => FamilyDetails(
+                subjectID: family['subject_id'].toString(),
+                subjectName: family['SubjectName'].toString(),
+                spouseName: family['SpouseName'].toString(),
+                childName: family['ChildName'].toString(),
+                mobile: family['Mobile'].toString(),
+                startDate: '',
+                endDate: '',
+              ),
+            )
+            .toList();
+        filteredList = familyList;
+      }
+    });
+  }
+
+  void filterFamilyList(String query) {
+    setState(() {
+      if (selectedCategory == 'Beneficiary Name') {
+        filteredList = familyList
+            .where((family) =>
+                family.subjectName.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      } else if (selectedCategory == 'Child Name') {
+        filteredList = familyList
+            .where((family) =>
+                family.childName.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      } else if (selectedCategory == 'Spouse Name') {
+        filteredList = familyList
+            .where((family) =>
+                family.spouseName.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var dataTable = PaginatedDataTable(
+      showCheckboxColumn: false,
+
+      columns: const <DataColumn>[
+        DataColumn(label: Text('Beneficiary Name/Spouse Name/Child Name')),
+        DataColumn(label: Text('Mobile')),
+        DataColumn(label: Text('Start Date')),
+        DataColumn(label: Text('End Date')),
+      ],
+      source: _FamilyDataSource(
+        filteredList,
+        onRowClicked: (family) {
+          navigateToDetailsPage(
+              context, family); // Navigate to details page on row click
+        },
+      ),
+      // header: const Text('Family Details'),
+      rowsPerPage: 10,
+    );
+
+    List<Widget> content = [dataTable];
+
+    return Scaffold(
+      drawer: HamburgerMenu(
+        userName: LoginPage.userId,
+        email: LoginPage.username,
+        pages: const [
+          SurveyorPageUtil(),
+          LoginPage(),
+          NetworkSpeedChecker(),
+        ],
+        icons: const [
+          Icons.home,
+          Icons.logout,
+          Icons.network_cell_rounded,
+        ],
+        pageTitles: const ['Home', 'Log out', 'Bandwidth'],
+      ),
+      appBar: AppBar(
+        title: const Text('Family Data Table'),
+        actions: [
+          IconButton(
+              onPressed: () => {Navigator.pop(context)},
+              icon: const Icon(Icons.arrow_back_rounded)),
+        ],
+      ),
+      body: Container(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  DropdownButton<String>(
+                    value: selectedCategory,
+                    items: [
+                      'Beneficiary Name',
+                      'Child Name',
+                      'Spouse Name',
+                    ].map((String category) {
+                      return DropdownMenuItem<String>(
+                        value: category,
+                        child: Text(category),
+                      );
+                    }).toList(),
+                    onChanged: (String? value) {
+                      setState(() {
+                        selectedCategory = value ?? 'Beneficiary Name';
+                      });
+                    },
+                  ),
+                  const SizedBox(width: 16.0),
+                  Expanded(
+                    child: TextField(
+                      controller: searchController,
+                      onChanged: (query) {
+                        filterFamilyList(query);
+                      },
+                      decoration: InputDecoration(
+                        isDense: true,
+                        labelText: 'Search by $selectedCategory',
+                        prefixIcon: const Icon(Icons.search),
+                        border: const OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Scrollbar(
+                controller: _scrollController,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height,
+                  ),
+                  child: ListView(
+                    controller: _scrollController,
+                    shrinkWrap: true,
+                    children: content.map((widget) => widget).toList(),
+                  ),
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SubjectRegisterPage()),
+                    );
+                    globalFormName = widget.formName;
+                    globalVillage = widget.village;
+                  },
+                  child: const Text('Add Beneficiary'),
+                ),
+                const SizedBox(
+                  height: 20,
+                  width: 20,
+                ), // Adding some space between buttons
+                Visibility(
+                  visible: widget.nextPage == 'survey',
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Handle enrollment to service
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FamilyDataTablePage(
+                                  formName: widget.formName,
+                                  village: widget.village,
+                                  nextPage: 'service registration',
+                                )),
+                      );
+                    },
+                    child: const Text('Enroll to this Service'),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
+      ),
+
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => SubjectRegisterPage()),
+      //     );
+      //   },
+      //   tooltip: 'Add Beneficiary',
+      //   child: Icon(Icons.add),
+      // ),
+    );
+  }
+
+  void navigateToDetailsPage(BuildContext context, FamilyDetails family) {
+    if (widget.nextPage == 'survey') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => TakeSurveyPage(
+                formName: widget.formName,
+                familyDetails: family,
+                nextPage: widget.nextPage,
+                village: widget.village)
+            // FormDataTablePage(family: family, nextPage: widget.nextPage),
+            ),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SelectTimePeriodPage(
+                formName: widget.formName,
+                familyDetails: family,
+                nextPage: widget.nextPage,
+                village: widget.village)
+            // FormDataTablePage(family: family, nextPage: widget.nextPage),
+            ),
+      );
+    }
+  }
+}
+
+class FamilyDetailsPage extends StatelessWidget {
+  final FamilyDetails family;
+
+  const FamilyDetailsPage({super.key, required this.family});
+
+  Widget subjectNameTextField(FamilyDetails familyDetails) {
+    // print('hello')
+    String name = familyDetails.subjectName;
+    name += "/";
+    if (familyDetails.spouseName != "null") {
+      name += familyDetails.spouseName;
+    }
+    name += "/";
+    if (familyDetails.childName != "null") {
+      name += familyDetails.childName;
+    }
+    return Text(name);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Family Details'),
+      ),
+      body: Container(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              subjectNameTextField(family),
+              // Text(
+              //     'Mother Name: ${family.subjectName}/${family.spouseName}/${family.childName}'),
+              Text('${family.mobile}'),
+              // Text('Child Name: ${family.childName}'),
+              // Text('Husband Name: ${family.spouseName}'),
+              Text('Start Date: ${family.startDate}'),
+              Text('End Date: ${family.endDate}'),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _FamilyDataSource extends DataTableSource {
+  final List<FamilyDetails> _familyList;
+  final Function(FamilyDetails) onRowClicked; // Add this callback
+
+  _FamilyDataSource(this._familyList, {required this.onRowClicked});
+  Widget subjectNameTextField(FamilyDetails familyDetails) {
+    // print('hello')
+    String name = familyDetails.subjectName;
+    if (familyDetails.spouseName != "null") {
+      name += "/";
+      name += familyDetails.spouseName;
+    }
+    if (familyDetails.childName != "null") {
+      name += "/";
+      name += familyDetails.childName;
+    }
+    return Text(name);
+  }
+
+  @override
+  DataRow? getRow(int index) {
+    if (index >= _familyList.length) {
+      return null;
+    }
+    final family = _familyList[index];
+    return DataRow(
+      cells: [
+        DataCell(subjectNameTextField(family)),
+        // DataCell(Text(
+        //     "${family.subjectName}/${family.spouseName}/${family.childName}")),
+        DataCell(Text(family.mobile!)),
+        // DataCell(Text(family.childName)),
+        // DataCell(Text(family.spouseName)),
+        DataCell(Text(family.startDate!)),
+        DataCell(Text(family.endDate!)),
+      ],
+      onSelectChanged: (isSelected) {
+        if (isSelected != null && isSelected) {
+          onRowClicked(family); // Invoke the callback on row selection
+        }
+      },
+    );
+  }
+
+  @override
+  int get rowCount => _familyList.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => 0;
+}

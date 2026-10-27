@@ -1,0 +1,78 @@
+{
+  "cases": [
+    {
+      "id": "readiness_preparation",
+      "description": "Patient in preparation stage with a concrete quit date, multiturn chat",
+      "signal_name": "readiness",
+      "extracted_signal": {
+        "readiness_stage": "preparation",
+        "evidence": "I've actually set a quit date for next Monday and already cut down to five cigarettes a day."
+      },
+      "conversation": "Counselor: How have things been since we last spoke about your smoking?\nPatient: I've been thinking about it a lot more seriously.\nCounselor: What's changed?\nPatient: I've actually set a quit date for next Monday and already cut down to five cigarettes a day.\nCounselor: That's great progress. What made you pick that date?\nPatient: My daughter's birthday is that weekend and I want to start fresh after it."
+    },
+    {
+      "id": "concern_psychological",
+      "description": "Patient expresses fear of failure and irritability worries, multiturn chat",
+      "signal_name": "concern",
+      "extracted_signal": {
+        "concerns": [
+          "fear of failing again",
+          "irritability during withdrawal"
+        ],
+        "evidence": [
+          "I'm scared I'm just going to fail like the last two times",
+          "I get so irritable I'm worried I'll snap at my kids"
+        ]
+      },
+      "conversation": "Counselor: What worries you most about trying to quit again?\nPatient: Honestly, I'm scared I'm just going to fail like the last two times.\nCounselor: That's understandable. Anything else on your mind?\nPatient: Yeah, when I quit before I got so irritable I'm worried I'll snap at my kids.\nCounselor: Withdrawal-related mood changes are common. Has that affected your relationships before?\nPatient: A little, my wife noticed I was on edge for almost two weeks."
+    },
+    {
+      "id": "trigger_stress_and_routine",
+      "description": "Patient links smoking to work stress and morning coffee routine, multiturn chat",
+      "signal_name": "trigger",
+      "extracted_signal": {
+        "triggers": [
+          "work stress",
+          "morning coffee"
+        ],
+        "evidence": [
+          "deadlines at work make me crave a cigarette immediately",
+          "I always smoke with my coffee in the morning, it's automatic"
+        ]
+      },
+      "conversation": "Counselor: When do you find yourself reaching for a cigarette the most?\nPatient: Definitely when deadlines at work make me crave a cigarette immediately.\nCounselor: What about outside of work?\nPatient: I always smoke with my coffee in the morning, it's automatic, I don't even think about it.\nCounselor: Do you smoke because you're worried about your health, or is that separate?\nPatient: No, the health worry is separate, that doesn't make me want to smoke more, if anything less."
+    },
+    {
+      "id": "attempt_nrt_and_cold_turkey",
+      "description": "Patient describes two prior quit attempts with different methods, multiturn chat",
+      "signal_name": "attempt",
+      "extracted_signal": {
+        "attempts": [
+          "cold turkey attempt in 2021, lasted 3 weeks",
+          "nicotine patch attempt in 2023, lasted 2 months"
+        ],
+        "evidence": [
+          "I just stopped cold turkey back in 2021, made it about three weeks",
+          "in 2023 I tried the nicotine patch and that got me almost two months smoke-free"
+        ]
+      },
+      "conversation": "Counselor: Have you tried to quit before?\nPatient: Yeah, a couple times. I just stopped cold turkey back in 2021, made it about three weeks.\nCounselor: What happened after that?\nPatient: I relapsed after a stressful week at work.\nCounselor: Did you try anything else since then?\nPatient: Yeah, in 2023 I tried the nicotine patch and that got me almost two months smoke-free.\nCounselor: What led to that one ending?\nPatient: I went to a wedding and started again after a few drinks."
+    },
+    {
+      "id": "advice_nrt_and_quit_date",
+      "description": "Counselor recommends NRT and agrees on a quit date, multiturn chat",
+      "signal_name": "advice",
+      "extracted_signal": {
+        "advice": [
+          "nicotine patch",
+          "set a quit date within two weeks"
+        ],
+        "evidence": [
+          "I'd recommend starting with a nicotine patch to manage the cravings",
+          "let's aim to set your quit date within the next two weeks"
+        ]
+      },
+      "conversation": "Counselor: Based on what you've shared, I'd recommend starting with a nicotine patch to manage the cravings.\nPatient: Okay, that sounds reasonable.\nCounselor: Given how motivated you sound, let's aim to set your quit date within the next two weeks.\nPatient: I think I can do that, maybe the 15th.\nCounselor: Great, let's pencil that in and check back on your progress before then."
+    }
+  ]
+}

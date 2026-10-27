@@ -1,0 +1,127 @@
+{
+  "readiness": [
+    {
+      "term": "precontemplation",
+      "definition": "Patient has no current intention to quit smoking within the next 6 months; may be unaware or under-aware of the need to change.",
+      "keywords": ["not ready", "don't want to quit", "no intention", "haven't thought about quitting", "not interested in quitting"]
+    },
+    {
+      "term": "contemplation",
+      "definition": "Patient is seriously considering quitting within the next 6 months but has not yet committed to action.",
+      "keywords": ["thinking about quitting", "considering", "maybe i should quit", "on the fence", "weighing pros and cons"]
+    },
+    {
+      "term": "preparation",
+      "definition": "Patient intends to quit within the next 30 days and may have already taken small preparatory steps (e.g. cutting back, setting a quit date).",
+      "keywords": ["quit date", "getting ready", "cutting back", "planning to quit", "next month"]
+    },
+    {
+      "term": "action",
+      "definition": "Patient has actively quit smoking within the last 6 months and is practicing new behaviors.",
+      "keywords": ["quit smoking", "stopped smoking", "haven't smoked since", "days smoke-free"]
+    },
+    {
+      "term": "maintenance",
+      "definition": "Patient has been smoke-free for more than 6 months and is working to prevent relapse.",
+      "keywords": ["smoke-free for months", "maintaining", "staying quit", "preventing relapse"]
+    },
+    {
+      "term": "relapse",
+      "definition": "Patient had previously quit but has resumed smoking and may be cycling back to an earlier stage.",
+      "keywords": ["started smoking again", "relapsed", "fell off the wagon", "back to smoking"]
+    }
+  ],
+  "concern": [
+    {
+      "term": "physiological",
+      "definition": "Concerns about physical health symptoms or bodily effects of smoking or quitting.",
+      "keywords": ["cough", "breathless", "shortness of breath", "sleep", "craving", "withdrawal", "weight gain", "lungs"]
+    },
+    {
+      "term": "psychological",
+      "definition": "Concerns about emotional or mental wellbeing tied to smoking or quitting.",
+      "keywords": ["anxiety", "stress", "mood swings", "irritability", "failing", "fear of failure", "depression"]
+    },
+    {
+      "term": "social_financial",
+      "definition": "Concerns about the cost of smoking/cessation aids, social stigma, or impact on family/relationships.",
+      "keywords": ["cost", "expensive", "money", "stigma", "family", "judged", "afford"]
+    },
+    {
+      "term": "situational_relapse",
+      "definition": "Concerns tied to specific contexts or situations that put the patient at risk of relapse.",
+      "keywords": ["parties", "drinking", "around smokers", "work stress", "specific situation", "triggers relapse"]
+    }
+  ],
+  "trigger": [
+    {
+      "term": "stress",
+      "definition": "Work, financial, or personal stress that the patient directly links to smoking urges or behavior.",
+      "keywords": ["stress", "stressful", "pressure", "deadline", "overwhelmed"]
+    },
+    {
+      "term": "social",
+      "definition": "Social settings or interactions (e.g. being around other smokers, social gatherings) that the patient links to smoking urges.",
+      "keywords": ["friends smoke", "party", "social gathering", "peer pressure", "drinking with friends"]
+    },
+    {
+      "term": "habitual_routine",
+      "definition": "Routine or habitual cues (e.g. morning coffee, after meals, driving) that the patient links to smoking behavior.",
+      "keywords": ["morning coffee", "after meals", "driving", "habit", "every morning", "routine"]
+    },
+    {
+      "term": "negative_exclusion",
+      "definition": "NOT a trigger — motivations to quit, health/financial/family concerns, consequences of smoking, or future goals must not be classified as triggers unless the patient explicitly links them to smoking urges or behavior.",
+      "keywords": ["worried about health", "expensive", "children", "future goal", "consequence of smoking", "motivation to quit"]
+    }
+  ],
+  "attempt": [
+    {
+      "term": "cold_turkey",
+      "definition": "Abrupt, unaided cessation without medication or behavioral support.",
+      "keywords": ["cold turkey", "stopped abruptly", "quit suddenly", "no help"]
+    },
+    {
+      "term": "nrt",
+      "definition": "Nicotine Replacement Therapy — patches, gum, lozenges, inhalers, or nasal spray.",
+      "keywords": ["patch", "nicotine gum", "lozenge", "inhaler", "nasal spray", "nrt"]
+    },
+    {
+      "term": "pharmacotherapy",
+      "definition": "Prescription cessation medication such as varenicline (Chantix) or bupropion (Zyban).",
+      "keywords": ["varenicline", "chantix", "bupropion", "zyban", "prescription medication"]
+    },
+    {
+      "term": "behavioral_support",
+      "definition": "Counseling, support groups, quitlines, or structured behavioral programs.",
+      "keywords": ["counseling", "support group", "quitline", "therapy", "behavioral program"]
+    }
+  ],
+  "advice": [
+    {
+      "term": "nrt",
+      "definition": "Counselor recommends nicotine replacement therapy (patch, gum, lozenge, inhaler).",
+      "keywords": ["patch", "nicotine gum", "lozenge", "inhaler", "nrt"]
+    },
+    {
+      "term": "pharmacotherapy",
+      "definition": "Counselor recommends prescription cessation medication.",
+      "keywords": ["varenicline", "chantix", "bupropion", "zyban", "prescription"]
+    },
+    {
+      "term": "behavioral",
+      "definition": "Counselor recommends behavioral strategies (stress management, coping plans, routine changes).",
+      "keywords": ["stress management", "coping plan", "behavioral strategy", "routine change"]
+    },
+    {
+      "term": "referral",
+      "definition": "Counselor refers the patient to another specialist or resource (e.g. nutritionist, support group, quitline).",
+      "keywords": ["referral", "nutritionist", "support group", "quitline", "specialist"]
+    },
+    {
+      "term": "quit_date",
+      "definition": "Counselor and patient agree on a concrete quit date or scheduling commitment.",
+      "keywords": ["quit date", "schedule", "set a date", "next two weeks"]
+    }
+  ]
+}

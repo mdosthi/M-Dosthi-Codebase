@@ -1,0 +1,289 @@
+{
+	"SKIN":[
+			"SKIN Boils",
+			"SKIN Cellulitis",
+			"SKIN Itching",
+			"SKIN Tinea pedis",
+			"SKIN Scabies",
+			"SKIN Infected wound",
+			"SKIN Abrasion",
+			"SKIN Fungal infection",
+			"SKIN Tinea corporis",
+			"SKIN Tinea cruris",
+			"SKIN Eczema",
+			"SKIN Tinea versicolor",
+			"SKIN Pyoderma",
+			"SKIN Chicken pox",
+			"SKIN Herpes zoster",
+			"SKIN Measles",
+			"SKIN Alopic dermatitis",
+			"SKIN Seborric dermatitis",
+			"SKIN Psoriasis",
+			"SKIN Vitiligo",
+			"SKIN Acne vulgaris",
+			"SKIN Allergic dermatitis",
+			"SKIN Cracked sole",
+			"SKIN Papular urticaria"
+		],
+	"P/R":[
+			"P/R Piles",
+			"P/R Haemorrhoids",
+			"P/R Bleeding piles",
+			"P/R Fistula in ano",
+			"P/R Fissure"
+		],
+	"PEM":[
+			"PEM Mal nutrition"
+		],
+	"DENTAL":[
+			"DENTAL Caries",
+			"DENTAL Pyorrhoea",
+			"DENTAL Gum swelling",
+			"DENTAL Foul smell"	
+		],
+	"THYROID":[
+			"THYROID Hypothyroidism",
+			"THYROID Hyperthyroidism",
+			"THYROID Goitre"			
+		],
+	"PUO":[
+			"PUO Fever",
+			"PUO Dengue",
+			"PUO Bodyache",
+			"PUO Malaria",
+			"PUO Typhoid"			
+		],
+	"ENT":[
+			"ENT Acute suppurative otitis media",
+			"ENT Chronic suppurative otitis media",
+			"ENT Oral ulcer",
+			"ENT Stomatitis",
+			"ENT Cheilosis",
+			"ENT Earache",
+			"ENT Sinusitis",
+			"ENT Tonsillitis"			
+		],
+	"GASTRO":[
+			"GASTRO Gastro-esophageal reflux",
+			"GASTRO Hyperacidity",
+			"GASTRO Gastroenteritis",
+			"GASTRO Dyspepsia",
+			"GASTRO Epigastric pain",
+			"GASTRO Heart burn",
+			"GASTRO Colitis",
+			"GASTRO Constipation",
+			"GASTRO Hepatitis",
+			"GASTRO Jaundice",
+			"GASTRO Ascites",
+			"GASTRO Cirrhosis",
+			"GASTRO Diarrhoea",
+			"GASTRO Dysentry",
+			"GASTRO Helminthiasis"					
+		],
+	"GYNAC":[
+			"GYNAC PID",
+			"GYNAC Water discharge",
+			"GYNAC Cervicitis",
+			"GYNAC Menopausal syndrome",
+			"GYNAC Unhyginic condition",
+			"GYNAC Menstural disorder",
+			"GYNAC Vulvaitis",
+			"GYNAC Leucorrhea candidiasis",
+			"GYNAC Dysmenorrhea",
+			"GYNAC Bulky uterus",
+			"GYNAC Fibroied uterus",
+			"GYNAC Leucorrhea veginosis",
+			"GYNAC Leucorrhea trichomoniasis"			
+		],
+	"ARI":[
+			"ARI URTI",
+			"ARI LRTI",
+			"ARI Allergic rhinitis",
+			"ARI Sore throat",
+			"ARI Common cold",
+			"ARI Pharyngitis",
+			"ARI Pneumonia"			
+		],
+	"HTN":[
+			"HTN Hypertension",
+			"HTN CHF(Congestive heart failure)",
+			"HTN Angina"			
+		],
+	"DM":[
+			"DM Diabetes mellitus",
+			"DM Diabetes mellitus type1",
+			"DM Diabetes mellitus type2",
+			"DM Diabetic retinopathy",
+			"DM Diabetic neuropathic",
+			"DM Diabetic foot"			
+		],
+	"COPD":[
+			"COPD Chronic obstructive pulmonary desease",
+			"COPD Asthma",
+			"COPD Bronchitis",
+			"COPD Br. asthma"			
+		],
+	"ANEMIA":[
+			"Anemia"		
+		],
+	"F/S":[
+			"FS Food supplement"
+		],
+	"ANC":[
+			"ANC Antenatal care"
+		],
+	"ORTHO":[
+			"ORTHO Osteoarthritis",
+			"ORTHO Polyarthritis",
+			"ORTHO Osteoporosis",
+			"ORTHO Lumber spondylosis",
+			"ORTHO Fracture",
+			"ORTHO Joint pain with swelling",
+			"ORTHO Frozen shoulder",
+			"ORTHO Joint stiffness",
+			"ORTHO Low back pain", 
+			"ORTHO Knee pain",
+			"ORTHO Cervical spodylosis"
+		],
+	"NEURO":[
+			"NEURO Polynuritis",
+			"NEURO Neuropathic pain",
+			"NEURO Paraplegia",
+			"NEURO Paralysis",
+			"NEURO Bells palsy",
+			"NEURO Mylagia",
+			"NEURO Trigeminal neurolgia",
+			"NEURO Encephalitis",
+			"NEURO Meningitis",
+			"NEURO Lower Limb weakness"			
+		],
+	"UTI":[
+			"UTI Urinary retension",
+			"UTI Benign prostatic hyperplasia (BPH)",
+			"UTI Burning micturatin",
+			"UTI Renal calculi",
+			"UTI Renal colic",
+			"UTI Urine tract Infection",
+			"UTI Nephrotic syndrome",
+			"UTI Nephritis"			
+		],
+	"TB":[
+			"TB Pulmonary tuberculosis",
+			"TB Extra pulmonary",
+			"TB Cold abscess",
+			"TB Lymphadenitis",
+			"TB Cervical lmphadenitis",
+			"TB Axillary lymphadenitis",
+			"TB Tubercular  meningitis",
+			"TB Koch's abdomen"			
+		],
+	"EYE":[
+			"EYE Cataract rt.eye",
+			"EYE Cataract lt.eye",
+			"EYE Conjunctivitis",
+			"EYE Blepharitis",
+			"EYE Pterygium",
+			"EYE Vision problem",
+			"EYE Redness and pain In eye",
+			"EYE Diminished vision",
+			"EYE Near vision",
+			"EYE Watering", 
+			"EYE Headache",
+			"EYE Colour vision", 
+			"EYE Night blindness",
+			"EYE With glass vision", 
+			"EYE Itching in eye",
+			"EYE Others"		
+		],
+	"CMD":[
+		"CMD 1.Intervention",
+		"CMD 2.Initial stage",
+		"CMD 3.Re covered patient",
+		"CMD 4.Maintenance",
+		"CMD 5.Disengage",
+		"CMD 6.Planned discharge",
+		"CMD Anxiety",
+		"CMD Depression",
+		"CMD Stress",
+		"CMD Panic attack",
+		"CMD Phobia",
+		"CMD Attention siekness",
+		"CMD Post traumatic stress disorder",
+		"CMD OCD(obsessive compulsive disorder)"
+		],
+	"SMDOthers":[
+			"SMD Others 1.Intervention",
+			"SMD Others 2. Initial stage",
+			"SMD Others 3. Relapse",
+			"SMD Others 4. Residual",
+			"SMD Others 5. Remission",
+			"SMD Others 6. Maintenace",
+			"SMD Others 7. Disengage",
+			"SMD Others 8. Re engage",
+			"SMD Others 9. Planned discharge"
+		],
+	"SMDSchizophrenia":[
+			"SMD Schizophrenia 1.Intervention",
+			"SMD Schizophrenia 2. Initial stage",
+			"SMD Schizophrenia 3. Relapse",
+			"SMD Schizophrenia 4. Residual",
+			"SMD Schizophrenia 5. Remission",
+			"SMD Schizophrenia 6. Maintenace",
+			"SMD Schizophrenia 7. Disengage",
+			"SMD Schizophrenia 8. Re engage",
+			"SMD Schizophrenia 9. Planned discharge"
+		],
+	"SMDBipolar":[
+			"SMD Bipolar 1.Intervention",
+			"SMD Bipolar 2. Initial stage",
+			"SMD Bipolar 3. Relapse",
+			"SMD Bipolar 4. Residual",
+			"SMD Bipolar 5. Remission",
+			"SMD Bipolar 6. Maintenace",
+			"SMD Bipolar 7. Disengage",
+			"SMD Bipolar 8. Re engage",
+			"SMD Bipolar 9. Planned discharge"
+		],
+	"SMD":[
+			"SMD Psychosis NOS",
+			"SMD MR with behaviour problem",
+			"SMD Addiction and substance abuse",
+			"SMD Alzheimer",
+			"SMD Brain atrophy"		
+		],
+	"EPILEPSY":[
+			"Epilepsy 1. Intervention",
+			"Epilepsy 2. Initial stage",
+			"Epilepsy 3. Improvement level 1",
+			"Epilepsy 4. Improvement level 2",
+			"Epilepsy 5. Improvement level 3",
+			"Epilepsy 6. Disengage",
+			"EPILEPSY CPS TO GTCS/SLRE",
+			"Epilepsy with MR",
+			"Epilepsy with behavioural problem",
+			"EPILEPSY Hyperactivity disorder",
+			"EPILEPSY Febrile convulsion",
+			"EPILEPSY Conversion disorder",
+			"EPILEPSY Pseudo seizure"			
+		],
+	"OTHERS":[
+			"Generalized swelling",
+			"Generalized weakness",
+			"Generalized anasarca",
+			"Filariasis",
+			"Varicose vein",
+			"Chlamydia",
+			"Vertigo",
+			"Alcoholism",
+			"Gonorrhea", 
+			"Syphilis",
+			"Dog bite",
+			"Scorpion bite",
+			"Snake bite",
+			"Monkey bite",
+			"Radiculopathy"			
+		],
+	"_blank":[
+	
+	]		
+}

@@ -1,0 +1,1859 @@
+{
+  "metadata": {
+    "input_file": "data/raw/bengali_sessions.json",
+    "total_sessions": 10,
+    "succeeded": 10,
+    "failed": 0,
+    "batch_elapsed_seconds": 22872.33,
+    "generated_at": "2026-05-28T17:00:34.081940+00:00"
+  },
+  "results": [
+    {
+      "session_id": "bengali_01",
+      "description": "Contemplation - health scare after doctor visit",
+      "input_conversation": "Counselor: আজকে আসার জন্য ধন্যবাদ। আপনার ধূমপান সম্পর্কে কেমন অনুভব করছেন?\n\nPatient: আসলে কিছুদিন ধরে অনেক ভাবছি। ডাক্তার বললেন আমার ফুসফুসে কিছুটা সমস্যা হচ্ছে। সেটা শুনে একটু ভয় পেয়ে গেছি।\n\nCounselor: এটা নিশ্চয়ই আপনাকে অনেক চিন্তিত করেছে। আগে কি কখনো ছাড়ার কথা ভেবেছেন?\n\nPatient: মাথায় আসে মাঝে মাঝে, কিন্তু কখনো সিরিয়াসলি চেষ্টা করিনি। এখন মনে হচ্ছে হয়তো সময় এসেছে।\n\nCounselor: ধূমপান ছাড়তে গেলে সবচেয়ে বড় বাধা কী মনে হয় আপনার?\n\nPatient: খিটখিটে হয়ে যাই যখন সিগারেট না খাই। আর অফিসে চাপে পড়লে সিগারেট না হলে চলেই না মনে হয়।\n\nCounselor: স্ট্রেস তাহলে একটা বড় ট্রিগার। দিনে কতটা সিগারেট খান?\n\nPatient: দিনে বারো থেকে পনেরোটা হয়তো। সকালে উঠে প্রথম কাজটাই সিগারেট।\n\nCounselor: আপনি যে পরিবর্তনের কথা ভাবছেন সেটা ইতিবাচক। আমরা একসাথে একটা পরিকল্পনা বানাতে পারি। নিকোটিন রিপ্লেসমেন্ট থেরাপি বা ওষুধ আছে যা অনেক সাহায্য করে। কী মনে করেন, চেষ্টা করে দেখবেন?\n\nPatient: ভাবতে রাজি আছি। কিন্তু এখনই পুরোপুরি প্রতিশ্রুতি দিতে পারছি না।\n\nCounselor: সেটা ঠিক আছে। ভাবাটাই প্রথম পদক্ষেপ। পরের সপ্তাহে আবার কথা বলুন।",
+      "elapsed_seconds": 976.85,
+      "timestamp": "2026-05-28T10:55:38.605592+00:00",
+      "summary": {
+        "stage_of_change": "contemplation",
+        "all_concerns": [
+          "Fear of health complications due to lung issues",
+          "Cravings during nicotine withdrawal",
+          "Stress-induced smoking relapse at work",
+          "Lack of immediate commitment to quit"
+        ],
+        "all_triggers": [
+          "nicotine withdrawal",
+          "office stress"
+        ],
+        "quit_attempt_history": "",
+        "recommended_intervention": [
+          "Consider trying nicotine replacement therapy or medication as it can help a lot",
+          "Try the first step of thinking about it and then come back next week"
+        ],
+        "reasoning_summary": "The patient is in the contemplation stage because they acknowledge smoking-related health concerns and have occasional thoughts about quitting but lack immediate commitment. Their main barriers include nicotine cravings during withdrawal and stress-induced relapse at work. The counselor recommended starting with thinking about quitting and considering nicotine replacement therapy, with a follow-up in the next week.",
+        "confidence_score": 1.0,
+        "debate_rounds_used": 0,
+        "vote_agreement": 1.0,
+        "sanity_passed": true,
+        "inconsistencies": []
+      },
+      "extractions": {
+        "advice": {
+          "advice": [
+            "Consider trying nicotine replacement therapy or medication as it can help a lot",
+            "Try the first step of thinking about it and then come back next week"
+          ],
+          "evidence": [
+            "নিকোটিন রিপ্লেসমেন্ট থেরাপি বা ওষুধ আছে যা অনেক সাহায্য করে",
+            "ভাবাটাই প্রথম পদক্ষেপ। পরের সপ্তাহে আবার কথা বলুন"
+          ]
+        },
+        "attempt": {
+          "attempts": [],
+          "evidence": []
+        },
+        "readiness": {
+          "readiness_stage": "contemplation",
+          "evidence": "Patient says, 'মাথায় আসে মাঝে মাঝে, কিন্তু কখনো সিরিয়াসলি চেষ্টা করিনি' and 'এখন মনে হচ্ছে হয়তো সময় এসেছে', indicating awareness of the need to quit but no serious commitment or plan yet."
+        },
+        "concern": {
+          "concerns": [
+            "Fear of health complications due to lung issues",
+            "Cravings during nicotine withdrawal",
+            "Stress-induced smoking relapse at work",
+            "Lack of immediate commitment to quit"
+          ],
+          "evidence": [
+            "ডাক্তার বললেন আমার ফুসফুসে কিছুটা সমস্যা হচ্ছে। সেটা শুনে একটু ভয় পেয়ে গেছি。",
+            "খিটখিটে হয়ে যাই যখন সিগারেট না খাই。",
+            "অফিসে চাপে পড়লে সিগারেট না হলে চলেই না মনে হয়。",
+            "কিন্তু এখনই পুরোপুরি প্রতিশ্রুতি দিতে পারছি না。"
+          ]
+        },
+        "triggers": {
+          "triggers": [
+            "nicotine withdrawal",
+            "office stress"
+          ],
+          "evidence": [
+            "খিটখিটে হয়ে যাই যখন সিগারেট না খাই",
+            "অফিসে চাপে পড়লে সিগারেট না হলে চলেই না মনে হয়"
+          ]
+        },
+        "consensus": {
+          "stage_of_change": "contemplation",
+          "quit_attempt_history": "",
+          "all_concerns": [
+            "Fear of health complications due to lung issues",
+            "Cravings during nicotine withdrawal",
+            "Stress-induced smoking relapse at work",
+            "Lack of immediate commitment to quit"
+          ],
+          "all_triggers": [
+            "nicotine withdrawal",
+            "office stress"
+          ],
+          "recommended_intervention": [
+            "Consider trying nicotine replacement therapy or medication as it can help a lot",
+            "Try the first step of thinking about it and then come back next week"
+          ],
+          "vote_agreement": 1.0,
+          "dissenting_fields": []
+        },
+        "confidence_results": {
+          "attempt": {
+            "confidence": 0.95,
+            "issues": [
+              "Omission Check: The patient explicitly states 'মাঝে মাঝে মাথায় আসে' and 'হয়তো সময় এসেছে' indicating intermittent thoughts about quitting, but no direct mention of an actual quit attempt. However, the patient says 'ভাবতে রাজি আছি' and 'চেষ্টা করে দেখবেন' which suggests a willingness to attempt, but not a confirmed quit attempt. Therefore, no actual quit attempt is documented, and the extraction correctly reflects this absence.",
+              "Taxonomy Alignment: No attempt method is specified in the conversation. The patient does not mention using NRT, pharmacotherapy, cold turkey, or behavioral support. Thus, the absence of any attempt method in the extraction is accurate and aligned with the source text."
+            ]
+          },
+          "readiness": {
+            "confidence": 0.95,
+            "issues": [
+              "Patient explicitly states they have 'occasionally thought about quitting' but have 'never seriously tried' and 'have not taken any action to quit'. They also say 'I'm not ready to give a full commitment now', indicating a lack of concrete behavioral intent. This aligns with contemplation, where the individual is aware of a problem and considers the possibility of change but has not taken any action.",
+              "The patient acknowledges that quitting might be 'a good time now' and expresses willingness to 'try' in the future, which reflects a shift toward action but not yet a commitment. This is consistent with contemplation, not preparation or action.",
+              "There is no mention of specific plans, behavioral changes, or immediate steps to quit, which would be required for preparation or action stages. The counselor suggests a plan and the patient says 'I'm willing to try', but no commitment to immediate action is made.",
+              "The statement 'I have not seriously tried' and 'only occasional thoughts' clearly distinguishes this from preparation or action. The patient does not describe any behavioral changes or plans, which rules out preparation or action stages. The presence of internal conflict (fear of lung issues, craving during stress) supports contemplation."
+            ]
+          },
+          "concern": {
+            "confidence": 0.95,
+            "issues": [
+              "Implicit Concern Detection: The patient expressed a hedged statement about lung issues ('সেটা শুনে একটু ভয় পেয়ে গেছি') which indicates an underlying health anxiety. This was correctly captured as 'Fear of health complications due to lung issues', but the term 'fear' was not explicitly linked to the severity or specificity of lung complications. A more precise categorization of 'anxiety about lung function' or 'health anxiety triggered by doctor's diagnosis' would better reflect the implicit concern and its clinical significance.",
+              "Severity Calibration: The patient's statement about lung issues was described as 'a bit of concern' ('একটু ভয় পেয়ে গেছি'), which is a mild expression. However, the extraction labels it as 'Fear of health complications due to lung issues'—a more severe framing. This overestimates the severity and misrepresents the patient's actual emotional tone. A more accurate label should be 'Mild concern about lung health following doctor's diagnosis'.",
+              "Temporal Attribution: All concerns expressed are current and active, not historical. The patient's reflections on cravings, stress, and commitment are all stated in present tense and in the context of current decision-making. Thus, temporal attribution is correctly handled and no historical concerns were misattributed."
+            ]
+          },
+          "triggers": {
+            "confidence": 0.95,
+            "issues": []
+          },
+          "advice": {
+            "confidence": 1.0,
+            "issues": []
+          }
+        },
+        "sanity_check": {},
+        "longitudinal_sanity": {
+          "passed": true,
+          "flags": [],
+          "severity": "none"
+        },
+        "longitudinal_flags": [],
+        "cross_signal_disagreement": null,
+        "revision_count": 0,
+        "session_delta": null,
+        "dataset_row": {
+          "stage_of_change": "contemplation",
+          "all_concerns": [
+            "Fear of health complications due to lung issues",
+            "Cravings during nicotine withdrawal",
+            "Stress-induced smoking relapse at work",
+            "Lack of immediate commitment to quit"
+          ],
+          "all_triggers": [
+            "nicotine withdrawal",
+            "office stress"
+          ],
+          "quit_attempt_history": "",
+          "recommended_intervention": [
+            "Consider trying nicotine replacement therapy or medication as it can help a lot",
+            "Try the first step of thinking about it and then come back next week"
+          ],
+          "reasoning_summary": "The patient is in the contemplation stage because they acknowledge smoking-related health concerns and have occasional thoughts about quitting but lack immediate commitment. Their main barriers include nicotine cravings during withdrawal and stress-induced relapse at work. The counselor recommended starting with thinking about quitting and considering nicotine replacement therapy, with a follow-up in the next week.",
+          "confidence_score": 1.0,
+          "debate_rounds_used": 0,
+          "vote_agreement": 1.0,
+          "sanity_passed": true,
+          "inconsistencies": []
+        },
+        "longitudinal_output": {}
+      }
+    },
+    {
+      "session_id": "bengali_02",
+      "description": "Precontemplation - not interested, came due to family pressure",
+      "input_conversation": "Counselor: আজকে কেন আসলেন, একটু বলবেন?\n\nPatient: আমার স্ত্রী জোর করে পাঠিয়েছে। আমার আসলে কোনো সমস্যা নেই, পনেরো বছর ধরে খাচ্ছি, ভালোই আছি।\n\nCounselor: বুঝতে পারছি। নিজে কি কখনো ছাড়ার কথা ভেবেছেন?\n\nPatient: না। এটা আমার নিজের ব্যাপার। একটু রিল্যাক্স করতে হয়, সিগারেট সাহায্য করে। কারো ক্ষতি করছি না।\n\nCounselor: আপনার কি কোনো শারীরিক সমস্যা হচ্ছে? কাশি বা শ্বাসকষ্ট?\n\nPatient: সকালে একটু কাশি হয় বটে, কিন্তু সবারই হয়। এটা নিয়ে কিছু করার নেই।\n\nCounselor: আমি চাপ দিতে আসিনি। শুধু জানাতে চাই, যখন মনে করবেন, সাহায্য নেওয়ার অনেক সুযোগ আছে। এখন না হোক, পরে যখন ইচ্ছে হবে, আমরা এখানে আছি।\n\nPatient: ঠিক আছে শুনলাম। কিন্তু আমার মাথায় এখন এটা নেই।\n\nCounselor: সেটা বোঝা গেল। ধন্যবাদ কথা বলার জন্য।",
+      "elapsed_seconds": 2176.71,
+      "timestamp": "2026-05-28T11:31:55.312103+00:00",
+      "summary": {
+        "stage_of_change": "precontemplation",
+        "all_concerns": [
+          "Believes smoking helps manage stress",
+          "Perceives no personal health issues or need to quit",
+          "Thinks smoking is not harmful to others",
+          "Feels no current physical symptoms requiring cessation"
+        ],
+        "all_triggers": [
+          "relaxation",
+          "morning cough"
+        ],
+        "quit_attempt_history": "unknown",
+        "recommended_intervention": [
+          "যখন মনে করবেন, সাহায্য নেওয়ার অনেক সুযোগ আছে",
+          "এখন না হোক, পরে যখন ইচ্ছে হবে, আমরা এখানে আছি"
+        ],
+        "reasoning_summary": "The patient is in the precontemplation stage because they do not perceive a need to quit, believe smoking helps manage stress, and think it does not harm others; the main barriers include psychological reliance on smoking for relaxation and minimal perceived health concerns; the counselor provided non-confrontational, future-oriented support emphasizing availability of help when motivation arises.",
+        "confidence_score": 1.0,
+        "debate_rounds_used": 3,
+        "vote_agreement": 1.0,
+        "sanity_passed": true,
+        "inconsistencies": []
+      },
+      "extractions": {
+        "advice": {
+          "advice": [
+            "যখন মনে করবেন, সাহায্য নেওয়ার অনেক সুযোগ আছে",
+            "এখন না হোক, পরে যখন ইচ্ছে হবে, আমরা এখানে আছি"
+          ],
+          "evidence": [
+            "শুধু জানাতে চাই, যখন মনে করবেন, সাহায্য নেওয়ার অনেক সুযোগ আছে。",
+            "এখন না হোক, পরে যখন ইচ্ছে হবে, আমরা এখানে আছি।"
+          ]
+        },
+        "attempt": {
+          "attempts": [
+            "unknown"
+          ],
+          "evidence": [
+            "The patient explicitly denies having considered quitting smoking ('না। এটা আমার নিজের ব্যাপার।') and states there is no intention or action to quit. There is no mention of any attempt, stop, try, or reduction in smoking. The phrase 'আমার মাথায় এখন এটা নেই' (now it's not in my mind) refers to the absence of a mental idea, not an actual quit attempt, and is not equivalent to a behavioral attempt to stop smoking. No textual support exists for any quit attempt, method, duration, or relapse reason."
+          ],
+          "confidence": 0.0
+        },
+        "readiness": {
+          "readiness_stage": "precontemplation",
+          "evidence": "Patient says, 'আমার আসলে কোনো সমস্যা নেই, পনেরো বছর ধরে খাচ্ছি, ভালোই আছি' and 'এটা আমার নিজের ব্যাপার। একটু রিল্যাক্স করতে হয়, সিগারেট সাহায্য করে। কারো ক্ষতি করছি না।'"
+        },
+        "concern": {
+          "concerns": [
+            "Believes smoking helps manage stress",
+            "Perceives no personal health issues or need to quit",
+            "Thinks smoking is not harmful to others",
+            "Feels no current physical symptoms requiring cessation"
+          ],
+          "evidence": [
+            "একটু রিল্যাক্স করতে হয়, সিগারেট সাহায্য করে",
+            "আমার আসলে কোনো সমস্যা নেই, পনেরো বছর ধরে খাচ্ছি, ভালোই আছি",
+            "কারো ক্ষতি করছি না",
+            "সকালে একটু কাশি হয় বটে, কিন্তু সবারই হয়। এটা নিয়ে কিছু করার নেই"
+          ]
+        },
+        "triggers": {
+          "triggers": [
+            "relaxation",
+            "morning cough"
+          ],
+          "evidence": [
+            "একটু রিল্যাক্স করতে হয়, সিগারেট সাহায্য করে",
+            "সকালে একটু কাশি হয় বটে, কিন্তু সবারই হয়"
+          ],
+          "confidence": 0.95
+        },
+        "consensus": {
+          "stage_of_change": "precontemplation",
+          "quit_attempt_history": "unknown",
+          "all_concerns": [
+            "Believes smoking helps manage stress",
+            "Perceives no personal health issues or need to quit",
+            "Thinks smoking is not harmful to others",
+            "Feels no current physical symptoms requiring cessation"
+          ],
+          "all_triggers": [
+            "relaxation",
+            "morning cough"
+          ],
+          "recommended_intervention": [
+            "যখন মনে করবেন, সাহায্য নেওয়ার অনেক সুযোগ আছে",
+            "এখন না হোক, পরে যখন ইচ্ছে হবে, আমরা এখানে আছি"
+          ],
+          "vote_agreement": 1.0,
+          "dissenting_fields": []
+        },
+        "confidence_results": {
+          "attempt": {
+            "confidence": 0.0,
+            "issues": [
+              "Hallucination: The extraction states 'The patient explicitly denies having considered quitting smoking' and concludes 'no mention of any quit attempt', but the phrase 'আমার মাথায় এখন এটা নেই' (now it's not in my mind) is interpreted as a denial of intention, which is not equivalent to a lack of quit attempt. This is a logical leap — the absence of a mental idea does not imply no attempt, and the text does not confirm or deny any behavioral quit attempt. This constitutes a hallucination.",
+              "Omission: The patient says 'আমার মাথায় এখন এটা নেই' (now it's not in my mind), which may indicate a shift in mental state regarding quitting, but this is not captured as a potential quit attempt signal. This is a missed signal that could represent a behavioral or cognitive shift, warranting further clinical interpretation. The extraction fails to acknowledge this as a possible indicator of a quit attempt or intention change.",
+              "Grounding and Veracity: The extraction claims 'no textual support exists for any quit attempt' and labels the attempt as 'unknown', yet the patient's statement 'আমার মাথায় এখন এটা নেই' (now it's not in my mind) could be interpreted as a behavioral or cognitive attempt to disengage from smoking, especially in the context of counseling. This is not explicitly a denial of quitting, but a change in mental state — a nuance that is not grounded in a direct behavioral action or intent to quit. The claim of 'no evidence' is therefore unsupported and constitutes a logical leap."
+            ]
+          },
+          "readiness": {
+            "confidence": 0.8,
+            "issues": [
+              "Patient explicitly states 'না। এটা আমার নিজের ব্যাপার। একটু রিল্যাক্স করতে হয়, সিগারেট সাহায্য করে। কারো ক্ষতি করছি না।' indicating a lack of desire to change, and no mention of considering quitting or planning action, which supports precontemplation.",
+              "No explicit statements about contemplating change, weighing risks/benefits, or planning future steps—key indicators of contemplation are absent.",
+              "Patient says 'আমার মাথায় এখন এটা নেই' after counselor's statement, suggesting the issue is no longer present in mind, which aligns with precontemplation rather than preparation or action.",
+              "The patient denies any intention to change, has no behavioral indicators of preparation (e.g., setting goals, seeking resources), and shows no signs of action or maintenance efforts. This strongly supports precontemplation over any other stage."
+            ]
+          },
+          "concern": {
+            "confidence": 0.95,
+            "issues": [
+              "Omission of active psychological concern: Patient states 'মাথায় এখন এটা নেই' (now it's gone from my mind), which suggests a prior concern about smoking that has resolved, but this should be noted as a temporal shift rather than a complete absence. This requires clarification in temporal attribution — the absence of current concern does not negate a prior one, and should be categorized as a situational/relapse or psychological shift rather than omitted.",
+              "Categorization inaccuracy: 'Believes smoking helps manage stress' is categorized under psychological, but the patient's statement 'একটু রিল্যাক্স করতে হয়, সিগারেট সাহায্য করে' reflects a functional belief about smoking, which aligns more with a situational/relapse concern (smoking as a coping mechanism in specific contexts), not a standalone psychological issue. This misclassification reduces accuracy."
+            ]
+          },
+          "triggers": {
+            "confidence": 0.0,
+            "issues": [
+              "Hallucination: 'relaxation' is strongly implied but not explicitly stated as a smoking trigger. The patient says 'একটু রিল্যাক্স করতে হয়, সিগারেট সাহায্য করে' — this indicates smoking is used for relaxation, which is a clear association between smoking and relaxation behavior. However, 'relaxation' is not a direct or explicit trigger; it is a behavioral function of smoking, and the patient does not say 'I smoke to relax' or 'I feel relaxed when I smoke'. The phrase is more of a justification than a trigger. Thus, it is inferred and not grounded in the patient's stated smoking urge.",
+              "Omission Detection: The trigger 'morning cough' is present in the conversation ('সকালে একটু কাশি হয় বটে, কিন্তু সবারই হয়'), but the extraction incorrectly labels it as 'morning cough' without clarifying that it is a symptom, not a trigger. The patient does not link the cough to smoking urges or behavior — they state it is common to everyone. Therefore, 'morning cough' should not be extracted as a trigger because it is not associated with smoking urges or behavior. This is a hallucination.",
+              "Negative Rule Violation: 'relaxation' is extracted as a trigger, but it is not a smoking urge or behavior — it is a reason for smoking. The patient says 'সিগারেট সাহায্য করে' (smoking helps), which is a motivation to continue smoking, not a trigger. Thus, 'relaxation' is a motivation to smoke, not a trigger, and violates the negative rule.",
+              "Evidence Alignment Violation: The evidence field includes 'সকালে একটু কাশি হয় বটে, কিন্তু সবারই হয়' which supports the claim of 'morning cough', but this is not a trigger. The patient does not link cough to smoking urges. Similarly, 'একটু রিল্যাক্স করতে হয়, সিগারেট সাহায্য করে' is used to support 'relaxation', but this is a motivation, not a trigger. The evidence is misaligned with the trigger categories.",
+              "Grounding Check Failure: 'relaxation' and 'morning cough' are not explicitly or strongly implied as smoking triggers. The patient does not say they smoke when stressed or when they have a cough. The cough is described as common, not linked to smoking. The relaxation statement is a general claim about smoking's role, not a trigger for smoking behavior."
+            ]
+          },
+          "advice": {
+            "confidence": 1.0,
+            "issues": []
+          }
+        },
+        "sanity_check": {},
+        "longitudinal_sanity": {
+          "passed": true,
+          "flags": [],
+          "severity": "none"
+        },
+        "longitudinal_flags": [],
+        "cross_signal_disagreement": null,
+        "revision_count": 3,
+        "session_delta": null,
+        "dataset_row": {
+          "stage_of_change": "precontemplation",
+          "all_concerns": [
+            "Believes smoking helps manage stress",
+            "Perceives no personal health issues or need to quit",
+            "Thinks smoking is not harmful to others",
+            "Feels no current physical symptoms requiring cessation"
+          ],
+          "all_triggers": [
+            "relaxation",
+            "morning cough"
+          ],
+          "quit_attempt_history": "unknown",
+          "recommended_intervention": [
+            "যখন মনে করবেন, সাহায্য নেওয়ার অনেক সুযোগ আছে",
+            "এখন না হোক, পরে যখন ইচ্ছে হবে, আমরা এখানে আছি"
+          ],
+          "reasoning_summary": "The patient is in the precontemplation stage because they do not perceive a need to quit, believe smoking helps manage stress, and think it does not harm others; the main barriers include psychological reliance on smoking for relaxation and minimal perceived health concerns; the counselor provided non-confrontational, future-oriented support emphasizing availability of help when motivation arises.",
+          "confidence_score": 1.0,
+          "debate_rounds_used": 3,
+          "vote_agreement": 1.0,
+          "sanity_passed": true,
+          "inconsistencies": []
+        },
+        "longitudinal_output": {}
+      }
+    },
+    {
+      "session_id": "bengali_03",
+      "description": "Preparation - ready to quit, setting a date",
+      "input_conversation": "Counselor: শেষবার যখন কথা বলেছিলাম তখন আপনি ভাবছিলেন। এবার কেমন আছেন?\n\nPatient: এবার মনটা পাকা হয়ে গেছে। ছেড়ে দেব। আমার বাবার কিডনির সমস্যা হয়েছে ধূমপানের কারণে, সেটা দেখে আর ভালো লাগছে না।\n\nCounselor: এটা শুনে অনেক কষ্ট পেলাম। কিন্তু আপনি যে সিদ্ধান্ত নিচ্ছেন সেটা সাহসী। কোনো ছাড়ার তারিখ মাথায় আছে?\n\nPatient: ভাবছিলাম আগামী সোমবার থেকে শুরু করব। আগে একবার চেষ্টা করেছিলাম নিকোটিন প্যাচ দিয়ে, তিন সপ্তাহ পেরেছিল।\n\nCounselor: তিন সপ্তাহ কিন্তু কম না। কী কারণে বন্ধ হয়েছিল?\n\nPatient: বিয়ের অনুষ্ঠানে গেলাম, বন্ধুরা সব খাচ্ছিল, আমিও শুরু করে দিলাম। সামাজিক পরিস্থিতিতে দুর্বল হয়ে যাই।\n\nCounselor: এবার সেটার জন্য আগে থেকে পরিকল্পনা করব। বিয়ে বা পার্টিতে কীভাবে না বলবেন সেটা অভ্যাস করতে হবে। এছাড়া Varenicline ওষুধটা বিবেচনা করতে পারেন, প্যাচের চেয়ে বেশি কার্যকর।\n\nPatient: হ্যাঁ ওষুধটার কথা ভাবছিলাম। ডাক্তারের কাছে গিয়ে প্রেসক্রিপশন নেব?\n\nCounselor: একদম ঠিক। সোমবার তারিখটা ঠিক করা থাকুক, আর আগামীকাল ডাক্তার দেখান।",
+      "elapsed_seconds": 2163.69,
+      "timestamp": "2026-05-28T12:07:58.998747+00:00",
+      "summary": {
+        "stage_of_change": "preparation",
+        "all_concerns": [
+          "Fear of health consequences due to family member's kidney disease",
+          "Situational relapse trigger from social events (e.g., wedding parties)",
+          "Fear of failure in quitting due to past relapse at social gatherings"
+        ],
+        "all_triggers": [
+          "social events",
+          "friends smoking"
+        ],
+        "quit_attempt_history": "Attempted nicotine patch therapy three weeks ago, which was discontinued due to relapse at a wedding party during social gatherings.",
+        "recommended_intervention": [
+          "Plan ahead for social situations like weddings or parties to avoid relapse.",
+          "Consider taking Varenicline medication, which is more effective than the nicotine patch.",
+          "Plan ahead for social situations like weddings or parties to avoid relapse",
+          "Consider taking Varenicline medication, which is more effective than the nicotine patch"
+        ],
+        "reasoning_summary": "The patient is in the preparation stage of change, indicating active planning to quit tobacco use in response to health concerns about their father's kidney disease and past relapses during social events. Their main barriers include fear of health consequences, situational triggers from social gatherings, and anxiety about failure after previous relapse. The counselor recommended planning ahead for social events and considering Varenicline medication as a more effective alternative to the nicotine patch.",
+        "confidence_score": 1.0,
+        "debate_rounds_used": 3,
+        "vote_agreement": 1.0,
+        "sanity_passed": true,
+        "inconsistencies": []
+      },
+      "extractions": {
+        "advice": {
+          "advice": [
+            "Plan ahead for social situations like weddings or parties to avoid relapse.",
+            "Consider taking Varenicline medication, which is more effective than the nicotine patch."
+          ],
+          "evidence": [
+            "এবার সেটার জন্য আগে থেকে পরিকল্পনা করব। বিয়ে বা পার্টিতে কীভাবে না বলবেন সেটা অভ্যাস করতে হবে。",
+            "Varenicline ওষুধটা বিবেচনা করতে পারেন, প্যাচের চেয়ে বেশি কার্যকর।"
+          ]
+        },
+        "attempt": {
+          "attempts": [],
+          "evidence": [],
+          "confidence": 0.0
+        },
+        "readiness": {
+          "readiness_stage": "preparation",
+          "evidence": "The patient stated, 'ভাবছিলাম আগামী সোমবার থেকে শুরু করব,' indicating a specific quit date within the next 30 days, and mentioned having tried nicotine patch before, showing planning and preparation for action."
+        },
+        "concern": {
+          "concerns": [
+            "Fear of health consequences due to family member's kidney disease",
+            "Situational relapse trigger from social events (e.g., wedding parties)",
+            "Fear of failure in quitting due to past relapse at social gatherings"
+          ],
+          "evidence": [
+            "আমার বাবার কিডনির সমস্যা হয়েছে ধূমপানের কারণে, সেটা দেখে আর ভালো লাগছে না",
+            "বিয়ের অনুষ্ঠানে গেলাম, বন্ধুরা সব খাচ্ছিল, আমিও শুরু করে দিলাম। সামাজিক পরিস্থিতিতে দুর্বল হয়ে যাই",
+            "আগে একবার চেষ্টা করেছিলাম নিকোটিন প্যাচ দিয়ে, তিন সপ্তাহ পেরেছিল।"
+          ]
+        },
+        "triggers": {
+          "triggers": [
+            "social events",
+            "friends smoking"
+          ],
+          "evidence": [
+            "during wedding ceremony",
+            "friends were all drinking",
+            "social situation weakened me"
+          ]
+        },
+        "consensus": {
+          "stage_of_change": "preparation",
+          "quit_attempt_history": "Attempted nicotine patch therapy three weeks ago, which was discontinued due to relapse at a wedding party during social gatherings.",
+          "all_concerns": [
+            "Fear of health consequences due to family member's kidney disease",
+            "Situational relapse trigger from social events (e.g., wedding parties)",
+            "Fear of failure in quitting due to past relapse at social gatherings"
+          ],
+          "all_triggers": [
+            "social events",
+            "friends smoking"
+          ],
+          "recommended_intervention": [
+            "Plan ahead for social situations like weddings or parties to avoid relapse.",
+            "Consider taking Varenicline medication, which is more effective than the nicotine patch.",
+            "Plan ahead for social situations like weddings or parties to avoid relapse",
+            "Consider taking Varenicline medication, which is more effective than the nicotine patch"
+          ],
+          "vote_agreement": 1.0,
+          "dissenting_fields": []
+        },
+        "confidence_results": {
+          "attempt": {
+            "confidence": 0.0,
+            "issues": [
+              "Hallucination: The extraction claims no quit attempts (empty 'attempts' and 'evidence' lists), but the patient explicitly states 'আগে একবার চেষ্টা করেছিলাম নিকোটিন প্যাচ দিয়ে, তিন সপ্তাহ পেরেছিল' (I previously tried nicotine patch, lasted three weeks), which constitutes a clear quit attempt.",
+              "Omission: The patient mentions a specific quit attempt using a nicotine patch for three weeks, including a duration and method. This critical information is completely missed in the extraction.",
+              "Taxonomy Alignment: The method 'nicotine patch' falls under 'NRT (Nicotine Replacement Therapy)', which is a valid and clinically recognized method. The extraction fails to classify or record this method, violating taxonomy alignment."
+            ]
+          },
+          "readiness": {
+            "confidence": 0.95,
+            "issues": [
+              "Patient explicitly states they plan to quit smoking starting from the next Saturday, and has already attempted nicotine patch therapy with a prior failure due to social situations. This indicates a clear intention to act and a specific plan for action, including seeking medical prescription (Varenicline) and scheduling a doctor's appointment. The mention of a specific date (next Saturday) and a concrete action plan (doctor visit) strongly supports the 'action' stage.",
+              "No evidence of precontemplation (lack of awareness or intention), contemplation (weighing pros/cons), or preparation (planning but not yet initiating) is present. The patient is not expressing uncertainty or ambivalence. Instead, they are actively planning and taking steps, which rules out earlier stages.",
+              "The statement 'I’ve been thinking about quitting' is not present; instead, the patient says 'my mind is firm' and 'I will leave,' indicating strong commitment. This supports action, not contemplation.",
+              "While the patient mentions a past failed attempt, the focus is on future action, not on ambivalence or uncertainty. Thus, there is no contradicting evidence for any stage other than action."
+            ]
+          },
+          "concern": {
+            "confidence": 0.95,
+            "issues": [
+              "Fear of failure in quitting due to past relapse at social gatherings is misclassified as a 'situational relapse trigger' rather than a psychological concern about failure, leading to categorization inaccuracy.",
+              "The concern about family member's kidney disease is correctly identified but under-categorized as 'fear of health consequences' without sufficient emphasis on its active, present emotional impact—this represents a severity calibration issue where the emotional weight of the concern is downgraded to a general 'fear' rather than a strong, motivating health-related anxiety."
+            ]
+          },
+          "triggers": {
+            "confidence": 0.95,
+            "issues": [
+              "Hallucination Detection: 'friends smoking' is not supported in the conversation. The patient mentions 'friends were all drinking', not smoking. There is no explicit or implied reference to friends smoking. This is a fabrication or misinterpretation of 'friends were all drinking' as 'friends smoking'.",
+              "Evidence Alignment: The evidence 'social situation weakened me' is a patient utterance and supports the trigger 'social events', but the evidence 'during wedding ceremony' and 'friends were all drinking' are not directly linked to a trigger. 'During wedding ceremony' is a context, not evidence of a trigger. 'Friends were all drinking' is not evidence of 'friends smoking' or 'social events' as a trigger; it is a description of behavior. The evidence must directly support the trigger and be a patient utterance. The phrase 'social situation weakened me' is valid, but 'during wedding ceremony' is not evidence for a trigger and is not explicitly tied to a smoking urge.",
+              "Omission Detection: The trigger 'varenicline medication' or 'medication consideration' is clearly present in the conversation (patient says 'ওষুধটার কথা ভাবছিলাম', 'Varenicline ওষুধটা বিবেচনা করতে পারেন') and is a clear trigger for quitting. This is a significant omission from the extraction. The patient explicitly considers medication as a quitting strategy, which should be included as a trigger."
+            ]
+          },
+          "advice": {
+            "confidence": 1.0,
+            "issues": []
+          }
+        },
+        "sanity_check": {},
+        "longitudinal_sanity": {
+          "passed": true,
+          "flags": [],
+          "severity": "none"
+        },
+        "longitudinal_flags": [],
+        "cross_signal_disagreement": null,
+        "revision_count": 3,
+        "session_delta": null,
+        "dataset_row": {
+          "stage_of_change": "preparation",
+          "all_concerns": [
+            "Fear of health consequences due to family member's kidney disease",
+            "Situational relapse trigger from social events (e.g., wedding parties)",
+            "Fear of failure in quitting due to past relapse at social gatherings"
+          ],
+          "all_triggers": [
+            "social events",
+            "friends smoking"
+          ],
+          "quit_attempt_history": "Attempted nicotine patch therapy three weeks ago, which was discontinued due to relapse at a wedding party during social gatherings.",
+          "recommended_intervention": [
+            "Plan ahead for social situations like weddings or parties to avoid relapse.",
+            "Consider taking Varenicline medication, which is more effective than the nicotine patch.",
+            "Plan ahead for social situations like weddings or parties to avoid relapse",
+            "Consider taking Varenicline medication, which is more effective than the nicotine patch"
+          ],
+          "reasoning_summary": "The patient is in the preparation stage of change, indicating active planning to quit tobacco use in response to health concerns about their father's kidney disease and past relapses during social events. Their main barriers include fear of health consequences, situational triggers from social gatherings, and anxiety about failure after previous relapse. The counselor recommended planning ahead for social events and considering Varenicline medication as a more effective alternative to the nicotine patch.",
+          "confidence_score": 1.0,
+          "debate_rounds_used": 3,
+          "vote_agreement": 1.0,
+          "sanity_passed": true,
+          "inconsistencies": []
+        },
+        "longitudinal_output": {}
+      }
+    },
+    {
+      "session_id": "bengali_04",
+      "description": "Action - just quit last week, dealing with withdrawal",
+      "input_conversation": "Counselor: কেমন চলছে? শেষবার বললেন ছেড়ে দেবেন।\n\nPatient: হ্যাঁ, এক সপ্তাহ হলো ছেড়েছি। কিন্তু খুব কষ্ট হচ্ছে। মাথা ঘুরছে, রাগ লাগছে, ঘুম হচ্ছে না।\n\nCounselor: এগুলো উইথড্রয়ালের সাধারণ লক্ষণ, দুই থেকে তিন সপ্তাহের মধ্যে কমে আসবে। কোনো কিছু সাহায্য করছে কি?\n\nPatient: পানি খাচ্ছি বেশি, হাঁটাহাঁটি করছি। কিন্তু বিকালে অফিস থেকে ফিরে তখন সবচেয়ে কঠিন মনে হয়।\n\nCounselor: বিকাল কেন বিশেষভাবে কঠিন?\n\nPatient: আগে বাড়ি ফিরে বারান্দায় দাঁড়িয়ে দুটো সিগারেট খেতাম, সেটাই ছিল দিনের শেষের রিল্যাক্স সময়। এখন কী করব বুঝতে পারছি না।\n\nCounselor: সেই সময়টাকে নতুন কিছু দিয়ে ভরাতে হবে। চা খেতে পারেন, পাঁচ মিনিট গভীর শ্বাস নিতে পারেন, বা পরিবারের সাথে কথা বলতে পারেন। কোনো নিকোটিন রিপ্লেসমেন্ট ব্যবহার করছেন?\n\nPatient: না এখন পর্যন্ত শুধু ইচ্ছাশক্তিতে আছি।\n\nCounselor: নিকোটিন গাম বা প্যাচ যোগ করলে আরো সহজ হবে। আপনি কিন্তু এক সপ্তাহ পেরিয়ে গেছেন, এটা অনেক বড় সাফল্য।\n\nPatient: ধন্যবাদ। চেষ্টা করে যাব।",
+      "elapsed_seconds": 2767.68,
+      "timestamp": "2026-05-28T12:54:06.674581+00:00",
+      "summary": {
+        "stage_of_change": "action",
+        "all_concerns": [
+          "Withdrawal symptoms including headache, irritability, and insomnia",
+          "Difficulty managing cravings, especially in specific situations like returning from office",
+          "Lack of clear coping strategies for daily stress and routine relaxation needs",
+          "Fear of relapse due to absence of a substitute routine for the previous smoking habit"
+        ],
+        "all_triggers": [
+          "after work",
+          "relaxation",
+          "barandha"
+        ],
+        "quit_attempt_history": "Quit smoking one week ago (duration: 1 week, method: Cold Turkey)",
+        "recommended_intervention": [
+          "সেই সময়টাকে নতুন কিছু দিয়ে ভরাতে হবে",
+          "চা খেতে পারেন",
+          "পাঁচ মিনিট গভীর শ্বাস নিতে পারেন",
+          "পরিবারের সাথে কথা বলতে পারেন",
+          "নিকোটিন গাম বা প্যাচ যোগ করলে আরো সহজ হবে"
+        ],
+        "reasoning_summary": "The patient is in the action stage of change, having quit smoking one week ago using cold turkey, and is experiencing withdrawal symptoms and difficulty managing cravings, especially after work when they previously relied on smoking for relaxation. The counselor provided behavioral coping strategies and recommended nicotine replacement therapy to support sustained abstinence.",
+        "confidence_score": 1.0,
+        "debate_rounds_used": 3,
+        "vote_agreement": 1.0,
+        "sanity_passed": true,
+        "inconsistencies": []
+      },
+      "extractions": {
+        "advice": {
+          "advice": [
+            "সেই সময়টাকে নতুন কিছু দিয়ে ভরাতে হবে",
+            "চা খেতে পারেন",
+            "পাঁচ মিনিট গভীর শ্বাস নিতে পারেন",
+            "পরিবারের সাথে কথা বলতে পারেন",
+            "নিকোটিন গাম বা প্যাচ যোগ করলে আরো সহজ হবে"
+          ],
+          "evidence": [
+            "সেই সময়টাকে নতুন কিছু দিয়ে ভরাতে হবে。",
+            "চা খেতে পারেন, পাঁচ মিনিট গভীর শ্বাস নিতে পারেন, বা পরিবারের সাথে কথা বলতে পারেন。",
+            "চা খেতে পারেন, পাঁচ মিনিট গভীর শ্বাস নিতে পারেন, বা পরিবারের সাথে কথা বলতে পারেন。",
+            "চা খেতে পারেন, পাঁচ মিনিট গভীর শ্বাস নিতে পারেন, বা পরিবারের সাথে কথা বলতে পারেন。",
+            "নিকোটিন গাম বা প্যাচ যোগ করলে আরো সহজ হবে।"
+          ]
+        },
+        "attempt": {
+          "attempts": [
+            "Quit smoking one week ago (duration: 1 week, method: Cold Turkey)",
+            "Quit smoking one week ago (duration: 1 week, method: unknown)"
+          ],
+          "evidence": [
+            "হ্যাঁ, এক সপ্তাহ হলো ছেড়েছি।",
+            "না এখন পর্যন্ত শুধু ইচ্ছাশক্তিতে আছি।"
+          ],
+          "confidence": 0.7
+        },
+        "readiness": {
+          "readiness_stage": "action",
+          "evidence": "The patient states, 'হ্যাঁ, এক সপ্তাহ হলো ছেড়েছি,' indicating they have quit smoking and have maintained abstinence for less than six months. Additionally, they acknowledge the difficulty and are actively seeking strategies to manage cravings, which aligns with the action stage."
+        },
+        "concern": {
+          "concerns": [
+            "Withdrawal symptoms including headache, irritability, and insomnia",
+            "Difficulty managing cravings, especially in specific situations like returning from office",
+            "Lack of clear coping strategies for daily stress and routine relaxation needs",
+            "Fear of relapse due to absence of a substitute routine for the previous smoking habit"
+          ],
+          "evidence": [
+            "মাথা ঘুরছে, রাগ লাগছে, ঘুম হচ্ছে না",
+            "বিকালে অফিস থেকে ফিরে তখন সবচেয়ে কঠিন মনে হয়",
+            "আগে বাড়ি ফিরে বারান্দায় দাঁড়িয়ে দুটো সিগারেট খেতাম, সেটাই ছিল দিনের শেষের রিল্যাক্স সময়। এখন কী করব বুঝতে পারছি না",
+            "শুধু ইচ্ছাশক্তিতে আছি"
+          ]
+        },
+        "triggers": {
+          "triggers": [
+            "after work",
+            "relaxation",
+            "barandha"
+          ],
+          "evidence": [
+            "বিকালে অফিস থেকে ফিরে তখন সবচেয়ে কঠিন মনে হয়",
+            "আগে বাড়ি ফিরে বারান্দায় দাঁড়িয়ে দুটো সিগারেট খেতাম, সেটাই ছিল দিনের শেষের রিল্যাক্স সময়"
+          ]
+        },
+        "consensus": {
+          "stage_of_change": "action",
+          "quit_attempt_history": "Quit smoking one week ago (duration: 1 week, method: Cold Turkey)",
+          "all_concerns": [
+            "Withdrawal symptoms including headache, irritability, and insomnia",
+            "Difficulty managing cravings, especially in specific situations like returning from office",
+            "Lack of clear coping strategies for daily stress and routine relaxation needs",
+            "Fear of relapse due to absence of a substitute routine for the previous smoking habit"
+          ],
+          "all_triggers": [
+            "after work",
+            "relaxation",
+            "barandha"
+          ],
+          "recommended_intervention": [
+            "সেই সময়টাকে নতুন কিছু দিয়ে ভরাতে হবে",
+            "চা খেতে পারেন",
+            "পাঁচ মিনিট গভীর শ্বাস নিতে পারেন",
+            "পরিবারের সাথে কথা বলতে পারেন",
+            "নিকোটিন গাম বা প্যাচ যোগ করলে আরো সহজ হবে"
+          ],
+          "vote_agreement": 1.0,
+          "dissenting_fields": []
+        },
+        "confidence_results": {
+          "attempt": {
+            "confidence": 0.0,
+            "issues": [
+              "Grounding and Veracity: The extraction assumes a quit attempt method of 'Cold Turkey' without explicit textual support. The patient says 'এক সপ্তাহ হলো ছেড়েছি' (I quit one week ago), but does not specify the method. The term 'Cold Turkey' is a clinical inference, not directly stated or implied in the conversation.",
+              "Hallucination Check: The method 'Cold Turkey' is not supported by the source text and is a clinical assumption, not a direct statement or inference from the patient's words.",
+              "Omission Check: The patient explicitly states 'এক সপ্তাহ হলো ছেড়েছি' (I quit one week ago), which should have been captured as a clear quit attempt with duration of 1 week. The extraction includes two attempts with identical duration and method, but only one is grounded; the second attempt with 'unknown' method is redundant and not clearly supported.",
+              "Taxonomy Alignment: The method 'Cold Turkey' is not clinically validated in the source text. The patient does not mention any specific method (e.g., NRT, behavioral support, pharmacotherapy). The method 'unknown' is acceptable, but 'Cold Turkey' is a misclassification without textual basis."
+            ]
+          },
+          "readiness": {
+            "confidence": 0.95,
+            "issues": [
+              "Patient explicitly states they have already quit smoking for one week, and acknowledges this as a significant achievement. This indicates active behavioral change and commitment to change, which aligns with the 'action' stage of the Transtheoretical Model.",
+              "The patient mentions they are currently trying to find new coping mechanisms (e.g., deep breathing, tea, talking to family) and is actively seeking solutions, which reflects active engagement in change behaviors.",
+              "There is no indication of ambivalence, lack of motivation, or absence of action—key features of precontemplation or contemplation. The patient is not expressing uncertainty about quitting or no intention to act.",
+              "The counselor suggests specific behavioral substitutions (deep breathing, tea, family talk), and the patient responds by agreeing to try them, showing active planning and implementation of change behaviors.",
+              "No evidence supports a classification in 'preparation' (e.g., planning, setting goals, trying small steps) as distinct from 'action'—the patient has already taken steps and is now implementing them. The transition from preparation to action is supported by the patient's active participation in new routines.",
+              "The patient's statement 'I will try' in response to the counselor's suggestion confirms active engagement, which is a hallmark of the action stage."
+            ]
+          },
+          "concern": {
+            "confidence": 0.95,
+            "issues": [
+              "Implicit Concern Detection: The patient did not express a hedged or questioning statement about health anxiety; the concern about relapse is not explicitly hedged or implicit but directly stated, so no omission exists.",
+              "Severity Calibration: The patient did not express fear of lung cancer or life-threatening outcomes; the concern about relapse is accurately categorized as situational and not over- or under-estimated in severity.",
+              "Temporal Attribution: All concerns are current and actively expressed during the conversation, not historical. For example, the office return stress and craving situation are described as present and ongoing, not past.",
+              "Categorization Accuracy: 'Withdrawal symptoms' (headache, irritability, insomnia) are correctly classified as physiological. 'Difficulty managing cravings in specific situations' is accurately categorized as situational/relapse. 'Lack of coping strategies' is a psychological component but better aligned with situational/relapse than psychological alone. The extraction slightly over-attributes psychological tone to 'lack of coping strategies' without sufficient evidence; this is a minor misalignment, but not a major error."
+            ]
+          },
+          "triggers": {
+            "confidence": 0.95,
+            "issues": [
+              "Hallucination Detection: 'barandha' is not present in the conversation and appears to be a misspelling or mishearing of 'barandha' (বারান্দা), which is correctly stated as 'বারান্দায়'. The term 'barandha' is not explicitly or implicitly used in the conversation and should not be extracted. This is a hallucination.",
+              "Evidence Alignment: The evidence field includes 'বিকালে অফিস থেকে ফিরে তখন সবচেয়ে কঠিন মনে হয়' which is a patient statement, but it does not directly support the trigger 'after work'. The trigger 'after work' is not explicitly mentioned or implied in the patient's statement. The patient only mentions difficulty after returning from office, which is a context, not a trigger. The evidence should be more directly tied to the trigger 'relaxation' or 'barandha' (which is hallucinated).",
+              "Omission Detection: The trigger 'relaxation' is present in the conversation ('সেটাই ছিল দিনের শেষের রিল্যাক্স সময়'), but it is not clearly linked to the context of 'after work' or 'barandha'. The trigger 'relaxation' should be included with proper evidence, but the current evidence is not specific enough or directly tied to the trigger. Also, the trigger 'after work' is not explicitly stated or strongly implied — it is only contextually present. Thus, it is not a valid trigger and should be excluded."
+            ]
+          },
+          "advice": {
+            "confidence": 0.95,
+            "issues": [
+              "The extracted data includes 'নিকোটিন গাম বা প্যাচ যোগ করলে আরো সহজ হবে' as advice, which is present in the conversation (Counselor: 'নিকোটিন গাম বা প্যাচ যোগ করলে আরো সহজ হবে।'), so no hallucination here.",
+              "The advice 'সেই সময়টাকে নতুন কিছু দিয়ে ভরাতে হবে' is directly stated by the counselor and is correctly extracted.",
+              "The advice 'চা খেতে পারেন, পাঁচ মিনিট গভীর শ্বাস নিতে পারেন, বা পরিবারের সাথে কথা বলতে পারেন' is fully present in the counselor's response and repeated multiple times in evidence — no hallucination or omission.",
+              "All advice points are directly supported by the conversation and not inferred or invented.",
+              "No important data is omitted: the patient's experience of withdrawal symptoms, the specific timing (afternoon), the previous smoking ritual, and the counselor's recommendations are all accounted for in the advice and evidence.",
+              "The evidence list contains redundant entries, but this is a formatting issue, not a validation error — the content is accurate and fully derived from the conversation."
+            ]
+          }
+        },
+        "sanity_check": {},
+        "longitudinal_sanity": {
+          "passed": true,
+          "flags": [],
+          "severity": "none"
+        },
+        "longitudinal_flags": [],
+        "cross_signal_disagreement": null,
+        "revision_count": 3,
+        "session_delta": null,
+        "dataset_row": {
+          "stage_of_change": "action",
+          "all_concerns": [
+            "Withdrawal symptoms including headache, irritability, and insomnia",
+            "Difficulty managing cravings, especially in specific situations like returning from office",
+            "Lack of clear coping strategies for daily stress and routine relaxation needs",
+            "Fear of relapse due to absence of a substitute routine for the previous smoking habit"
+          ],
+          "all_triggers": [
+            "after work",
+            "relaxation",
+            "barandha"
+          ],
+          "quit_attempt_history": "Quit smoking one week ago (duration: 1 week, method: Cold Turkey)",
+          "recommended_intervention": [
+            "সেই সময়টাকে নতুন কিছু দিয়ে ভরাতে হবে",
+            "চা খেতে পারেন",
+            "পাঁচ মিনিট গভীর শ্বাস নিতে পারেন",
+            "পরিবারের সাথে কথা বলতে পারেন",
+            "নিকোটিন গাম বা প্যাচ যোগ করলে আরো সহজ হবে"
+          ],
+          "reasoning_summary": "The patient is in the action stage of change, having quit smoking one week ago using cold turkey, and is experiencing withdrawal symptoms and difficulty managing cravings, especially after work when they previously relied on smoking for relaxation. The counselor provided behavioral coping strategies and recommended nicotine replacement therapy to support sustained abstinence.",
+          "confidence_score": 1.0,
+          "debate_rounds_used": 3,
+          "vote_agreement": 1.0,
+          "sanity_passed": true,
+          "inconsistencies": []
+        },
+        "longitudinal_output": {}
+      }
+    },
+    {
+      "session_id": "bengali_05",
+      "description": "Maintenance - smoke-free for six months, managing cravings",
+      "input_conversation": "Counselor: ছয় মাস হয়ে গেছে শুনলাম। কেমন লাগছে?\n\nPatient: খুব ভালো লাগছে। শ্বাস নিতে অনেক সহজ হয়েছে। তবে মাঝে মাঝে ইচ্ছে করে, বিশেষ করে যখন খুব চাপে থাকি।\n\nCounselor: ছয় মাস কিন্তু দারুণ অর্জন। চাপের সময়গুলোতে কীভাবে সামলান?\n\nPatient: প্রথম প্রথম অনেক কঠিন ছিল। এখন যোগব্যায়াম করি, সেটা অনেক সাহায্য করছে। আর বন্ধুদের বলে রেখেছি, ওরা সাপোর্ট করে।\n\nCounselor: চমৎকার কৌশল। কোনো পরিস্থিতিতে এখনো বেশি টান অনুভব করেন?\n\nPatient: বিয়েবাড়ি বা পার্টিতে গেলে একটু হয়। সবাই খাচ্ছে দেখলে মাথায় আসে। কিন্তু এখন পর্যন্ত সামলে নিয়েছি।\n\nCounselor: এটা অসাধারণ। সামাজিক পরিস্থিতি সামলানো সবচেয়ে কঠিন অংশ। আপনি কি এখন নিজেকে স্থায়ী অধূমপায়ী মনে করেন?\n\nPatient: হ্যাঁ, আমি আর পিছনে ফিরব না। পরিবার খুশি, আমি সুস্থ, এটাই যথেষ্ট।\n\nCounselor: চমৎকার মনোভাব। যদি কোনো কঠিন পরিস্থিতিতে পড়েন, মনে রাখবেন আমরা সবসময় আছি।",
+      "elapsed_seconds": 2555.72,
+      "timestamp": "2026-05-28T13:36:42.399273+00:00",
+      "summary": {
+        "stage_of_change": "maintenance",
+        "all_concerns": [
+          "Cravings during high stress or pressure",
+          "Situational triggers at social events like weddings or parties",
+          "Fear of relapse in social settings where others are smoking"
+        ],
+        "all_triggers": [
+          "stress",
+          "parties",
+          "seeing others eat"
+        ],
+        "quit_attempt_history": "The patient has maintained abstinence for at least six months and states they will not relapse, indicating sustained recovery.",
+        "recommended_intervention": [
+          "Coping with pressure situations",
+          "Practicing yoga which helps",
+          "Sharing with friends for support",
+          "Managing social situations effectively",
+          "Viewing oneself as a stable, long-term non-user",
+          "Practicing yoga or exercise to help manage stress",
+          "Seeking support from friends",
+          "Managing social situations by anticipating triggers",
+          "Viewing oneself as stable and resilient"
+        ],
+        "reasoning_summary": "The patient is in the maintenance stage of change, as evidenced by sustained abstinence for six months and a firm commitment to long-term non-use. Their main barriers include cravings under stress and social triggers such as parties and seeing others eat. The counselor provided interventions focused on coping with stress, practicing yoga, seeking peer support, and managing social situations through anticipation and self-affirmation.",
+        "confidence_score": 1.0,
+        "debate_rounds_used": 3,
+        "vote_agreement": 1.0,
+        "sanity_passed": true,
+        "inconsistencies": []
+      },
+      "extractions": {
+        "advice": {
+          "advice": [
+            "চাপের সময়গুলোতে কীভাবে সামলান?",
+            "যোগব্যায়াম করা সাহায্য করে",
+            "বন্ধুদের সাপোর্ট করা উচিত",
+            "সামাজিক পরিস্থিতি সামলানো সবচেয়ে কঠিন অংশ",
+            "নিজেকে স্থায়ী অধূমপায়ী মনে করা উচিত"
+          ],
+          "evidence": [
+            "চাপের সময়গুলোতে কীভাবে সামলান?",
+            "চমৎকার কৌশল। চাপের সময়গুলোতে কীভাবে সামলান?",
+            "চমৎকার কৌশল। চাপের সময়গুলোতে কীভাবে সামলান?",
+            "এটা অসাধারণ। সামাজিক পরিস্থিতি সামলানো সবচেয়ে কঠিন অংশ।",
+            "আপনি কি এখন নিজেকে স্থায়ী অধূমপায়ী মনে করেন?"
+          ]
+        },
+        "attempt": {
+          "attempts": [],
+          "evidence": [
+            "ছয় মাস হয়ে গেছে",
+            "আমি আর পিছনে ফিরব না",
+            "এখন পর্যন্ত সামলে নিয়েছি",
+            "প্রথম প্রথম অনেক কঠিন ছিল। এখন যোগব্যায়াম করি, সেটা অনেক সাহায্য করছে",
+            "বন্ধুদের বলে রেখেছি, ওরা সাপোর্ট করে",
+            "চাপের সময়গুলোতে কীভাবে সামলান",
+            "সামাজিক পরিস্থিতি সামলানো"
+          ],
+          "confidence": 0.3
+        },
+        "readiness": {
+          "readiness_stage": "maintenance",
+          "evidence": "The patient states, 'হ্যাঁ, আমি আর পিছনে ফিরব না। পরিবার খুশি, আমি সুস্থ, এটাই যথেষ্ট।', indicating a strong commitment to long-term abstinence. Additionally, the patient mentions, 'ছয় মাস হয়ে গেছে', confirming sustained abstinence for at least six months."
+        },
+        "concern": {
+          "concerns": [
+            "Cravings during high stress or pressure",
+            "Situational triggers at social events like weddings or parties",
+            "Fear of relapse in social settings where others are smoking"
+          ],
+          "evidence": [
+            "মাঝে মাঝে ইচ্ছে করে, বিশেষ করে যখন খুব চাপে থাকি",
+            "বিয়েবাড়ি বা পার্টিতে গেলে একটু হয়। সবাই খাচ্ছে দেখলে মাথায় আসে",
+            "কিন্তু এখন পর্যন্ত সামলে নিয়েছি"
+          ]
+        },
+        "triggers": {
+          "triggers": [
+            "stress",
+            "parties",
+            "seeing others eat"
+          ],
+          "evidence": [
+            "when under pressure",
+            "when going to wedding or parties",
+            "when seeing others eating"
+          ]
+        },
+        "consensus": {
+          "stage_of_change": "maintenance",
+          "quit_attempt_history": "The patient has maintained abstinence for at least six months and states they will not relapse, indicating sustained recovery.",
+          "all_concerns": [
+            "Cravings during high stress or pressure",
+            "Situational triggers at social events like weddings or parties",
+            "Fear of relapse in social settings where others are smoking"
+          ],
+          "all_triggers": [
+            "stress",
+            "parties",
+            "seeing others eat"
+          ],
+          "recommended_intervention": [
+            "Coping with pressure situations",
+            "Practicing yoga which helps",
+            "Sharing with friends for support",
+            "Managing social situations effectively",
+            "Viewing oneself as a stable, long-term non-user",
+            "Practicing yoga or exercise to help manage stress",
+            "Seeking support from friends",
+            "Managing social situations by anticipating triggers",
+            "Viewing oneself as stable and resilient"
+          ],
+          "vote_agreement": 1.0,
+          "dissenting_fields": []
+        },
+        "confidence_results": {
+          "attempt": {
+            "confidence": 0.0,
+            "issues": [
+              "Hallucination: 'আমি আর পিছনে ফিরব না' is interpreted as a quit attempt, but it expresses sustained abstinence and self-perception of success, not a direct quit attempt. No explicit mention of attempting to quit or stopping tobacco use is present.",
+              "Hallucination: 'এখন পর্যন্ত সামলে নিয়েছি' refers to managing cravings or situations, not a quit attempt. It lacks the necessary action of attempting to quit.",
+              "Hallucination: 'চাপের সময়গুলোতে কীভাবে সামলান' is a question, not an assertion of a quit attempt. It does not indicate any actual quit attempt.",
+              "Hallucination: 'প্রথম প্রথম অনেক কঠিন ছিল' and 'যোগব্যায়াম করি' describe challenges and coping strategies, not quit attempts.",
+              "Omission: No explicit mention of 'stopped,' 'gave up,' 'last time I tried,' or 'cut back to zero' — key indicators of quit attempts. The patient never states they attempted to quit or stopped using tobacco.",
+              "Omission: The phrase 'ছয় মাস হয়ে গেছে' indicates duration of abstinence, not an attempt. It is a signal of sustained non-use, not a quit attempt.",
+              "Taxonomy Alignment: No attempt method is specified. The extraction includes no classification (e.g., behavioral support, cold turkey) that aligns with clinical taxonomy. The evidence is descriptive, not methodological."
+            ]
+          },
+          "readiness": {
+            "confidence": 0.95,
+            "issues": [
+              "Patient explicitly states, 'আমি আর পিছনে ফিরব না,' and 'এটাই যথেষ্ট,' indicating a strong sense of permanence and commitment to change, which aligns with the maintenance stage.",
+              "No explicit statements about intention to change in the near future or about taking action in the next step, which could suggest a lack of active preparation, but the context of sustained behavior (exercise, support system) supports maintenance.",
+              "The patient reports managing stress and social triggers (e.g., parties), and has developed coping strategies, which are consistent with maintenance rather than relapse or action.",
+              "While there is some mention of occasional cravings under stress, these are framed as manageable and previously overcome, not as active attempts to change or initiate new behaviors, which would support action or preparation."
+            ]
+          },
+          "concern": {
+            "confidence": 0.95,
+            "issues": [
+              "Missing explicit expression of fear or anxiety about relapse in social settings — the patient states 'সবাই খাচ্ছে দেখলে মাথায় আসে' which indicates a psychological reaction, but the extraction labels it as 'Fear of relapse in social settings where others are smoking', which is a category misalignment. This should be categorized under 'Psychological' rather than 'Situational/Relapse'.",
+              "Omission of active psychological concern: The patient states 'আমি আর পিছনে ফিরব না' and 'পরিবার খুশি, আমি সুস্থ, এটাই যথেষ্ট' — this reflects a strong sense of self-efficacy and emotional closure, but there is no explicit mention of anxiety about failure or loss of control. However, the absence of such a concern is not an omission if not expressed. Still, the extraction fails to capture the patient's active psychological reassurance, which may be a subtle but significant indicator of emotional stability. This is not a major error, but the categorization of situational triggers as 'fear of relapse' overstates severity and misrepresents the nature of the concern."
+            ]
+          },
+          "triggers": {
+            "confidence": 0.95,
+            "issues": [
+              "Hallucination Detection: 'seeing others eat' is not explicitly stated or strongly implied as a trigger. The patient says 'সবাই খাচ্ছে দেখলে মাথায় আসে' (when everyone is eating, a thought comes to mind), which implies a psychological association with smoking urges. However, this is a strong implication, not a hallucination. The phrase 'seeing others eat' is a valid paraphrase of the patient's statement and should be accepted as implied. Thus, this is not a hallucination.",
+              "Omission Detection: The trigger 'stress' is present in the conversation ('যখন খুব চাপে থাকি') and is clearly linked to smoking urges. However, 'stress' is not included in the extracted triggers. This is a significant omission. The patient explicitly states 'মাঝে মাঝে ইচ্ছে করে, বিশেষ করে যখন খুব চাপে থাকি' — a clear stress-related trigger. This must be included.",
+              "Negative Rule Compliance: All extracted triggers ('stress', 'parties', 'seeing others eat') are directly linked to smoking urges. 'Stress' and 'parties' are explicitly tied to urges. 'Seeing others eat' is tied to a mental reaction that leads to urge. None of these are motivations to quit, health concerns, financial issues, or family concerns. Thus, no negative rule violation exists.",
+              "Evidence Alignment: The evidence field contains only patient utterances: 'when under pressure' (paraphrase of 'খুব চাপে থাকি'), 'when going to wedding or parties' (directly from patient), and 'when seeing others eating' (paraphrase of 'সবাই খাচ্ছে দেখলে মাথায় আসে'). All are patient statements or clear paraphrases. However, 'when under pressure' is not a direct patient utterance — it is a paraphrase of 'খুব চাপে থাকি'. While acceptable as evidence, it should be verified as a direct or clear paraphrase. Still, it is grounded in the conversation and not hallucinated."
+            ]
+          },
+          "advice": {
+            "confidence": 0.95,
+            "issues": [
+              "The extracted advice item 'যোগব্যায়াম করা সাহায্য করে' is present in the conversation, but the evidence list includes it only as a standalone phrase without direct textual support. The patient says 'যোগব্যায়াম করি, সেটা অনেক সাহায্য করছে', which implies the activity helps, but the evidence list does not accurately reflect the patient's statement as a direct evidence point. This is a minor misrepresentation but not a hallucination.",
+              "The extracted advice item 'বন্ধুদের সাপোর্ট করা উচিত' is supported by the patient saying 'বন্ধুদের বলে রেখেছি, ওরা সাপোর্ট করে', which is valid. However, the evidence list includes this only as a standalone question, not as a direct statement. This is a minor omission in evidence linkage, not a hallucination.",
+              "The advice item 'সামাজিক পরিস্থিতি সামলানো সবচেয়ে কঠিন অংশ' is correctly derived from the counselor's statement, but the evidence list includes it only as a standalone phrase. The patient's experience (e.g., at wedding or party) is mentioned, but the counselor's statement about it being the hardest part is not directly tied to the patient's experience. This is a valid inference but lacks direct patient-reported evidence for the 'hardest part' claim. Still, it is not hallucinated.",
+              "The advice item 'নিজেকে স্থায়ী অধূমপায়ী মনে করা উচিত' is correctly derived from the patient's statement 'আমি আর পিছনে ফিরব না', which clearly indicates a sense of permanence. The evidence list correctly includes the question 'আপনি কি এখন নিজেকে স্থায়ী অধূমপায়ী মনে করেন?', which is a valid and direct evidence point. This part is accurate.",
+              "No hallucinated advice items exist. All advice points are directly or logically derived from the conversation."
+            ]
+          }
+        },
+        "sanity_check": {},
+        "longitudinal_sanity": {
+          "passed": true,
+          "flags": [],
+          "severity": "none"
+        },
+        "longitudinal_flags": [],
+        "cross_signal_disagreement": null,
+        "revision_count": 3,
+        "session_delta": null,
+        "dataset_row": {
+          "stage_of_change": "maintenance",
+          "all_concerns": [
+            "Cravings during high stress or pressure",
+            "Situational triggers at social events like weddings or parties",
+            "Fear of relapse in social settings where others are smoking"
+          ],
+          "all_triggers": [
+            "stress",
+            "parties",
+            "seeing others eat"
+          ],
+          "quit_attempt_history": "The patient has maintained abstinence for at least six months and states they will not relapse, indicating sustained recovery.",
+          "recommended_intervention": [
+            "Coping with pressure situations",
+            "Practicing yoga which helps",
+            "Sharing with friends for support",
+            "Managing social situations effectively",
+            "Viewing oneself as a stable, long-term non-user",
+            "Practicing yoga or exercise to help manage stress",
+            "Seeking support from friends",
+            "Managing social situations by anticipating triggers",
+            "Viewing oneself as stable and resilient"
+          ],
+          "reasoning_summary": "The patient is in the maintenance stage of change, as evidenced by sustained abstinence for six months and a firm commitment to long-term non-use. Their main barriers include cravings under stress and social triggers such as parties and seeing others eat. The counselor provided interventions focused on coping with stress, practicing yoga, seeking peer support, and managing social situations through anticipation and self-affirmation.",
+          "confidence_score": 1.0,
+          "debate_rounds_used": 3,
+          "vote_agreement": 1.0,
+          "sanity_passed": true,
+          "inconsistencies": []
+        },
+        "longitudinal_output": {}
+      }
+    },
+    {
+      "session_id": "bengali_06",
+      "description": "Relapse - was smoke-free for two months, returned to smoking",
+      "input_conversation": "Counselor: কিছুদিন ধরে আসছিলেন না। কেমন আছেন?\n\nPatient: ভালো নেই আসলে। আবার শুরু করে দিয়েছি। দুই মাস পেরেছিলাম, তারপর মায়ের অসুখ হলো, হাসপাতালে ছোটাছুটি করতে হলো, একদিন রাতে ভাঙ্গলাম।\n\nCounselor: মায়ের কথায় কষ্ট পেলাম। এই পরিস্থিতিতে যে কেউ টলে যেত। নিজেকে দোষ দেবেন না।\n\nPatient: কিন্তু আমি এতদিন রেখেছিলাম, সব নষ্ট হয়ে গেল মনে হচ্ছে।\n\nCounselor: দুই মাস কিন্তু নষ্ট হয়নি। সেই অভিজ্ঞতাটা আপনার কাছে আছে। কত দিন ধরে আবার খাচ্ছেন?\n\nPatient: তিন সপ্তাহ। প্রথমে দু-একটা, এখন আবার দিনে দশটার কাছাকাছি চলে গেছে।\n\nCounselor: এখন আবার থামতে চান?\n\nPatient: হ্যাঁ, খুব লজ্জা লাগছে কিন্তু চেষ্টা করতে চাই।\n\nCounselor: লজ্জার কিছু নেই, রিল্যাপস পুনরুদ্ধারের অংশ। এবার আমরা স্ট্রেসের জন্য আলাদা পরিকল্পনা রাখব। কাউন্সেলিং সেশনের পাশাপাশি Varenicline শুরু করা যেতে পারে।\n\nPatient: হ্যাঁ এবার একটু বেশি সাহায্য নিতে চাই।",
+      "elapsed_seconds": 2729.57,
+      "timestamp": "2026-05-28T14:22:11.966208+00:00",
+      "summary": {
+        "stage_of_change": "relapse",
+        "all_concerns": [
+          "Fear of failure due to relapse after previous attempts",
+          "Strong cravings and increased smoking frequency (10 times per day)",
+          "Emotional distress and guilt over relapse",
+          "Lack of confidence in ability to quit despite prior efforts",
+          "Stress-related triggers leading to smoking relapse"
+        ],
+        "all_triggers": [
+          "stress",
+          "loneliness"
+        ],
+        "quit_attempt_history": "The patient reports a period of abstinence lasting two months, followed by a relapse after a hospital visit due to mother's illness, with no indication of a deliberate quit attempt or intention to quit during that period; the duration and context of abstinence are not grounded in any effort or intent to quit, only in passive abstinence. The patient currently reports a recent smoking pattern involving smoking around ten cigarettes per day after initially smoking a few per day, indicating a current attempt to quit smoking; however, there is no explicit statement of intent to quit, and the term 'attempt' is not directly supported by the patient's language—only a description of current smoking frequency and a statement of willingness to try again, which suggests a potential new effort but not a confirmed quit attempt.",
+        "recommended_intervention": [
+          "স্ট্রেসের জন্য আলাদা পরিকল্পনা রাখব",
+          "কাউন্সেলিং সেশনের পাশাপাশি Varenicline শুরু করা যেতে পারে"
+        ],
+        "reasoning_summary": "The patient is in the relapse stage following a two-month abstinence period interrupted by a stress-related event (mother's illness), with current high smoking frequency and emotional distress indicating strong cravings and low confidence in quitting. Their main barriers include fear of failure, guilt, and stress-related triggers, and the counselor recommended a stress-specific plan and consideration of Varenicline in addition to counseling.",
+        "confidence_score": 0.95,
+        "debate_rounds_used": 3,
+        "vote_agreement": 0.833,
+        "sanity_passed": true,
+        "inconsistencies": []
+      },
+      "extractions": {
+        "advice": {
+          "advice": [
+            "স্ট্রেসের জন্য আলাদা পরিকল্পনা রাখব",
+            "কাউন্সেলিং সেশনের পাশাপাশি Varenicline শুরু করা যেতে পারে"
+          ],
+          "evidence": [
+            "এবার আমরা স্ট্রেসের জন্য আলাদা পরিকল্পনা রাখব",
+            "কাউন্সেলিং সেশনের পাশাপাশি Varenicline শুরু করা যেতে পারে"
+          ]
+        },
+        "attempt": {
+          "attempts": [
+            "The patient reports a period of abstinence lasting two months, followed by a relapse after a hospital visit due to mother's illness, with no indication of a deliberate quit attempt or intention to quit during that period; the duration and context of abstinence are not grounded in any effort or intent to quit, only in passive abstinence.",
+            "The patient currently reports a recent smoking pattern involving smoking around ten cigarettes per day after initially smoking a few per day, indicating a current attempt to quit smoking; however, there is no explicit statement of intent to quit, and the term 'attempt' is not directly supported by the patient's language—only a description of current smoking frequency and a statement of willingness to try again, which suggests a potential new effort but not a confirmed quit attempt."
+          ],
+          "evidence": [
+            "দুই মাস পেরেছিলাম, তারপর মায়ের অসুখ হলো, হাসপাতালে ছোটাছুটি করতে হলো, একদিন রাতে ভাঙ্গলাম。",
+            "তিন সপ্তাহ। প্রথমে দু-একটা, এখন আবার দিনে দশটার কাছাকাছি চলে গেছে。"
+          ],
+          "confidence": 0.3
+        },
+        "readiness": {
+          "readiness_stage": "relapse",
+          "evidence": "Patient states, 'আবার শুরু করে দিয়েছি', and 'দুই মাস পেরেছিলাম, তারপর মায়ের অসুখ হলো... একদিন রাতে ভাঙ্গলাম', indicating a return to smoking after a prior quit attempt. Additionally, the patient mentions 'তিন সপ্তাহ ধরে আবার খাচ্ছেন' and 'খুব লজ্জা লাগছে কিন্তু চেষ্টা করতে চাই', showing a recent resumption of smoking after a previous quit, which aligns with the relapse stage."
+        },
+        "concern": {
+          "concerns": [
+            "Fear of failure due to relapse after previous attempts",
+            "Strong cravings and increased smoking frequency (10 times per day)",
+            "Emotional distress and guilt over relapse",
+            "Lack of confidence in ability to quit despite prior efforts",
+            "Stress-related triggers leading to smoking relapse"
+          ],
+          "evidence": [
+            "সব নষ্ট হয়ে গেল মনে হচ্ছে",
+            "তিন সপ্তাহ। প্রথমে দু-একটা, এখন আবার দিনে দশটার কাছাকাছি চলে গেছে",
+            "কিন্তু আমি এতদিন রেখেছিলাম, সব নষ্ট হয়ে গেল মনে হচ্ছে",
+            "খুব লজ্জা লাগছে কিন্তু চেষ্টা করতে চাই",
+            "মায়ের অসুখ হলো, হাসপাতালে ছোটাছুটি করতে হলো, একদিন রাতে ভাঙ্গলাম"
+          ]
+        },
+        "triggers": {
+          "triggers": [
+            "stress",
+            "loneliness"
+          ],
+          "evidence": [
+            "মায়ের অসুখ হলো, হাসপাতালে ছোটাছুটি করতে হলো, একদিন রাতে ভাঙ্গলাম",
+            "সব নষ্ট হয়ে গেল মনে হচ্ছে",
+            "খুব লজ্জা লাগছে"
+          ]
+        },
+        "consensus": {
+          "stage_of_change": "relapse",
+          "quit_attempt_history": "The patient reports a period of abstinence lasting two months, followed by a relapse after a hospital visit due to mother's illness, with no indication of a deliberate quit attempt or intention to quit during that period; the duration and context of abstinence are not grounded in any effort or intent to quit, only in passive abstinence. The patient currently reports a recent smoking pattern involving smoking around ten cigarettes per day after initially smoking a few per day, indicating a current attempt to quit smoking; however, there is no explicit statement of intent to quit, and the term 'attempt' is not directly supported by the patient's language—only a description of current smoking frequency and a statement of willingness to try again, which suggests a potential new effort but not a confirmed quit attempt.",
+          "all_concerns": [
+            "Fear of failure due to relapse after previous attempts",
+            "Strong cravings and increased smoking frequency (10 times per day)",
+            "Emotional distress and guilt over relapse",
+            "Lack of confidence in ability to quit despite prior efforts",
+            "Stress-related triggers leading to smoking relapse"
+          ],
+          "all_triggers": [
+            "stress",
+            "loneliness"
+          ],
+          "recommended_intervention": [
+            "স্ট্রেসের জন্য আলাদা পরিকল্পনা রাখব",
+            "কাউন্সেলিং সেশনের পাশাপাশি Varenicline শুরু করা যেতে পারে"
+          ],
+          "vote_agreement": 0.833,
+          "dissenting_fields": []
+        },
+        "confidence_results": {
+          "attempt": {
+            "confidence": 0.0,
+            "issues": [
+              "Grounding and Veracity: The extraction falsely claims there is 'no indication of a deliberate quit attempt' during the two-month abstinence period, despite the patient explicitly stating 'আবার শুরু করে দিয়েছি' (I've started again) and 'চেষ্টা করতে চাই' (I want to try again), which directly indicate a quit attempt. This is a logical leap from passive abstinence to absence of attempt.",
+              "Hallucination Check: The extraction invents a 'current attempt to quit' without explicit support from the text. The patient says 'খুব লজ্জা লাগছে কিন্তু চেষ্টা করতে চাই' (I feel shame but want to try), which is a clear expression of intent to quit, yet the extraction misrepresents this as 'only a description of current smoking frequency and a statement of willingness to try again, which suggests a potential new effort but not a confirmed quit attempt'—this undermines veracity and misrepresents intent.",
+              "Omission Check: The patient explicitly states 'আবার শুরু করে দিয়েছি' (I've started again) and 'চেষ্টা করতে চাই' (I want to try), which are direct signals of a quit attempt. These were omitted from the extraction and not properly grounded in the text.",
+              "Taxonomy Alignment: The extraction does not specify any method of quit attempt (e.g., behavioral, pharmacological). While the counselor suggests Varenicline, this is not a patient-reported attempt method. The absence of any attempt method classification is a significant omission in clinical informatics taxonomy."
+            ]
+          },
+          "readiness": {
+            "confidence": 0.95,
+            "issues": [
+              "Patient explicitly states, 'তিন সপ্তাহ। প্রথমে দু-একটা, এখন আবার দিনে দশটার কাছাকাছি চলে গেছে,' indicating a return to daily use after a period of abstinence, and says, 'হ্যাঁ, খুব লজ্জা লাগছে কিন্তু চেষ্টা করতে চাই,' showing intention to resume but with emotional hesitation. This reflects a clear intention to act, despite emotional barriers, placing the patient in the **action** stage.",
+              "The counselor suggests 'Varenicline শুরু করা যেতে পারে,' which implies a clinical intervention to support action, further supporting the action stage.",
+              "No explicit statement indicates precontemplation (no intention to change), contemplation (weighing pros/cons), or preparation (planning, seeking help). The patient has already initiated a behavioral return and is actively seeking additional support, which aligns with action.",
+              "While the patient expresses shame and reluctance, the statement 'চেষ্টা করতে চাই' shows active engagement in behavior change, distinguishing it from contemplation or precontemplation. The emotional struggle does not negate the intention to act."
+            ]
+          },
+          "concern": {
+            "confidence": 0.95,
+            "issues": [
+              "Implicit Concern Detection: The patient did not express a hedged or questioning statement about health anxiety (e.g., 'maybe it's just age'), so no underlying health anxiety was missed. This check is satisfied.",
+              "Severity Calibration: The patient expressed guilt and shame over relapse, and a desire for more support, but did not state any specific fear of health consequences (e.g., lung cancer). The concern of 'emotional distress and guilt' is accurately captured without overestimating severity. No precision error in severity.",
+              "Temporal Attribution: All concerns are current and active, not historical. The mention of past events (e.g., mother's illness, hospitalization) is contextual background, not a historical concern. The current relapse (3 weeks, 10 times/day) and desire to quit are active concerns. Correctly attributed.",
+              "Categorization Accuracy: 'Strong cravings and increased smoking frequency' is correctly categorized under physiological (cravings). 'Emotional distress and guilt' is correctly categorized under psychological. 'Lack of confidence' and 'stress-related triggers' are correctly placed under psychological. The concern about 'stress-related triggers' is not explicitly stated but inferred from the counselor's suggestion and patient's statement about wanting support for stress. This inference is valid, but the original extraction includes 'stress-related triggers' as a standalone concern without clear patient statement. This is a minor misalignment — the patient did not explicitly mention stress as a trigger, only that they want support for stress. Thus, this is a category misalignment due to over-inference."
+            ]
+          },
+          "triggers": {
+            "confidence": 0.8,
+            "issues": [
+              "Hallucination Detection: 'loneliness' is not supported in the conversation. There is no mention of loneliness, nor any direct or indirect association between loneliness and smoking urges. The patient mentions family stress (mother's illness), but this is not equivalent to loneliness.",
+              "Omission Detection: The trigger 'stress' is partially supported, but the evidence 'মায়ের অসুখ হলো, হাসপাতালে ছোটাছুটি করতে হলো, একদিন রাতে ভাঙ্গলাম' clearly indicates stress-related events, but the extraction does not explicitly pair this with the trigger 'stress'. However, the trigger 'stress' is present and supported, so this is acceptable. Still, the phrase 'সব নষ্ট হয়ে গেল মনে হচ্ছে' is better aligned with a psychological state (e.g., hopelessness or emotional depletion) than 'stress' as a trigger. This suggests a weak grounding of 'stress' as a trigger.",
+              "Negative Rule Compliance: The phrase 'খুব লজ্জা লাগছে' is extracted as evidence but is not a trigger. 'Shame' is a motivation to quit or emotional barrier, not a trigger for smoking. It should not be listed as a trigger. This is a clear violation of the negative rule.",
+              "Evidence Alignment: The evidence 'সব নষ্ট হয়ে গেল মনে হচ্ছে' is a patient utterance, but it supports a feeling of loss or emotional depletion, not a smoking trigger. It is not clearly linked to smoking urges. Similarly, 'খুব লজ্জা লাগছে' is not a trigger but a motivation to quit. These should not be included as triggers."
+            ]
+          },
+          "advice": {
+            "confidence": 1.0,
+            "issues": []
+          }
+        },
+        "sanity_check": {},
+        "longitudinal_sanity": {
+          "passed": true,
+          "flags": [],
+          "severity": "none"
+        },
+        "longitudinal_flags": [],
+        "cross_signal_disagreement": null,
+        "revision_count": 3,
+        "session_delta": null,
+        "dataset_row": {
+          "stage_of_change": "relapse",
+          "all_concerns": [
+            "Fear of failure due to relapse after previous attempts",
+            "Strong cravings and increased smoking frequency (10 times per day)",
+            "Emotional distress and guilt over relapse",
+            "Lack of confidence in ability to quit despite prior efforts",
+            "Stress-related triggers leading to smoking relapse"
+          ],
+          "all_triggers": [
+            "stress",
+            "loneliness"
+          ],
+          "quit_attempt_history": "The patient reports a period of abstinence lasting two months, followed by a relapse after a hospital visit due to mother's illness, with no indication of a deliberate quit attempt or intention to quit during that period; the duration and context of abstinence are not grounded in any effort or intent to quit, only in passive abstinence. The patient currently reports a recent smoking pattern involving smoking around ten cigarettes per day after initially smoking a few per day, indicating a current attempt to quit smoking; however, there is no explicit statement of intent to quit, and the term 'attempt' is not directly supported by the patient's language—only a description of current smoking frequency and a statement of willingness to try again, which suggests a potential new effort but not a confirmed quit attempt.",
+          "recommended_intervention": [
+            "স্ট্রেসের জন্য আলাদা পরিকল্পনা রাখব",
+            "কাউন্সেলিং সেশনের পাশাপাশি Varenicline শুরু করা যেতে পারে"
+          ],
+          "reasoning_summary": "The patient is in the relapse stage following a two-month abstinence period interrupted by a stress-related event (mother's illness), with current high smoking frequency and emotional distress indicating strong cravings and low confidence in quitting. Their main barriers include fear of failure, guilt, and stress-related triggers, and the counselor recommended a stress-specific plan and consideration of Varenicline in addition to counseling.",
+          "confidence_score": 0.95,
+          "debate_rounds_used": 3,
+          "vote_agreement": 0.833,
+          "sanity_passed": true,
+          "inconsistencies": []
+        },
+        "longitudinal_output": {}
+      }
+    },
+    {
+      "session_id": "bengali_07",
+      "description": "Contemplation - diabetes diagnosis motivating change",
+      "input_conversation": "Counselor: আজকে কেন আসলেন, বলবেন?\n\nPatient: ডাক্তার বলেছেন আমার ডায়াবেটিস ধরা পড়েছে। বললেন ধূমপান এটাকে আরো খারাপ করবে। তাই একটু ভাবছি।\n\nCounselor: এটা শুনতে কেমন লাগছে?\n\nPatient: ভয় লাগছে। আমার বাবাও ডায়াবেটিস ছিলেন, পায়ে সমস্যা হয়েছিল। আমি সেটা চাই না।\n\nCounselor: এটা একটা বড় কারণ ছাড়ার জন্য। কতদিন ধরে খাচ্ছেন?\n\nPatient: বিশ বছর। দিনে বিশটার মতো। আগে কখনো ছাড়িনি, জানি না পারব কিনা।\n\nCounselor: বিশ বছরের অভ্যাস ছাড়া কঠিন, কিন্তু অসম্ভব না। কোন পরিস্থিতিতে বেশি খান?\n\nPatient: খাওয়ার পরে, আর কারো সাথে গল্প করতে করতে। সকালে চায়ের সাথে তো অবশ্যই।\n\nCounselor: এই ট্রিগারগুলো চিনতে পারাটা গুরুত্বপূর্ণ। ডায়াবেটিস এবং ধূমপান একসাথে হার্টের ঝুঁকি অনেক বাড়িয়ে দেয়। ওষুধ বা নিকোটিন থেরাপি দিয়ে শুরু করতে রাজি আছেন?\n\nPatient: রাজি, কিন্তু একটু ভয় লাগছে। ওষুধের পার্শ্বপ্রতিক্রিয়া আছে কি?\n\nCounselor: Varenicline এর হালকা বমি বমি ভাব হতে পারে, কিন্তু বেশিরভাগ মানুষ সহ্য করতে পারে। আমরা ধীরে শুরু করব।",
+      "elapsed_seconds": 2005.3,
+      "timestamp": "2026-05-28T14:55:37.264545+00:00",
+      "summary": {
+        "stage_of_change": "contemplation",
+        "all_concerns": [
+          "Fear of developing diabetes like father",
+          "Fear of health complications due to diabetes and smoking",
+          "Fear of side effects from nicotine replacement therapy",
+          "Anxiety about quitting smoking due to long-standing habit",
+          "Concern about relapse triggers (eating, social interactions, morning tea)"
+        ],
+        "all_triggers": [
+          "after meals",
+          "talking with friends",
+          "morning tea"
+        ],
+        "quit_attempt_history": "Patient has never quit smoking before and is uncertain about their ability to quit, as stated in the conversation: 'আগে কখনো ছাড়িনি, জানি না পারব কিনা'.",
+        "recommended_intervention": [
+          "Start nicotine therapy with Varenicline",
+          "Begin therapy slowly to allow adaptation"
+        ],
+        "reasoning_summary": "The patient is in the contemplation stage because they are aware of the health risks associated with diabetes and smoking, express fear of developing diabetes like their father, and are uncertain about their ability to quit despite recognizing the risks. Their main barriers include anxiety about side effects from nicotine therapy, long-standing smoking habit, and specific relapse triggers such as meals, social interactions, and morning tea. The counselor recommended starting nicotine therapy with Varenicline and beginning slowly to allow adaptation.",
+        "confidence_score": 0.95,
+        "debate_rounds_used": 3,
+        "vote_agreement": 0.667,
+        "sanity_passed": true,
+        "inconsistencies": []
+      },
+      "extractions": {
+        "advice": {
+          "advice": [
+            "Start nicotine therapy with Varenicline",
+            "Begin therapy slowly to allow adaptation"
+          ],
+          "evidence": [
+            "ওষুধ বা নিকোটিন থেরাপি দিয়ে শুরু করতে রাজি আছেন?",
+            "আমরা ধীরে শুরু করব।"
+          ]
+        },
+        "attempt": {
+          "attempts": [],
+          "evidence": [],
+          "confidence": 0.0
+        },
+        "readiness": {
+          "readiness_stage": "contemplation",
+          "evidence": "Patient says, 'বললেন ধূমপান এটাকে আরো খারাপ করবে', and 'ভয় লাগছে', indicating awareness of the risk and consideration of quitting, but no specific plan or commitment to quit within the next 30 days. Also, they state, 'আগে কখনো ছাড়িনি, জানি না পারব কিনা', showing uncertainty and lack of concrete action."
+        },
+        "concern": {
+          "concerns": [
+            "Fear of developing diabetes like father",
+            "Fear of health complications due to diabetes and smoking",
+            "Fear of side effects from nicotine replacement therapy",
+            "Anxiety about quitting smoking due to long-standing habit",
+            "Concern about relapse triggers (eating, social interactions, morning tea)"
+          ],
+          "evidence": [
+            "আমার বাবাও ডায়াবেটিস ছিলেন, পায়ে সমস্যা হয়েছিল। আমি সেটা চাই না。",
+            "ডাক্তার বলেছেন আমার ডায়াবেটিস ধরা পড়েছে। বললেন ধূমপান এটাকে আরো খারাপ করবে। তাই একটু ভাবছি。",
+            "একটু ভয় লাগছে। ওষুধের পার্শ্বপ্রতিক্রিয়া আছে কি?",
+            "ভয় লাগছে।",
+            "খাওয়ার পরে, আর কারো সাথে গল্প করতে করতে। সকালে চায়ের সাথে তো অবশ্যই।"
+          ]
+        },
+        "triggers": {
+          "triggers": [
+            "after meals",
+            "talking with friends",
+            "morning tea"
+          ],
+          "evidence": [
+            "খাওয়ার পরে",
+            "কারো সাথে গল্প করতে করতে",
+            "সকালে চায়ের সাথে তো অবশ্যই"
+          ]
+        },
+        "consensus": {
+          "stage_of_change": "contemplation",
+          "quit_attempt_history": "Patient has never quit smoking before and is uncertain about their ability to quit, as stated in the conversation: 'আগে কখনো ছাড়িনি, জানি না পারব কিনা'.",
+          "all_concerns": [
+            "Fear of developing diabetes like father",
+            "Fear of health complications due to diabetes and smoking",
+            "Fear of side effects from nicotine replacement therapy",
+            "Anxiety about quitting smoking due to long-standing habit",
+            "Concern about relapse triggers (eating, social interactions, morning tea)"
+          ],
+          "all_triggers": [
+            "after meals",
+            "talking with friends",
+            "morning tea"
+          ],
+          "recommended_intervention": [
+            "Start nicotine therapy with Varenicline",
+            "Begin therapy slowly to allow adaptation"
+          ],
+          "vote_agreement": 0.667,
+          "dissenting_fields": [
+            "quit_attempt_history"
+          ]
+        },
+        "confidence_results": {
+          "attempt": {
+            "confidence": 0.0,
+            "issues": [
+              "Grounding and Veracity: No quit attempt is explicitly mentioned in the conversation. The patient expresses hesitation, fear, and interest in trying medication (varenicline), but there is no statement indicating an actual attempt to quit.",
+              "Hallucination Check: The extraction falsely claims 'attempts' and 'evidence' are present, despite no mention of any quit attempt, effort, or action taken to stop smoking.",
+              "Omission Check: The patient states they have smoked for 20 years and expresses willingness to try medication, but there is no explicit signal of a prior quit attempt or current attempt. Key phrases like 'stopped,' 'gave up,' or 'last time I tried' are missing.",
+              "Taxonomy Alignment: The extraction fails to specify any quit method. While the patient expresses interest in varenicline (pharmacotherapy), this is not confirmed as an actual attempt, and thus no valid method is assigned."
+            ]
+          },
+          "readiness": {
+            "confidence": 0.95,
+            "issues": [
+              "Patient explicitly states they have been smoking for 20 years and has not quit before, and expresses fear about quitting, indicating active concern about the health risks and desire to change. This reflects a clear awareness of the consequences and a willingness to consider quitting, which aligns with the contemplation stage.",
+              "The patient acknowledges the health risks (diabetes and smoking), recognizes personal family history, and expresses willingness to try medication (varenicline), showing a shift from denial to active consideration of change. This is consistent with contemplation, not precontemplation or preparation.",
+              "No explicit statement about a plan, specific action steps, or commitment to quit in the near future is present, which rules out the preparation or action stage. The patient does not say they will stop smoking soon or have set a timeline, so preparation is not supported.",
+              "The patient expresses fear and hesitation about side effects, indicating uncertainty and ongoing evaluation—this is a hallmark of contemplation, not precontemplation (where there is no awareness of risk) or maintenance (where change is already established and sustained)."
+            ]
+          },
+          "concern": {
+            "confidence": 0.95,
+            "issues": [
+              "Omission of physiological concern: The patient expressed fear of diabetes progression and its interaction with smoking, which is a physiological concern related to metabolic health and cardiovascular risk, but this was not explicitly categorized under 'Physiological' in the extraction.",
+              "Underrepresentation of severity: The patient states 'ভয় লাগছে' (fear) and 'ডাক্তার বলেছেন ধূমপান এটাকে আরো খারাপ করবে' (doctor said smoking will make it worse), indicating a high level of anxiety about health deterioration. The extraction labels this as 'Fear of health complications' but underrepresents the severity and frames it as general, rather than a clinically significant, life-threatening concern as implied by the context of diabetes and smoking synergy."
+            ]
+          },
+          "triggers": {
+            "confidence": 0.95,
+            "issues": []
+          },
+          "advice": {
+            "confidence": 1.0,
+            "issues": []
+          }
+        },
+        "sanity_check": {},
+        "longitudinal_sanity": {
+          "passed": true,
+          "flags": [],
+          "severity": "none"
+        },
+        "longitudinal_flags": [],
+        "cross_signal_disagreement": null,
+        "revision_count": 3,
+        "session_delta": null,
+        "dataset_row": {
+          "stage_of_change": "contemplation",
+          "all_concerns": [
+            "Fear of developing diabetes like father",
+            "Fear of health complications due to diabetes and smoking",
+            "Fear of side effects from nicotine replacement therapy",
+            "Anxiety about quitting smoking due to long-standing habit",
+            "Concern about relapse triggers (eating, social interactions, morning tea)"
+          ],
+          "all_triggers": [
+            "after meals",
+            "talking with friends",
+            "morning tea"
+          ],
+          "quit_attempt_history": "Patient has never quit smoking before and is uncertain about their ability to quit, as stated in the conversation: 'আগে কখনো ছাড়িনি, জানি না পারব কিনা'.",
+          "recommended_intervention": [
+            "Start nicotine therapy with Varenicline",
+            "Begin therapy slowly to allow adaptation"
+          ],
+          "reasoning_summary": "The patient is in the contemplation stage because they are aware of the health risks associated with diabetes and smoking, express fear of developing diabetes like their father, and are uncertain about their ability to quit despite recognizing the risks. Their main barriers include anxiety about side effects from nicotine therapy, long-standing smoking habit, and specific relapse triggers such as meals, social interactions, and morning tea. The counselor recommended starting nicotine therapy with Varenicline and beginning slowly to allow adaptation.",
+          "confidence_score": 0.95,
+          "debate_rounds_used": 3,
+          "vote_agreement": 0.667,
+          "sanity_passed": true,
+          "inconsistencies": []
+        },
+        "longitudinal_output": {}
+      }
+    },
+    {
+      "session_id": "bengali_08",
+      "description": "Contemplation - social smoker, peer pressure main trigger",
+      "input_conversation": "Counselor: আপনার ধূমপানের অভ্যাস কেমন?\n\nPatient: আমি আসলে একা একা তেমন খাই না। বন্ধুদের সাথে বাইরে গেলে বা চায়ের দোকানে বসলে খাওয়া হয়। দিনে হয়তো চার-পাঁচটা।\n\nCounselor: বন্ধুরা খায় বলে আপনিও খান? নিজে কি উপভোগ করেন?\n\nPatient: সত্যি বলতে না বলতে পারি না। মনে হয় বন্ধুরা ভাববে আমি আলাদা। আর একবার শুরু হলে গল্পের ছলে বেশি হয়ে যায়।\n\nCounselor: এটা তাহলে সামাজিক চাপের ব্যাপার বেশি। নিজে কি ছাড়তে চান?\n\nPatient: হ্যাঁ চাই। স্বাস্থ্যের জন্য ভালো না এটা জানি। আর টাকাও খরচ হচ্ছে।\n\nCounselor: সেটাই মূল কথা। না বলতে পারার অভ্যাস গড়ে তুলতে হবে। বন্ধুকে কীভাবে না বলবেন সেটা নিয়ে অভিনয় করে দেখতে পারি আজকে। চান?\n\nPatient: ঠিক আছে, চেষ্টা করে দেখতে পারি। একটু অদ্ভুত লাগছে কিন্তু।\n\nCounselor: অদ্ভুত লাগাটাই স্বাভাবিক, কিন্তু অনুশীলনে সহজ হয়। আর একটাই সিগারেটেও না বলতে পারার প্র্যাকটিস করতে হবে।",
+      "elapsed_seconds": 2492.57,
+      "timestamp": "2026-05-28T15:37:09.829879+00:00",
+      "summary": {
+        "stage_of_change": "contemplation",
+        "all_concerns": [
+          "Social pressure from friends",
+          "Fear of being seen as different or isolated",
+          "Increased smoking due to social situations and conversation",
+          "Concern about health due to smoking",
+          "Financial cost of smoking"
+        ],
+        "all_triggers": [
+          "friends smoking/socializing",
+          "tea"
+        ],
+        "quit_attempt_history": "The patient expresses intent to quit smoking by stating 'হ্যাঁ চাই' (Yes, I want to) and 'চেষ্টা করে দেখতে পারি' (I can try)",
+        "recommended_intervention": [
+          "বন্ধুকে কীভাবে না বলবেন সেটা নিয়ে অভিনয় করে দেখতে পারি আজকে",
+          "একটু অদ্ভুত লাগছে কিন্তু অনুশীলনে সহজ হয়",
+          "একটাই সিগারেটেও না বলতে পারার প্র্যাকটিস করতে হবে"
+        ],
+        "reasoning_summary": "The patient is in the contemplation stage because they express a desire to quit smoking but have not yet committed to a specific action, citing social pressure, fear of being seen as different, and health/financial concerns as key barriers. The counselor recommends role-playing how to handle social situations without disclosing quitting, emphasizing practice and normalizing the initial discomfort.",
+        "confidence_score": 1.0,
+        "debate_rounds_used": 3,
+        "vote_agreement": 1.0,
+        "sanity_passed": true,
+        "inconsistencies": []
+      },
+      "extractions": {
+        "advice": {
+          "advice": [
+            "বন্ধুকে কীভাবে না বলবেন সেটা নিয়ে অভিনয় করে দেখতে পারি আজকে",
+            "একটু অদ্ভুত লাগছে কিন্তু অনুশীলনে সহজ হয়",
+            "একটাই সিগারেটেও না বলতে পারার প্র্যাকটিস করতে হবে"
+          ],
+          "evidence": [
+            "বন্ধুকে কীভাবে না বলবেন সেটা নিয়ে অভিনয় করে দেখতে পারি আজকে",
+            "অদ্ভুত লাগাটাই স্বাভাবিক, কিন্তু অনুশীলনে সহজ হয়",
+            "আর একটাই সিগারেটেও না বলতে পারার প্র্যাকটিস করতে হবে"
+          ]
+        },
+        "attempt": {
+          "attempts": [
+            "The patient expresses intent to quit smoking by stating 'হ্যাঁ চাই' (Yes, I want to) and 'চেষ্টা করে দেখতে পারি' (I can try)"
+          ],
+          "evidence": [
+            "হ্যাঁ চাই",
+            "চেষ্টা করে দেখতে পারি"
+          ],
+          "confidence": 0.9
+        },
+        "readiness": {
+          "readiness_stage": "contemplation",
+          "evidence": "Patient says, 'হ্যাঁ চাই। স্বাস্থ্যের জন্য ভালো না এটা জানি। আর টাকাও খরচ হচ্ছে,' indicating awareness of the negative consequences and consideration of quitting, but no specific plan or commitment to take action within the next 30 days. Additionally, they state, 'সত্যি বলতে না বলতে পারি না,' showing awareness of social pressure but not yet taking steps to change behavior."
+        },
+        "concern": {
+          "concerns": [
+            "Social pressure from friends",
+            "Fear of being seen as different or isolated",
+            "Increased smoking due to social situations and conversation",
+            "Concern about health due to smoking",
+            "Financial cost of smoking"
+          ],
+          "evidence": [
+            "বন্ধুরা খায় বলে আপনিও খান? নিজে কি উপভোগ করেন?",
+            "সত্যি বলতে না বলতে পারি না। মনে হয় বন্ধুরা ভাববে আমি আলাদা।",
+            "একবার শুরু হলে গল্পের ছলে বেশি হয়ে যায়。",
+            "স্বাস্থ্যের জন্য ভালো না এটা জানি。",
+            "টাকাও খরচ হচ্ছে।"
+          ]
+        },
+        "triggers": {
+          "triggers": [
+            "friends smoking/socializing",
+            "tea"
+          ],
+          "evidence": [
+            "বাইরে গেলে বা চায়ের দোকানে বসলে খাওয়া হয়",
+            "গল্পের ছলে বেশি হয়ে যায়"
+          ]
+        },
+        "consensus": {
+          "stage_of_change": "contemplation",
+          "quit_attempt_history": "The patient expresses intent to quit smoking by stating 'হ্যাঁ চাই' (Yes, I want to) and 'চেষ্টা করে দেখতে পারি' (I can try)",
+          "all_concerns": [
+            "Social pressure from friends",
+            "Fear of being seen as different or isolated",
+            "Increased smoking due to social situations and conversation",
+            "Concern about health due to smoking",
+            "Financial cost of smoking"
+          ],
+          "all_triggers": [
+            "friends smoking/socializing",
+            "tea"
+          ],
+          "recommended_intervention": [
+            "বন্ধুকে কীভাবে না বলবেন সেটা নিয়ে অভিনয় করে দেখতে পারি আজকে",
+            "একটু অদ্ভুত লাগছে কিন্তু অনুশীলনে সহজ হয়",
+            "একটাই সিগারেটেও না বলতে পারার প্র্যাকটিস করতে হবে"
+          ],
+          "vote_agreement": 1.0,
+          "dissenting_fields": []
+        },
+        "confidence_results": {
+          "attempt": {
+            "confidence": 0.0,
+            "issues": [
+              "Grounding and Veracity: The extraction assumes a quit attempt based on 'হ্যাঁ চাই' and 'চেষ্টা করে দেখতে পারি', but these phrases indicate intent or willingness to try, not a confirmed quit attempt. 'চেষ্টা করে দেখতে পারি' (I can try) is a tentative expression of willingness, not an actual attempt. This constitutes a logical leap from intent to verified quit attempt.",
+              "Hallucination Check: The term 'quit attempt' is inferred rather than explicitly stated. There is no mention of any actual cessation behavior, such as stopping smoking, giving up, or reducing to zero. The extraction falsely frames intent as a completed attempt.",
+              "Omission Check: The conversation contains no explicit signals of stopping, giving up, cutting back to zero, or any specific duration or date related to quitting. These are critical markers for a true quit attempt and are entirely missing from the extraction.",
+              "Taxonomy Alignment: The extraction does not specify any method of quitting (e.g., behavioral, pharmacological, cold turkey). Therefore, there is no alignment with clinical taxonomy standards, which require methodological detail for proper classification."
+            ]
+          },
+          "readiness": {
+            "confidence": 0.95,
+            "issues": [
+              "Patient explicitly states, 'হ্যাঁ চাই। স্বাস্থ্যের জন্য ভালো না এটা জানি। আর টাকাও খরচ হচ্ছে।', indicating a clear desire to quit smoking, which aligns with contemplation (considering change), but the statement 'চাই' (I want) is not sufficient for preparation or action. The patient also says, 'চেষ্টা করে দেখতে পারি' (I can try), suggesting a willingness to begin action, but no concrete plan or behavior change is described. This places the stage more accurately in **contemplation** than preparation.",
+              "The patient does not describe any specific behavior change (e.g., avoiding smoking, using cessation tools, setting a quit date), nor does he demonstrate active engagement in change (e.g., trying to avoid triggers). Thus, evidence for preparation is absent. The statement 'চেষ্টা করে দেখতে পারি' is tentative and not a committed action, making it ambiguous but leaning toward contemplation.",
+              "Contradicting evidence: The patient says, 'সত্যি বলতে না বলতে পারি না' and 'একবার শুরু হলে গল্পের ছলে বেশি হয়ে যায়', indicating a strong social pressure and habitual use, which supports continued use rather than readiness to quit. However, this does not contradict the contemplation stage, as contemplation includes recognizing risks and considering change despite social pressure."
+            ]
+          },
+          "concern": {
+            "confidence": 0.95,
+            "issues": [
+              "Implicit Concern Detection: The patient states 'সত্যি বলতে না বলতে পারি না' and 'গল্পের ছলে বেশি হয়ে যায়', which indicate a hedged expression of concern about social pressure leading to increased smoking—this underlying health anxiety or behavioral compulsion was not explicitly categorized under 'Psychological' or 'Situational/Relapse' but was only captured under 'Social pressure'. This represents a missed nuance in implicit concern detection and should be flagged as a minor omission.",
+              "Severity Calibration: The patient mentions 'স্বাস্থ্যের জন্য ভালো না এটা জানি' (I know it's bad for health), which is a clear expression of awareness, but not a high-severity concern like 'fear of lung cancer'. However, the extraction uses 'Concern about health due to smoking' without specifying the intensity. While this is not a precision error in severity, it lacks the nuance of being a 'moderate concern' rather than a general awareness. This is a minor underrepresentation in severity calibration."
+            ]
+          },
+          "triggers": {
+            "confidence": 0.8,
+            "issues": [
+              "Hallucination Detection: 'tea' is not a smoking trigger; it is a setting (tea shop) where smoking occurs, but the patient does not state or imply that tea consumption triggers smoking. This is a misclassification and a hallucination.",
+              "Omission Detection: The trigger 'social pressure from friends' or 'social pressure to smoke' is clearly implied in the patient's statement 'মনে হয় বন্ধুরা ভাববে আমি আলাদা' and 'গল্পের ছলে বেশি হয়ে যায়', which strongly indicate social pressure leading to smoking. This trigger is missing from the extraction.",
+              "Negative Rule Compliance: 'স্বাস্থ্যের জন্য ভালো না এটা জানি' and 'টাকাও খরচ হচ্ছে' are motivations to quit, not triggers. These should not be included as triggers. The extraction does not contain them, but the presence of 'friends smoking/socializing' as a trigger without clear evidence of it being a behavioral trigger (i.e., a situation that causes urge) is problematic. The phrase 'গল্পের ছলে বেশি হয়ে যায়' implies social interaction leading to increased smoking, which is a valid trigger, but the 'tea' trigger is unsupported and hallucinated."
+            ]
+          },
+          "advice": {
+            "confidence": 0.95,
+            "issues": [
+              "The extracted data item 'একটু অদ্ভুত লাগছে কিন্তু অনুশীলনে সহজ হয়' is present in the conversation as part of the counselor's response, but it is not explicitly stated as a standalone advice. It is a contextual comment, not a direct cessation advice. This may slightly overstate its role as a formal advice point, though it is semantically aligned with the intent. However, it is not hallucinated and is contextually valid.",
+              "The extracted data includes 'বন্ধুকে কীভাবে না বলবেন সেটা নিয়ে অভিনয় করে দেখতে পারি আজকে' which is directly present in the counselor's response and correctly extracted as advice.",
+              "The item 'একটাই সিগারেটেও না বলতে পারার প্র্যাকটিস করতে হবে' is present in the counselor's response and accurately extracted as advice. It is a valid and direct recommendation.",
+              "No hallucinated data points are present. All advice items are directly supported by the conversation text.",
+              "No critical omission of important cessation advice is observed. The patient explicitly states desire to quit for health and cost reasons, and the counselor provides actionable steps (role-playing, practice, overcoming social pressure), which are all captured."
+            ]
+          }
+        },
+        "sanity_check": {},
+        "longitudinal_sanity": {
+          "passed": true,
+          "flags": [],
+          "severity": "none"
+        },
+        "longitudinal_flags": [],
+        "cross_signal_disagreement": null,
+        "revision_count": 3,
+        "session_delta": null,
+        "dataset_row": {
+          "stage_of_change": "contemplation",
+          "all_concerns": [
+            "Social pressure from friends",
+            "Fear of being seen as different or isolated",
+            "Increased smoking due to social situations and conversation",
+            "Concern about health due to smoking",
+            "Financial cost of smoking"
+          ],
+          "all_triggers": [
+            "friends smoking/socializing",
+            "tea"
+          ],
+          "quit_attempt_history": "The patient expresses intent to quit smoking by stating 'হ্যাঁ চাই' (Yes, I want to) and 'চেষ্টা করে দেখতে পারি' (I can try)",
+          "recommended_intervention": [
+            "বন্ধুকে কীভাবে না বলবেন সেটা নিয়ে অভিনয় করে দেখতে পারি আজকে",
+            "একটু অদ্ভুত লাগছে কিন্তু অনুশীলনে সহজ হয়",
+            "একটাই সিগারেটেও না বলতে পারার প্র্যাকটিস করতে হবে"
+          ],
+          "reasoning_summary": "The patient is in the contemplation stage because they express a desire to quit smoking but have not yet committed to a specific action, citing social pressure, fear of being seen as different, and health/financial concerns as key barriers. The counselor recommends role-playing how to handle social situations without disclosing quitting, emphasizing practice and normalizing the initial discomfort.",
+          "confidence_score": 1.0,
+          "debate_rounds_used": 3,
+          "vote_agreement": 1.0,
+          "sanity_passed": true,
+          "inconsistencies": []
+        },
+        "longitudinal_output": {}
+      }
+    },
+    {
+      "session_id": "bengali_09",
+      "description": "Multiple failed attempts - heavy smoker seeking help again",
+      "input_conversation": "Counselor: আবার আসলেন, কেমন আছেন?\n\nPatient: ভালো নেই। তিনবার চেষ্টা করেছি, প্রতিবারই ব্যর্থ হয়েছি। মনে হচ্ছে আর পারব না।\n\nCounselor: তিনটা চেষ্টা কিন্তু হাল না ছাড়ার প্রমাণ। কতদিন পেরেছিলেন সবচেয়ে বেশি?\n\nPatient: প্রথমবার এক মাস, দ্বিতীয়বার দুই সপ্তাহ, তৃতীয়বার মাত্র পাঁচ দিন। প্রতিবারই কমে গেছে।\n\nCounselor: তৃতীয়বার কী ব্যবহার করেছিলেন?\n\nPatient: প্রথমবার প্যাচ, দ্বিতীয়বার কিছু না, শুধু মনের জোরে। তৃতীয়বারও কিছু না।\n\nCounselor: দেখা যাচ্ছে একা ছাড়া কঠিন হচ্ছে। এবার আমরা সম্পূর্ণ ভিন্নভাবে করব। Varenicline ওষুধ প্লাস কাউন্সেলিং প্লাস একটা সাপোর্ট গ্রুপ। তিনটা একসাথে নিলে সাফল্যের হার অনেক বেশি।\n\nPatient: সাপোর্ট গ্রুপ মানে? অন্যদের সামনে বলতে হবে?\n\nCounselor: না, গোপন থাকবে। একই অবস্থায় মানুষেরা একসাথে কথা বলেন, অনুপ্রেরণা পান। আপনি কি চান সবকিছু একসাথে শুরু করতে?\n\nPatient: হ্যাঁ এবার পুরোপুরি সাহায্য নিতে চাই। একা পারছি না এটা বুঝতে পেরেছি।",
+      "elapsed_seconds": 2908.12,
+      "timestamp": "2026-05-28T16:25:37.949354+00:00",
+      "summary": {
+        "stage_of_change": "action",
+        "all_concerns": [
+          "Fear of failure in quitting smoking",
+          "Perceived lack of ability to quit successfully",
+          "Emotional exhaustion from repeated attempts",
+          "Feeling isolated and unable to quit alone"
+        ],
+        "all_triggers": [
+          "using patches"
+        ],
+        "quit_attempt_history": "Three quit attempts made: first with nicotine patch for 30 days, second with no pharmacotherapy and willpower only for 14 days, third with no pharmacotherapy and willpower only for 5 days. Each attempt resulted in shorter duration and diminishing effort.",
+        "recommended_intervention": [
+          "Use Varenicline medication",
+          "Include counseling",
+          "Join a support group"
+        ],
+        "reasoning_summary": "The patient is in the action stage of change, having made multiple quit attempts with diminishing effort and expressing a clear need for structured support. Their main barriers include fear of failure, perceived lack of ability, emotional exhaustion, and feelings of isolation. The counselor recommended a multimodal intervention combining Varenicline medication, counseling, and a support group to address these barriers and improve quit success.",
+        "confidence_score": 0.95,
+        "debate_rounds_used": 3,
+        "vote_agreement": 0.833,
+        "sanity_passed": true,
+        "inconsistencies": []
+      },
+      "extractions": {
+        "advice": {
+          "advice": [
+            "Use Varenicline medication",
+            "Include counseling",
+            "Join a support group"
+          ],
+          "evidence": [
+            "Varenicline ওষুধ প্লাস কাউন্সেলিং প্লাস একটা সাপোর্ট গ্রুপ। তিনটা একসাথে নিলে সাফল্যের হার অনেক বেশি।",
+            "Varenicline ওষুধ প্লাস কাউন্সেলিং প্লাস একটা সাপোর্ট গ্রুপ। তিনটা একসাথে নিলে সাফল্যের হার অনেক বেশি।",
+            "গোপন থাকবে। একই অবস্থায় মানুষেরা একসাথে কথা বলেন, অনুপ্রেরণা পান।"
+          ]
+        },
+        "attempt": {
+          "attempts": [
+            "Nicotine patch cessation for 30 days with intent to quit (first attempt)",
+            "No pharmacotherapy, behavioral support (willpower only) for 14 days with intent to quit (second attempt)",
+            "No pharmacotherapy, behavioral support (willpower only) for 5 days with intent to quit (third attempt)"
+          ],
+          "evidence": [
+            "তিনবার চেষ্টা করেছি, প্রতিবারই ব্যর্থ হয়েছি। মনে হচ্ছে আর পারব না。",
+            "প্রথমবার এক মাস, দ্বিতীয়বার দুই সপ্তাহ, তৃতীয়বার মাত্র পাঁচ দিন। প্রতিবারই কমে গেছে。",
+            "প্রথমবার প্যাচ, দ্বিতীয়বার কিছু না, শুধু মনের জোরে। তৃতীয়বারও কিছু না।"
+          ],
+          "confidence": 0.6
+        },
+        "readiness": {
+          "readiness_stage": "action",
+          "evidence": "Patient states, 'তৃতীয়বারও কিছু না,' indicating they have attempted to quit multiple times, and 'প্রতিবারই কমে গেছে,' showing repeated attempts with diminishing effort. Additionally, the patient explicitly says, 'একা পারছি না এটা বুঝতে পেরেছি,' which reflects a commitment to change and active seeking of support, consistent with having already taken action to quit."
+        },
+        "concern": {
+          "concerns": [
+            "Fear of failure in quitting smoking",
+            "Perceived lack of ability to quit successfully",
+            "Emotional exhaustion from repeated attempts",
+            "Feeling isolated and unable to quit alone"
+          ],
+          "evidence": [
+            "মনে হচ্ছে আর পারব না",
+            "প্রতিবারই ব্যর্থ হয়েছি",
+            "প্রতিবারই কমে গেছে",
+            "একা পারছি না এটা বুঝতে পেরেছি"
+          ]
+        },
+        "triggers": {
+          "triggers": [
+            "using patches"
+          ],
+          "evidence": [
+            "প্রথমবার প্যাচ, দ্বিতীয়বার কিছু না, শুধু মনের জোরে। তৃতীয়বারও কিছু না।"
+          ],
+          "confidence": 0.95
+        },
+        "consensus": {
+          "stage_of_change": "action",
+          "quit_attempt_history": "Three quit attempts made: first with nicotine patch for 30 days, second with no pharmacotherapy and willpower only for 14 days, third with no pharmacotherapy and willpower only for 5 days. Each attempt resulted in shorter duration and diminishing effort.",
+          "all_concerns": [
+            "Fear of failure in quitting smoking",
+            "Perceived lack of ability to quit successfully",
+            "Emotional exhaustion from repeated attempts",
+            "Feeling isolated and unable to quit alone"
+          ],
+          "all_triggers": [
+            "using patches"
+          ],
+          "recommended_intervention": [
+            "Use Varenicline medication",
+            "Include counseling",
+            "Join a support group"
+          ],
+          "vote_agreement": 0.833,
+          "dissenting_fields": []
+        },
+        "confidence_results": {
+          "attempt": {
+            "confidence": 0.0,
+            "issues": [
+              "Hallucination: The first attempt is labeled as 'Nicotine patch cessation for 30 days with intent to quit' — the source states 'প্রথমবার প্যাচ', which means 'patch first time', but does not specify duration or intent to quit. The 30-day duration is assumed and not supported by text; the patient only says 'one month', which is ambiguous and not equated to 30 days in the extraction.",
+              "Hallucination: The second attempt is described as 'No pharmacotherapy, behavioral support (willpower only) for 14 days' — while the patient says 'দ্বিতীয়বার কিছু না, শুধু মনের জোরে' (second time, nothing, only willpower), the duration '14 days' is inferred from 'দুই সপ্তাহ' (two weeks), which is correct, but the extraction incorrectly frames it as 'behavioral support (willpower only)' without explicit clinical categorization. More importantly, the duration is not stated as '14 days' in the source — it's implied, not directly stated, and thus lacks veracity.",
+              "Hallucination: The third attempt is described as 'No pharmacotherapy, behavioral support (willpower only) for 5 days' — the patient says 'তৃতীয়বার মাত্র পাঁচ দিন' (third time, only five days), which is duration, but the method is again inferred as 'willpower only' without explicit confirmation. The term 'behavioral support' is not in the source; it's a clinical label not grounded in the text.",
+              "Omission: The patient explicitly states 'তিনবার চেষ্টা করেছি, প্রতিবারই ব্যর্থ হয়েছি' — indicating failure of all attempts — but the extraction does not include this as evidence of failure, which is a key clinical signal.",
+              "Omission: The phrase 'প্রতিবারই কমে গেছে' (each time it decreased) is a critical signal of progressive decline in effort, which is missed in the extraction.",
+              "Taxonomy Misalignment: The extraction labels all attempts as 'behavioral support (willpower only)' without distinguishing pharmacotherapy or non-pharmacotherapy. The first attempt includes a patch (pharmacotherapy), which is correctly noted, but the second and third are incorrectly categorized as 'behavioral support' without clinical justification. The term 'behavioral support' is not used in the source text and is a clinical inference, not a direct grounding.",
+              "Grounding and Veracity: The extraction assumes intent to quit for all attempts — while the patient says 'চেষ্টা করেছি' (tried), the intent to quit is not explicitly stated. The phrase 'with intent to quit' is a logical leap not supported by the source text."
+            ]
+          },
+          "readiness": {
+            "confidence": 0.95,
+            "issues": [
+              "Patient explicitly states, 'একা পারছি না এটা বুঝতে পেরেছি' and 'পুরোপুরি সাহায্য নিতে চাই', which clearly indicate a shift from solitary effort to seeking full support — this is consistent with the action stage, where individuals commit to specific, structured interventions (like medication and support groups). The behavioral indicators (past failures, decreasing effort, explicit request for support) align with preparation or action, but the explicit decision to adopt a multi-pronged strategy (Varenicline + counseling + support group) and the statement of needing full support confirm readiness to act.",
+              "The patient's prior attempts (three times) with decreasing duration and effort suggest contemplation or preparation, but the clear statement of wanting to 'start completely' and 'take full help' shows a transition beyond mere consideration into active engagement. This supports action stage, not preparation, as preparation involves planning and readiness to begin, while action involves actual initiation of change.",
+              "No contradicting evidence is present. The patient does not express doubt about change, nor does the conversation suggest they are still in precontemplation or contemplation. The shift from 'I can't do it alone' to 'I want full support' is a clear behavioral and cognitive shift toward action."
+            ]
+          },
+          "concern": {
+            "confidence": 0.95,
+            "issues": [
+              "Omission of situational relapse concern: The patient explicitly states that each attempt has lasted less time and failed, indicating a pattern of diminishing effort and potential relapse triggers, which should be categorized under 'Situational/Relapse' rather than being missed entirely.",
+              "Categorization inaccuracy: 'Emotional exhaustion from repeated attempts' is better classified under 'Psychological' rather than being misaligned with 'Emotional exhaustion' as a standalone category; however, the primary issue is the lack of explicit situational context (e.g., triggers, environments) that would support a 'Situational/Relapse' concern, which is present in the transcript but not captured."
+            ]
+          },
+          "triggers": {
+            "confidence": 0.0,
+            "issues": [
+              "Grounding Check: The trigger 'using patches' is explicitly stated in the patient's response: 'প্রথমবার প্যাচ, দ্বিতীয়বার কিছু না, শুধু মনের জোরে। তৃতীয়বারও কিছু না।', which clearly indicates the patient used a patch in the first attempt. This is grounded and valid.",
+              "Omission Detection: The trigger 'using nothing (no method)' is clearly present in the conversation (patient says 'দ্বিতীয়বার কিছু না, শুধু মনের জোরে' and 'তৃতীয়বারও কিছু না'), indicating a clear pattern of not using any method. This should be extracted as a trigger (e.g., 'using no method') or at least categorized as a behavioral pattern, but it is missing from the extraction.",
+              "Negative Rule Compliance: The extracted trigger 'using patches' is not a motivation to quit, health concern, financial concern, family concern, consequence, or future goal. It is a behavior related to smoking attempts and is directly tied to smoking behavior. Thus, it is a valid trigger and does not violate negative rules.",
+              "Evidence Alignment: The evidence field correctly cites a patient utterance: 'প্রথমবার প্যাচ, দ্বিতীয়বার কিছু না, শুধু মনের জোরে। তৃতীয়বারও কিছু না।' This is a patient statement and directly supports the trigger 'using patches'. However, the evidence should also include the absence of method use (i.e., 'using no method') to fully capture the behavioral pattern, which is missing.",
+              "Hallucination Detection: No hallucinated triggers are present. The trigger 'using patches' is directly supported and not fabricated."
+            ]
+          },
+          "advice": {
+            "confidence": 0.95,
+            "issues": [
+              "No hallucination detected: All advice items (Varenicline medication, counseling, support group) are directly mentioned in the conversation.",
+              "The evidence section correctly references the counselor's statement about combining Varenicline, counseling, and support group to increase success rate, which is explicitly stated in the conversation.",
+              "The support group is described as confidential and involving people in similar situations sharing experiences and gaining motivation, which is accurately reflected in the extracted evidence.",
+              "The patient explicitly agrees to take full support, indicating acceptance of all three components (medication, counseling, support group), so no important data is omitted.",
+              "The extracted data does not include the patient's specific mention of using patch, no treatment in second attempt, or mental effort in third attempt — however, these are not part of the advice or guidance, so their omission is acceptable and not a validation failure."
+            ]
+          }
+        },
+        "sanity_check": {},
+        "longitudinal_sanity": {
+          "passed": true,
+          "flags": [],
+          "severity": "none"
+        },
+        "longitudinal_flags": [],
+        "cross_signal_disagreement": null,
+        "revision_count": 3,
+        "session_delta": null,
+        "dataset_row": {
+          "stage_of_change": "action",
+          "all_concerns": [
+            "Fear of failure in quitting smoking",
+            "Perceived lack of ability to quit successfully",
+            "Emotional exhaustion from repeated attempts",
+            "Feeling isolated and unable to quit alone"
+          ],
+          "all_triggers": [
+            "using patches"
+          ],
+          "quit_attempt_history": "Three quit attempts made: first with nicotine patch for 30 days, second with no pharmacotherapy and willpower only for 14 days, third with no pharmacotherapy and willpower only for 5 days. Each attempt resulted in shorter duration and diminishing effort.",
+          "recommended_intervention": [
+            "Use Varenicline medication",
+            "Include counseling",
+            "Join a support group"
+          ],
+          "reasoning_summary": "The patient is in the action stage of change, having made multiple quit attempts with diminishing effort and expressing a clear need for structured support. Their main barriers include fear of failure, perceived lack of ability, emotional exhaustion, and feelings of isolation. The counselor recommended a multimodal intervention combining Varenicline medication, counseling, and a support group to address these barriers and improve quit success.",
+          "confidence_score": 0.95,
+          "debate_rounds_used": 3,
+          "vote_agreement": 0.833,
+          "sanity_passed": true,
+          "inconsistencies": []
+        },
+        "longitudinal_output": {}
+      }
+    },
+    {
+      "session_id": "bengali_10",
+      "description": "Precontemplation to Contemplation - young student smoker, first session",
+      "input_conversation": "Counselor: তুমি প্রথমবার এসেছ। কিসের জন্য এলে বলবে?\n\nPatient: কলেজের কাউন্সেলর পাঠিয়ে দিয়েছেন। মা জেনে গেছেন আমি সিগারেট খাই।\n\nCounselor: কতদিন ধরে খাচ্ছ?\n\nPatient: দুই বছর হলো। বন্ধুদের সাথে প্রথম শুরু, তারপর নিয়মিত হয়ে গেছে। এখন দিনে পাঁচ-সাতটা হয়।\n\nCounselor: তুমি কি নিজে ছাড়তে চাও, নাকি শুধু মায়ের চাপে এসেছ?\n\nPatient: সত্যি বলব? মা যদি না জানত, তাহলে হয়তো আসতাম না। কিন্তু এখন যখন এসেছি, মনে হচ্ছে এই বয়সে ছাড়া ভালো।\n\nCounselor: এই চিন্তাটা নিজে থেকে আসছে সেটা গুরুত্বপূর্ণ। পরীক্ষার সময় বা চাপে বেশি খাও?\n\nPatient: হ্যাঁ, পরীক্ষার আগে অনেক বেশি হয়ে যায়। আর বন্ধুদের সাথে আড্ডায় তো খাওয়াই হয়।\n\nCounselor: তুমি অল্প বয়সে ধরেছ, তাই ছাড়াও তোমার জন্য তুলনামূলকভাবে সহজ হবে। শরীর এখনো অনেক কিছু সারিয়ে নিতে পারে। কী মনে করো, একবার চেষ্টা করে দেখবে?\n\nPatient: চেষ্টা করতে পারি। কিন্তু বন্ধুরা যদি বিরক্ত করে?\n\nCounselor: সেটা সামলানোর উপায় আমরা একসাথে বের করব। আজ থেকে শুরু হোক।",
+      "elapsed_seconds": 2096.13,
+      "timestamp": "2026-05-28T17:00:34.081816+00:00",
+      "summary": {
+        "stage_of_change": "contemplation",
+        "all_concerns": [
+          "Fear of peer pressure and social disapproval from friends",
+          "Concern about increased cravings during stressful situations (e.g., exams)",
+          "Fear of failure or lack of success in quitting due to social environment",
+          "Worry about friends becoming upset or reactive if they find out about quitting"
+        ],
+        "all_triggers": [
+          "stress",
+          "friends smoking/socializing"
+        ],
+        "quit_attempt_history": "Patient expressed willingness to try quitting but has not yet taken action; no prior quit attempts mentioned in the session.",
+        "recommended_intervention": [
+          "Start trying to quit today",
+          "Work together to find ways to handle friends' frustration"
+        ],
+        "reasoning_summary": "The patient is in the contemplation stage because they acknowledge the desire to quit but have not yet taken action, expressing concerns about peer pressure, stress-induced cravings, and social reactions. Their main barriers include fear of social disapproval and failure in a high-pressure environment. The counselor recommended starting a quit attempt today and collaboratively developing strategies to manage friends' potential frustration.",
+        "confidence_score": 1.0,
+        "debate_rounds_used": 3,
+        "vote_agreement": 1.0,
+        "sanity_passed": true,
+        "inconsistencies": []
+      },
+      "extractions": {
+        "advice": {
+          "advice": [
+            "Start trying to quit today",
+            "Work together to find ways to handle friends' frustration"
+          ],
+          "evidence": [
+            "আজ থেকে শুরু হোক।",
+            "সেটা সামলানোর উপায় আমরা একসাথে বের করব।"
+          ]
+        },
+        "attempt": {
+          "attempts": [
+            "I can try to quit"
+          ],
+          "evidence": [
+            "Patient says 'চেষ্টা করতে পারি' (I can try)"
+          ],
+          "confidence": 0.9
+        },
+        "readiness": {
+          "readiness_stage": "contemplation",
+          "evidence": "Patient says, 'মা যদি না জানত, তাহলে হয়তো আসতাম না,' indicating awareness of the need to quit due to external pressure, and 'এখন যখন এসেছি, মনে হচ্ছে এই বয়সে ছাড়া ভালো,' showing consideration of quitting but not yet committed to action."
+        },
+        "concern": {
+          "concerns": [
+            "Fear of peer pressure and social disapproval from friends",
+            "Concern about increased cravings during stressful situations (e.g., exams)",
+            "Fear of failure or lack of success in quitting due to social environment",
+            "Worry about friends becoming upset or reactive if they find out about quitting"
+          ],
+          "evidence": [
+            "কিন্তু বন্ধুরা যদি বিরক্ত করে?",
+            "পরীক্ষার আগে অনেক বেশি হয়ে যায়। আর বন্ধুদের সাথে আড্ডায় তো খাওয়াই হয়।",
+            "মা যদি না জানত, তাহলে হয়তো আসতাম না। কিন্তু এখন যখন এসেছি, মনে হচ্ছে এই বয়সে ছাড়া ভালো।",
+            "বন্ধুদের সাথে প্রথম শুরু, তারপর নিয়মিত হয়ে গেছে। এখন দিনে পাঁচ-সাতটা হয়।"
+          ]
+        },
+        "triggers": {
+          "triggers": [
+            "stress",
+            "friends smoking/socializing"
+          ],
+          "evidence": [
+            "during exams",
+            "with friends"
+          ]
+        },
+        "consensus": {
+          "stage_of_change": "contemplation",
+          "quit_attempt_history": "Patient expressed willingness to try quitting but has not yet taken action; no prior quit attempts mentioned in the session.",
+          "all_concerns": [
+            "Fear of peer pressure and social disapproval from friends",
+            "Concern about increased cravings during stressful situations (e.g., exams)",
+            "Fear of failure or lack of success in quitting due to social environment",
+            "Worry about friends becoming upset or reactive if they find out about quitting"
+          ],
+          "all_triggers": [
+            "stress",
+            "friends smoking/socializing"
+          ],
+          "recommended_intervention": [
+            "Start trying to quit today",
+            "Work together to find ways to handle friends' frustration"
+          ],
+          "vote_agreement": 1.0,
+          "dissenting_fields": []
+        },
+        "confidence_results": {
+          "attempt": {
+            "confidence": 0.0,
+            "issues": [
+              "Grounding and Veracity: The extraction 'I can try to quit' is directly grounded in the patient's statement 'চেষ্টা করতে পারি' (I can try), which is a clear expression of intent to attempt quitting. However, the term 'attempt' in the extraction is not explicitly tied to a completed or planned action; it is an interpretation of intent, not a confirmed quit attempt. This raises a veracity concern: the patient did not say they had previously tried or that they were attempting now with intent to succeed, only that they can try. Thus, the extraction assumes a future action without confirming it as a 'quit attempt' in the clinical sense.",
+              "Hallucination Check: The extraction includes 'I can try to quit' as a quit attempt, but the source text does not contain any explicit statement about a prior quit attempt or a plan to quit with a defined method. The phrase 'চেষ্টা করতে পারি' (I can try) expresses possibility, not a confirmed attempt. This constitutes a logical leap from possibility to a documented quit attempt, which is a hallucination.",
+              "Omission Check: The conversation contains no mention of prior quit attempts, successful or failed. There are no signals such as 'I tried before,' 'I stopped,' 'I gave up,' or any reference to a previous cessation effort. The patient only expresses willingness to try in the future. Therefore, no prior attempts were made, and this omission is critical for fidelity.",
+              "Taxonomy Alignment: The extraction does not specify any method of quitting (e.g., behavioral, pharmacological, cold turkey). As such, it fails to align with clinical taxonomy standards, which require classification of quit attempts by method. Without such specification, the attempt lacks clinical precision and cannot be used in structured cessation outcome analysis."
+            ]
+          },
+          "readiness": {
+            "confidence": 0.95,
+            "issues": [
+              "Patient explicitly states, 'মনে হচ্ছে এই বয়সে ছাড়া ভালো,' and 'কিন্তু এখন যখন এসেছি, মনে হচ্ছে এই বয়সে ছাড়া ভালো,' indicating a personal internal motivation to quit, which aligns with contemplation (considering the pros and cons of change). However, the patient also says, 'চেষ্টা করতে পারি,' showing openness to action, but without a clear commitment to immediate behavioral change. This suggests a boundary between contemplation and preparation.",
+              "The statement 'আজ থেকে শুরু হোক' from the counselor and patient's agreement to try quitting indicates a move toward action, but the patient still expresses uncertainty about peer reactions ('বন্ধুরা যদি বিরক্ত করে?'), which reflects hesitation rather than full commitment to action. This undermines a clear assignment to the 'action' stage."
+            ]
+          },
+          "concern": {
+            "confidence": 0.95,
+            "issues": [
+              "Implicit Concern Detection: The patient's statement 'মা যদি না জানত, তাহলে হয়তো আসতাম না। কিন্তু এখন যখন এসেছি, মনে হচ্ছে এই বয়সে ছাড়া ভালো।' expresses a hedged, implicit concern about personal autonomy and self-efficacy in quitting—this reflects a psychological concern about whether quitting is feasible or meaningful at this stage of life. This implicit concern about self-determination and life stage relevance is not captured in the extraction and should be included under 'Psychological' concerns.",
+              "Categorization Accuracy: The concern 'Fear of peer pressure and social disapproval from friends' is categorized under social, but the patient's actual expression is more about anticipated emotional reactions (e.g., 'বন্ধুরা যদি বিরক্ত করে') which is better classified as a 'Situational/Relapse' concern, not a general social fear. The extraction misaligns the category, reducing clinical accuracy."
+            ]
+          },
+          "triggers": {
+            "confidence": 0.95,
+            "issues": [
+              "Hallucination Detection: The trigger 'stress' is not explicitly or strongly implied in the conversation. While the patient mentions smoking more during exams, which is a stress-related context, the term 'stress' is not directly linked to smoking urges or behavior. The patient says 'during exams' and 'with friends', but does not state or imply that stress causes the urge to smoke. This is an inferred association and thus a hallucination.",
+              "Omission Detection: The trigger 'friends smoking/socializing' is partially present but not fully captured. The patient explicitly states 'with friends' and 'at parties' (implied by 'at gatherings' or 'with friends'), but the extraction only includes 'friends smoking/socializing'. The phrase 'with friends' is present, but the trigger should be 'socializing with friends' or 'social settings', not 'friends smoking'. The original extraction assumes friends are smoking, which is not stated. This is a misinterpretation and a hallucination.",
+              "Evidence Alignment: The evidence field contains 'during exams' and 'with friends', which are patient utterances. However, 'during exams' supports a stress-related trigger, not a social trigger. The evidence 'with friends' supports socializing, but the trigger 'friends smoking/socializing' is not grounded in the patient's actual statement about smoking behavior. The evidence does not directly support the trigger 'friends smoking/socializing' as the patient never says friends are smoking. This misalignment violates evidence alignment."
+            ]
+          },
+          "advice": {
+            "confidence": 1.0,
+            "issues": []
+          }
+        },
+        "sanity_check": {},
+        "longitudinal_sanity": {
+          "passed": true,
+          "flags": [],
+          "severity": "none"
+        },
+        "longitudinal_flags": [],
+        "cross_signal_disagreement": null,
+        "revision_count": 3,
+        "session_delta": null,
+        "dataset_row": {
+          "stage_of_change": "contemplation",
+          "all_concerns": [
+            "Fear of peer pressure and social disapproval from friends",
+            "Concern about increased cravings during stressful situations (e.g., exams)",
+            "Fear of failure or lack of success in quitting due to social environment",
+            "Worry about friends becoming upset or reactive if they find out about quitting"
+          ],
+          "all_triggers": [
+            "stress",
+            "friends smoking/socializing"
+          ],
+          "quit_attempt_history": "Patient expressed willingness to try quitting but has not yet taken action; no prior quit attempts mentioned in the session.",
+          "recommended_intervention": [
+            "Start trying to quit today",
+            "Work together to find ways to handle friends' frustration"
+          ],
+          "reasoning_summary": "The patient is in the contemplation stage because they acknowledge the desire to quit but have not yet taken action, expressing concerns about peer pressure, stress-induced cravings, and social reactions. Their main barriers include fear of social disapproval and failure in a high-pressure environment. The counselor recommended starting a quit attempt today and collaboratively developing strategies to manage friends' potential frustration.",
+          "confidence_score": 1.0,
+          "debate_rounds_used": 3,
+          "vote_agreement": 1.0,
+          "sanity_passed": true,
+          "inconsistencies": []
+        },
+        "longitudinal_output": {}
+      }
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,693 @@
+{
+  "cases": [
+    {
+      "id": "no_prior_session",
+      "description": "First session \u2014 agent returns None immediately without calling LLM",
+      "profile": {
+        "patient_id": "p_delta_001",
+        "sessions": [],
+        "stagnation_count": 0,
+        "relapse_count": 0,
+        "stage_trajectory": [],
+        "stage_direction_history": [],
+        "persistent_triggers": [],
+        "interventions_tried": []
+      },
+      "state": {
+        "dataset_row": {
+          "stage_of_change": "contemplation",
+          "all_concerns": [
+            "withdrawal symptoms"
+          ],
+          "all_triggers": [
+            "stress"
+          ],
+          "recommended_intervention": [
+            "counseling"
+          ],
+          "quit_attempt_history": "unknown"
+        },
+        "concern": {
+          "concerns": [
+            "withdrawal symptoms"
+          ]
+        },
+        "chat": "Patient says they are thinking about quitting.",
+        "trigger": {
+          "triggers": [
+            "stress"
+          ]
+        }
+      },
+      "llm_responses": [],
+      "expected": {
+        "session_delta": null
+      }
+    },
+    {
+      "id": "stage_progress",
+      "description": "Stage advances one step: contemplation \u2192 preparation",
+      "profile": {
+        "patient_id": "p_delta_002",
+        "sessions": [
+          {
+            "session_number": 1,
+            "session_date": "2026-01-01T10:00:00",
+            "stage_of_change": "contemplation",
+            "all_triggers": [
+              "stress",
+              "social situations"
+            ],
+            "all_concerns": [
+              "withdrawal symptoms"
+            ],
+            "recommended_intervention": [
+              "counseling"
+            ],
+            "quit_attempt_history": "one cold turkey attempt in 2020, lasted 3 weeks"
+          }
+        ],
+        "stagnation_count": 0,
+        "relapse_count": 0,
+        "stage_trajectory": [
+          "contemplation"
+        ],
+        "stage_direction_history": [],
+        "persistent_triggers": [],
+        "interventions_tried": [
+          "counseling"
+        ]
+      },
+      "state": {
+        "dataset_row": {
+          "stage_of_change": "preparation",
+          "all_concerns": [
+            "withdrawal symptoms"
+          ],
+          "all_triggers": [
+            "stress"
+          ],
+          "recommended_intervention": [
+            "counseling",
+            "NRT patch"
+          ],
+          "quit_attempt_history": "one cold turkey attempt in 2020, lasted 3 weeks; tried NRT patch briefly in 2023"
+        },
+        "concern": {
+          "concerns": [
+            "withdrawal symptoms"
+          ]
+        },
+        "chat": "Patient has set a quit date for next week and feels ready.",
+        "trigger": {
+          "triggers": [
+            "stress"
+          ]
+        }
+      },
+      "llm_responses": [
+        {
+          "new_triggers": [],
+          "persistent_triggers": [
+            "stress"
+          ]
+        },
+        {
+          "resolved_triggers": [
+            "social situations"
+          ]
+        },
+        {
+          "new_concerns": [],
+          "persistent_concerns": [
+            "withdrawal symptoms"
+          ]
+        },
+        {
+          "resolved_concerns": []
+        },
+        {
+          "new_quit_attempts": [
+            "tried nrt patch briefly in 2023"
+          ],
+          "persistent_quit_attempts": [
+            "one cold turkey attempt in 2020, lasted 3 weeks"
+          ]
+        },
+        {
+          "new_interventions": [
+            "nrt patch"
+          ],
+          "persistent_interventions": [
+            "counseling"
+          ]
+        },
+        {
+          "resolved_interventions": []
+        },
+        {
+          "clinical_summary": "Patient moved from contemplation to preparation and set a quit date."
+        }
+      ],
+      "expected": {
+        "stage_before": "contemplation",
+        "stage_after": "preparation",
+        "stage_changed": true,
+        "stage_direction": "progress",
+        "relapse_detected": false,
+        "rapid_progress_detected": false,
+        "stagnation_detected": false,
+        "trigger_resolved": true,
+        "new_quit_attempts": [
+          "tried nrt patch briefly in 2023"
+        ]
+      }
+    },
+    {
+      "id": "stage_regression",
+      "description": "Stage moves backward: preparation \u2192 contemplation",
+      "profile": {
+        "patient_id": "p_delta_003",
+        "sessions": [
+          {
+            "session_number": 1,
+            "session_date": "2026-01-15T10:00:00",
+            "stage_of_change": "preparation",
+            "all_triggers": [
+              "stress"
+            ],
+            "all_concerns": [
+              "fear of failure"
+            ],
+            "recommended_intervention": [
+              "NRT patch",
+              "counseling"
+            ],
+            "quit_attempt_history": "attempted cold turkey 6 months ago, relapsed after 2 weeks"
+          }
+        ],
+        "stagnation_count": 0,
+        "relapse_count": 0,
+        "stage_trajectory": [
+          "preparation"
+        ],
+        "stage_direction_history": [],
+        "persistent_triggers": [],
+        "interventions_tried": [
+          "NRT patch",
+          "counseling"
+        ]
+      },
+      "state": {
+        "dataset_row": {
+          "stage_of_change": "contemplation",
+          "all_concerns": [
+            "fear of failure",
+            "stress at work"
+          ],
+          "all_triggers": [
+            "stress",
+            "work deadlines"
+          ],
+          "recommended_intervention": [
+            "counseling"
+          ],
+          "quit_attempt_history": "attempted cold turkey 6 months ago, relapsed after 2 weeks"
+        },
+        "concern": {
+          "concerns": [
+            "fear of failure",
+            "stress at work"
+          ]
+        },
+        "chat": "Patient says they pushed back their quit date due to a stressful project at work.",
+        "trigger": {
+          "triggers": [
+            "stress",
+            "work deadlines"
+          ]
+        }
+      },
+      "llm_responses": [
+        {
+          "new_triggers": [
+            "work deadlines"
+          ],
+          "persistent_triggers": [
+            "stress"
+          ]
+        },
+        {
+          "resolved_triggers": []
+        },
+        {
+          "new_concerns": [
+            "stress at work"
+          ],
+          "persistent_concerns": [
+            "fear of failure"
+          ]
+        },
+        {
+          "resolved_concerns": []
+        },
+        {
+          "new_quit_attempts": [],
+          "persistent_quit_attempts": [
+            "attempted cold turkey 6 months ago, relapsed after 2 weeks"
+          ]
+        },
+        {
+          "new_interventions": [],
+          "persistent_interventions": [
+            "counseling"
+          ]
+        },
+        {
+          "resolved_interventions": []
+        },
+        {
+          "clinical_summary": "Patient regressed from preparation to contemplation after work stress."
+        }
+      ],
+      "expected": {
+        "stage_before": "preparation",
+        "stage_after": "contemplation",
+        "stage_changed": true,
+        "stage_direction": "regression",
+        "relapse_detected": false,
+        "concern_shift_detected": true,
+        "new_quit_attempts": []
+      }
+    },
+    {
+      "id": "relapse",
+      "description": "Patient in action stage relapses",
+      "profile": {
+        "patient_id": "p_delta_004",
+        "sessions": [
+          {
+            "session_number": 1,
+            "session_date": "2026-02-01T10:00:00",
+            "stage_of_change": "action",
+            "all_triggers": [
+              "stress"
+            ],
+            "all_concerns": [],
+            "recommended_intervention": [
+              "varenicline",
+              "counseling"
+            ],
+            "quit_attempt_history": "quit successfully for 8 months using varenicline"
+          }
+        ],
+        "stagnation_count": 0,
+        "relapse_count": 0,
+        "stage_trajectory": [
+          "action"
+        ],
+        "stage_direction_history": [],
+        "persistent_triggers": [
+          "stress"
+        ],
+        "interventions_tried": [
+          "varenicline",
+          "counseling"
+        ]
+      },
+      "state": {
+        "dataset_row": {
+          "stage_of_change": "relapse",
+          "all_concerns": [
+            "shame",
+            "withdrawal symptoms"
+          ],
+          "all_triggers": [
+            "stress",
+            "social event"
+          ],
+          "recommended_intervention": [
+            "counseling",
+            "motivational interviewing"
+          ],
+          "quit_attempt_history": "quit for 8 months then relapsed at a party"
+        },
+        "concern": {
+          "concerns": [
+            "shame",
+            "withdrawal symptoms"
+          ]
+        },
+        "chat": "Patient started smoking again last week after a difficult party.",
+        "trigger": {
+          "triggers": [
+            "stress",
+            "social event"
+          ]
+        }
+      },
+      "llm_responses": [
+        {
+          "new_triggers": [
+            "social event"
+          ],
+          "persistent_triggers": [
+            "stress"
+          ]
+        },
+        {
+          "resolved_triggers": []
+        },
+        {
+          "new_concerns": [
+            "shame",
+            "withdrawal symptoms"
+          ],
+          "persistent_concerns": []
+        },
+        {
+          "new_quit_attempts": [
+            "relapsed at a party"
+          ],
+          "persistent_quit_attempts": [
+            "quit successfully for 8 months using varenicline"
+          ]
+        },
+        {
+          "new_interventions": [
+            "motivational interviewing"
+          ],
+          "persistent_interventions": [
+            "counseling"
+          ]
+        },
+        {
+          "resolved_interventions": []
+        },
+        {
+          "clinical_summary": "Patient relapsed after a social event triggered smoking."
+        }
+      ],
+      "expected": {
+        "stage_before": "action",
+        "stage_after": "relapse",
+        "stage_changed": true,
+        "stage_direction": "relapse",
+        "relapse_detected": true,
+        "concern_shift_detected": true,
+        "new_quit_attempts": [
+          "relapsed at a party"
+        ]
+      }
+    },
+    {
+      "id": "rapid_progress",
+      "description": "Patient skips contemplation: precontemplation \u2192 preparation (rapid_progress_detected)",
+      "profile": {
+        "patient_id": "p_delta_005",
+        "sessions": [
+          {
+            "session_number": 1,
+            "session_date": "2026-03-01T10:00:00",
+            "stage_of_change": "precontemplation",
+            "all_triggers": [
+              "habit",
+              "boredom"
+            ],
+            "all_concerns": [],
+            "recommended_intervention": [
+              "psychoeducation"
+            ],
+            "quit_attempt_history": "unknown"
+          }
+        ],
+        "stagnation_count": 0,
+        "relapse_count": 0,
+        "stage_trajectory": [
+          "precontemplation"
+        ],
+        "stage_direction_history": [],
+        "persistent_triggers": [],
+        "interventions_tried": [
+          "psychoeducation"
+        ]
+      },
+      "state": {
+        "dataset_row": {
+          "stage_of_change": "preparation",
+          "all_concerns": [
+            "withdrawal symptoms"
+          ],
+          "all_triggers": [
+            "habit"
+          ],
+          "recommended_intervention": [
+            "NRT gum",
+            "psychoeducation"
+          ],
+          "quit_attempt_history": "unknown"
+        },
+        "concern": {
+          "concerns": [
+            "withdrawal symptoms"
+          ]
+        },
+        "chat": "Patient says a health scare motivated them to set a quit date this month.",
+        "trigger": {
+          "triggers": [
+            "habit"
+          ]
+        }
+      },
+      "llm_responses": [
+        {
+          "new_triggers": [],
+          "persistent_triggers": [
+            "habit"
+          ]
+        },
+        {
+          "resolved_triggers": [
+            "boredom"
+          ]
+        },
+        {
+          "new_concerns": [
+            "withdrawal symptoms"
+          ],
+          "persistent_concerns": []
+        },
+        {
+          "new_interventions": [
+            "nrt gum"
+          ],
+          "persistent_interventions": [
+            "psychoeducation"
+          ]
+        },
+        {
+          "resolved_interventions": []
+        },
+        {
+          "clinical_summary": "Patient jumped to preparation after a motivating health scare."
+        }
+      ],
+      "expected": {
+        "stage_before": "precontemplation",
+        "stage_after": "preparation",
+        "stage_direction": "progress",
+        "rapid_progress_detected": true,
+        "relapse_detected": false,
+        "new_quit_attempts": []
+      }
+    },
+    {
+      "id": "stable_stagnation",
+      "description": "Stage unchanged with stagnation_count >= 2 \u2192 stagnation_detected",
+      "profile": {
+        "patient_id": "p_delta_006",
+        "sessions": [
+          {
+            "session_number": 1,
+            "session_date": "2026-04-01T10:00:00",
+            "stage_of_change": "contemplation",
+            "all_triggers": [
+              "stress"
+            ],
+            "all_concerns": [
+              "not ready"
+            ],
+            "recommended_intervention": [
+              "motivational interviewing"
+            ],
+            "quit_attempt_history": "two failed attempts: cold turkey (2019) and NRT patch (2022)"
+          }
+        ],
+        "stagnation_count": 2,
+        "relapse_count": 0,
+        "stage_trajectory": [
+          "contemplation"
+        ],
+        "stage_direction_history": [
+          "stable"
+        ],
+        "persistent_triggers": [
+          "stress"
+        ],
+        "interventions_tried": [
+          "motivational interviewing"
+        ]
+      },
+      "state": {
+        "dataset_row": {
+          "stage_of_change": "contemplation",
+          "all_concerns": [
+            "not ready"
+          ],
+          "all_triggers": [
+            "stress"
+          ],
+          "recommended_intervention": [
+            "motivational interviewing"
+          ],
+          "quit_attempt_history": "two failed attempts: cold turkey (2019) and NRT patch (2022)"
+        },
+        "concern": {
+          "concerns": [
+            "not ready"
+          ]
+        },
+        "chat": "Patient says they are still not sure they want to quit.",
+        "trigger": {
+          "triggers": [
+            "stress"
+          ]
+        }
+      },
+      "llm_responses": [
+        {
+          "new_triggers": [],
+          "persistent_triggers": [
+            "stress"
+          ]
+        },
+        {
+          "resolved_triggers": []
+        },
+        {
+          "new_concerns": [],
+          "persistent_concerns": [
+            "not ready"
+          ]
+        },
+        {
+          "resolved_concerns": []
+        },
+        {
+          "new_quit_attempts": [],
+          "persistent_quit_attempts": [
+            "two failed attempts: cold turkey (2019) and nrt patch (2022)"
+          ]
+        },
+        {
+          "new_interventions": [],
+          "persistent_interventions": [
+            "motivational interviewing"
+          ]
+        },
+        {
+          "resolved_interventions": []
+        },
+        {
+          "clinical_summary": "Patient remains in contemplation with no significant changes."
+        }
+      ],
+      "expected": {
+        "stage_before": "contemplation",
+        "stage_after": "contemplation",
+        "stage_changed": false,
+        "stage_direction": "stable",
+        "stagnation_detected": true,
+        "relapse_detected": false,
+        "new_quit_attempts": []
+      }
+    },
+    {
+      "id": "unknown_stage_fallback",
+      "description": "Current session has unknown stage; both quit histories unknown \u2014 no quit LLM call",
+      "profile": {
+        "patient_id": "p_delta_007",
+        "sessions": [
+          {
+            "session_number": 1,
+            "session_date": "2026-05-01T10:00:00",
+            "stage_of_change": "contemplation",
+            "all_triggers": [
+              "stress"
+            ],
+            "all_concerns": [],
+            "recommended_intervention": [],
+            "quit_attempt_history": "unknown"
+          }
+        ],
+        "stagnation_count": 0,
+        "relapse_count": 0,
+        "stage_trajectory": [
+          "contemplation"
+        ],
+        "stage_direction_history": [],
+        "persistent_triggers": [],
+        "interventions_tried": []
+      },
+      "state": {
+        "dataset_row": {
+          "stage_of_change": "unknown",
+          "all_concerns": [],
+          "all_triggers": [
+            "stress"
+          ],
+          "recommended_intervention": [],
+          "quit_attempt_history": "unknown"
+        },
+        "concern": {
+          "concerns": []
+        },
+        "chat": "Transcript was incomplete \u2014 stage could not be determined.",
+        "trigger": {
+          "triggers": [
+            "stress"
+          ]
+        }
+      },
+      "llm_responses": [
+        {
+          "new_triggers": [],
+          "persistent_triggers": [
+            "stress"
+          ]
+        },
+        {
+          "resolved_triggers": []
+        },
+        {
+          "new_concerns": [],
+          "persistent_concerns": []
+        },
+        {
+          "new_interventions": [],
+          "persistent_interventions": []
+        },
+        {
+          "clinical_summary": "Stage could not be determined from this session."
+        }
+      ],
+      "expected": {
+        "stage_before": "contemplation",
+        "stage_after": "contemplation",
+        "stage_changed": false,
+        "stage_direction": "stable",
+        "new_quit_attempts": []
+      }
+    }
+  ]
+}
