@@ -156,6 +156,14 @@ The API uses JDK 25 while the legacy build/runtime uses JDK 11. Set `JAVA_HOME` 
 
 The legacy stack is separate from the Flutter/API path. It needs JDK 11 with `rmic`, MySQL and a compatible legacy schema. On a clean checkout, confirm that required legacy build artifacts are available before relying on the build command; see [Legacy Build Notes](docs/setup.md#legacy-web-and-rmi).
 
+
+```bash
+mvn -f database/migration-runner/pom.xml package
+java -jar database/migration-runner/target/pobado-migration-runner-1.0.0.jar
+```
+
+The runner reads the legacy database configuration, applies only pending migrations, and refuses databases other than `mDosthi`. It does not initialize a fresh legacy schema, and migrations are not applied automatically when Tomcat starts. See the [migration runner guide](database/migration-runner/README.md) before applying them to a production database.
+
 ```bash
 scripts/setup.sh
 # Edit services/legacy/runtime/gblinfo.inf and apps/web/config.info.
