@@ -8,6 +8,7 @@ import imedix.saMiX.model.*;
 import imedix.saMiX.service.iMediXUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,6 +36,12 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 import imedix.saMiX.service.OllamaService;
+import imedix.saMiX.service.OllamaSpeechService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.codec.Hex;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -79,6 +86,9 @@ public class UserController {
     @Autowired
     private OllamaService ollamaService;
 
+    @Autowired
+    private OllamaSpeechService ollamaSpeechService;
+
     @Value("${imedix.center.code}")
     String centerCode;
 
@@ -99,19 +109,43 @@ public class UserController {
 
     @PostMapping("/login")
     public JwtResponse login(@RequestBody JwtReqest jwtReqest) throws Exception {
+        if (jwtReqest.getUsername() == null || jwtReqest.getUsername().isBlank()
+                || jwtReqest.getPassword() == null || jwtReqest.getPassword().isEmpty()) {
+            return invalidCredentials();
+        }
+
+        String encodedPassword = userRepository.encodePassword(jwtReqest.getPassword());
+        if (encodedPassword == null || encodedPassword.isBlank()) {
+            throw new IllegalStateException("Could not encode login password.");
+        }
         try {
-
-            String password = userRepository.encodePassword(jwtReqest.getPassword());
-
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            jwtReqest.getUsername(), password
+                            jwtReqest.getUsername(), encodedPassword
                     )
             );
         } catch (BadCredentialsException e) {
-            System.out.println(e.getMessage());
-            //throw new Exception("Invalid Credential", e);
-            return new JwtResponse("", "", "","", "error", "Invalid Credential");
+            Map<String, Object> existingUser;
+            try {
+                existingUser = userRepository.getUserInfo(jwtReqest.getUsername());
+            } catch (EmptyResultDataAccessException missingUser) {
+                return invalidCredentials();
+            }
+
+            String storedPassword = Objects.toString(existingUser.get("pwd"), "");
+            String submittedPassword = Objects.toString(jwtReqest.getPassword(), "");
+            String userId = Objects.toString(existingUser.get("uid"), "");
+            if (userId.isBlank() || storedPassword.isEmpty()
+                    || !MessageDigest.isEqual(
+                            storedPassword.getBytes(StandardCharsets.UTF_8),
+                            submittedPassword.getBytes(StandardCharsets.UTF_8))
+                    || !userRepository.updatePassword(userId, encodedPassword)) {
+                return invalidCredentials();
+            }
+
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            jwtReqest.getUsername(), encodedPassword));
         }
 
         final UserDetails userDetails =
@@ -122,6 +156,10 @@ public class UserController {
         int dpdpAgreed = userinfo.get("dpdp_agreed") != null ? ((Number) userinfo.get("dpdp_agreed")).intValue() : 0;
         //return new JwtResponse(token, (String) userinfo.get("user_type"), (String) userinfo.get("name"), (String) userinfo.get("userid"), "success", "Login Successful");
         return new JwtResponse(token, (String) userinfo.get("type"), (String) userinfo.get("name"), (String) userinfo.get("uid"), "success", "Login Successful", dpdpAgreed);
+    }
+
+    private JwtResponse invalidCredentials() {
+        return new JwtResponse("", "", "", "", "error", "Invalid Credential");
     }
 
     //user agreement
@@ -1120,6 +1158,82 @@ public class UserController {
         return result;
     }
 
+    @PostMapping(value = "/speech", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> generateSpeech(
+            @RequestBody Map<String, String> request,
+            Authentication authentication) {
+        if (request == null || request.size() != 1) {
+            return speechError(HttpStatus.BAD_REQUEST, "INVALID_REQUEST",
+                    "Provide only the assistant message ID.");
+        }
+
+        String messageId = request.get("message_id");
+        if (messageId == null || !messageId.matches("msg_[0-9a-fA-F-]{36}")) {
+            return speechError(HttpStatus.BAD_REQUEST, "INVALID_MESSAGE_ID",
+                    "A valid assistant message ID is required.");
+        }
+
+        Map<String, Object> userInfo = userRepository.getUserInfo(authentication.getName());
+        String userType = Objects.toString(userInfo.get("type"), "");
+        String patientId = Objects.toString(userInfo.get("uid"), "");
+        if (!"pat".equalsIgnoreCase(userType) || patientId.isBlank()) {
+            return speechError(HttpStatus.NOT_FOUND, "MESSAGE_NOT_FOUND",
+                    "This assistant response is unavailable.");
+        }
+
+        ChatMessage message = userRepository.getAssistantMessageForPatient(messageId, patientId);
+        if (message == null) {
+            return speechError(HttpStatus.NOT_FOUND, "MESSAGE_NOT_FOUND",
+                    "This assistant response is unavailable.");
+        }
+
+        ChatSession session = userRepository.getChatSessionById(message.getSessionId());
+        if (session == null || !patientId.equals(session.getPatId())) {
+            return speechError(HttpStatus.NOT_FOUND, "MESSAGE_NOT_FOUND",
+                    "This assistant response is unavailable.");
+        }
+        if (!ollamaSpeechService.supportsLanguage(session.getLanguagePreference())) {
+            return speechError(HttpStatus.UNPROCESSABLE_ENTITY, "UNSUPPORTED_LANGUAGE",
+                    "Speech is currently available for English responses only.");
+        }
+        if (!ollamaSpeechService.isEnabled()) {
+            return speechError(HttpStatus.SERVICE_UNAVAILABLE, "SPEECH_DISABLED",
+                    "Speech is currently unavailable.");
+        }
+
+        try {
+            byte[] audio = ollamaSpeechService.synthesize(message.getMessageContent());
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.parseMediaType("audio/wav"));
+            headers.setCacheControl("no-store");
+            headers.set("X-Content-Type-Options", "nosniff");
+            return new ResponseEntity<>(audio, headers, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return speechError(HttpStatus.UNPROCESSABLE_ENTITY, "EMPTY_SPEECH_TEXT",
+                    "This response does not contain readable text.");
+        } catch (OllamaSpeechService.SpeechTextTooLongException e) {
+            return speechError(HttpStatus.PAYLOAD_TOO_LARGE, "SPEECH_TEXT_TOO_LONG",
+                    "This response is too long to read aloud.");
+        } catch (OllamaSpeechService.UnsupportedSpeechLanguageException e) {
+            return speechError(HttpStatus.UNPROCESSABLE_ENTITY, "UNSUPPORTED_LANGUAGE",
+                    "Speech is currently available for English responses only.");
+        } catch (OllamaSpeechService.SpeechCapacityException e) {
+            return speechError(HttpStatus.TOO_MANY_REQUESTS, "SPEECH_BUSY",
+                    "Speech is busy. Please try again shortly.");
+        } catch (OllamaSpeechService.SpeechUnavailableException e) {
+            return speechError(HttpStatus.SERVICE_UNAVAILABLE, "SPEECH_UNAVAILABLE",
+                    "Speech is currently unavailable. Your written response is unchanged.");
+        }
+    }
+
+    private ResponseEntity<Map<String, String>> speechError(
+            HttpStatus status, String errorCode, String message) {
+        return ResponseEntity.status(status)
+                .contentType(MediaType.APPLICATION_JSON)
+                .cacheControl(org.springframework.http.CacheControl.noStore())
+                .body(Map.of("status", "error", "error_code", errorCode, "message", message));
+    }
+
     @PostMapping("/mark-messages-read")
     public Map<String, Object> markMessagesRead(@RequestBody Map<String, Object> req) {
         Map<String, Object> result = new HashMap<>();
@@ -2086,8 +2200,21 @@ public class UserController {
 
         try {
 
+            String submittedPassword = req.get("pwd");
+            if (submittedPassword == null || submittedPassword.isBlank()) {
+                result.put("status", "error");
+                result.put("message", "Password is required");
+                return result;
+            }
+            String encodedPassword = userRepository.encodePassword(submittedPassword);
+            if (encodedPassword == null || encodedPassword.isBlank()) {
+                result.put("status", "error");
+                result.put("message", "Could not create login");
+                return result;
+            }
+
             data.put("uid", req.get("uid"));
-            data.put("pwd", req.get("pwd"));
+            data.put("pwd", encodedPassword);
             data.put("name", req.get("name"));
             data.put("crtdate", req.get("crtdate"));
             data.put("center", req.get("center"));

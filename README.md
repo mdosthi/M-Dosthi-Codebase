@@ -39,8 +39,7 @@ M-Dosthi is a healthcare application monorepo containing the legacy JSP/Tomcat s
 │       ├── prompts/, schemas/       Prompt templates and data schemas
 │       ├── db/, utils/              Persistence and helper code
 │       ├── examples/                Example inputs and usage
-│       ├── pyproject.toml           Python package metadata
-│       └── pyproject.toml           Python package metadata and dependency source
+│       └── pyproject.toml           Python package metadata and dependencies
 ├── database/
 │   ├── migrations/                  Versioned SQL schema changes
 │   ├── migration-runner/            Java migration application tool
@@ -88,7 +87,7 @@ From the repository root:
 
 ```bash
 git clone <repository-url> M-Dosthi
-cd M-Dosthi-Codebase
+cd M-Dosthi
 scripts/setup.sh                         # Windows: powershell -File scripts/setup.ps1
 ```
 
@@ -100,32 +99,46 @@ docker compose up -d mysql
 
 See [Setup instructions](docs/setup.md) for database import and configuration details.
 
+### Optional English chat speech
+
+The patient chat UI can read an English assistant response aloud after the user selects **Listen**. It uses Ollama's speech API with the separate Phonon model; Ollama remains the LLM and the displayed response is unchanged. Install the model on the Ollama host with `ollama pull phonon` (Ollama 0.40.9+). Speech is English-only and generated on demand by the configured Ollama host. The API does not cache or save the generated audio. See [speech setup and configuration](docs/setup.md#optional-english-speech-playback), including the data-handling implications of a remote Ollama host.
+
+### Chat voice input
+
+The chat microphone button uses the browser or device speech-recognition service to put dictated words into the message field; it does not use Ollama. Recognition support depends on the platform and browser, and the platform provider may process audio online. Review the [voice input setup and data-handling notes](docs/setup.md#chat-voice-input). Dictation only fills the draft; the patient must press Send to submit it.
+
 ### Terminal 1: start the API
 
-From the repository root (the directory containing `scripts/` and `apps/`), select JDK 25 and start the API:
+From the repository root (the directory containing `scripts/` and `apps/`), install JDK 25 if needed and start the API:
 
 ```bash
-export JAVA_HOME="$(dirname "$(dirname "$(readlink -f "$(command -v javac)")")")"
+brew install openjdk@25
+export JAVA_HOME="$(brew --prefix openjdk@25)/libexec/openjdk.jdk/Contents/Home"
 export PATH="$JAVA_HOME/bin:$PATH"
 javac -version
 java -version
 scripts/api.sh
 ```
 
-The `JAVA_HOME` value must be the JDK installation directory, not a placeholder or the path to the `java` executable. The command above derives it from the `javac` currently on your `PATH`; confirm the reported version is 25 before starting the API.
+The `JAVA_HOME` value must be the JDK installation directory, not the path to the `java` executable. `scripts/api.sh` also detects JDK 25 installed through Homebrew or registered with macOS when `JAVA_HOME` is unset. Keep this terminal open; the API listens on port `9090`.
 
-Keep this terminal open. The API listens on port `9090`. If you already have JDK 25 under `~/.jdk`, you can select it with:
+To use another API port, pass it to Spring Boot:
 
 ```bash
-export JAVA_HOME="$(find "$HOME/.jdk" -maxdepth 1 -type d -name 'jdk-25*' -print -quit)"
-export PATH="$JAVA_HOME/bin:$PATH"
+scripts/api.sh -Dspring-boot.run.arguments=--server.port=9091
+```
 
+If JDK 25 is installed in a custom location, set `JAVA_HOME` to that JDK's installation directory:
+
+```bash
+export JAVA_HOME="/path/to/jdk-25"
+export PATH="$JAVA_HOME/bin:$PATH"
 scripts/api.sh
 ```
 
 ### Terminal 2: start Flutter in a browser
 
-Open a second terminal. If it is not already at the repository root, change to the checkout root first. Then run:
+Open a second terminal at the repository root, then run:
 
 ```bash
 cd apps/mobile
@@ -139,6 +152,8 @@ Open `http://127.0.0.1:3001/` in your browser. Keep this terminal open while usi
 ```bash
 flutter run -d chrome --dart-define=API_HOST=localhost:9090
 ```
+
+If the API is using port `9091`, change the Flutter define to `--dart-define=API_HOST=localhost:9091` as well. The API and Flutter client must use matching ports.
 
 If Flutter reports that port `3001` is already in use, first open `http://127.0.0.1:3001/`; an existing Flutter server may already be running. To start an additional server, use another port such as `3002` and open the URL with that port:
 

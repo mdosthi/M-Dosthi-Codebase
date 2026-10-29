@@ -58,10 +58,13 @@ Copy/edit `.env` in the repository root. It is ignored by Git; keep one value pe
 For the API, select JDK 25 before launching. Bash example:
 
 ```bash
-export JAVA_HOME=/path/to/jdk-25
+brew install openjdk@25
+export JAVA_HOME="$(brew --prefix openjdk@25)/libexec/openjdk.jdk/Contents/Home"
 export PATH="$JAVA_HOME/bin:$PATH"
 java -version
 ```
+
+On macOS, `scripts/api.sh` can also find a JDK 25 installed by Homebrew or registered with the system when `JAVA_HOME` is unset. If the JDK is installed elsewhere, set `JAVA_HOME` to its installation directory. The API script checks that `JAVA_HOME` contains JDK 25 before starting Maven.
 
 PowerShell example:
 
@@ -82,6 +85,51 @@ export PATH="$JAVA_HOME/bin:$PATH"
 The most important API values in `.env` are `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, `SPRING_DATASOURCE_PASSWORD`, and `SECRETKEY`. Use a dedicated, non-root MySQL account for `SPRING_DATASOURCE_USERNAME`; `MYSQL_ROOT_PASSWORD` is only for database administration and must not be used as the API password. For the local Compose database, Compose creates the API account using the Spring datasource username and password. Replace the example database password with a strong, unique value. Generate a unique key, for example with `openssl rand -base64 32`; do not reuse any credentials from historical files. Ollama model settings and `IMEDIX_WHATSAPP_*` values are only needed for those integrations. Set `OLLAMA_LOG_PAYLOAD_ENABLED=false` where prompt payloads may contain patient data.
 
 The legacy RMI server does not automatically load `.env`. Edit the generated `services/legacy/runtime/gblinfo.inf` for its JDBC URL, username, password, FTP credentials, and local paths. The legacy website has its own generated `apps/web/config.info`; provide any required external integration credentials there too. Both files are ignored by Git.
+
+## Optional English speech playback
+
+The Flutter chatbot keeps Ollama as its response-generating LLM. When a patient explicitly chooses **Listen**, the Spring API sends only that persisted assistant response to the same configured Ollama instance's separate `/v1/audio/speech` endpoint and returns WAV audio. The default instance is local (`localhost:11434`); if you configure a remote Ollama host, the response text is sent there, so use only a deployment approved for counselling data. No conversation history, session ID, patient ID, or audio file is sent to the TTS model or stored by the API.
+
+Use Ollama 0.40.9 or later and pull its Phonon model on the same Ollama instance configured by `OLLAMA_BASE_URL`:
+
+```bash
+ollama --version
+ollama pull phonon
+ollama show phonon
+```
+
+`ollama show phonon` lists the available English voices. Configure these optional values in the root `.env`:
+
+| Variable | Default | Purpose |
+|---|---:|---|
+| `OLLAMA_TTS_ENABLED` | `true` | Enable or disable speech synthesis |
+| `OLLAMA_TTS_MODEL` | `phonon` | Ollama speech model |
+| `OLLAMA_TTS_VOICE` | `default` | Voice name supported by the installed model |
+| `OLLAMA_TTS_LANGUAGE` | `en` | Supported language; the selected model currently accepts English only |
+| `OLLAMA_TTS_TIMEOUT` | `30000` | Per-segment request timeout in milliseconds |
+| `OLLAMA_TTS_MAX_TEXT_LENGTH` | `12000` | Maximum prepared response length |
+| `OLLAMA_TTS_MAX_CONCURRENT` | `2` | Maximum concurrent synthesis requests (1–16) |
+
+Speech is generated on demand; autoplay is off. English sessions show Listen, pause/resume, stop, replay, and volume controls. Bengali sessions and responses containing non-Latin letters remain text-only; the application does not translate them. The current model configuration validates `OLLAMA_TTS_LANGUAGE=en` at startup. Speech errors leave the written answer available. Audio is buffered until synthesis completes; audio is not streamed incrementally. The API does not cache or persist generated audio; the client retains only the currently selected audio in memory for replay and releases it on message change or screen disposal. Text is cleaned for speech (including Markdown and fenced code blocks) and long responses are split at sentence boundaries, with oversized sentences split at word boundaries.
+
+The model is [Phonon 31m English](https://huggingface.co/gradium/phonon-31m-en) (24 kHz mono); its model card lists Apache-2.0. The [official Phonon runtime](https://github.com/gradium-ai/xn-ptts) source is MIT OR Apache-2.0, but the model license is separate. Review the license and voice terms for the exact model/version deployed. The API uses [Ollama's documented speech API](https://docs.ollama.com/capabilities/speech) and does not download weights into this repository.
+
+## Chat voice input
+
+The microphone button beside the chat composer uses the platform's speech-recognition service to transcribe a short dictation into the message draft. It is separate from Ollama and the M-Dosthi API; the recording is not uploaded to this application's API. Depending on the browser, operating system, and configured recognition provider, audio may be processed by that provider or sent to its online service. The recognized text remains an unsent draft until the patient chooses **Send**.
+
+The feature requires microphone permission and a browser/device with speech-recognition support. For Flutter web, use a supported browser and a secure context (HTTPS, or localhost for local development), then allow microphone access when prompted. The session language selects English or Bengali recognition where supported by the browser or device. iOS and macOS microphone and speech-recognition permission descriptions are configured in their respective `Info.plist` files. Recognition availability and language support vary by platform; speech input is not provided by the Ollama TTS configuration.
+
+To verify a deployment, start the API and Flutter app, open an English patient chat, wait for an assistant response, then use **Listen** and test pause/resume, stop, replay, and volume. A standalone non-clinical model check is:
+
+```bash
+curl http://localhost:11434/v1/audio/speech \
+  -H 'Content-Type: application/json' \
+  -d '{"model":"phonon","voice":"default","input":"This is a local speech test."}' \
+  --output /tmp/phonon-test.wav
+```
+
+If synthesis fails, confirm that `ollama show phonon` lists the configured voice, `OLLAMA_BASE_URL` points to the same Ollama instance, and that instance is reachable from the API host. The API returns a user-friendly error and preserves the written response if the model is missing, times out, or is overloaded.
 
 ## 3. Start MySQL And Prepare Schemas
 
@@ -203,7 +251,9 @@ Read [the annotation package README](../services/annotate/README.md) for support
 
 ## Troubleshooting
 
-- **API exits with an unsupported Java version:** select JDK 25 and verify `java -version` in the same terminal before running `scripts/api.sh`.
+- **API reports that JDK 25 is required:** install JDK 25, set `JAVA_HOME` to the JDK installation directory (not `bin/java`), and verify `"$JAVA_HOME/bin/java" -version` before running `scripts/api.sh`. On macOS with Homebrew, use `brew install openjdk@25`.
+- **Suicide ideation tracking is disabled because database tables are missing:** the API can start, but the background alert poller remains disabled. Import the approved schema containing `signal_history`, `session_history`, and `login`, then restart the API. Do not create placeholder tables.
+- **Login returns “Invalid Credential” for an account created by an older API:** restart with the current API; when the correct password is entered, legacy plaintext password rows are migrated to the format expected by login. If it still fails, verify the account and password in the database configured by `SPRING_DATASOURCE_URL`.
 - **`Access denied` or connection refused from MySQL:** verify the server is running, host/port are reachable, and that the credentials in `.env` (API) or `gblinfo.inf` (legacy) match the DB user. Test the exact JDBC schema name.
 - **Unknown database/table:** Compose creates an empty schema, not application tables. Import the correct approved dump before using the app; apply only the migrations intended for that schema.
 - **Flutter login says failed to fetch:** confirm the API is listening on 9090, set the correct `API_HOST` for the target device, and check browser/network CORS errors.

@@ -45,6 +45,12 @@ scripts/api.sh
 
 The configured port is `9090`. Configure `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, and `SPRING_DATASOURCE_PASSWORD` in the root `.env`. Use a dedicated non-root MySQL account and ensure the account exists and has access to the configured schema. Direct Maven or IDE launches do not load the root `.env` automatically.
 
+## Optional chat speech
+
+The Flutter chatbot can read persisted English assistant messages aloud using Ollama's speech-only `/v1/audio/speech` API and the `phonon` model (local by default). This is separate from the existing Ollama chat/generation calls; response generation, conversation context, and clinical safety handling are unchanged. The speech endpoint accepts only an assistant message ID, verifies that its session belongs to the authenticated patient, and returns uncached `audio/wav` bytes. No message text is logged or written to temporary files.
+
+Ollama 0.40.9 or later is required. On the Ollama host, run `ollama pull phonon` and `ollama show phonon`, then configure `OLLAMA_TTS_ENABLED`, `OLLAMA_TTS_MODEL`, `OLLAMA_TTS_VOICE`, `OLLAMA_TTS_LANGUAGE`, `OLLAMA_TTS_TIMEOUT`, `OLLAMA_TTS_MAX_TEXT_LENGTH`, and `OLLAMA_TTS_MAX_CONCURRENT` in the root `.env`. Defaults and language/licensing limitations are documented in the [setup guide](../../docs/setup.md#optional-english-speech-playback).
+
 ## Source Layout
 
 ```text

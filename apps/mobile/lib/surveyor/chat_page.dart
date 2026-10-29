@@ -7,6 +7,10 @@ import '../service/language_service.dart';
 import '../login_page.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert' show utf8, jsonEncode, jsonDecode;
+import '../chat/assistant_speech_player.dart';
+import 'package:speech_to_text/speech_recognition_error.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -19,6 +23,8 @@ class _ChatPageState extends State<ChatPage> {
   final LanguageService languageService = LanguageService();
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  final stt.SpeechToText _speechToText = stt.SpeechToText();
+  late final AssistantSpeechPlayer _speechPlayer;
 
   List<ChatMessage> messages = [];
   String? currentSessionId;
@@ -31,6 +37,10 @@ class _ChatPageState extends State<ChatPage> {
   String? errorMessage;
   int currentDailyUsage = 0;
   bool isTyping = false;
+  bool _speechInitialized = false;
+  bool _isListening = false;
+  bool _isStartingSpeech = false;
+  String _speechDraftPrefix = '';
 
   // New variable for Bengali translation mode
   bool isBengaliModeEnabled = false;
@@ -48,7 +58,117 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
+    _speechPlayer = AssistantSpeechPlayer();
     _initializeChat();
+  }
+
+  Future<void> _toggleSpeechInput() async {
+    if (_isStartingSpeech) return;
+
+    if (_speechToText.isListening || _isListening) {
+      await _speechToText.stop();
+      if (mounted) setState(() => _isListening = false);
+      return;
+    }
+
+    setState(() {
+      _isStartingSpeech = true;
+      _speechDraftPrefix = _messageController.text.trimRight();
+    });
+
+    try {
+      if (!_speechInitialized) {
+        _speechInitialized = await _speechToText.initialize(
+          onStatus: _onSpeechStatus,
+          onError: _onSpeechError,
+        );
+      }
+
+      if (!_speechInitialized) {
+        if (mounted) {
+          setState(() => _isStartingSpeech = false);
+          _showSpeechMessage(
+            'Speech recognition is unavailable. Try a supported browser or device.',
+          );
+        }
+        return;
+      }
+
+      await _speechToText.listen(
+        onResult: _onSpeechResult,
+        listenOptions: stt.SpeechListenOptions(
+          partialResults: true,
+          cancelOnError: true,
+          listenMode: stt.ListenMode.dictation,
+          listenFor: const Duration(minutes: 1),
+          pauseFor: const Duration(seconds: 5),
+          localeId: sessionLanguage.toLowerCase().startsWith('bn')
+              ? 'bn-BD'
+              : 'en-US',
+        ),
+      );
+      if (mounted) setState(() => _isStartingSpeech = false);
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _isStartingSpeech = false;
+        _isListening = false;
+      });
+      _showSpeechMessage(
+        'Could not start speech recognition. Check microphone permissions and try again.',
+      );
+    }
+  }
+
+  void _onSpeechResult(SpeechRecognitionResult result) {
+    final recognizedWords = result.recognizedWords.trim();
+    if (!mounted || recognizedWords.isEmpty) return;
+
+    final text = _speechDraftPrefix.isEmpty
+        ? recognizedWords
+        : '$_speechDraftPrefix $recognizedWords';
+    _messageController.value = TextEditingValue(
+      text: text,
+      selection: TextSelection.collapsed(offset: text.length),
+    );
+  }
+
+  void _onSpeechStatus(String status) {
+    if (!mounted) return;
+    setState(() {
+      _isListening = status == stt.SpeechToText.listeningStatus;
+      if (!_isListening) _isStartingSpeech = false;
+    });
+  }
+
+  void _onSpeechError(SpeechRecognitionError error) {
+    if (!mounted) return;
+    setState(() {
+      _isListening = false;
+      _isStartingSpeech = false;
+    });
+
+    final message = switch (error.errorMsg) {
+      'error_permission' =>
+        'Allow microphone and speech-recognition access in your device or browser settings.',
+      'error_language_unavailable' ||
+      'error_language_not_supported' =>
+        'Speech recognition is not available for this language on your device.',
+      'error_network' ||
+      'error_network_timeout' =>
+        'Speech recognition needs a working network connection.',
+      'error_no_match' ||
+      'error_speech_timeout' =>
+        'No speech was recognized. Try speaking again.',
+      _ => 'Speech recognition failed. Please try again.',
+    };
+    _showSpeechMessage(message);
+  }
+
+  void _showSpeechMessage(String message) {
+    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   Future<void> _initializeChat() async {
@@ -229,8 +349,12 @@ class _ChatPageState extends State<ChatPage> {
         final jsonResponse = jsonDecode(response.body);
         if (jsonResponse['status'] == 'success' &&
             jsonResponse['session'] != null) {
+          final nextSessionId = jsonResponse['session']['session_id'];
+          if (currentSessionId != null && currentSessionId != nextSessionId) {
+            await _speechPlayer.stop();
+          }
           setState(() {
-            currentSessionId = jsonResponse['session']['session_id'];
+            currentSessionId = nextSessionId;
             sessionLanguage =
                 jsonResponse['session']['language_preference'] ?? 'en';
             isSessionActive = true;
@@ -265,6 +389,7 @@ class _ChatPageState extends State<ChatPage> {
       return;
     }
 
+    await _speechPlayer.stop();
     setState(() => isLoading = true);
 
     try {
@@ -367,6 +492,7 @@ class _ChatPageState extends State<ChatPage> {
         if (jsonResponse['status'] == 'success') {
           if (jsonResponse['session_active'] == false) {
             // Session has been ended due to duration limit
+            await _speechPlayer.stop();
             setState(() {
               isSessionActive = false;
               currentSessionId = null;
@@ -683,6 +809,9 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Future<void> _sendMessage() async {
+    if (_speechToText.isListening) {
+      await _speechToText.stop();
+    }
     final messageText = _messageController.text.trim();
     if (messageText.isEmpty || currentSessionId == null) return;
 
@@ -753,6 +882,7 @@ class _ChatPageState extends State<ChatPage> {
     setState(() => isLoading = true);
 
     try {
+      await _speechPlayer.stop();
       _durationCheckTimer?.cancel(); // Cancel the timer
 
       final url =
@@ -905,11 +1035,14 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           Row(
             children: [
-              const Icon(Icons.info_outline_rounded, color: Color(0xFF1B5E20), size: 20),
+              const Icon(Icons.info_outline_rounded,
+                  color: Color(0xFF1B5E20), size: 20),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  languageService.isBengali ? 'চ্যাট সেশনের নিয়মাবলী' : 'Your Chat Limits',
+                  languageService.isBengali
+                      ? 'চ্যাট সেশনের নিয়মাবলী'
+                      : 'Your Chat Limits',
                   style: GoogleFonts.outfit(
                     fontWeight: FontWeight.bold,
                     color: const Color(0xFF1B5E20),
@@ -918,7 +1051,8 @@ class _ChatPageState extends State<ChatPage> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
                   color: currentDailyUsage >= dailyLimit
                       ? Colors.red.shade100
@@ -951,7 +1085,9 @@ class _ChatPageState extends State<ChatPage> {
                 value: currentDailyUsage / dailyLimit,
                 backgroundColor: const Color(0xFFC8E6C9).withOpacity(0.5),
                 valueColor: AlwaysStoppedAnimation<Color>(
-                  currentDailyUsage >= dailyLimit ? Colors.red : const Color(0xFF2E7D32),
+                  currentDailyUsage >= dailyLimit
+                      ? Colors.red
+                      : const Color(0xFF2E7D32),
                 ),
                 minHeight: 6,
               ),
@@ -960,30 +1096,40 @@ class _ChatPageState extends State<ChatPage> {
           ],
           _buildLimitRow(
             icon: Icons.today_rounded,
-            label: languageService.isBengali ? 'দৈনিক চ্যাট সেশন সীমা' : 'Daily Chat Sessions',
+            label: languageService.isBengali
+                ? 'দৈনিক চ্যাট সেশন সীমা'
+                : 'Daily Chat Sessions',
             value: dailyLimit.toString(),
           ),
           _buildLimitRow(
             icon: Icons.timer_rounded,
-            label: languageService.isBengali ? 'সর্বোচ্চ সেশন সময়সীমা' : 'Max Session Duration',
-            value: languageService.isBengali ? '$maxDurationMinutes মিনিট' : '$maxDurationMinutes minutes',
+            label: languageService.isBengali
+                ? 'সর্বোচ্চ সেশন সময়সীমা'
+                : 'Max Session Duration',
+            value: languageService.isBengali
+                ? '$maxDurationMinutes মিনিট'
+                : '$maxDurationMinutes minutes',
           ),
           if (minIntervalSeconds > 0)
             _buildLimitRow(
               icon: Icons.schedule_rounded,
-              label: languageService.isBengali ? 'পরবর্তী সেশনের ব্যবধান' : 'Min Wait Between Sessions',
+              label: languageService.isBengali
+                  ? 'পরবর্তী সেশনের ব্যবধান'
+                  : 'Min Wait Between Sessions',
               value: minIntervalMinutes > 60
-                  ? (languageService.isBengali 
-                      ? '${(minIntervalMinutes / 60).round()} ঘণ্টা' 
+                  ? (languageService.isBengali
+                      ? '${(minIntervalMinutes / 60).round()} ঘণ্টা'
                       : '${(minIntervalMinutes / 60).round()} hours')
-                  : (languageService.isBengali 
-                      ? '$minIntervalMinutes মিনিট' 
+                  : (languageService.isBengali
+                      ? '$minIntervalMinutes মিনিট'
                       : '$minIntervalMinutes minutes'),
             ),
           if (blackoutStart != null && blackoutEnd != null)
             _buildLimitRow(
               icon: Icons.block_rounded,
-              label: languageService.isBengali ? 'বন্ধ থাকার সময়' : 'Restricted Hours',
+              label: languageService.isBengali
+                  ? 'বন্ধ থাকার সময়'
+                  : 'Restricted Hours',
               value: '$blackoutStart - $blackoutEnd',
             ),
           if (blackoutDays != null && blackoutDays.isNotEmpty)
@@ -1030,8 +1176,8 @@ class _ChatPageState extends State<ChatPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  languageService.isBengali 
-                      ? 'সেশন সময়সীমা: আর $remainingMinutes মিনিট বাকি আছে' 
+                  languageService.isBengali
+                      ? 'সেশন সময়সীমা: আর $remainingMinutes মিনিট বাকি আছে'
                       : 'Session Time: ${remainingMinutes}min remaining',
                   style: GoogleFonts.outfit(
                     fontSize: 12,
@@ -1155,7 +1301,9 @@ class _ChatPageState extends State<ChatPage> {
                 isSystem
                     ? Icons.info_outline_rounded
                     : isBot
-                        ? (hasCodeBlock ? Icons.terminal_rounded : Icons.smart_toy_rounded)
+                        ? (hasCodeBlock
+                            ? Icons.terminal_rounded
+                            : Icons.smart_toy_rounded)
                         : Icons.person_rounded,
                 size: 18,
                 color: Colors.white,
@@ -1212,6 +1360,14 @@ class _ChatPageState extends State<ChatPage> {
                       fontSize: 10,
                     ),
                   ),
+                  if (isBot)
+                    AssistantSpeechControl(
+                      messageId: message.messageId,
+                      endpoint:
+                          "${LoginPage.protocol}://${LoginPage.domainName}/api/user/speech",
+                      token: LoginPage.jwtToken,
+                      player: _speechPlayer,
+                    ),
                 ],
               ),
             ),
@@ -1406,7 +1562,9 @@ class _ChatPageState extends State<ChatPage> {
             foregroundColor: Colors.white,
             elevation: 1,
             title: Text(
-              languageService.isBengali ? 'ই-দোস্তির সাথে চ্যাট' : 'Chat with mDosthi',
+              languageService.isBengali
+                  ? 'ই-দোস্তির সাথে চ্যাট'
+                  : 'Chat with mDosthi',
               style: GoogleFonts.outfit(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
@@ -1416,7 +1574,8 @@ class _ChatPageState extends State<ChatPage> {
               if (isSessionActive && isEnrolledInRCT)
                 TextButton.icon(
                   onPressed: _endChatSession,
-                  icon: const Icon(Icons.stop_circle_rounded, color: Colors.white),
+                  icon: const Icon(Icons.stop_circle_rounded,
+                      color: Colors.white),
                   label: Text(
                     languageService.isBengali ? 'সেশন শেষ' : 'End Chat',
                     style: GoogleFonts.outfit(
@@ -1428,7 +1587,8 @@ class _ChatPageState extends State<ChatPage> {
             ],
           ),
           body: isLoading
-              ? const Center(child: CircularProgressIndicator(color: Color(0xFF1B5E20)))
+              ? const Center(
+                  child: CircularProgressIndicator(color: Color(0xFF1B5E20)))
               : !isEnrolledInRCT
                   ? _buildNotEnrolledView()
                   : errorMessage != null
@@ -1442,12 +1602,16 @@ class _ChatPageState extends State<ChatPage> {
                                     size: 64, color: Colors.red),
                                 const SizedBox(height: 16),
                                 Text(
-                                  languageService.isBengali ? 'ত্রুটি ঘটেছে' : 'Chat Error',
+                                  languageService.isBengali
+                                      ? 'ত্রুটি ঘটেছে'
+                                      : 'Chat Error',
                                   style: GoogleFonts.outfit(
-                                      fontSize: 18, fontWeight: FontWeight.bold),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(height: 8),
-                                Text(errorMessage!, textAlign: TextAlign.center),
+                                Text(errorMessage!,
+                                    textAlign: TextAlign.center),
                                 const SizedBox(height: 16),
                                 ElevatedButton(
                                   onPressed: _initializeChat,
@@ -1455,7 +1619,9 @@ class _ChatPageState extends State<ChatPage> {
                                     backgroundColor: const Color(0xFF1B5E20),
                                     foregroundColor: Colors.white,
                                   ),
-                                  child: Text(languageService.isBengali ? 'পুনরায় চেষ্টা করুন' : 'Retry'),
+                                  child: Text(languageService.isBengali
+                                      ? 'পুনরায় চেষ্টা করুন'
+                                      : 'Retry'),
                                 ),
                               ],
                             ),
@@ -1476,7 +1642,8 @@ class _ChatPageState extends State<ChatPage> {
                                           Container(
                                             padding: const EdgeInsets.all(24),
                                             decoration: BoxDecoration(
-                                              color: const Color(0xFF1B5E20).withOpacity(0.08),
+                                              color: const Color(0xFF1B5E20)
+                                                  .withOpacity(0.08),
                                               shape: BoxShape.circle,
                                             ),
                                             child: const Icon(
@@ -1487,7 +1654,9 @@ class _ChatPageState extends State<ChatPage> {
                                           ),
                                           const SizedBox(height: 24),
                                           Text(
-                                            languageService.isBengali ? 'mDosthi এর সাথে বার্তালাপ শুরু করুন' : 'Start a conversation with mDosthi',
+                                            languageService.isBengali
+                                                ? 'mDosthi এর সাথে বার্তালাপ শুরু করুন'
+                                                : 'Start a conversation with mDosthi',
                                             style: GoogleFonts.outfit(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
@@ -1497,7 +1666,9 @@ class _ChatPageState extends State<ChatPage> {
                                           ),
                                           const SizedBox(height: 8),
                                           Text(
-                                            languageService.isBengali ? 'আপনার যেকোনো স্বাস্থ্য জিজ্ঞাসার জন্য সাহায্য ও উত্তর পান' : 'Get support and answers to your health questions',
+                                            languageService.isBengali
+                                                ? 'আপনার যেকোনো স্বাস্থ্য জিজ্ঞাসার জন্য সাহায্য ও উত্তর পান'
+                                                : 'Get support and answers to your health questions',
                                             style: GoogleFonts.outfit(
                                               fontSize: 14,
                                               color: Colors.grey.shade500,
@@ -1509,23 +1680,29 @@ class _ChatPageState extends State<ChatPage> {
                                             onPressed: canStartChat
                                                 ? _startChatSession
                                                 : null,
-                                            icon: const Icon(Icons.bolt_rounded),
+                                            icon:
+                                                const Icon(Icons.bolt_rounded),
                                             label: Text(
-                                              languageService.isBengali ? 'আলাপ শুরু করুন' : 'Start Chat',
+                                              languageService.isBengali
+                                                  ? 'আলাপ শুরু করুন'
+                                                  : 'Start Chat',
                                               style: GoogleFonts.outfit(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15,
                                               ),
                                             ),
                                             style: ElevatedButton.styleFrom(
-                                              backgroundColor: const Color(0xFF1B5E20),
+                                              backgroundColor:
+                                                  const Color(0xFF1B5E20),
                                               foregroundColor: Colors.white,
-                                              padding: const EdgeInsets.symmetric(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
                                                 horizontal: 32,
                                                 vertical: 16,
                                               ),
                                               shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(12),
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
                                               ),
                                               elevation: 2,
                                             ),
@@ -1541,7 +1718,8 @@ class _ChatPageState extends State<ChatPage> {
                               children: [
                                 // Chat header with session info
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 10),
                                   color: const Color(0xFFE8F5E9),
                                   child: Row(
                                     children: [
@@ -1549,18 +1727,21 @@ class _ChatPageState extends State<ChatPage> {
                                           color: Color(0xFF2E7D32), size: 10),
                                       const SizedBox(width: 8),
                                       Text(
-                                        languageService.isBengali ? 'চ্যাট সক্রিয় রয়েছে' : 'Chat Active',
+                                        languageService.isBengali
+                                            ? 'চ্যাট সক্রিয় রয়েছে'
+                                            : 'Chat Active',
                                         style: GoogleFonts.outfit(
-                                            fontWeight: FontWeight.bold,
-                                            color: const Color(0xFF1B5E20),
-                                            fontSize: 13,
+                                          fontWeight: FontWeight.bold,
+                                          color: const Color(0xFF1B5E20),
+                                          fontSize: 13,
                                         ),
                                       ),
                                       const Spacer(),
                                       Text(
                                         'ID: ${currentSessionId?.substring(0, 8) ?? ''}',
                                         style: GoogleFonts.outfit(
-                                            fontSize: 11, color: Colors.grey.shade600),
+                                            fontSize: 11,
+                                            color: Colors.grey.shade600),
                                       ),
                                     ],
                                   ),
@@ -1622,6 +1803,31 @@ class _ChatPageState extends State<ChatPage> {
                                         ),
                                       ),
                                       const SizedBox(width: 8),
+                                      IconButton(
+                                        tooltip: _isListening
+                                            ? 'Stop voice input'
+                                            : 'Dictate a message (speech may use an online recognition service)',
+                                        onPressed: isTyping || _isStartingSpeech
+                                            ? null
+                                            : _toggleSpeechInput,
+                                        color: _isListening
+                                            ? Colors.red
+                                            : Colors.green.shade800,
+                                        icon: _isStartingSpeech
+                                            ? const SizedBox(
+                                                width: 20,
+                                                height: 20,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  strokeWidth: 2,
+                                                ),
+                                              )
+                                            : Icon(
+                                                _isListening
+                                                    ? Icons.stop_circle
+                                                    : Icons.mic,
+                                              ),
+                                      ),
                                       FloatingActionButton(
                                         onPressed:
                                             isTyping ? null : _sendMessage,
@@ -1640,6 +1846,10 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   void dispose() {
+    if (_speechToText.isListening) {
+      unawaited(_speechToText.stop());
+    }
+    _speechPlayer.dispose();
     _messageController.dispose();
     _scrollController.dispose();
     _durationCheckTimer?.cancel(); // Cancel the timer

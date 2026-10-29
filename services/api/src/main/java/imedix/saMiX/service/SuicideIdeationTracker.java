@@ -5,13 +5,25 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import jakarta.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class SuicideIdeationTracker {
+
+    private static final Logger logger = LoggerFactory.getLogger(SuicideIdeationTracker.class);
+    private static final String REQUIRED_TABLES_QUERY =
+            "SELECT table_name FROM information_schema.tables " +
+                    "WHERE table_schema = DATABASE() " +
+                    "AND table_name IN ('signal_history', 'session_history', 'login')";
+    private static final Set<String> REQUIRED_TABLES =
+            Set.of("signal_history", "session_history", "login");
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -22,8 +34,29 @@ public class SuicideIdeationTracker {
     @Value("${imedix.whatsapp.alert.recipient:91XXXXXXXXXX}")
     private String alertRecipient;
 
+    private volatile boolean signalTablesAvailable;
+
     @PostConstruct
     public void init() {
+        Set<String> existingTables = jdbcTemplate.queryForList(REQUIRED_TABLES_QUERY).stream()
+                .map(row -> row.get("table_name"))
+                .filter(String.class::isInstance)
+                .map(String.class::cast)
+                .collect(Collectors.toSet());
+        Set<String> missingTables = REQUIRED_TABLES.stream()
+                .filter(table -> !existingTables.contains(table))
+                .collect(Collectors.toSet());
+
+        if (!missingTables.isEmpty()) {
+            logger.warn(
+                    "Suicide ideation tracking is disabled because required database tables are missing: {}. "
+                            + "Import the correct schema and restart the API to enable tracking.",
+                    String.join(", ", missingTables));
+            return;
+        }
+
+        signalTablesAvailable = true;
+
         try {
             // Check and add is_processed column to signal_history
             try {
@@ -42,13 +75,16 @@ public class SuicideIdeationTracker {
                 // Column might already exist
             }
         } catch (Exception e) {
-            System.err.println(
-                    "ERROR: Failed to initialize database migrations for SuicideIdeationTracker: " + e.getMessage());
+            logger.error("Failed to initialize database migrations for SuicideIdeationTracker.", e);
         }
     }
 
     @Scheduled(fixedDelayString = "${suicide.tracker.delay:10000}")
     public void pollSuicidalSignals() {
+        if (!signalTablesAvailable) {
+            return;
+        }
+
         try {
             // Retrieve dynamic alert recipient from DB, fallback to injected field
             String dynamicRecipient = whatsAppService.getConfig("imedix.whatsapp.alert.recipient", alertRecipient);
@@ -157,8 +193,7 @@ public class SuicideIdeationTracker {
                 System.out.println("DEBUG: Marked signal_id " + signalId + " as processed (is_processed=1).");
             }
         } catch (Exception e) {
-            System.err.println("ERROR: Exception in pollSuicidalSignals background task: " + e.getMessage());
-            e.printStackTrace();
+            logger.error("Exception in pollSuicidalSignals background task.", e);
         }
     }
 }

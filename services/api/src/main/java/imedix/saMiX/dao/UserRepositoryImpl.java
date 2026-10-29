@@ -876,6 +876,15 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public ChatMessage getAssistantMessageForPatient(String messageId, String patId) {
+        String sql = "SELECT cm.* FROM chat_messages cm " +
+                "JOIN chat_sessions cs ON cs.session_id = cm.session_id " +
+                "WHERE cm.message_id = ? AND cs.pat_id = ? AND cm.sender_type = 'bot'";
+        List<ChatMessage> messages = jdbcTemplate.query(sql, this::mapChatMessage, messageId, patId);
+        return messages.isEmpty() ? null : messages.get(0);
+    }
+
+    @Override
     public boolean markMessagesAsRead(String sessionId, List<String> messageIds) {
         try {
             if (messageIds == null || messageIds.isEmpty()) {
@@ -1658,24 +1667,27 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public boolean createNewEdosthiLogin(Map<String, String> data)
     {
-        //uid   | pwd                  | name                 | crtdate             | type | phone      | address | emailid | qualification | designation | dis
-        //| rg_no       | center | active | sign       | doc_regno | available | referral | verified | verifemail | verifphone | consent
+        String query = "INSERT INTO login "
+                + "(uid, pwd, name, crtdate, center, type, phone, active, available, referral, "
+                + "verified, verifemail, verifphone, consent) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-
-        String query="insert into login (uid,pwd,name,crtdate,center,type,phone,active,available,referral,verified,verifemail,verifphone,consent) values "+
-                "('"+data.get("uid")+"','"+data.get("pwd")+"','"+data.get("name")+"','"+data.get("crtdate")+"','"+data.get("center")+"','"+data.get("type")+"','"+data.get("phone")+"','"+
-                data.get("active")+"','"+data.get("available")+"','"+data.get("referral")+"','"+data.get("verified")+"','"+data.get("verifemail")+"','"+data.get("verifphone")+"','"+data.get("consent")+"')";
-
-
-        String str="";
-
-        try {
-            jdbcTemplate.update(query);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
-        return true;
+        return jdbcTemplate.update(
+                query,
+                data.get("uid"),
+                data.get("pwd"),
+                data.get("name"),
+                data.get("crtdate"),
+                data.get("center"),
+                data.get("type"),
+                data.get("phone"),
+                data.get("active"),
+                data.get("available"),
+                data.get("referral"),
+                data.get("verified"),
+                data.get("verifemail"),
+                data.get("verifphone"),
+                data.get("consent")) > 0;
 
     }
 
