@@ -252,12 +252,6 @@ class AssistantSpeechControl extends StatelessWidget {
                   ),
                 ),
                 if (isCurrent) ...[
-                  IconButton(
-                    tooltip: 'Stop speech',
-                    visualDensity: VisualDensity.compact,
-                    onPressed: () => player.stop(),
-                    icon: const Icon(Icons.stop, size: 19),
-                  ),
                   if (hasAudio)
                     IconButton(
                       tooltip: 'Replay response',

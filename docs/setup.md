@@ -110,7 +110,7 @@ ollama show phonon
 | `OLLAMA_TTS_MAX_TEXT_LENGTH` | `12000` | Maximum prepared response length |
 | `OLLAMA_TTS_MAX_CONCURRENT` | `2` | Maximum concurrent synthesis requests (1–16) |
 
-Speech is generated on demand; autoplay is off. English sessions show Listen, pause/resume, stop, replay, and volume controls. Bengali sessions and responses containing non-Latin letters remain text-only; the application does not translate them. The current model configuration validates `OLLAMA_TTS_LANGUAGE=en` at startup. Speech errors leave the written answer available. Audio is buffered until synthesis completes; audio is not streamed incrementally. The API does not cache or persist generated audio; the client retains only the currently selected audio in memory for replay and releases it on message change or screen disposal. Text is cleaned for speech (including Markdown and fenced code blocks) and long responses are split at sentence boundaries, with oversized sentences split at word boundaries.
+Speech is generated on demand; autoplay is off. English sessions show Listen, pause/resume, replay, and volume controls. Bengali sessions and responses containing non-Latin letters remain text-only; the application does not translate them. The current model configuration validates `OLLAMA_TTS_LANGUAGE=en` at startup. Speech errors leave the written answer available. Audio is buffered until synthesis completes; audio is not streamed incrementally. The API does not cache or persist generated audio; the client retains only the currently selected audio in memory for replay and releases it on message change or screen disposal. Text is cleaned for speech (including Markdown and fenced code blocks) and long responses are split at sentence boundaries, with oversized sentences split at word boundaries.
 
 The model is [Phonon 31m English](https://huggingface.co/gradium/phonon-31m-en) (24 kHz mono); its model card lists Apache-2.0. The [official Phonon runtime](https://github.com/gradium-ai/xn-ptts) source is MIT OR Apache-2.0, but the model license is separate. Review the license and voice terms for the exact model/version deployed. The API uses [Ollama's documented speech API](https://docs.ollama.com/capabilities/speech) and does not download weights into this repository.
 
@@ -120,7 +120,7 @@ The microphone button beside the chat composer uses the platform's speech-recogn
 
 The feature requires microphone permission and a browser/device with speech-recognition support. For Flutter web, use a supported browser and a secure context (HTTPS, or localhost for local development), then allow microphone access when prompted. The session language selects English or Bengali recognition where supported by the browser or device. iOS and macOS microphone and speech-recognition permission descriptions are configured in their respective `Info.plist` files. Recognition availability and language support vary by platform; speech input is not provided by the Ollama TTS configuration.
 
-To verify a deployment, start the API and Flutter app, open an English patient chat, wait for an assistant response, then use **Listen** and test pause/resume, stop, replay, and volume. A standalone non-clinical model check is:
+To verify a deployment, start the API and Flutter app, open an English patient chat, wait for an assistant response, then use **Listen** and test pause/resume, replay, and volume. A standalone non-clinical model check is:
 
 ```bash
 curl http://localhost:11434/v1/audio/speech \
