@@ -79,7 +79,7 @@ export PATH="$JAVA_HOME/bin:$PATH"
 "$JAVA_HOME/bin/rmic" -version
 ```
 
-The most important API values in `.env` are `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, `SPRING_DATASOURCE_PASSWORD`, and `SECRETKEY`. Generate a unique key, for example with `openssl rand -base64 32`; do not reuse any credentials from historical files. Ollama model settings and `IMEDIX_WHATSAPP_*` values are only needed for those integrations. Set `OLLAMA_LOG_PAYLOAD_ENABLED=false` where prompt payloads may contain patient data.
+The most important API values in `.env` are `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, `SPRING_DATASOURCE_PASSWORD`, and `SECRETKEY`. Use a dedicated, non-root MySQL account for `SPRING_DATASOURCE_USERNAME`; `MYSQL_ROOT_PASSWORD` is only for database administration and must not be used as the API password. For the local Compose database, Compose creates the API account using the Spring datasource username and password. Replace the example database password with a strong, unique value. Generate a unique key, for example with `openssl rand -base64 32`; do not reuse any credentials from historical files. Ollama model settings and `IMEDIX_WHATSAPP_*` values are only needed for those integrations. Set `OLLAMA_LOG_PAYLOAD_ENABLED=false` where prompt payloads may contain patient data.
 
 The legacy RMI server does not automatically load `.env`. Edit the generated `services/legacy/runtime/gblinfo.inf` for its JDBC URL, username, password, FTP credentials, and local paths. The legacy website has its own generated `apps/web/config.info`; provide any required external integration credentials there too. Both files are ignored by Git.
 
@@ -87,14 +87,22 @@ The legacy RMI server does not automatically load `.env`. Edit the generated `se
 
 ### Optional local MySQL with Docker
 
-Set `MYSQL_ROOT_PASSWORD` and `MYSQL_DATABASE` in `.env`, then run:
+Set `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `SPRING_DATASOURCE_USERNAME`, and `SPRING_DATASOURCE_PASSWORD` in `.env`, then run:
 
 ```bash
 docker compose up -d mysql
 docker compose ps
 ```
 
-`MYSQL_DATABASE` creates one empty schema on the first initialization of the Docker volume. The API and legacy config template default to `mDosthi`. Docker does not copy data from an existing local MySQL server; import an approved dump into the container before using the app. Existing MySQL Docker volumes are not reinitialized when these values change.
+On the first initialization of the Docker volume, Compose creates the schema named by `MYSQL_DATABASE` and a non-root application account whose credentials match `SPRING_DATASOURCE_USERNAME` and `SPRING_DATASOURCE_PASSWORD`. Set `SPRING_DATASOURCE_URL` to that MySQL server and schema. Docker does not copy data from an existing local MySQL server; import an approved dump into the container before using the app.
+
+Existing MySQL Docker volumes are not reinitialized when these values change. If the volume already exists, changing `.env` alone does not create or update the application account. Provision or update it safely using the configured MySQL administrator credentials:
+
+```bash
+bash scripts/provision-api-db-user.sh
+```
+
+The script uses `MYSQL_ROOT_PASSWORD` only to administer the database; it creates or updates the dedicated API user and grants it access only to `MYSQL_DATABASE`. For a database server not on `127.0.0.1:3306`, set `MYSQL_ADMIN_HOST` and `MYSQL_ADMIN_PORT` in `.env` to the server's administration endpoint. The failure `Access denied for user ...` means MySQL rejected the configured credentials or the account lacks access from the API host; restarting the API alone will not repair credentials.
 
 Without Docker, start your MySQL 8 server using your operating system's service manager, then create the required schema(s) and a least-privilege application user. The JDBC URL host/port/database must match that server.
 
