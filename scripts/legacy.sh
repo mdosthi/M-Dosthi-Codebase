@@ -49,6 +49,15 @@ build() {
 stop() {
   "$TOMCAT/bin/shutdown.sh" >/dev/null 2>&1 || true
   pkill -f iMediXBusinessLogic.jar 2>/dev/null || true
+  for _ in {1..10}; do
+    if ! pgrep -f '[i]MediXBusinessLogic.jar' >/dev/null; then
+      sleep 1
+      return 0
+    fi
+    sleep 1
+  done
+  echo "Legacy RMI process did not stop; refusing to start another instance." >&2
+  return 1
 }
 
 start() {

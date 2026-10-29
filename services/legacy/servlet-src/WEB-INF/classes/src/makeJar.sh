@@ -23,7 +23,10 @@ cp -r "$WORK_DIR/imedix/"*.class "$WEBAPP_DIR/WEB-INF/classes/imedix"
 "$JDK_HOME/bin/jar" -cf  phiv.jar phiv/*.class
 "$JDK_HOME/bin/jar" -cf  onlinegc.jar onlinegc/*.class
 "$JDK_HOME/bin/jar" -cf  logger.jar logger/*.class
+"$JDK_HOME/bin/jar" -uf logger.jar -C "$LEGACY_DIR/server-src" logger/imedixloggerInterface.class
 "$JDK_HOME/bin/jar" -cf  imedixservlets.jar imedixservlets/*.class
 cp -r *.jar "$WEBAPP_DIR/WEB-INF/lib"
+cp "$LEGACY_DIR/external-lib/commons-codec-1.7.jar" "$WEBAPP_DIR/WEB-INF/lib/"
+cp "$LEGACY_DIR/external-lib/json-simple-1.1.1.jar" "$WEBAPP_DIR/WEB-INF/lib/"
 
 echo done
