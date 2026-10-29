@@ -61,11 +61,22 @@ M-Dosthi is a healthcare application monorepo containing the legacy JSP/Tomcat s
 |---|---|---|---|
 | Flutter client (`apps/mobile`) | Flutter SDK; Chrome for web, or a configured platform runner | Calls `services/api` on port 9090 | `flutter run -d chrome --dart-define=API_HOST=localhost:9090` |
 | REST API (`services/api`) | JDK 25; Maven wrapper included | MySQL 8; Ollama for configured AI features | `scripts/api.sh` or `scripts/api.ps1` |
-| Legacy JSP site (`apps/web`) | Tomcat 9; Java 11 toolchain for servlet build | Uses legacy Java business logic | `scripts/legacy.sh run` in Bash |
-| Legacy RMI business logic (`services/legacy`) | JDK 11 including `rmic`; Bash | MySQL configuration in `runtime/gblinfo.inf` | Started with the legacy script |
+| Legacy JSP site (`apps/web`) | Tomcat 9; JDK 11 or later for servlet build | Uses legacy Java business logic | `scripts/legacy.sh run` in Bash |
+| Legacy RMI business logic (`services/legacy`) | JDK 11 or later; Bash | MySQL configuration in `runtime/gblinfo.inf` | Started with the legacy script |
 | Annotation pipeline (`services/annotate`) | Python 3.10+; dependencies in project files | Ollama; optional database integrations | See `services/annotate/README.md` |
 
-Docker is optional and can provide a local MySQL server. The setup scripts download Tomcat when it is absent; they do not install Java, Flutter, Python, MySQL, or Ollama. On Windows, use PowerShell for setup/API commands and Git Bash or WSL for the legacy build scripts.
+For the Flutter/API workflow, install both the Flutter SDK and JDK 25; they are separate prerequisites and are not installed by the Python requirements file or setup scripts. Docker can provide local MySQL on port 3306, but Compose creates only an empty `mDosthi` schema. Import an approved compatible schema/data dump before using database-backed features. The setup scripts download Tomcat when it is absent; they do not install Java, Flutter, Python, MySQL, or Ollama. On Windows, use PowerShell for setup/API commands and Git Bash or WSL for the legacy build scripts.
+
+### Install Python dependencies
+
+For the annotation pipeline, install `uv` first if it is not already available. From the repository root, create a virtual environment and install the dependencies listed in `requirements.txt`:
+
+```bash
+uv venv
+uv pip install -r requirements.txt
+```
+
+Run these commands from the repository root because `requirements.txt` includes the local `services/annotate` package.
 
 ## Quick Start: Flutter And API
 
@@ -140,22 +151,50 @@ For an Android emulator, set `API_HOST=10.0.2.2:9090`; for a physical phone, use
 
 ### Terminal 3: start the legacy JSP website
 
-The legacy website is independent of Flutter and uses JDK 11, Tomcat, and its RMI service. Configure `services/legacy/runtime/gblinfo.inf` for the legacy database and confirm the generated build artifacts are available. From a third terminal at the repository root, run this the first time or when rebuilding:
+The legacy website is independent of Flutter and uses JDK 11 or later, Tomcat, and its RMI service. Configure `services/legacy/runtime/gblinfo.inf` for the legacy database and confirm the generated build artifacts are available. From a third terminal at the repository root, run this the first time or when rebuilding:
 
 ```bash
-export JAVA_HOME="$PWD/tools/jdk11"
+export JAVA_HOME="$(brew --prefix openjdk@25)/libexec/openjdk.jdk/Contents/Home"
 export PATH="$JAVA_HOME/bin:$PATH"
 scripts/legacy.sh run
 ```
 
-After the legacy build artifacts are ready, on later starts use `scripts/legacy.sh start` instead of rebuilding. Keep the terminal open. Open the web URL printed by the script; this repository's local Tomcat configuration uses port `8081`, so the address is typically `http://127.0.0.1:8081/M-Dosthi/`. Check `tools/tomcat9/conf/server.xml` if the port differs. The legacy RMI service uses port `1099`.
+After the legacy build artifacts are ready, on later starts use `scripts/legacy.sh start` instead of rebuilding. Keep the terminal open. Open the web URL printed by the script; this repository's local Tomcat configuration uses port `8081`, so the address is typically `http://127.0.0.1:8081/M-Dosthi/`. Check `tools/tomcat9/conf/server.xml` if the port differs. The legacy RMI service uses port `1099` and advertises `127.0.0.1` by default for local development; set `LEGACY_RMI_ADVERTISE_HOST` to a reachable address when clients connect from another machine.
 
-The API uses JDK 25 while the legacy build/runtime uses JDK 11. Set `JAVA_HOME` separately in each terminal; do not try to run both Java services from a single terminal environment. See [the legacy build notes](docs/setup.md#legacy-clean-checkout-limitation) if `scripts/legacy.sh run` fails on a clean checkout because a required artifact is missing.
+The API and legacy build/runtime can use JDK 25. Set `JAVA_HOME` separately in each terminal if you run both Java services; do not try to run both from a single terminal environment. See [the legacy build notes](docs/setup.md#legacy-clean-checkout-limitation) if `scripts/legacy.sh run` fails on a clean checkout because a required artifact is missing.
 
 ## Quick Start: Legacy Web System
 
-The legacy stack is separate from the Flutter/API path. It needs JDK 11 with `rmic`, MySQL and a compatible legacy schema. On a clean checkout, confirm that required legacy build artifacts are available before relying on the build command; see [Legacy Build Notes](docs/setup.md#legacy-web-and-rmi).
+The legacy stack is separate from the Flutter/API path. It needs JDK 11 or later, MySQL and a compatible legacy schema. Its build uses dynamic RMI stubs and does not require `rmic`. On a clean checkout, confirm that required legacy build artifacts are available before relying on the build command; see [Legacy Build Notes](docs/setup.md#legacy-web-and-rmi).
 
+### Fresh local database: local legacy testing
+
+Compose creates an empty database, not the full legacy application schema. If you have no approved database backup and need to test local legacy workflows, start MySQL and run the development-only bootstrap:
+
+```bash
+docker compose up -d mysql
+scripts/dev/legacy-fresh-db.sh
+```
+
+The script refuses to run unless the Compose database is named `mDosthi` and the legacy login/queue tables are absent. It creates a minimal schema from [legacy-minimal-login.sql](database/dev/legacy-minimal-login.sql), then prompts you to choose an admin user ID and password. There is no default password. For this disposable local test only, the password may match the user ID; that is weak and must not be reused elsewhere. The minimal schema supports local accounts, patient registration, screening checkpoints, and chat-control/session/message persistence; it is not the full clinical application schema. Chat remains limited to patients explicitly enrolled in the RCT (`login.rctFlag = 1`); the bootstrap does not enroll patients automatically. Before starting or restarting the legacy services, set `gbldbusername` and `gbldbpasswd` in the ignored local file `services/legacy/runtime/gblinfo.inf` to the same local Compose application account configured by `SPRING_DATASOURCE_USERNAME` and `SPRING_DATASOURCE_PASSWORD` in `.env`, then run:
+
+```bash
+scripts/legacy.sh run
+```
+
+Sign in at `http://localhost:8080/M-Dosthi/` with the user ID and password you entered. The seeded account uses the legacy `adm` role; the legacy web app has no separate “System Administrator” role. This bootstrap does not initialize the full application schema or enable the other clinical workflows. The legacy application stores passwords with MD5, so use a unique local-only password and never use this bootstrap with production data or an exposed server. For a functional system, import the complete, approved legacy schema instead.
+
+The screening migration runner requires Java 11 or later and Maven. On macOS with Homebrew, install both (JDK 25 is also suitable for the legacy project), then add them to the current terminal's `PATH`:
+
+```bash
+brew install maven openjdk@25
+export JAVA_HOME="$(brew --prefix openjdk@25)/libexec/openjdk.jdk/Contents/Home"
+export PATH="$(brew --prefix maven)/bin:$JAVA_HOME/bin:$PATH"
+java -version
+mvn -version
+```
+
+Once Java and Maven are available, build and run the migration runner from the repository root:
 
 ```bash
 mvn -f database/migration-runner/pom.xml package

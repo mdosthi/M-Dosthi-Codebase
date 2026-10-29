@@ -129,6 +129,7 @@
         return;
       }
     } catch (Exception exception) {
+      application.log("Unable to load pending screening checkpoints.", exception);
       error = "Unable to load pending screening checkpoints.";
     } finally {
       if (result != null) try { result.close(); } catch (SQLException ignored) { }

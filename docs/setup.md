@@ -20,7 +20,7 @@ Install the tools needed for your chosen workflow. The repository setup scripts 
 |---|---|---|
 | Git | All workflows | Clone this repository. |
 | JDK 25 | `services/api` | Required by `services/api/pom.xml`; set `JAVA_HOME` and `PATH` before starting Maven. |
-| JDK 11 | Legacy build and runtime | Must include `javac` and `rmic`. `rmic` was removed from later JDK releases. A local `tools/jdk11` may be supplied separately; `tools/` is not part of Git. |
+| JDK 11 or later | Legacy build and runtime | Must include `javac`. The legacy RMI service uses dynamic stubs and does not require the removed `rmic` tool; builds target Java 11 bytecode. A local `tools/jdk11` may still be used; `tools/` is not part of Git. |
 | MySQL 8 | API and legacy workflows | Use a local server, a remote server, or the optional Compose service. You need a compatible database dump/schema; Compose alone creates an empty database. |
 | Flutter SDK | `apps/mobile` | Chrome is needed for the Chrome target; `web-server` can be used with another browser. |
 | Python 3.10+ | `services/annotate` | Create an isolated environment and install the package's declared dependencies. |
@@ -49,7 +49,7 @@ powershell -ExecutionPolicy Bypass -File scripts/setup.ps1
 
 The setup script prepares local configuration and Tomcat, then reports which prerequisite commands are on `PATH`. It does not install those prerequisites or initialize application tables. It creates `.env` from `.env.example` if needed. It also creates `services/legacy/runtime/gblinfo.inf` and `apps/web/config.info` from templates, replacing `@PROJECT_ROOT@` with this checkout's absolute path. Generated files are not overwritten on later setup runs, so preserve your local edits.
 
-`tools/` is Git-ignored. Setup downloads Tomcat 9 there if it is missing, but a JDK 11 distribution is not automatically downloaded. Install the needed JDKs yourself and keep their paths outside version control.
+`tools/` is Git-ignored. Setup downloads Tomcat 9 there if it is missing, but a Java distribution is not automatically downloaded. Install the needed JDKs yourself and keep their paths outside version control.
 
 ## 2. Configure Java And Secrets
 
@@ -71,12 +71,12 @@ $env:Path = "$env:JAVA_HOME\bin;$env:Path"
 java -version
 ```
 
-For legacy build commands, select JDK 11 instead:
+For legacy build commands, select JDK 11 or later:
 
 ```bash
 export JAVA_HOME=/path/to/jdk-11
 export PATH="$JAVA_HOME/bin:$PATH"
-"$JAVA_HOME/bin/rmic" -version
+"$JAVA_HOME/bin/javac" -version
 ```
 
 The most important API values in `.env` are `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, `SPRING_DATASOURCE_PASSWORD`, and `SECRETKEY`. Use a dedicated, non-root MySQL account for `SPRING_DATASOURCE_USERNAME`; `MYSQL_ROOT_PASSWORD` is only for database administration and must not be used as the API password. For the local Compose database, Compose creates the API account using the Spring datasource username and password. Replace the example database password with a strong, unique value. Generate a unique key, for example with `openssl rand -base64 32`; do not reuse any credentials from historical files. Ollama model settings and `IMEDIX_WHATSAPP_*` values are only needed for those integrations. Set `OLLAMA_LOG_PAYLOAD_ENABLED=false` where prompt payloads may contain patient data.
@@ -95,6 +95,8 @@ docker compose ps
 ```
 
 On the first initialization of the Docker volume, Compose creates the schema named by `MYSQL_DATABASE` and a non-root application account whose credentials match `SPRING_DATASOURCE_USERNAME` and `SPRING_DATASOURCE_PASSWORD`. Set `SPRING_DATASOURCE_URL` to that MySQL server and schema. Docker does not copy data from an existing local MySQL server; import an approved dump into the container before using the app.
+
+For local legacy testing without a backup, the repository README documents a guarded [minimal local development bootstrap](../README.md#fresh-local-database-local-legacy-testing). It supports local accounts, basic patient registration, screening checkpoints, and chat persistence tables, but is not a full database initialization and does not enable the other clinical workflows. Chat remains restricted to patients explicitly enrolled in the RCT.
 
 Existing MySQL Docker volumes are not reinitialized when these values change. If the volume already exists, changing `.env` alone does not create or update the application account. Provision or update it safely using the configured MySQL administrator credentials:
 
@@ -162,7 +164,7 @@ The client screen can render without the API, but login and server-backed featur
 
 ## 5. Run The Legacy JSP And RMI System
 
-This workflow requires JDK 11, Tomcat 9, a compatible `mDosthi` schema and the legacy configuration files. Confirm `services/legacy/runtime/gblinfo.inf` contains the right local DB connection before starting.
+This workflow requires JDK 11 or later, Tomcat 9, a compatible `mDosthi` schema and the legacy configuration files. Confirm `services/legacy/runtime/gblinfo.inf` contains the right local DB connection before starting.
 
 ```bash
 export JAVA_HOME=/path/to/jdk-11
@@ -206,6 +208,6 @@ Read [the annotation package README](../services/annotate/README.md) for support
 - **Unknown database/table:** Compose creates an empty schema, not application tables. Import the correct approved dump before using the app; apply only the migrations intended for that schema.
 - **Flutter login says failed to fetch:** confirm the API is listening on 9090, set the correct `API_HOST` for the target device, and check browser/network CORS errors.
 - **Flutter web asset manifest is missing:** stop the stale Flutter process, run `flutter pub get`, then start Flutter again from `apps/mobile` and open the new URL it prints.
-- **`JDK 11 with rmic required`:** the legacy script auto-detects JDK 11 under `/usr/lib/jvm` or `tools/jdk11`. Otherwise, set `JAVA_HOME` to a JDK 11 installation that includes `bin/rmic`; JDK 15 and later do not include it.
+- **`JDK 11 or later with javac required`:** set `JAVA_HOME` to a JDK installation. The legacy build uses dynamic RMI stubs and does not invoke `rmic`.
 - **Tomcat or RMI port is occupied:** inspect listeners on the configured HTTP port and 1099, stop the conflicting application, and start again. Do not kill unrelated Java processes indiscriminately.
 - **Legacy rebuild errors for absent classes:** see the clean-checkout limitation above; local ignored build output may have hidden the missing artifact.
