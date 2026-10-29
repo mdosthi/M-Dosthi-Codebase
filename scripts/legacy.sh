@@ -16,10 +16,23 @@ for name in LEGACY_DB_URL LEGACY_DB_USERNAME LEGACY_DB_PASSWORD; do
   esac
 done
 
-if [ -z "${JAVA_HOME:-}" ] && [ -x "$ROOT/tools/jdk11/bin/javac" ]; then
-  export JAVA_HOME="$ROOT/tools/jdk11"
+is_jdk11_with_rmic() {
+  [ -x "$1/bin/java" ] &&
+    [ -x "$1/bin/rmic" ] &&
+    [ -r "$1/release" ] &&
+    grep -Eq '^JAVA_VERSION="11([.]|")' "$1/release"
+}
+
+if [ -z "${JAVA_HOME:-}" ]; then
+  for candidate in "$ROOT/tools/jdk11" /usr/lib/jvm/*; do
+    if is_jdk11_with_rmic "$candidate"; then
+      JAVA_HOME="$candidate"
+      break
+    fi
+  done
 fi
-if [ ! -x "${JAVA_HOME:-/nonexistent}/bin/rmic" ]; then
+
+if ! is_jdk11_with_rmic "${JAVA_HOME:-/nonexistent}"; then
   echo "JDK 11 with rmic required. Set JAVA_HOME to a JDK 11 install." >&2
   exit 1
 fi

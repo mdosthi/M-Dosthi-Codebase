@@ -198,6 +198,6 @@ Read [the annotation package README](../services/annotate/README.md) for support
 - **Unknown database/table:** Compose creates an empty schema, not application tables. Import the correct approved dump before using the app; apply only the migrations intended for that schema.
 - **Flutter login says failed to fetch:** confirm the API is listening on 9090, set the correct `API_HOST` for the target device, and check browser/network CORS errors.
 - **Flutter web asset manifest is missing:** stop the stale Flutter process, run `flutter pub get`, then start Flutter again from `apps/mobile` and open the new URL it prints.
-- **`JDK 11 with rmic required`:** set `JAVA_HOME` to a JDK 11 installation that includes `bin/rmic`; JDK 15 and later do not include it.
+- **`JDK 11 with rmic required`:** the legacy script auto-detects JDK 11 under `/usr/lib/jvm` or `tools/jdk11`. Otherwise, set `JAVA_HOME` to a JDK 11 installation that includes `bin/rmic`; JDK 15 and later do not include it.
 - **Tomcat or RMI port is occupied:** inspect listeners on the configured HTTP port and 1099, stop the conflicting application, and start again. Do not kill unrelated Java processes indiscriminately.
 - **Legacy rebuild errors for absent classes:** see the clean-checkout limitation above; local ignored build output may have hidden the missing artifact.
