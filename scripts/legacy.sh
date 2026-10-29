@@ -23,7 +23,7 @@ is_jdk11_with_rmic() {
     grep -Eq '^JAVA_VERSION="11([.]|")' "$1/release"
 }
 
-if [ -z "${JAVA_HOME:-}" ]; then
+if ! is_jdk11_with_rmic "${JAVA_HOME:-/nonexistent}"; then
   for candidate in "$ROOT/tools/jdk11" /usr/lib/jvm/*; do
     if is_jdk11_with_rmic "$candidate"; then
       JAVA_HOME="$candidate"
