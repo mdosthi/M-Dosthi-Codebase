@@ -1,7 +1,7 @@
 gblcentercode = EXTR
 gbldbjdbccriver = com.mysql.cj.jdbc.Driver
 gbldburl = jdbc:mysql://127.0.0.1:3306/mDosthi?useUnicode=true&characterEncoding=UTF-8
-gbldbusername =your-database-user
+gbldbusername =mDosthi
 gbldbpasswd =change-me
 blport = 1099
 tempdatadir = @PROJECT_ROOT@/services/legacy/runtime/temp
@@ -15,6 +15,5 @@ SystemLogger = yes
 SystemLoggerPath = @PROJECT_ROOT@/services/legacy/runtime/SystemLog
 GeneralSqlLog = yes
 GeneralSqlLogPath = @PROJECT_ROOT@/services/legacy/runtime/GenSqlLog
-
 
 

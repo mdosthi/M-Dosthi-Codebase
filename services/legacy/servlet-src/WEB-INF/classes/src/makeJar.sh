@@ -1,3 +1,5 @@
+set -eu
+
 SCRIPT_DIR="$(cd -- "$(dirname -- "$0")" && pwd)"
 PROJECT_ROOT="$(cd -- "$SCRIPT_DIR/../../../../../../" && pwd)"
 LEGACY_DIR="$PROJECT_ROOT/services/legacy"
@@ -6,6 +8,7 @@ JDK_HOME="${JAVA_HOME:-$PROJECT_ROOT/tools/jdk11}"
 WORK_DIR="$(pwd)"
 
 cp -r "$LEGACY_DIR/server-src/imedix" "$WORK_DIR"
+mkdir -p "$WORK_DIR/imedixservlets" "$WEBAPP_DIR/WEB-INF/classes/imedix"
 
 "$JDK_HOME/bin/javac" -classpath ".:$LEGACY_DIR/server-src/ftp.jar:$LEGACY_DIR/server-src:$LEGACY_DIR/external-lib/*:" -d "$WORK_DIR" *.java
 

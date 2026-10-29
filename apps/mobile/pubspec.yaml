@@ -211,7 +211,7 @@ flutter:
   assets:
     - assets/survey_questions.json
     - assets/images/
-    - assets/icon/
+    - assets/icons/
     - assets/Video1.mp4
     - assets/Video2.mp4
     - assets/1.pdf

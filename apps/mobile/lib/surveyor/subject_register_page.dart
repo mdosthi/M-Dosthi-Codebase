@@ -463,7 +463,7 @@ Widget _buildFormField(String labelText, TextEditingController controller,
                   Expanded(
                     child: isDropdown
                         ? DropdownButtonFormField<String>(
-                            initialValue:
+                            value:
                                 dropdownItems?.contains(controller.text) == true
                                     ? controller.text
                                     : null,

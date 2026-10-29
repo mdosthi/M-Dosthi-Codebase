@@ -1,3 +1,5 @@
+set -eu
+
 SCRIPT_DIR="$(cd -- "$(dirname -- "$0")" && pwd)"
 PROJECT_ROOT="$(cd -- "$SCRIPT_DIR/../../.." && pwd)"
 LEGACY_DIR="$PROJECT_ROOT/services/legacy"
@@ -10,7 +12,6 @@ WORK_DIR="$(pwd)"
 "$JDK_HOME/bin/jar" -cf phiv.jar phiv/*.class
 "$JDK_HOME/bin/jar" -cf logger.jar logger/*.class
 "$JDK_HOME/bin/jar" -cf onlinegc.jar onlinegc/*.class
-"$JDK_HOME/bin/jar" -cf ftp.jar ftp/*.class
 "$JDK_HOME/bin/jar" -cmf imedixserver.txt iMediXBusinessLogic.jar imedixserver/*.class
 
 "$JDK_HOME/bin/rmic" imedix.dbGenOperations

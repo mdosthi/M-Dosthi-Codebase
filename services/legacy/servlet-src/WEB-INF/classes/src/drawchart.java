@@ -8,7 +8,6 @@ import java.awt.image.*;
 import java.awt.*;
 import javax.imageio.*;
 import javax.swing.ImageIcon;
-import com.sun.image.codec.jpeg.*;
 import java.awt.geom.AffineTransform;
 import java.text.DecimalFormat;
 

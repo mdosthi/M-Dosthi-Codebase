@@ -9,7 +9,7 @@ This directory contains the source code for the M-Dosthi Spring Boot API.
 
 ## Requirements
 
-- Java 25, as declared in `pom.xml`.
+- JDK 25, as declared in `pom.xml`.
 - MySQL for database-backed features.
 - Ollama for AI-backed features where configured.
 
@@ -22,7 +22,7 @@ From this directory:
 ./mvnw test
 ```
 
-The current development machine has Java 11, so Maven validation works but compilation and tests require a Java 25-capable JDK.
+Compilation and tests require a Java 25-capable JDK.
 
 ## Run From Source
 

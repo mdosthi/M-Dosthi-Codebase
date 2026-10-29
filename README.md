@@ -77,7 +77,7 @@ From the repository root:
 
 ```bash
 git clone <repository-url> M-Dosthi
-cd M-Dosthi
+cd M-Dosthi-Codebase
 scripts/setup.sh                         # Windows: powershell -File scripts/setup.ps1
 ```
 
@@ -94,11 +94,14 @@ See [Setup instructions](docs/setup.md) for database import and configuration de
 From the repository root (the directory containing `scripts/` and `apps/`), select JDK 25 and start the API:
 
 ```bash
-export JAVA_HOME=/path/to/jdk-25
+export JAVA_HOME="$(dirname "$(dirname "$(readlink -f "$(command -v javac)")")")"
 export PATH="$JAVA_HOME/bin:$PATH"
+javac -version
 java -version
 scripts/api.sh
 ```
+
+The `JAVA_HOME` value must be the JDK installation directory, not a placeholder or the path to the `java` executable. The command above derives it from the `javac` currently on your `PATH`; confirm the reported version is 25 before starting the API.
 
 Keep this terminal open. The API listens on port `9090`. If you already have JDK 25 under `~/.jdk`, you can select it with:
 

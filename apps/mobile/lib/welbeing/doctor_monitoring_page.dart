@@ -261,10 +261,10 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
                           width: double.infinity,
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: distressColor.withValues(alpha: 0.08),
+                            color: distressColor.withOpacity(0.08),
                             borderRadius: BorderRadius.circular(14),
                             border: Border.all(
-                                color: distressColor.withValues(alpha: 0.2)),
+                                color: distressColor.withOpacity(0.2)),
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -338,7 +338,7 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
                                 color: Colors.grey.shade700)),
                         const SizedBox(height: 8),
                         DropdownButtonFormField<String>(
-                          initialValue: _selectedAction,
+                          value: _selectedAction,
                           decoration: const InputDecoration(
                               border: OutlineInputBorder()),
                           items: const [

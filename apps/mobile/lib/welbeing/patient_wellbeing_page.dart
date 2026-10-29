@@ -137,7 +137,7 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
       label: Text(label),
       selected: selected,
       onSelected: (_) => onSelected(),
-      selectedColor: const Color(0xFF1B5E20).withValues(alpha: 0.14),
+      selectedColor: const Color(0xFF1B5E20).withOpacity(0.14),
       labelStyle: GoogleFonts.outfit(fontWeight: FontWeight.w600),
     );
   }
