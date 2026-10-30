@@ -47,13 +47,13 @@ Set-Location M-Dosthi
 powershell -ExecutionPolicy Bypass -File scripts/setup.ps1
 ```
 
-The setup script prepares local configuration and Tomcat, then reports which prerequisite commands are on `PATH`. It does not install those prerequisites or initialize application tables. It creates `.env` from `.env.example` if needed. It also creates `services/legacy/runtime/gblinfo.inf` and `apps/web/config.info` from templates, replacing `@PROJECT_ROOT@` with this checkout's absolute path. Generated files are not overwritten on later setup runs, so preserve your local edits.
+The setup script prepares local configuration and Tomcat, then reports which prerequisite commands are on `PATH`. It does not install those prerequisites or initialize application tables. If `.env` is missing, it copies `.env.example` to `.env`; the tracked `.env.example` template is not modified. Edit only `.env` with local values. It also creates `services/legacy/runtime/gblinfo.inf` and `apps/web/config.info` from templates, replacing `@PROJECT_ROOT@` with this checkout's absolute path. Generated files are not overwritten on later setup runs, so preserve your local edits.
 
 `tools/` is Git-ignored. Setup downloads Tomcat 9 there if it is missing, but a Java distribution is not automatically downloaded. Install the needed JDKs yourself and keep their paths outside version control.
 
 ## 2. Configure Java And Secrets
 
-Copy/edit `.env` in the repository root. It is ignored by Git; keep one value per line as `NAME=value` and do not add real values to `.env.example`.
+Copy `.env.example` to `.env` in the repository root, then edit `.env`. It is ignored by Git; keep one value per line as `NAME=value`. Never put passwords, API tokens, or other credentials in `.env.example`; it is a tracked template shared with the repository.
 
 For the API, select JDK 25 before launching. Bash example:
 

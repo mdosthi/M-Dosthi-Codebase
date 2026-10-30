@@ -91,7 +91,7 @@ cd M-Dosthi
 scripts/setup.sh                         # Windows: powershell -File scripts/setup.ps1
 ```
 
-The setup script creates `.env` from `.env.example` if it does not exist. Edit `.env` with your local database settings. Generate a JWT secret with `openssl rand -base64 32` and put the output in `SECRETKEY` (do not leave the example value `change-me`). Start MySQL (or use an existing MySQL 8 server), then import an approved compatible database dump; Compose creates an empty database and does not load application data:
+The setup script copies `.env.example` to `.env` if it does not exist; it does not modify the tracked template. Edit `.env` only with your local database settings. Generate a JWT secret with `openssl rand -base64 32` and put the output in `SECRETKEY`. Start MySQL (or use an existing MySQL 8 server), then import an approved compatible database dump; Compose creates an empty database and does not load application data:
 
 ```bash
 docker compose up -d mysql
