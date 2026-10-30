@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -16,7 +18,6 @@ import java.util.Objects;
 
 @Service
 public class PatientScreeningReportService {
-    private static final int DEFAULT_PAGE_SIZE = 50;
     private static final int MAX_PAGE_SIZE = 100;
     private static final int MAX_OFFSET = 10_000;
 
@@ -44,8 +45,7 @@ public class PatientScreeningReportService {
         String normalizedPatientId = patientId.trim();
         Map<String, Object> userInfo = userRepository.getUserInfo(actor);
         String role = Objects.toString(userInfo.get("type"), "");
-        if (!"doc".equalsIgnoreCase(role) && !"psy".equalsIgnoreCase(role)
-                && !"adm".equalsIgnoreCase(role)) {
+        if (!"doc".equalsIgnoreCase(role) && !"psy".equalsIgnoreCase(role)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN,
                     "Only clinicians can access screening history");
         }
@@ -84,7 +84,8 @@ public class PatientScreeningReportService {
                 + count("distress_thermometer", "pat_id", normalizedPatientId)
                 + count("phq9_screening", "pat_id", normalizedPatientId)
                 + count("gad7_screening", "pat_id", normalizedPatientId);
-        String nextScreeningDate = findLatestPoBadoFollowUp(normalizedPatientId);
+        String followUpDate = findLatestPoBadoFollowUp(normalizedPatientId);
+        List<Map<String, Object>> screeningSchedule = loadScreeningSchedule(normalizedPatientId);
         attachDistressConcerns(records, requestedOffset, requestedLimit);
 
         int start = Math.min(requestedOffset, records.size());
@@ -100,15 +101,120 @@ public class PatientScreeningReportService {
         response.put("hasMore", requestedOffset + page.size() < total);
         response.put("lastScreeningDate",
                 records.isEmpty() ? null : records.get(0).get("screeningDate"));
-        response.put("nextScreeningDate", nextScreeningDate);
+        response.put("followUpDate", followUpDate);
+        response.put("screeningSchedule", screeningSchedule);
         return response;
+    }
+
+    private List<Map<String, Object>> loadScreeningSchedule(String patientId) {
+        List<Map<String, Object>> schedule = new ArrayList<>();
+        schedule.add(loadScheduleItem(
+                patientId, "PO Bado", "pobado_screening", "cr_number", true));
+        schedule.add(loadScheduleItem(
+                patientId, "Distress Thermometer", "distress_thermometer", "pat_id", false));
+        schedule.add(loadScheduleItem(
+                patientId, "PHQ-9", "phq9_screening", "pat_id", false));
+        schedule.add(loadScheduleItem(
+                patientId, "GAD-7", "gad7_screening", "pat_id", false));
+        return schedule;
+    }
+
+    private Map<String, Object> loadScheduleItem(
+            String patientId, String screeningType, String table, String patientColumn,
+            boolean hasSavedFollowUpDate) {
+        List<Map<String, Object>> baselineRows = jdbc.queryForList(
+                "SELECT screening_date FROM " + table + " WHERE " + patientColumn +
+                        " = ? AND assessment_checkpoint = 'Baseline Assessment' " +
+                        "ORDER BY screening_date ASC, id ASC LIMIT 1",
+                patientId);
+        List<Map<String, Object>> latestRows = jdbc.queryForList(
+                "SELECT screening_date, assessment_checkpoint" +
+                        (hasSavedFollowUpDate ? ", follow_up_date" : "") +
+                        " FROM " + table + " WHERE " + patientColumn +
+                        " = ? ORDER BY screening_date DESC, id DESC LIMIT 1",
+                patientId);
+
+        LocalDate baselineDate = baselineRows.isEmpty()
+                ? null : toLocalDate(baselineRows.get(0).get("screening_date"));
+        Map<String, Object> latest = latestRows.isEmpty() ? null : latestRows.get(0);
+        String latestCheckpoint = latest == null
+                ? null : Objects.toString(latest.get("assessment_checkpoint"), null);
+        LocalDate savedFollowUpDate = hasSavedFollowUpDate && latest != null
+                ? toLocalDate(latest.get("follow_up_date")) : null;
+
+        Map<String, Object> item = new LinkedHashMap<>();
+        item.put("screeningType", screeningType);
+        item.put("baselineDate", baselineDate == null ? null : baselineDate.toString());
+        item.put("lastCompletedCheckpoint", latestCheckpoint);
+
+        if (latest == null) {
+            item.put("nextCheckpoint", "Baseline Assessment");
+            item.put("dueDate", null);
+            item.put("countdown", "Baseline screening not completed");
+            return item;
+        }
+        if (baselineDate == null) {
+            item.put("nextCheckpoint", "Baseline Assessment");
+            item.put("dueDate", null);
+            item.put("countdown", "Baseline date unavailable; schedule cannot be calculated");
+            return item;
+        }
+
+        int completedWeek = checkpointWeek(latestCheckpoint);
+        if (completedWeek < 0) {
+            item.put("nextCheckpoint", null);
+            item.put("dueDate", null);
+            item.put("countdown", "Schedule checkpoint unavailable");
+            return item;
+        }
+        if (completedWeek >= 12) {
+            item.put("nextCheckpoint", null);
+            item.put("dueDate", null);
+            item.put("countdown", "12-week schedule complete");
+            return item;
+        }
+
+        int nextWeek = completedWeek + 4;
+        LocalDate dueDate = savedFollowUpDate != null
+                ? savedFollowUpDate : baselineDate.plusWeeks(nextWeek);
+        long daysRemaining = ChronoUnit.DAYS.between(LocalDate.now(), dueDate);
+        item.put("nextCheckpoint", nextWeek + " week Assessment");
+        item.put("dueDate", dueDate.toString());
+        item.put("daysRemaining", daysRemaining);
+        item.put("countdown", countdown(daysRemaining));
+        return item;
+    }
+
+    private int checkpointWeek(String checkpoint) {
+        if ("Baseline Assessment".equalsIgnoreCase(checkpoint)) return 0;
+        if (checkpoint == null) return -1;
+        java.util.regex.Matcher matcher =
+                java.util.regex.Pattern.compile("^(4|8|12) week Assessment$", java.util.regex.Pattern.CASE_INSENSITIVE)
+                        .matcher(checkpoint.trim());
+        return matcher.matches() ? Integer.parseInt(matcher.group(1)) : -1;
+    }
+
+    private String countdown(long daysRemaining) {
+        if (daysRemaining < 0) {
+            return "Due date passed by " + Math.abs(daysRemaining) +
+                    " " + (Math.abs(daysRemaining) == 1 ? "day" : "days") +
+                    "; no completion is recorded for this checkpoint";
+        }
+        if (daysRemaining == 0) return "Due today";
+        return "Due in " + daysRemaining + " " + (daysRemaining == 1 ? "day" : "days");
+    }
+
+    private LocalDate toLocalDate(Object value) {
+        if (value == null) return null;
+        if (value instanceof java.sql.Date sqlDate) return sqlDate.toLocalDate();
+        return LocalDate.parse(value.toString().substring(0, 10));
     }
 
     private List<Map<String, Object>> loadPoBado(String patientId, int limit) {
         List<Map<String, Object>> rows = jdbc.queryForList(
                 "SELECT id, screening_date, assessment_checkpoint, total_score, fatigue, mood, " +
                         "anxiety, depression, limitations, social_problems, follow_up_date, " +
-                        "recorded_at, recorded_by FROM pobado_screening WHERE cr_number = ? " +
+                        "recorded_at FROM pobado_screening WHERE cr_number = ? " +
                         "ORDER BY screening_date DESC, id DESC LIMIT ?",
                 patientId, limit);
         List<Map<String, Object>> records = new ArrayList<>();
@@ -129,8 +235,8 @@ public class PatientScreeningReportService {
 
     private List<Map<String, Object>> loadDistressThermometer(String patientId, int limit) {
         List<Map<String, Object>> rows = jdbc.queryForList(
-                "SELECT id, screening_date, assessment_checkpoint, distress_score, recorded_at, " +
-                        "recorded_by FROM distress_thermometer WHERE pat_id = ? " +
+                "SELECT id, screening_date, assessment_checkpoint, distress_score, recorded_at " +
+                "FROM distress_thermometer WHERE pat_id = ? " +
                         "ORDER BY screening_date DESC, id DESC LIMIT ?",
                 patientId, limit);
         List<Map<String, Object>> records = new ArrayList<>();
@@ -148,7 +254,7 @@ public class PatientScreeningReportService {
     private List<Map<String, Object>> loadPhq9(String patientId, int limit) {
         List<Map<String, Object>> rows = jdbc.queryForList(
                 "SELECT id, screening_date, assessment_checkpoint, total_score, q1, q2, q3, q4, " +
-                        "q5, q6, q7, q8, q9, recorded_at, recorded_by FROM phq9_screening " +
+                        "q5, q6, q7, q8, q9 FROM phq9_screening " +
                         "WHERE pat_id = ? ORDER BY screening_date DESC, id DESC LIMIT ?",
                 patientId, limit);
         List<Map<String, Object>> records = new ArrayList<>();
@@ -166,7 +272,7 @@ public class PatientScreeningReportService {
     private List<Map<String, Object>> loadGad7(String patientId, int limit) {
         List<Map<String, Object>> rows = jdbc.queryForList(
                 "SELECT id, screening_date, assessment_checkpoint, total_score, anxiety_category, " +
-                        "q1, q2, q3, q4, q5, q6, q7, recorded_at, recorded_by FROM gad7_screening " +
+                        "q1, q2, q3, q4, q5, q6, q7 FROM gad7_screening " +
                         "WHERE pat_id = ? ORDER BY screening_date DESC, id DESC LIMIT ?",
                 patientId, limit);
         List<Map<String, Object>> records = new ArrayList<>();
@@ -194,7 +300,6 @@ public class PatientScreeningReportService {
         record.put("maximumScore", maximumScore);
         record.put("interpretation", interpretation);
         record.put("recordedAt", row.get("recorded_at") == null ? null : row.get("recorded_at").toString());
-        record.put("recordedBy", row.get("recorded_by"));
         record.put("responses", new ArrayList<Map<String, Object>>());
         return record;
     }
@@ -241,8 +346,11 @@ public class PatientScreeningReportService {
                 ids.toArray());
         Map<String, List<Map<String, Object>>> grouped = new HashMap<>();
         for (Map<String, Object> concern : concerns) {
+            Map<String, Object> item = new LinkedHashMap<>();
+            item.put("category", concern.get("category"));
+            item.put("concern", concern.get("concern"));
             grouped.computeIfAbsent(String.valueOf(concern.get("screening_id")), key -> new ArrayList<>())
-                    .add(Map.of("category", concern.get("category"), "concern", concern.get("concern")));
+                    .add(item);
         }
         for (Map<String, Object> record : page) {
             if (!"Distress Thermometer".equals(record.get("screeningType"))) continue;

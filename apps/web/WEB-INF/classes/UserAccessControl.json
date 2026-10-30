@@ -497,6 +497,9 @@
 	"org.apache.jsp.jspfiles.psychologistPatientList_jsp": [
 		"psy"
 	],
+	"org.apache.jsp.jspfiles.patientScreeningReport_jsp": [
+		"psy"
+	],
 	"org.apache.jsp.jspfiles.pendingScreeningSelection_jsp": [
 		"adm",
 		"psy"
@@ -638,4 +641,3 @@
 		"adm"
 	]
 }
-

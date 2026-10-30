@@ -37,12 +37,14 @@ import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 import imedix.saMiX.service.OllamaService;
 import imedix.saMiX.service.OllamaSpeechService;
+import imedix.saMiX.service.PatientScreeningReportService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.codec.Hex;
+import org.springframework.web.server.ResponseStatusException;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -88,6 +90,9 @@ public class UserController {
 
     @Autowired
     private OllamaSpeechService ollamaSpeechService;
+
+    @Autowired
+    private PatientScreeningReportService patientScreeningReportService;
 
     @Value("${imedix.center.code}")
     String centerCode;
@@ -2422,6 +2427,32 @@ public class UserController {
         return result;
     }
 
+    @PostMapping("/get-screening-history")
+    public ResponseEntity<Map<String, Object>> getPatientScreeningHistory(
+            @RequestBody Map<String, Object> request, Authentication authentication) {
+        String patientId = Objects.toString(request.get("patientId"), "");
+        int offset;
+        int limit;
+        try {
+            offset = request.get("offset") == null ? 0
+                    : Integer.parseInt(request.get("offset").toString());
+            limit = request.get("limit") == null ? 50
+                    : Integer.parseInt(request.get("limit").toString());
+        } catch (NumberFormatException exception) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "status", "error", "message", "Offset and limit must be integers"));
+        }
+
+        try {
+            return ResponseEntity.ok(patientScreeningReportService.getHistory(
+                    patientId, authentication == null ? null : authentication.getName(), offset, limit));
+        } catch (ResponseStatusException exception) {
+            Map<String, Object> error = new HashMap<>();
+            error.put("status", "error");
+            error.put("message", Objects.toString(exception.getReason(), "Request denied"));
+            return ResponseEntity.status(exception.getStatusCode()).body(error);
+        }
+    }
 
 
     @GetMapping("/")

@@ -155,7 +155,7 @@
       <p class="muted">Patients <%= totalPatients == 0 ? 0 : ((pageNumber - 1) * pageSize + 1) %> to <%= Math.min(pageNumber * pageSize, totalPatients) %> of <%= totalPatients %></p>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Sex</th><th>Phone</th><th>OPD No.</th><th>City</th><th>District</th><th>State</th></tr></thead>
+          <thead><tr><th>Patient ID</th><th>Name</th><th>Date of Birth</th><th>Sex</th><th>Phone</th><th>OPD No.</th><th>City</th><th>District</th><th>State</th><th>Screening History</th></tr></thead>
           <tbody>
             <% for (Map<String, String> patient : patients) { %>
               <tr>
@@ -163,9 +163,10 @@
                 <td><%= html(patient.get("dateofbirth")) %></td><td><%= html(patient.get("sex")) %></td>
                 <td><%= html(patient.get("phone")) %></td><td><%= html(patient.get("opdno")) %></td>
                 <td><%= html(patient.get("city")) %></td><td><%= html(patient.get("dist")) %></td><td><%= html(patient.get("state")) %></td>
+                <td><a href="#" onclick="clearPanel('patientScreeningReport.jsp?pat_id=<%= java.net.URLEncoder.encode(patient.get("pat_id"), "UTF-8") %>'); return false;">View history</a></td>
               </tr>
             <% } %>
-            <% if (patients.isEmpty()) { %><tr><td colspan="9" class="muted">No patients found.</td></tr><% } %>
+            <% if (patients.isEmpty()) { %><tr><td colspan="10" class="muted">No patients found.</td></tr><% } %>
           </tbody>
         </table>
       </div>

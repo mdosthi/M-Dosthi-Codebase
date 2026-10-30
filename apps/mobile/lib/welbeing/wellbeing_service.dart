@@ -93,6 +93,26 @@ class WellbeingService {
     }
   }
 
+  static Future<Map<String, dynamic>> getPatientScreeningHistory({
+    required String patientId,
+    int offset = 0,
+    int limit = 50,
+  }) async {
+    if (!hasPatientId(patientId)) {
+      throw ArgumentError.value(patientId, 'patientId', 'must not be empty');
+    }
+
+    final result = await _postJson('/get-screening-history', {
+      'patientId': patientId.trim(),
+      'offset': offset,
+      'limit': limit,
+    });
+    if (result['status'] != 'success') {
+      throw Exception(result['message'] ?? 'Unable to load screening history');
+    }
+    return result;
+  }
+
   static Future<Map<String, dynamic>> getDistressStatus(
       String patientId) async {
     final result = await getPatientMonitoring(patientId);
