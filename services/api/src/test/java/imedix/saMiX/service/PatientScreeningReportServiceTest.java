@@ -168,6 +168,21 @@ class PatientScreeningReportServiceTest {
         assertThat(records.get(0).get("screeningDate")).isEqualTo("2025-04-04");
         assertThat(records.get(3).get("followUpDate")).isEqualTo("2025-05-01");
         assertThat(records).allSatisfy(record -> assertThat(record.get("status")).isEqualTo("Completed"));
+        @SuppressWarnings("unchecked")
+        List<Map<String, Object>> gadResponses =
+                (List<Map<String, Object>>) records.get(1).get("responses");
+        assertThat(gadResponses.get(0))
+                .containsEntry("label", "Feeling nervous, anxious, or on edge")
+                .containsEntry("value", "Nearly every day");
+        @SuppressWarnings("unchecked")
+        List<Map<String, Object>> phqResponses =
+                (List<Map<String, Object>>) records.get(2).get("responses");
+        assertThat(phqResponses.get(0))
+                .containsEntry("label", "Little interest or pleasure in doing things")
+                .containsEntry("value", "Nearly every day");
+        assertThat(phqResponses.get(1))
+                .containsEntry("label", "Feeling down, depressed, or hopeless")
+                .containsEntry("value", "More than half the days");
 
         @SuppressWarnings("unchecked")
         List<Map<String, Object>> schedule =
@@ -259,16 +274,19 @@ class PatientScreeningReportServiceTest {
 
     private Map<String, Object> phq9Row() {
         Map<String, Object> row = baseRow("phq9-1", "2025-04-02", "8 week Assessment");
-        row.put("total_score", 9);
+        row.put("total_score", 12);
         for (int question = 1; question <= 9; question++) row.put("q" + question, 1);
+        row.put("q1", 3);
+        row.put("q2", 2);
         return row;
     }
 
     private Map<String, Object> gad7Row() {
         Map<String, Object> row = baseRow("gad7-1", "2025-04-03", "8 week Assessment");
-        row.put("total_score", 7);
+        row.put("total_score", 9);
         row.put("anxiety_category", "Mild");
         for (int question = 1; question <= 7; question++) row.put("q" + question, 1);
+        row.put("q1", 3);
         return row;
     }
 

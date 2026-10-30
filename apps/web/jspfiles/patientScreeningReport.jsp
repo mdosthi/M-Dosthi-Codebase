@@ -51,6 +51,22 @@
     record.put("responses", responses);
   }
 
+  private void appendQuestionnaireResponses(Map<String, Object> record, String[] questions, Object[] scores) {
+    String[] answerLabels = { "Not at all", "Several days", "More than half the days", "Nearly every day" };
+    Object[] answers = new Object[scores.length];
+    for (int i = 0; i < scores.length; i++) {
+      Object score = scores[i];
+      if (score instanceof Number) {
+        int answerIndex = ((Number) score).intValue();
+        answers[i] = answerIndex >= 0 && answerIndex < answerLabels.length
+          ? answerLabels[answerIndex] : score;
+      } else {
+        answers[i] = score;
+      }
+    }
+    appendResponses(record, questions, answers);
+  }
+
   private int checkpointWeek(String checkpoint) {
     if ("Baseline Assessment".equalsIgnoreCase(checkpoint)) return 0;
     if (checkpoint == null) return -1;
@@ -272,8 +288,18 @@
       record.put("maximum", 27);
       record.put("interpretation", null);
       record.put("followUpDate", null);
-      appendResponses(record,
-        new String[] { "Question 1", "Question 2", "Question 3", "Question 4", "Question 5", "Question 6", "Question 7", "Question 8", "Question 9" },
+      appendQuestionnaireResponses(record,
+        new String[] {
+          "Little interest or pleasure in doing things",
+          "Feeling down, depressed, or hopeless",
+          "Trouble falling or staying asleep, or sleeping too much",
+          "Feeling tired or having little energy",
+          "Poor appetite or overeating",
+          "Feeling bad about yourself or that you are a failure or have let yourself or your family down",
+          "Trouble concentrating on things, such as reading the newspaper or watching television",
+          "Moving or speaking so slowly that other people could have noticed, or being so fidgety or restless that you have been moving around a lot more than usual",
+          "Thoughts that you would be better off dead, or of hurting yourself"
+        },
         new Object[] { result.getObject("q1"), result.getObject("q2"), result.getObject("q3"), result.getObject("q4"),
           result.getObject("q5"), result.getObject("q6"), result.getObject("q7"), result.getObject("q8"),
           result.getObject("q9") });
@@ -300,8 +326,16 @@
       record.put("maximum", 21);
       record.put("interpretation", result.getString("anxiety_category"));
       record.put("followUpDate", null);
-      appendResponses(record,
-        new String[] { "Question 1", "Question 2", "Question 3", "Question 4", "Question 5", "Question 6", "Question 7" },
+      appendQuestionnaireResponses(record,
+        new String[] {
+          "Feeling nervous, anxious, or on edge",
+          "Not being able to stop or control worrying",
+          "Worrying too much about different things",
+          "Trouble relaxing",
+          "Being so restless that it is hard to sit still",
+          "Becoming easily annoyed or irritable",
+          "Feeling afraid, as if something awful might happen"
+        },
         new Object[] { result.getObject("q1"), result.getObject("q2"), result.getObject("q3"), result.getObject("q4"),
           result.getObject("q5"), result.getObject("q6"), result.getObject("q7") });
       records.add(record);
@@ -382,11 +416,6 @@
     .back-link { position: relative; z-index: 1; border-color: rgba(255,255,255,.45); color: #fff; background: rgba(255,255,255,.08); }
     .back-link:hover { color: #fff; background: rgba(255,255,255,.16); }
     .page-link:hover, .filter-button:hover { border-color: #a9c8d4; background: #f5fafc; }
-    .summary-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 28px; }
-    .summary-card { display: flex; align-items: center; gap: 13px; min-height: 88px; padding: 17px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 4px 14px rgba(31, 62, 82, .035); }
-    .summary-icon { display: grid; flex: 0 0 42px; width: 42px; height: 42px; place-items: center; color: var(--brand); background: var(--brand-soft); border-radius: 12px; font-size: 19px; font-weight: 700; }
-    .summary-label { display: block; margin-bottom: 4px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .55px; text-transform: uppercase; }
-    .summary-value { color: var(--ink); font-size: 16px; font-weight: 700; overflow-wrap: anywhere; }
     .section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin: 0 0 14px; }
     .section-heading h2 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -.2px; }
     .section-heading p { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
@@ -438,8 +467,8 @@
     .error, .empty-state { padding: 18px; color: #822727; background: #fff4f1; border: 1px solid #f0d7cf; border-radius: 12px; }
     .empty-state { color: var(--muted); background: #fff; border-color: var(--line); text-align: center; }
     .pagination-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 16px; padding: 14px 0; }
-    @media (max-width: 760px) { body { padding: 16px; } .history-hero { padding: 22px; } .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .summary-card:last-child { grid-column: 1 / -1; } .schedule-grid { grid-template-columns: 1fr; } }
-    @media (max-width: 540px) { body { padding: 10px; } .history-hero { flex-direction: column; padding: 20px; border-radius: 15px; } .back-link { align-self: flex-start; } .summary-grid { grid-template-columns: 1fr 1fr; gap: 8px; } .summary-card { min-height: 78px; padding: 12px; gap: 9px; } .summary-icon { flex-basis: 34px; width: 34px; height: 34px; } .summary-value { font-size: 14px; } .section-heading { align-items: flex-start; flex-direction: column; } .filters { align-items: stretch; } .filter-field { flex: 1 1 42%; } .filters select, .filters input { width: 100%; min-width: 0; } .filters button { flex: 1 1 auto; } .screening-card summary { align-items: flex-start; padding: 14px; } .record-summary-right { gap: 6px; } .score-pill { padding: 6px 7px; font-size: 11px; } .record-details ul { grid-template-columns: 1fr; } .pagination-row { align-items: flex-start; flex-direction: column; } }
+    @media (max-width: 760px) { body { padding: 16px; } .history-hero { padding: 22px; } .schedule-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 540px) { body { padding: 10px; } .history-hero { flex-direction: column; padding: 20px; border-radius: 15px; } .back-link { align-self: flex-start; } .section-heading { align-items: flex-start; flex-direction: column; } .filters { align-items: stretch; } .filter-field { flex: 1 1 42%; } .filters select, .filters input { width: 100%; min-width: 0; } .filters button { flex: 1 1 auto; } .screening-card summary { align-items: flex-start; padding: 14px; } .record-summary-right { gap: 6px; } .score-pill { padding: 6px 7px; font-size: 11px; } .record-details ul { grid-template-columns: 1fr; } .pagination-row { align-items: flex-start; flex-direction: column; } }
     @media (prefers-reduced-motion: reduce) { *, *:before, *:after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
   </style>
 </head>
@@ -456,20 +485,6 @@
     <% if (error != null) { %>
       <div class="error"><%= html(error) %></div>
     <% } else { %>
-      <section class="summary-grid" aria-label="Screening summary">
-        <article class="summary-card">
-          <span class="summary-icon" aria-hidden="true">#</span>
-          <div><span class="summary-label">Saved records</span><strong class="summary-value"><%= totalRecords %></strong></div>
-        </article>
-        <article class="summary-card">
-          <span class="summary-icon" aria-hidden="true">↻</span>
-          <div><span class="summary-label">Screening types</span><strong class="summary-value"><%= screeningSchedule.size() %> tracked</strong></div>
-        </article>
-        <article class="summary-card">
-          <span class="summary-icon" aria-hidden="true">◷</span>
-          <div><span class="summary-label">History page</span><strong class="summary-value"><%= pageNumber %> of <%= totalPages %></strong></div>
-        </article>
-      </section>
       <section aria-labelledby="schedule-heading">
         <div class="section-heading">
           <div>
