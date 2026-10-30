@@ -15,8 +15,13 @@
 
 	  String list = "";
 	  rcDisplayData display = new rcDisplayData(request.getRealPath("/"));
-	    Object res=display.getSelfRelationPatList(ccode); 
-	    Vector tmp = (Vector)res;
+	    Object res=display.getSelfRelationPatList(ccode);
+	    Vector tmp;
+	    if (res instanceof Vector) {
+            tmp = (Vector)res;
+	    } else {
+            tmp = new Vector();
+	    }
 	    JSONArray jsarray = new JSONArray();
 	    for(int i=0;i<tmp.size();i++){
 	      dataobj temp = (dataobj) tmp.get(i);

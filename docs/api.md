@@ -38,6 +38,16 @@ Controllers cover user-related operations, WhatsApp/webhook integration, survey 
 
 Before publishing a complete endpoint catalog, inspect the controller mappings from the exact source copy being deployed. The workspace contains more than one API/runtime copy.
 
+### Authenticated chatbot speech
+
+`POST /api/user/speech` accepts JSON containing only a persisted assistant `message_id`. The caller must be the patient who owns that message's session, and the session must be English. Successful responses are uncached `audio/wav`; invalid, unavailable, oversized, or unsupported-language requests return a JSON error. The endpoint sends only the final stored response text to the configured Ollama Phonon model, not conversation history or patient/session identifiers.
+
+```json
+{"message_id":"msg_<assistant-message-uuid>"}
+```
+
+Speech generation is explicit and on demand; the complete audio is returned after synthesis rather than streamed. See the [speech setup](setup.md#optional-english-speech-playback) for model installation, configuration, language limits, and data handling.
+
 ## Python CLI API
 
 The annotation package exposes:

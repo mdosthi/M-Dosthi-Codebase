@@ -181,6 +181,7 @@ dependencies:
   google_fonts: ^6.2.1
   path: any
   flutter_cached_pdfview: ^0.4.4
+  speech_to_text: '>=7.3.0 <7.5.0'
   
 dev_dependencies:
   flutter_test:
@@ -211,7 +212,7 @@ flutter:
   assets:
     - assets/survey_questions.json
     - assets/images/
-    - assets/icon/
+    - assets/icons/
     - assets/Video1.mp4
     - assets/Video2.mp4
     - assets/1.pdf

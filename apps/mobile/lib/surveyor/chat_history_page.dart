@@ -5,6 +5,7 @@ import 'dart:convert';
 import '../service/language_service.dart';
 import '../login_page.dart';
 import 'package:intl/intl.dart';
+import '../chat/assistant_speech_player.dart';
 
 class ChatHistoryPage extends StatefulWidget {
   const ChatHistoryPage({super.key});
@@ -18,11 +19,19 @@ class _ChatHistoryPageState extends State<ChatHistoryPage> {
   List<ChatSession> chatSessions = [];
   bool isLoading = true;
   String? errorMessage;
+  late final AssistantSpeechPlayer _speechPlayer;
 
   @override
   void initState() {
     super.initState();
+    _speechPlayer = AssistantSpeechPlayer();
     _loadChatHistory();
+  }
+
+  @override
+  void dispose() {
+    _speechPlayer.dispose();
+    super.dispose();
   }
 
   Future<void> _loadChatHistory() async {
@@ -224,7 +233,7 @@ class _ChatHistoryPageState extends State<ChatHistoryPage> {
           ),
         );
       },
-    );
+    ).whenComplete(() => _speechPlayer.stop());
   }
 
   Widget _buildHistoryMessageBubble(ChatMessage message) {
@@ -278,6 +287,14 @@ class _ChatHistoryPageState extends State<ChatHistoryPage> {
                       fontSize: 10,
                     ),
                   ),
+                  if (!isUser && !isSystem)
+                    AssistantSpeechControl(
+                      messageId: message.messageId,
+                      endpoint:
+                          "${LoginPage.protocol}://${LoginPage.domainName}/api/user/speech",
+                      token: LoginPage.jwtToken,
+                      player: _speechPlayer,
+                    ),
                 ],
               ),
             ),

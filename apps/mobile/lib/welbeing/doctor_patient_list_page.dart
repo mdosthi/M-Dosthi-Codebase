@@ -283,7 +283,7 @@ class _DoctorPatientListPageState extends State<DoctorPatientListPage> {
                               borderRadius: BorderRadius.circular(14),
                             ),
                             shadowColor: _PatientsColors.deepGreen
-                                .withValues(alpha: 0.1),
+                                .withOpacity(0.1),
                             clipBehavior: Clip.antiAlias,
                             child: SingleChildScrollView(
                               child: SingleChildScrollView(

@@ -11,7 +11,7 @@
 
 ## Legacy build
 
-`scripts/legacy.sh build` compiles both legacy modules and copies jars into `services/legacy/runtime/lib` and `apps/web/WEB-INF/lib`. Both makeJar scripts compile with `JAVA_HOME` (JDK 11) and `services/legacy/external-lib`.
+`scripts/legacy.sh build` compiles both legacy modules and copies jars into `services/legacy/runtime/lib` and `apps/web/WEB-INF/lib`. The web build also packages the RMI logger interface, `json-simple`, and `commons-codec`, which are required by login, access-control, and dashboard code. Both makeJar scripts compile with `JAVA_HOME` (JDK 11) and `services/legacy/external-lib`.
 
 ## Git conventions
 

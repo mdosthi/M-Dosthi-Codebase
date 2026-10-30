@@ -5,11 +5,22 @@
 Apply `../../database/migrations/V20260923_01__patient_monitoring.sql` to the active MySQL database before using the monitoring endpoints. This project does not currently configure Flyway or Liquibase, so migrations are reviewed and applied explicitly.
 
 The authenticated API surface is under `/api/monitoring`. Doctor operations require `type=doc` and an active `lpatq.assigneddoc` relationship; patient operations require `type=pat` and the authenticated user ID to match the patient ID.
+
+## Required API Schema
+
+Before the first API launch, from the repository root, apply the annotation pipeline queue schema to the same database configured by `SPRING_DATASOURCE_URL`:
+
+```bash
+mysql --host=127.0.0.1 --user=DB_MIGRATION_USER --password mDosthi \
+  < services/api/src/main/resources/db/manual/V20261029_01__pipeline_job_queue.sql
+```
+
+Replace the host, migration account, and database name to match the configured JDBC URL. MySQL prompts for the password. Use a schema migration account with `CREATE` privileges; the API runtime account should retain only its required data privileges. This idempotent script creates the tables used by the scheduled annotation queue and seeds the default 00:00–02:00 processing window without overwriting an existing setting.
 This directory contains the source code for the M-Dosthi Spring Boot API.
 
 ## Requirements
 
-- Java 25, as declared in `pom.xml`.
+- JDK 25, as declared in `pom.xml`.
 - MySQL for database-backed features.
 - Ollama for AI-backed features where configured.
 
@@ -22,15 +33,23 @@ From this directory:
 ./mvnw test
 ```
 
-The current development machine has Java 11, so Maven validation works but compilation and tests require a Java 25-capable JDK.
+Compilation and tests require a Java 25-capable JDK.
 
 ## Run From Source
 
+From the repository root, use the API script so it loads the local `.env` settings:
+
 ```bash
-./mvnw spring-boot:run
+scripts/api.sh
 ```
 
-The configured port is `9090`. Review `src/main/resources/application.properties` and provide local environment values before starting the API.
+The configured port is `9090`. Configure `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, and `SPRING_DATASOURCE_PASSWORD` in the root `.env`. Use a dedicated non-root MySQL account and ensure the account exists and has access to the configured schema. Direct Maven or IDE launches do not load the root `.env` automatically.
+
+## Optional chat speech
+
+The Flutter chatbot can read persisted English assistant messages aloud using Ollama's speech-only `/v1/audio/speech` API and the `phonon` model (local by default). This is separate from the existing Ollama chat/generation calls; response generation, conversation context, and clinical safety handling are unchanged. The speech endpoint accepts only an assistant message ID, verifies that its session belongs to the authenticated patient, and returns uncached `audio/wav` bytes. No message text is logged or written to temporary files.
+
+Ollama 0.40.9 or later is required. On the Ollama host, run `ollama pull phonon` and `ollama show phonon`, then configure `OLLAMA_TTS_ENABLED`, `OLLAMA_TTS_MODEL`, `OLLAMA_TTS_VOICE`, `OLLAMA_TTS_LANGUAGE`, `OLLAMA_TTS_TIMEOUT`, `OLLAMA_TTS_MAX_TEXT_LENGTH`, and `OLLAMA_TTS_MAX_CONCURRENT` in the root `.env`. Defaults and language/licensing limitations are documented in the [setup guide](../../docs/setup.md#optional-english-speech-playback).
 
 ## Source Layout
 

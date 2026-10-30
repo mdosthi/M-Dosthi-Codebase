@@ -33,7 +33,7 @@ EOF
 
 check() { command -v "$1" >/dev/null 2>&1 && echo "  ok      $1" || echo "  MISSING $1 ($2)"; }
 echo "Prerequisites:"
-check java "JDK 11 for legacy, JDK 25 for services/api"
+check java "JDK 11 or later for legacy, JDK 25 for services/api"
 check javac "JDK, not just a JRE"
 check mvn "or use services/api/mvnw"
 check mysql "MySQL 8 client; server may run via docker compose"

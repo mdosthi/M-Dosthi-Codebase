@@ -1,5 +1,17 @@
 <%@page language="java"  import= "imedix.rcGenOperations, imedix.rcCentreInfo,imedix.dataobj, imedix.cook,java.util.*,imedix.Decryptcenter"%>
 <%@ include file="..//includes/chkcook.jsp" %>
+<%
+	boolean testCenterCreationEnabled = Boolean.getBoolean("imedix.testCenterCreation")
+			&& ("127.0.0.1".equals(request.getRemoteAddr())
+					|| "::1".equals(request.getRemoteAddr())
+					|| "0:0:0:0:0:0:0:1".equals(request.getRemoteAddr()))
+			&& "adm".equalsIgnoreCase((String) session.getAttribute("utype"));
+	String testCenterCsrf = "";
+	if (testCenterCreationEnabled) {
+		testCenterCsrf = java.util.UUID.randomUUID().toString();
+		session.setAttribute("testCenterCsrf", testCenterCsrf);
+	}
+%>
 
 <HTML>
 <HEAD>
@@ -374,6 +386,23 @@ table tr:nth-child(even) td{
 	<center><input class="btn btn-primary" type="submit" value="Upload" onclick="return fCheck()"  style="background-color: '#FFE0C1'; color: '#000000'; font-weight:BOLD; font-style:oblique "></CENTER>
 
 </FORM>
+
+<% if (testCenterCreationEnabled) { %>
+<hr>
+<h4>Local Test Center <small>(development only; skips license upload)</small></h4>
+<form method="post" action="testcenteradd.jsp">
+	<input type="hidden" name="csrf" value="<%=testCenterCsrf%>">
+	<div class="form-group">
+		<label for="testCenterCode">Center code</label>
+		<input class="form-control" id="testCenterCode" name="code" maxlength="16" value="TESTMDOSTHI" required>
+	</div>
+	<div class="form-group">
+		<label for="testCenterName">Center name</label>
+		<input class="form-control" id="testCenterName" name="name" maxlength="128" value="Mdosthi Test Center" required>
+	</div>
+	<button class="btn btn-warning" type="submit">Create local test center</button>
+</form>
+<% } %>
               
         </div>
         <div class="modal-footer">

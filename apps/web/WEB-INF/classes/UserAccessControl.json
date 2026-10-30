@@ -330,6 +330,9 @@
 	"org.apache.jsp.jspfiles.showcenter_jsp": [
 		"adm"
 	],
+	"org.apache.jsp.jspfiles.testcenteradd_jsp": [
+		"adm"
+	],
 	"org.apache.jsp.jspfiles.listDepartments_jsp": [
 		"adm"
 	],
@@ -635,5 +638,4 @@
 		"adm"
 	]
 }
-
 

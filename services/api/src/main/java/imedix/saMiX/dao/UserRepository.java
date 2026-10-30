@@ -45,6 +45,7 @@ public interface UserRepository {
     public String sendChatMessage(String sessionId, String senderType, String messageContent);
     public List<ChatMessage> getChatMessages(String sessionId, Integer limit, Integer offset);
     public List<ChatMessage> getRecentChatMessages(String sessionId, int limit);
+    public ChatMessage getAssistantMessageForPatient(String messageId, String patId);
     public boolean markMessagesAsRead(String sessionId, List<String> messageIds);
     public Integer getUnreadMessageCount(String patId);
     // Terminal command logging
