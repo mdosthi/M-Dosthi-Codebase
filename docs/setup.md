@@ -25,7 +25,7 @@ Install the tools needed for your chosen workflow. The repository setup scripts 
 | Flutter SDK | `apps/mobile` | Chrome is needed for the Chrome target; `web-server` can be used with another browser. |
 | Python 3.10+ | `services/annotate` | Create an isolated environment and install the package's declared dependencies. |
 | Ollama | Annotation and configured API features | Install separately, start the service, and download/configure the model names required by your workflow. |
-| Docker Compose | Optional MySQL | `docker compose` is included with current Docker Desktop and many Docker Engine installations. |
+| Docker Compose | Unified web/API/database stack and Android APK build | `docker compose` is included with current Docker Desktop and many Docker Engine installations. |
 
 On Windows, run setup and the API in PowerShell. The legacy scripts are Bash scripts; use Git Bash or WSL. Flutter can use native Windows tooling for the desired target.
 
@@ -170,6 +170,34 @@ mysql --host=127.0.0.1 --user=YOUR_USER --password mDosthi < /secure/path/to/app
 Only import schemas you actually have and intend to use. Do not assume the API and legacy application can share a database simply because both use MySQL; confirm the schema and tables in the supplied dump first.
 
 The PO Bado migrations in `database/migrations` are for the `mDosthi` legacy schema. They are not general database initialization scripts and are not applied automatically. Back up first and follow [the migration runner guide](../database/migration-runner/README.md); its database guard rejects other schema names.
+
+## Run The Apps With Docker Compose
+
+The root `docker-compose.yml` is the single Docker entry point. From the repository root, copy `.env.example` to `.env`, set unique local values for `MYSQL_ROOT_PASSWORD`, `SPRING_DATASOURCE_PASSWORD`, `LEGACY_DB_PASSWORD`, and `SECRETKEY`, then start the services:
+
+```bash
+docker compose up --build -d
+```
+
+Compose starts MySQL, the Spring API, the legacy RMI service and JSP site, and the Flutter web app. Open:
+
+| App | URL |
+|---|---|
+| Legacy JSP site | `http://localhost:8080/M-Dosthi/` |
+| Flutter web app | `http://localhost:8081/` |
+| Spring API | `http://localhost:9090/` |
+
+Compose creates an empty database and does not import schemas or patient data. Import the approved API and/or legacy schema into the configured database before using database-backed features. By default, the legacy service uses the same database name as `MYSQL_DATABASE`; set `LEGACY_DB_DATABASE` if it needs a separate schema and provision its account as needed. The default legacy DB username/password are separate `.env` values and must match a provisioned MySQL account. MySQL initialization settings only apply when its named volume is first created.
+
+Build an Android APK separately:
+
+```bash
+docker compose run --build --rm android-apk
+```
+
+The output is `dist/android/app-release.apk`. This checkout has no `apps/mobile/android/` project, so the build container creates the Android platform runner before building. The APK allows cleartext HTTP to match the app's current API protocol; use this local-development build only, not for production. The default application ID is `com.example.app_001`; set `ANDROID_ORG` to your organization's reverse-DNS prefix before distributing the APK. `ANDROID_API_HOST` defaults to `10.0.2.2:9090` for the standard Android emulator. Set it to a reachable LAN hostname/IP for a physical device. Flutter web calls the API through the same-origin Nginx `/api/` proxy; `FLUTTER_API_HOST` defaults to `localhost:8081` and should match the browser-visible host/port when changed.
+
+Use the unified stack for local development only. It does not initialize clinical schemas, configure production secrets, or expose the RMI port on the host. A clean-checkout legacy image build may also require separately approved prebuilt artifacts documented in [the legacy build limitation](#legacy-clean-checkout-limitation).
 
 ## 4. Run Flutter And The API
 

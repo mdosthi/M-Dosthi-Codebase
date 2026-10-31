@@ -1,0 +1,14 @@
+**
+!apps/
+!apps/mobile/
+!apps/mobile/**
+apps/mobile/.dart_tool/
+apps/mobile/.dart_tool/**
+apps/mobile/build/
+apps/mobile/build/**
+apps/mobile/android/.gradle/
+apps/mobile/android/.gradle/**
+apps/mobile/ios/Pods/
+apps/mobile/ios/Pods/**
+!docker/
+!docker/nginx.conf
