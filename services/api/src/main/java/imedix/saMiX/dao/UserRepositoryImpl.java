@@ -1668,9 +1668,9 @@ public class UserRepositoryImpl implements UserRepository {
     public boolean createNewEdosthiLogin(Map<String, String> data)
     {
         String query = "INSERT INTO login "
-                + "(uid, pwd, name, crtdate, center, type, phone, active, available, referral, "
+                + "(uid, pwd, name, crtdate, rg_no, center, type, phone, active, available, referral, "
                 + "verified, verifemail, verifphone, consent) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         return jdbcTemplate.update(
                 query,
@@ -1678,6 +1678,7 @@ public class UserRepositoryImpl implements UserRepository {
                 data.get("pwd"),
                 data.get("name"),
                 data.get("crtdate"),
+                data.get("rg_no"),
                 data.get("center"),
                 data.get("type"),
                 data.get("phone"),

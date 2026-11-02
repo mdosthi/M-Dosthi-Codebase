@@ -114,53 +114,85 @@ public class UserController {
 
     @PostMapping("/login")
     public JwtResponse login(@RequestBody JwtReqest jwtReqest) throws Exception {
-        if (jwtReqest.getUsername() == null || jwtReqest.getUsername().isBlank()
-                || jwtReqest.getPassword() == null || jwtReqest.getPassword().isEmpty()) {
+        String username = jwtReqest.getUsername();
+        String password = jwtReqest.getPassword();
+        if (username == null || username.isBlank() || password == null || password.isBlank()) {
             return invalidCredentials();
         }
+        username = resolveUserId(username);
 
-        String encodedPassword = userRepository.encodePassword(jwtReqest.getPassword());
-        if (encodedPassword == null || encodedPassword.isBlank()) {
-            throw new IllegalStateException("Could not encode login password.");
-        }
         try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            jwtReqest.getUsername(), encodedPassword
-                    )
-            );
-        } catch (BadCredentialsException e) {
-            Map<String, Object> existingUser;
+            authenticateLogin(username, password);
+        } catch (BadCredentialsException invalidCredentials) {
+            String trimmedUsername = username.trim();
+            String trimmedPassword = password.trim();
+            if (username.equals(trimmedUsername) && password.equals(trimmedPassword)) {
+                return invalidCredentials();
+            }
+
             try {
-                existingUser = userRepository.getUserInfo(jwtReqest.getUsername());
-            } catch (EmptyResultDataAccessException missingUser) {
+                username = trimmedUsername;
+                password = trimmedPassword;
+                authenticateLogin(username, password);
+            } catch (BadCredentialsException stillInvalid) {
                 return invalidCredentials();
             }
-
-            String storedPassword = Objects.toString(existingUser.get("pwd"), "");
-            String submittedPassword = Objects.toString(jwtReqest.getPassword(), "");
-            String userId = Objects.toString(existingUser.get("uid"), "");
-            if (userId.isBlank() || storedPassword.isEmpty()
-                    || !MessageDigest.isEqual(
-                            storedPassword.getBytes(StandardCharsets.UTF_8),
-                            submittedPassword.getBytes(StandardCharsets.UTF_8))
-                    || !userRepository.updatePassword(userId, encodedPassword)) {
-                return invalidCredentials();
-            }
-
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            jwtReqest.getUsername(), encodedPassword));
         }
 
         final UserDetails userDetails =
-                imedixUserDetailService.loadUserByUsername(jwtReqest.getUsername());
+                imedixUserDetailService.loadUserByUsername(username);
         final String token = jwtUtil.generateToken(userDetails);
-        Map<String, Object> userinfo = userRepository.getUserInfo(jwtReqest.getUsername());
+        Map<String, Object> userinfo = userRepository.getUserInfo(username);
         System.out.println("Returning response from /api/user/login");
         int dpdpAgreed = userinfo.get("dpdp_agreed") != null ? ((Number) userinfo.get("dpdp_agreed")).intValue() : 0;
         //return new JwtResponse(token, (String) userinfo.get("user_type"), (String) userinfo.get("name"), (String) userinfo.get("userid"), "success", "Login Successful");
         return new JwtResponse(token, (String) userinfo.get("type"), (String) userinfo.get("name"), (String) userinfo.get("uid"), "success", "Login Successful", dpdpAgreed);
+    }
+
+    private String resolveUserId(String identifier) {
+        String normalizedIdentifier = identifier.trim();
+        try {
+            Map<String, Object> userinfo = userRepository.getUserInfo(normalizedIdentifier);
+            String userId = Objects.toString(userinfo.get("uid"), "");
+            if (!userId.isBlank() && userId.equalsIgnoreCase(normalizedIdentifier)) {
+                return userId;
+            }
+        } catch (EmptyResultDataAccessException missingUser) {
+            return normalizedIdentifier;
+        }
+        return normalizedIdentifier;
+    }
+
+    private void authenticateLogin(String username, String password) {
+        String encodedPassword = userRepository.encodePassword(password);
+        if (encodedPassword == null || encodedPassword.isBlank()) {
+            throw new IllegalStateException("Could not encode login password.");
+        }
+
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, encodedPassword));
+        } catch (BadCredentialsException invalidCredentials) {
+            Map<String, Object> existingUser;
+            try {
+                existingUser = userRepository.getUserInfo(username);
+            } catch (EmptyResultDataAccessException missingUser) {
+                throw invalidCredentials;
+            }
+
+            String storedPassword = Objects.toString(existingUser.get("pwd"), "");
+            String userId = Objects.toString(existingUser.get("uid"), "");
+            if (userId.isBlank() || storedPassword.isEmpty()
+                    || !MessageDigest.isEqual(
+                            storedPassword.getBytes(StandardCharsets.UTF_8),
+                            password.getBytes(StandardCharsets.UTF_8))
+                    || !userRepository.updatePassword(userId, encodedPassword)) {
+                throw invalidCredentials;
+            }
+
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, encodedPassword));
+        }
     }
 
     private JwtResponse invalidCredentials() {
@@ -2211,6 +2243,12 @@ public class UserController {
                 result.put("message", "Password is required");
                 return result;
             }
+            String registrationNo = req.get("rg_no");
+            if (registrationNo == null || registrationNo.isBlank()) {
+                result.put("status", "error");
+                result.put("message", "Registration number is required");
+                return result;
+            }
             String encodedPassword = userRepository.encodePassword(submittedPassword);
             if (encodedPassword == null || encodedPassword.isBlank()) {
                 result.put("status", "error");
@@ -2222,6 +2260,7 @@ public class UserController {
             data.put("pwd", encodedPassword);
             data.put("name", req.get("name"));
             data.put("crtdate", req.get("crtdate"));
+            data.put("rg_no", registrationNo);
             data.put("center", req.get("center"));
             //data.put("userid", req.get("userid"));
             data.put("type", req.get("type"));
