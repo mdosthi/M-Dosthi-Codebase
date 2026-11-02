@@ -12,6 +12,19 @@ This guide covers the independently runnable parts of the M-Dosthi repository. T
 
 You do not need to start both Java servers for the Flutter workflow. The JSP application is not the Flutter app's API server.
 
+## Choose A Platform And Run Mode
+
+The Flutter client and Spring API can run on macOS, Linux, and Windows. Use Docker Compose for a consistent multi-service stack, or run the Flutter/API components directly with the platform's native tools.
+
+| Run mode | macOS | Linux | Windows |
+|---|---|---|---|
+| Docker | Install Docker Desktop or Docker Engine with Compose. Run `docker compose` from Terminal. | Install Docker Engine and the Compose plugin. Run `docker compose` from a shell. | Install Docker Desktop. Run `docker compose` from PowerShell. |
+| Without Docker | Use `scripts/setup.sh` and `scripts/api.sh` from Terminal; Flutter runs natively. | Use `scripts/setup.sh` and `scripts/api.sh` from a shell; Flutter runs natively. | Use `scripts/setup.ps1` and `scripts/api.ps1` from PowerShell; Flutter runs natively. |
+
+The no-Docker path requires you to install and configure JDK 25, Flutter, and MySQL 8 yourself (MySQL may be local or remote). For Windows, the legacy JSP/RMI scripts are Bash scripts and require Git Bash or WSL; alternatively, use Docker Compose for those services. The Compose stack uses Linux containers and is supported through Docker Desktop on macOS/Windows and Docker Engine on Linux.
+
+To start the Docker stack, first prepare `.env` as described below, then follow [Run The Apps With Docker Compose](#run-the-apps-with-docker-compose). To start Flutter and the API without Docker, follow [Run Flutter And The API](#4-run-flutter-and-the-api). Compose initializes an empty database only; neither setup mode supplies clinical schemas or patient data.
+
 ## Prerequisites
 
 Install the tools needed for your chosen workflow. The repository setup scripts do not install Java, Flutter, Python, MySQL, or Ollama.
@@ -27,7 +40,7 @@ Install the tools needed for your chosen workflow. The repository setup scripts 
 | Ollama | Annotation and configured API features | Install separately, start the service, and download/configure the model names required by your workflow. |
 | Docker Compose | Unified web/API/database stack and Android APK build | `docker compose` is included with current Docker Desktop and many Docker Engine installations. |
 
-On Windows, run setup and the API in PowerShell. The legacy scripts are Bash scripts; use Git Bash or WSL. Flutter can use native Windows tooling for the desired target.
+On Windows, run setup and the API in PowerShell. The legacy scripts are Bash scripts; use Git Bash or WSL. Flutter can use native Windows tooling for targets supported by the installed Flutter SDK.
 
 ## 1. Clone And Prepare Local Files
 
@@ -237,6 +250,8 @@ flutter run -d web-server --web-hostname 127.0.0.1 --web-port 3001 \
 Open the URL printed by Flutter (for the example, `http://127.0.0.1:3001/`). Keep the Flutter process running. The `API_HOST` define is a host and port, not a URL; the app uses HTTP. Use `10.0.2.2:9090` for an Android emulator. For a physical device, use the development computer's LAN IP and ensure firewall/network access is allowed.
 
 The client screen can render without the API, but login and server-backed features require a reachable API and populated compatible database. A web UI returning successfully does not prove credentials or the database are valid.
+
+Flutter selects among devices available to the installed SDK. The web commands above work across macOS, Linux, and Windows. For a device or emulator, set `API_HOST` to an address reachable from that target; `localhost` inside a mobile emulator/device does not refer to the development computer.
 
 ## 5. Run The Legacy JSP And RMI System
 
