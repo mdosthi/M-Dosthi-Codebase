@@ -1,4 +1,4 @@
-import 'package:app_001/welbeing/doctor_monitoring_page.dart';
+import 'package:mdosthi_app/welbeing/doctor_monitoring_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

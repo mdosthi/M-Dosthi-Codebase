@@ -90,6 +90,18 @@ services:
       legacy-rmi:
         condition: service_started
 
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    profiles: ["tunnel"]
+    restart: unless-stopped
+    command: ["tunnel", "--no-autoupdate", "--config", "/etc/cloudflared/config.docker.yml", "run"]
+    volumes:
+      - ./deploy/cloudflared/config.docker.yml:/etc/cloudflared/config.docker.yml:ro
+      - ./deploy/cloudflared/credentials.json:/etc/cloudflared/credentials.json:ro
+    depends_on:
+      flutter-web:
+        condition: service_started
+
   android-apk:
     build:
       context: .

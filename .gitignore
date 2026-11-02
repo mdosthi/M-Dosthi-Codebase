@@ -14,6 +14,13 @@ apps/web/config.info
 /database/snapshots/
 /Downloads/
 
+# Cloudflare Tunnel local config and credentials
+deploy/cloudflared/config.yml
+deploy/cloudflared/config.docker.yml
+deploy/cloudflared/*.json
+cert.pem
+.cloudflared/
+
 # OS and IDE files
 .DS_Store
 ._*

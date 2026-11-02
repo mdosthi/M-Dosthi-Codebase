@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:app_001/backend/database_helper.dart';
+import 'package:mdosthi_app/backend/database_helper.dart';
 import 'package:http/http.dart' as http;
-import 'package:app_001/login_page.dart';
+import 'package:mdosthi_app/login_page.dart';
 
 class UserProfileService {
   static Future<Map<String, dynamic>> getUserInfo() async {

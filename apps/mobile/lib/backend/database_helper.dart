@@ -4,9 +4,9 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
-import 'package:app_001/log/logger.dart';
-import 'package:app_001/login_page.dart';
-import 'package:app_001/surveyor/family_details.dart';
+import 'package:mdosthi_app/log/logger.dart';
+import 'package:mdosthi_app/login_page.dart';
+import 'package:mdosthi_app/surveyor/family_details.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 

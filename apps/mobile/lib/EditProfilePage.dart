@@ -1,7 +1,7 @@
-import 'package:app_001/change_password_page.dart';
-import 'package:app_001/services/user_profile_service.dart';
+import 'package:mdosthi_app/change_password_page.dart';
+import 'package:mdosthi_app/services/user_profile_service.dart';
 import 'package:flutter/material.dart';
-import 'package:app_001/login_page.dart';
+import 'package:mdosthi_app/login_page.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});

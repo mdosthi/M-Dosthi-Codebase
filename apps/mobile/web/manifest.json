@@ -1,6 +1,6 @@
 {
-    "name": "app_001",
-    "short_name": "app_001",
+    "name": "mDosthi",
+    "short_name": "mDosthi",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

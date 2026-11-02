@@ -1,8 +1,8 @@
 // import 'dart:io';
-// import 'package:app_001/surveyor/hamburger_menu.dart';
-// import 'package:app_001/surveyor/survery_page_util.dart';
-// import 'package:app_001/utils/NetworkSpeedChecker.dart';
-// import 'package:app_001/login_page.dart';
+// import 'package:mdosthi_app/surveyor/hamburger_menu.dart';
+// import 'package:mdosthi_app/surveyor/survery_page_util.dart';
+// import 'package:mdosthi_app/utils/NetworkSpeedChecker.dart';
+// import 'package:mdosthi_app/login_page.dart';
 // import 'package:flutter/material.dart';
 // import 'package:image_picker/image_picker.dart';
 // import '../Audio/audio_player.dart';

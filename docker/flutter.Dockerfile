@@ -21,7 +21,7 @@ RUN flutter pub get
 FROM android-flutter-build AS android-apk
 ARG API_HOST=10.0.2.2:9090
 ARG ANDROID_ORG=com.example
-RUN flutter create --platforms=android --project-name app_001 --org "${ANDROID_ORG}" --no-pub .
+RUN flutter create --platforms=android --project-name mdosthi_app --org "${ANDROID_ORG}" --no-pub .
 RUN manifest=android/app/src/main/AndroidManifest.xml \
     && if ! grep -q 'android.permission.INTERNET' "$manifest"; then \
       sed -i '/<application/i\    <uses-permission android:name="android.permission.INTERNET" />' "$manifest"; \

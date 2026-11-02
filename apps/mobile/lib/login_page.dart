@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:app_001/designExecutive/design_executive_util_page.dart';
+import 'package:mdosthi_app/designExecutive/design_executive_util_page.dart';
 //import 'profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,8 +27,8 @@ class LoginPage extends StatefulWidget {
   static String password = "";
   static String patid = "";
   static List<String> usernames = [];
-  //static String protocol = "http";
-  static String protocol = "http";
+  static String get protocol =>
+      kIsWeb && Uri.base.scheme == 'https' ? 'https' : 'http';
   //static String domainName = "matrikaruna.in";
   //static String domainName="10.5.29.236:9090";
   //static String domainName = "10.5.29.226:9090";
@@ -319,7 +319,7 @@ class _LoginPageState extends State<LoginPage> {
       // Write the image byte data to a file in the application directory
       File(destinationImagePath).writeAsBytes(byteList);
 
-      // /data/user/0/com.example.app_001/app_flutter/null
+      // /data/user/0/com.example.mdosthi_app/app_flutter/null
       print('Image copied successfully to application directory.');
     } catch (e) {
       print('Error copying image: $e');
@@ -343,7 +343,7 @@ class _LoginPageState extends State<LoginPage> {
       // Write the image byte data to a file in the application directory
       File(destinationAudioPath).writeAsBytes(byteList);
 
-      // /data/user/0/com.example.app_001/app_flutter/null
+      // /data/user/0/com.example.mdosthi_app/app_flutter/null
       print('Audio copied successfully to application directory.');
     } catch (e) {
       print('Error copying image: $e');

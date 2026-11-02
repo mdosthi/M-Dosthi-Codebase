@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:app_001/backend/database_helper.dart';
-import 'package:app_001/log/logger.dart';
-import 'package:app_001/login_page.dart';
+import 'package:mdosthi_app/backend/database_helper.dart';
+import 'package:mdosthi_app/log/logger.dart';
+import 'package:mdosthi_app/login_page.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
-import 'package:app_001/main.dart';
+import 'package:mdosthi_app/main.dart';
 
 class DataUploadPage extends StatefulWidget {
   const DataUploadPage({super.key});

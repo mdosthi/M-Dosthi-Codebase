@@ -1,12 +1,12 @@
-// import 'package:app_001/surveyor/form_selection_survey.dart';
-// import 'package:app_001/surveyor/subject_selection_survey.dart';
+// import 'package:mdosthi_app/surveyor/form_selection_survey.dart';
+// import 'package:mdosthi_app/surveyor/subject_selection_survey.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login_page.dart';
 import 'backend/database_helper.dart';
 import 'surveyor/survery_page_util.dart';
 import 'admin/admin_page_util.dart';
-import 'package:app_001/designExecutive/design_executive_util_page.dart';
+import 'package:mdosthi_app/designExecutive/design_executive_util_page.dart';
 import 'service/auth_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';

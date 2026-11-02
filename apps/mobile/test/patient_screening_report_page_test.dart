@@ -1,4 +1,4 @@
-import 'package:app_001/welbeing/patient_screening_report_page.dart';
+import 'package:mdosthi_app/welbeing/patient_screening_report_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

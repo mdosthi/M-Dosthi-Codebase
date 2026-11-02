@@ -3,14 +3,14 @@
 
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:app_001/Audio/audio_player.dart';
+import 'package:mdosthi_app/Audio/audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import '../backend/database_helper.dart';
 import 'package:path/path.dart' as path;
-import 'package:app_001/admin/edit_survey_data_page.dart';
+import 'package:mdosthi_app/admin/edit_survey_data_page.dart';
 
-import 'package:app_001/admin/admin_page_util.dart';
+import 'package:mdosthi_app/admin/admin_page_util.dart';
 
 class DisplaySurveyResponses extends StatefulWidget {
   const DisplaySurveyResponses({super.key});

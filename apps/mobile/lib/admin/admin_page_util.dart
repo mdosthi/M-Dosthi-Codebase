@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../login_page.dart';
 
-import 'package:app_001/backend/database_helper.dart';
+import 'package:mdosthi_app/backend/database_helper.dart';
 import 'edit_survey_response.dart';
-// import 'package:app_001/surveyor/change_username.dart';
+// import 'package:mdosthi_app/surveyor/change_username.dart';
 
 //Import the font package
 import 'package:google_fonts/google_fonts.dart';

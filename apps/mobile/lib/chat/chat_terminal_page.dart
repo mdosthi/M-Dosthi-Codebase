@@ -1,7 +1,7 @@
 // // lib/chat/chat_terminal_page.dart
 // import 'package:flutter/material.dart';
-// import 'package:app_001/service/chat_terminal_service.dart';
-// import 'package:app_001/login_page.dart';
+// import 'package:mdosthi_app/service/chat_terminal_service.dart';
+// import 'package:mdosthi_app/login_page.dart';
 
 // class ChatTerminalPage extends StatefulWidget {
 //   const ChatTerminalPage({Key? key}) : super(key: key);

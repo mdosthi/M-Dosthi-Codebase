@@ -219,14 +219,14 @@ public class UserInfo extends UnicastRemoteObject implements UserInfoInterface {
                     } else {
                         qr = qr + "'" + qv + "',";
                     }
-                } else if (val.equalsIgnoreCase("INT")) {
-                    // Handle RCT flag specifically
-                    if (key.equalsIgnoreCase("rctFlag")) {
-                        String rctValue = tmp.getValue("rctFlag");
-                        if (rctValue != null && !rctValue.isEmpty()) {
-                            qr = qr + rctValue + ",";
+                } else if (val.equalsIgnoreCase("INT") || val.equalsIgnoreCase("TINYINT")) {
+                    // Default non-null status flags to zero when absent.
+                    if (key.equalsIgnoreCase("rctFlag") || key.equalsIgnoreCase("dpdp_agreed")) {
+                        String flagValue = tmp.getValue(key);
+                        if (flagValue != null && !flagValue.isEmpty()) {
+                            qr = qr + flagValue + ",";
                         } else {
-                            qr = qr + "0,"; // Default to 0 if not specified
+                            qr = qr + "0,";
                         }
                     } else {
                         if (qv.length() > 0) {
@@ -243,9 +243,9 @@ public class UserInfo extends UnicastRemoteObject implements UserInfoInterface {
                     }
                 }
             } else {
-                if (val.equalsIgnoreCase("INT")) {
-                    if (key.equalsIgnoreCase("rctFlag")) {
-                        qr = qr + "0,"; // Default RCT flag to 0
+                if (val.equalsIgnoreCase("INT") || val.equalsIgnoreCase("TINYINT")) {
+                    if (key.equalsIgnoreCase("rctFlag") || key.equalsIgnoreCase("dpdp_agreed")) {
+                        qr = qr + "0,";
                     } else {
                         qr = qr + "NULL,";
                     }

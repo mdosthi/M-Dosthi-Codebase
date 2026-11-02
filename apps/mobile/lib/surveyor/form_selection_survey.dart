@@ -1,16 +1,16 @@
-import 'package:app_001/login_page.dart';
-import 'package:app_001/surveyor/family_details.dart';
-import 'package:app_001/surveyor/form_details.dart';
-import 'package:app_001/surveyor/hamburger_menu.dart';
-// import 'package:app_001/surveyor/selectTimePeriodPage.dart';
-import 'package:app_001/surveyor/survery_page_util.dart';
-import 'package:app_001/surveyor/take_survey_page.dart';
-import 'package:app_001/surveyor/village_data_table_page.dart';
-import 'package:app_001/utils/NetworkSpeedChecker.dart';
-// import 'package:app_001/surveyor/take_survey_page.dart';
+import 'package:mdosthi_app/login_page.dart';
+import 'package:mdosthi_app/surveyor/family_details.dart';
+import 'package:mdosthi_app/surveyor/form_details.dart';
+import 'package:mdosthi_app/surveyor/hamburger_menu.dart';
+// import 'package:mdosthi_app/surveyor/selectTimePeriodPage.dart';
+import 'package:mdosthi_app/surveyor/survery_page_util.dart';
+import 'package:mdosthi_app/surveyor/take_survey_page.dart';
+import 'package:mdosthi_app/surveyor/village_data_table_page.dart';
+import 'package:mdosthi_app/utils/NetworkSpeedChecker.dart';
+// import 'package:mdosthi_app/surveyor/take_survey_page.dart';
 // import 'family_details.dart';
 import 'package:flutter/material.dart';
-import 'package:app_001/backend/database_helper.dart';
+import 'package:mdosthi_app/backend/database_helper.dart';
 
 // import 'service_enrolled_subjects.dart';
 

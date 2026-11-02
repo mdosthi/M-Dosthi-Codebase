@@ -12,6 +12,8 @@
 	String epho = "" ;
 	String eqln = "" ;
 	String edes = "" ;
+	String everifemail = "N" ;
+	String everifphone = "N" ;
 	
 	rcUserInfo uinfo = new rcUserInfo(request.getRealPath("/"));
 	Object res=uinfo.getuserinfo(uid);
@@ -34,6 +36,8 @@
 			epho=objusr.getValue("phone");
 			eqln=objusr.getValue("qualification");
 			edes=objusr.getValue("designation");
+			everifemail=objusr.getValue("verifemail");
+			everifphone=objusr.getValue("verifphone");
 
 		}
 	 }
@@ -63,26 +67,18 @@
 //function actnow( actionfile,  conttype)
 function actnow()
 {
-	var flag,opwd;
-	opwd=document.profile.oldpwd.value;
-	if(opwd.length==0)
+	var oldPassword = document.profile.oldpwd;
+	if(oldPassword && oldPassword.value.length==0)
 	{
 		alert("Existing Password field is mandatory");
-		document.profile.oldpwd.focus();
+		oldPassword.focus();
 		return false;
 	}
-	flag = checknum(document.profile.phone.value);
-	if (flag == false)
+	if (checknum(document.profile.phone.value) == false)
 	{
 		return false;
-		//if (document.images) 
-		//{
-		//	document.profile.action= actionfile;
-		//	document.profile.encoding = conttype;
-		//}
 	}
-	//else return false;
-	//return true;
+	return true;
 }
 
 function checknum(phn)
@@ -113,12 +109,14 @@ function checknum(phn)
 
 <div class="container-fluid">
 <center><h4 style="COLOR:FIREBRICK">Edit <strong><%=uid%></strong>'s Details </h4></center><BR><BR>
-<FORM role="form" METHOD="GET" Name=profile ACTION="saveeditusr.jsp" onSubmit="return actnow();">
+<FORM role="form" METHOD="POST" Name=profile ACTION="saveeditusr.jsp" onSubmit="return actnow();">
 
 <div class="input-group">
 <span class="input-group-addon" style="color:Blue">User ID : </span>
 	<span class="input-group-addon"><B style="color:#FF6600"><%=uid %></B><INPUT TYPE="hidden" NAME="uid" Value = "<%=uid %>"> </span>
 </div>		<!-- "input-group" -->
+<INPUT TYPE="hidden" NAME="verifyemailstatus" Value="<%=everifemail %>">
+<INPUT TYPE="hidden" NAME="verifyphonestatus" Value="<%=everifphone %>">
 <%if(!userid.equals("admin")){%>
 <INPUT class="form-control" TYPE="password" NAME="oldpwd" MAXLENGTH=10 placeholder="Existing Password" />
 <%}%>

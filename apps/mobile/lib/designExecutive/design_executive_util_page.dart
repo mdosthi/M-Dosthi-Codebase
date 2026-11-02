@@ -1,7 +1,7 @@
-import 'package:app_001/designExecutive/display_fields_page.dart';
-import 'package:app_001/designExecutive/display_forms_page.dart';
-import 'package:app_001/designExecutive/forms_name_details_page.dart';
-import 'package:app_001/designExecutive/upload_data_page.dart';
+import 'package:mdosthi_app/designExecutive/display_fields_page.dart';
+import 'package:mdosthi_app/designExecutive/display_forms_page.dart';
+import 'package:mdosthi_app/designExecutive/forms_name_details_page.dart';
+import 'package:mdosthi_app/designExecutive/upload_data_page.dart';
 import 'package:flutter/material.dart';
 import '../login_page.dart';
 
