@@ -212,142 +212,7 @@ The output is `dist/android/app-release.apk`. This checkout has no `apps/mobile/
 
 Use the unified stack for local development only. It does not initialize clinical schemas, configure production secrets, or expose the RMI port on the host. A clean-checkout legacy image build may also require separately approved prebuilt artifacts documented in [the legacy build limitation](#legacy-clean-checkout-limitation).
 
-## Share the Flutter web app from your computer
-
-A Cloudflare Tunnel can expose the local Flutter web container at a domain you already own (for example `mdosthi.app`, registered at Name.com or any registrar). The registrar provides the domain; it does not host the app. The host computer (macOS, Linux, or Windows), Docker, internet connection, and tunnel process must stay running, so this is not an always-on production host. Domain registration may have a renewal fee. Replace `mdosthi.app` with your own domain throughout.
-
-Commands are shown for Bash (macOS/Linux, or Git Bash/WSL on Windows) with PowerShell equivalents where they differ. Run them from the repository root.
-
-```text
-Browser --HTTPS--> Cloudflare (DNS + certificate) --tunnel--> cloudflared on your computer
-  --> http://localhost:8081 (Nginx + Flutter web) --/api/--> Spring API --> MySQL
-```
-
-### Concepts
-
-- **DNS** maps `mdosthi.app` to Cloudflare. Changing the domain's *nameservers* at Name.com delegates DNS to Cloudflare; ownership and registration stay at Name.com. Recreate any email (MX/TXT) records in Cloudflare.
-- **Cloudflare Tunnel** (`cloudflared`) opens an outbound connection to Cloudflare, so no router ports are opened.
-- **Loopback-only ports** (`127.0.0.1:PORT`) make Docker publish services to this computer only. `cloudflared` can reach them; other devices cannot.
-- **HTTPS:** when the web app is opened over HTTPS, `LoginPage.protocol` in `apps/mobile/lib/login_page.dart` uses HTTPS for API calls. The browser calls `https://mdosthi.app/api/...`, which Nginx proxies to the API container.
-
-### 1. Point the domain at Cloudflare
-
-1. Add `mdosthi.app` to a Cloudflare account.
-2. At Name.com, replace the domain's nameservers with the two Cloudflare gives you.
-3. Verify that the nameservers are `*.ns.cloudflare.com`. Run each command separately. macOS/Linux: `dig NS mdosthi.app +short`. Windows PowerShell: `Resolve-DnsName mdosthi.app -Type NS`.
-4. In Cloudflare, SSL/TLS mode must be **Flexible** or **Full** (not Full strict), and Edge Certificates should show an **Active** Universal certificate. New zones can take minutes to hours.
-
-### 2. Configure `.env`
-
-Add these to the Git-ignored `.env` in the repository root (never commit it or paste its secrets anywhere):
-
-```dotenv
-FLUTTER_API_HOST=mdosthi.app
-FLUTTER_WEB_PORT=127.0.0.1:8081
-API_PORT=127.0.0.1:9090
-MYSQL_PORT=127.0.0.1:3306
-LEGACY_WEB_PORT=127.0.0.1:8080
-```
-
-`FLUTTER_API_HOST` is compiled into the web image, so changing it requires a rebuild. Use strong unique secrets and import only the approved database schema/data; Compose creates an empty database.
-
-### 3. Start the services
-
-```bash
-docker compose build --no-cache flutter-web
-docker compose up -d --force-recreate mysql api flutter-web
-docker compose stop legacy-web legacy-rmi
-docker compose ps
-```
-
-`docker compose ps` must show `127.0.0.1:...` bindings. `--force-recreate` is required after changing port bindings. The legacy JSP services are not needed for the Flutter site. Check the Flutter image uses the public host (the container name may differ; see `docker compose ps`; the command works in any shell):
-
-```bash
-docker compose exec flutter-web grep -c "mdosthi.app" /usr/share/nginx/html/main.dart.js
-```
-
-The count should be greater than 0.
-
-### 4. Create the tunnel
-
-Install `cloudflared` for your platform ([downloads](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/)):
-
-| Platform | Install |
-|---|---|
-| macOS | `brew install cloudflared` |
-| Linux | Use your package manager or the `.deb`/`.rpm`/binary from the downloads page |
-| Windows | `winget install --id Cloudflare.cloudflared` |
-
-Then authenticate and create the tunnel (same on all platforms):
-
-```bash
-cloudflared tunnel login
-cloudflared tunnel create mdosthi
-cloudflared tunnel list
-```
-
-The credentials directory is `~/.cloudflared/` on macOS/Linux and `%USERPROFILE%\.cloudflared\` on Windows.
-
-- If `login` says a certificate (`cert.pem`) already exists, you are already logged in; skip it.
-- If `create` says the name already exists, reuse that tunnel. Find its ID in any of these places:
-  - `cloudflared tunnel list`: the `ID` column of the `mdosthi` row.
-  - The credentials file name: `<TUNNEL_ID>.json` in the credentials directory.
-  - The Cloudflare dashboard: Zero Trust > Networks > Tunnels > your tunnel.
-  - The `tunnel:` line in `deploy/cloudflared/config.yml`.
-
-  The tunnel ID is not secret; the `.json` file is.
-- The `.json` credentials file and `cert.pem` are secrets. Keep them in that directory and never commit or share them.
-
-Copy [`deploy/cloudflared/config.yml.example`](../deploy/cloudflared/config.yml.example) to `deploy/cloudflared/config.yml` (`cp` in Bash, `Copy-Item` in PowerShell) and edit it:
-
-- Replace `YOUR_TUNNEL_ID` with the tunnel ID.
-- Set `credentials-file` to the absolute path of the `.json` file: for example `/Users/you/.cloudflared/ID.json` (macOS), `/home/you/.cloudflared/ID.json` (Linux), or `C:\Users\you\.cloudflared\ID.json` (Windows).
-
-Use plain values with no `<` `>` brackets. Edit the file in an editor; pasting YAML directly at a shell prompt runs each line as a command. The real `config.yml` is Git-ignored.
-
-### 5. Route DNS and run the tunnel
-
-```bash
-cloudflared tunnel --config deploy/cloudflared/config.yml ingress validate
-cloudflared tunnel route dns --overwrite-dns mdosthi mdosthi.app
-cloudflared tunnel --config deploy/cloudflared/config.yml run mdosthi
-```
-
-`--overwrite-dns` replaces an existing `mdosthi.app` A/AAAA/CNAME record (otherwise error 1003 "record already exists"). Keep the `run` terminal open. In Cloudflare, Zero Trust > Networks > Tunnels should show the tunnel as **Healthy**, and the `mdosthi.app` DNS record must be **Proxied**. Then open `https://mdosthi.app`.
-
-### Optional: run the tunnel in Docker instead
-
-To avoid installing `cloudflared` on the host (identical on every platform), use the optional `cloudflared` Compose service. It is off unless the `tunnel` profile is enabled. Create the tunnel and DNS route as above (steps 1, 4 and the `route dns` command), then:
-
-1. Copy [`deploy/cloudflared/config.docker.yml.example`](../deploy/cloudflared/config.docker.yml.example) to `deploy/cloudflared/config.docker.yml` and set `YOUR_TUNNEL_ID` and your hostname. It targets `http://flutter-web:80` on the Compose network.
-2. Copy the tunnel's `<TUNNEL_ID>.json` credentials file to `deploy/cloudflared/credentials.json`. Both files are Git-ignored; never commit them.
-3. Stop any host `cloudflared ... run` process, then start the stack with the profile:
-
-   ```bash
-   docker compose --profile tunnel up -d mysql api flutter-web cloudflared
-   docker compose logs cloudflared
-   ```
-
-   The logs should show registered tunnel connections. Stop it with `docker compose --profile tunnel stop cloudflared`.
-
-### Troubleshooting
-
-| Symptom | Fix |
-|---|---|
-| `credentials file ... doesn't exist` | Remove `<` `>` from the config; confirm the `.json` file exists in the credentials directory (`ls ~/.cloudflared` or `dir $env:USERPROFILE\.cloudflared`). If lost, `cloudflared tunnel delete mdosthi` and create a new tunnel. |
-| `command not found: tunnel:` (or similar) | YAML was pasted into the shell. Save it to the file instead. |
-| `Connection reset by peer` on `https://mdosthi.app` | Certificate not yet issued, or a local DNS/network cache. Wait, check Edge Certificates, try mobile data or DNS `1.1.1.1`. Test with `curl -I --resolve mdosthi.app:443:<Cloudflare IP> https://mdosthi.app` (use `curl.exe` in PowerShell). |
-| `502` | `flutter-web` is not running on port 8081; run `docker compose up -d flutter-web`. |
-| Page loads but login fails | Rebuild `flutter-web` with `FLUTTER_API_HOST=mdosthi.app` and confirm the API and imported database are available. |
-| Ports show `0.0.0.0` | `.env` values missing or containers not recreated; use `--force-recreate`. |
-
-Stop everything with `docker compose down` (never `-v`, which deletes the database volume) and `Ctrl+C` in the tunnel terminal.
-
-### Security
-
-The site is public to anyone who can reach the domain; a tunnel does not replace authentication. Do not use real patient or sensitive data on a personal development host. Rotate any secret that has been exposed (WhatsApp token, database and root passwords, `SECRETKEY`) and avoid weak passwords. An internet-facing healthcare system needs approved hosting, access controls, backups, monitoring, and privacy/security review.
-
-## 4. Run Flutter And The API
+## 3. Run Flutter And The API
 
 ### Start the API
 
@@ -388,7 +253,7 @@ The client screen can render without the API, but login and server-backed featur
 
 Flutter selects among devices available to the installed SDK. The web commands above work across macOS, Linux, and Windows. For a device or emulator, set `API_HOST` to an address reachable from that target; `localhost` inside a mobile emulator/device does not refer to the development computer.
 
-## 5. Run The Legacy JSP And RMI System
+## 4. Run The Legacy JSP And RMI System
 
 This workflow requires JDK 11 or later, Tomcat 9, a compatible `mDosthi` schema and the legacy configuration files. Confirm `services/legacy/runtime/gblinfo.inf` contains the right local DB connection before starting.
 
@@ -412,7 +277,7 @@ The script prints the web URL based on `tools/tomcat9/conf/server.xml`; open tha
 
 Some old legacy components do not have corresponding Java source in this repository. In particular, `drawchart` has historically been available only as a compiled class, while `.class` files and generated jars are ignored by Git. Therefore a legacy rebuild from a clean clone may fail or need a separately supplied, approved legacy artifact. A successful run on a developer machine with local build output does not establish a reproducible cross-platform build. Do not copy arbitrary compiled classes from patient or production systems; arrange for the missing source/artifact to be reviewed and distributed through an approved channel.
 
-## 6. Optional Annotation Pipeline
+## 5. Optional Annotation Pipeline
 
 Read [the annotation package README](../services/annotate/README.md) for supported inputs and commands. Use an isolated Python environment and install the shared dependencies from the repository-root `requirements.txt`, then start/configure Ollama if the selected workflow calls a local model. Do not place patient data in example inputs or generated logs unless it is authorized and protected.
 

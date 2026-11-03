@@ -220,8 +220,6 @@ See [Setup instructions](docs/setup.md) for database import and configuration de
 
 To start the complete Docker development stack instead, follow [the unified Compose instructions](docs/setup.md#run-the-apps-with-docker-compose). The Flutter web app and legacy JSP site are served from the same Compose project; an Android APK is built on demand.
 
-To share the Flutter web app on your own domain (for example `mdosthi.app`) from your computer using a Cloudflare Tunnel, see [Share the Flutter web app from your computer](docs/setup.md#share-the-flutter-web-app-from-your-computer). It covers DNS, creating the tunnel and finding its ID, loopback-only ports, and an optional Docker-based tunnel.
-
 ### Optional English chat speech
 
 The patient chat UI can read an English assistant response aloud after the user selects **Listen**. It uses Ollama's speech API with the separate Phonon model; Ollama remains the LLM and the displayed response is unchanged. Install the model on the Ollama host with `ollama pull phonon` (Ollama 0.40.9+). Speech is English-only and generated on demand by the configured Ollama host. The API does not cache or save the generated audio. See [speech setup and configuration](docs/setup.md#optional-english-speech-playback), including the data-handling implications of a remote Ollama host.

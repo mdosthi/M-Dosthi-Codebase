@@ -1,9 +1,0 @@
-# Used by the optional `cloudflared` Docker Compose service (profile "tunnel").
-# Copy to config.docker.yml, set the tunnel ID, and copy the tunnel credentials
-# file to deploy/cloudflared/credentials.json (both are Git-ignored).
-tunnel: 
-credentials-file: /etc/cloudflared/credentials.json
-ingress:
-  - hostname: mdosthi.app
-    service: http://flutter-web:80
-  - service: http_status:404
