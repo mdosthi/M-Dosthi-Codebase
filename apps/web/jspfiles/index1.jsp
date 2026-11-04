@@ -251,7 +251,7 @@
 							$(".pat-prof-sum").remove();
 							var patque = fileName.match("browse.jsp");
 							var oldpat = fileName.match("oldpat.jsp");
-							if (patque == "browse.jsp" || oldpat == "oldpat.jsp" || patque == "totalsummary.jsp" || fileName.indexOf("poBadoPending.jsp") == 0 || fileName == "psychologistPatientMenu.jsp" || fileName.indexOf("psychologistPatientList.jsp") == 0) {
+							if (patque == "browse.jsp" || oldpat == "oldpat.jsp" || patque == "totalsummary.jsp" || fileName.indexOf("poBadoPending.jsp") == 0 || fileName == "psychologistPatientMenu.jsp" || fileName.indexOf("psychologistPatientList.jsp") == 0 || fileName.indexOf("patientMonitoring") == 0) {
 								var loadUrl = "<%=request.getContextPath()%>/jspfiles/" + fileName;
 								var ajax_load = "<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>";
 								$("#main_frame").html(ajax_load).load(loadUrl);
@@ -651,6 +651,10 @@
 																	onclick='clearPanel("psychologistPatientMenu.jsp")'>
 																	<span class="title">Patient Details</span>
 																	<div class="cnt"><span></span></div>
+																</div>
+																<div class="col-sm-3 monitoring rect" onclick="clearPanel('patientMonitoringDoctorList.jsp')">
+																	<span class="title">Patient Monitoring</span>
+																	<div class="cnt"><span class="glyphicon glyphicon-heart"></span></div>
 																</div>
 																<!--<div class="col-sm-3 actvTest rect" onclick='clearPanel("<%=parts[1].split(",")[0]%>")'><span class="title"><%=parts[1].split(",")[1]%></span><div class="cnt"><span><%=total_lpat%></span></div></div>-->
 

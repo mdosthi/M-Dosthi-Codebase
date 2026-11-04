@@ -45,7 +45,7 @@ services:
       dockerfile: docker/flutter.Dockerfile
       target: flutter-web
       args:
-        API_HOST: ${FLUTTER_API_HOST:-localhost:${FLUTTER_WEB_PORT:-8081}}
+        API_HOST: ${FLUTTER_API_HOST:-}
     restart: unless-stopped
     ports:
       - "${FLUTTER_WEB_PORT:-8081}:80"
@@ -81,6 +81,11 @@ services:
     restart: unless-stopped
     environment:
       IMEDIX_CENTER_CODE: ${IMEDIX_CENTER_CODE:-VBCR019}
+      LEGACY_DB_URL: "jdbc:mysql://mysql:3306/${LEGACY_DB_DATABASE:-${MYSQL_DATABASE:-mDosthi}}?useUnicode=true&characterEncoding=UTF-8"
+      LEGACY_DB_USERNAME: ${LEGACY_DB_USERNAME:?set LEGACY_DB_USERNAME in .env}
+      LEGACY_DB_PASSWORD: ${LEGACY_DB_PASSWORD:?set LEGACY_DB_PASSWORD in .env}
+      LEGACY_FTP_USERNAME: ${LEGACY_FTP_USERNAME:-}
+      LEGACY_FTP_PASSWORD: ${LEGACY_FTP_PASSWORD:-}
       LEGACY_RMI_ADVERTISE_HOST: legacy-rmi
       PACS_UID: ${PACS_UID:-}
       PACS_PASSWORD: ${PACS_PASSWORD:-}

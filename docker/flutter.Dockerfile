@@ -5,7 +5,7 @@ COPY apps/mobile/ ./
 RUN flutter pub get
 
 FROM flutter-build AS flutter-web-build
-ARG API_HOST=localhost:9090
+ARG API_HOST=
 RUN flutter build web --release --dart-define=API_HOST=${API_HOST}
 
 FROM nginx:alpine AS flutter-web

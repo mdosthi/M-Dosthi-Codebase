@@ -139,15 +139,8 @@ class WellbeingService {
         'reason': reason,
         'date': date,
       });
-    } catch (_) {
-      return {
-        'status': 'success',
-        'patientId': patientId,
-        'previousTherapy': previousTherapy,
-        'newTherapy': newTherapy,
-        'reason': reason,
-        'date': date,
-      };
+    } catch (error) {
+      return {'status': 'error', 'message': error.toString()};
     }
   }
 
@@ -171,14 +164,8 @@ class WellbeingService {
         'notes': notes,
         'date': date,
       });
-    } catch (_) {
-      return {
-        'status': 'success',
-        'patientId': patientId,
-        'state': state,
-        'notes': notes,
-        'date': date,
-      };
+    } catch (error) {
+      return {'status': 'error', 'message': error.toString()};
     }
   }
 
@@ -200,13 +187,8 @@ class WellbeingService {
         'action': action,
         'remarks': remarks,
       });
-    } catch (_) {
-      return {
-        'status': 'success',
-        'patientId': patientId,
-        'action': action,
-        'remarks': remarks,
-      };
+    } catch (error) {
+      return {'status': 'error', 'message': error.toString()};
     }
   }
 

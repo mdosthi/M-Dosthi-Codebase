@@ -71,6 +71,14 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
     });
   }
 
+  void _showSaveError(Map<String, dynamic> result) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+          content: Text(result['message']?.toString() ??
+              'Unable to save. Please try again.')),
+    );
+  }
+
   Future<void> _saveTherapyChange() async {
     final previous = _therapyPreviousController.text.trim();
     final next = _therapyNewController.text.trim();
@@ -110,6 +118,8 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Therapy change saved.')),
       );
+    } else {
+      _showSaveError(result);
     }
   }
 
@@ -145,6 +155,8 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Metastasis state saved.')),
       );
+    } else {
+      _showSaveError(result);
     }
   }
 
@@ -160,6 +172,8 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Patient monitoring action recorded.')),
       );
+    } else {
+      _showSaveError(result);
     }
   }
 

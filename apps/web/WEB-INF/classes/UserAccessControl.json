@@ -233,11 +233,17 @@
 		"doc",
 		"usr"
 	],
+	"org.apache.jsp.jspfiles.patientMonitoringApi_jsp": [
+		"doc",
+		"psy"
+	],
 	"org.apache.jsp.jspfiles.patientMonitoringDoctorList_jsp": [
-		"doc"
+		"doc",
+		"psy"
 	],
 	"org.apache.jsp.jspfiles.patientMonitoringDoctor_jsp": [
-		"doc"
+		"doc",
+		"psy"
 	],
 	"org.apache.jsp.jspfiles.showpatdata_jsp": [
 		"adm",
@@ -498,6 +504,7 @@
 		"psy"
 	],
 	"org.apache.jsp.jspfiles.patientScreeningReport_jsp": [
+		"doc",
 		"psy"
 	],
 	"org.apache.jsp.jspfiles.pendingScreeningSelection_jsp": [

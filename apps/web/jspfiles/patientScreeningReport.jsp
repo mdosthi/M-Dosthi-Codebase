@@ -169,11 +169,12 @@
 %>
 <%
   String role = new cook().getCookieValue("usertype", request.getCookies());
-  if (!"psy".equalsIgnoreCase(role)) {
+  if (!"psy".equalsIgnoreCase(role) && !"doc".equalsIgnoreCase(role)) {
     out.println("<div class=\"alert alert-danger\">Access denied.</div>");
     return;
   }
 
+  boolean embed = "1".equals(request.getParameter("embed"));
   String patientId = request.getParameter("pat_id");
   patientId = patientId == null ? "" : patientId.trim();
   int pageSize = 30;
@@ -207,6 +208,19 @@
     result = null;
     statement = null;
     if (!patientExists) throw new SQLException("Patient not found.");
+
+    if ("doc".equalsIgnoreCase(new cook().getCookieValue("usertype", request.getCookies()))) {
+      statement = connection.prepareStatement("SELECT COUNT(*) FROM lpatq lp JOIN login d ON UPPER(d.rg_no)=UPPER(lp.assigneddoc) WHERE lp.pat_id=? AND UPPER(d.uid)=UPPER(?) AND UPPER(lp.delflag)='N'");
+      statement.setString(1, patientId);
+      statement.setString(2, new cook().getCookieValue("userid", request.getCookies()));
+      result = statement.executeQuery();
+      boolean assigned = result.next() && result.getInt(1) > 0;
+      result.close();
+      statement.close();
+      result = null;
+      statement = null;
+      if (!assigned) throw new SQLException("Patient not found.");
+    }
 
     totalRecords = count(connection, "pobado_screening", "cr_number", patientId)
       + count(connection, "distress_thermometer", "pat_id", patientId)
@@ -467,21 +481,22 @@
     .error, .empty-state { padding: 18px; color: #822727; background: #fff4f1; border: 1px solid #f0d7cf; border-radius: 12px; }
     .empty-state { color: var(--muted); background: #fff; border-color: var(--line); text-align: center; }
     .pagination-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 16px; padding: 14px 0; }
+    body.embed { padding: 0; background: transparent; }
     @media (max-width: 760px) { body { padding: 16px; } .history-hero { padding: 22px; } .schedule-grid { grid-template-columns: 1fr; } }
     @media (max-width: 540px) { body { padding: 10px; } .history-hero { flex-direction: column; padding: 20px; border-radius: 15px; } .back-link { align-self: flex-start; } .section-heading { align-items: flex-start; flex-direction: column; } .filters { align-items: stretch; } .filter-field { flex: 1 1 42%; } .filters select, .filters input { width: 100%; min-width: 0; } .filters button { flex: 1 1 auto; } .screening-card summary { align-items: flex-start; padding: 14px; } .record-summary-right { gap: 6px; } .score-pill { padding: 6px 7px; font-size: 11px; } .record-details ul { grid-template-columns: 1fr; } .pagination-row { align-items: flex-start; flex-direction: column; } }
     @media (prefers-reduced-motion: reduce) { *, *:before, *:after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
   </style>
 </head>
-<body>
+<body class="<%= embed ? "embed" : "" %>">
   <main class="history-shell">
-    <header class="history-hero">
+    <% if (!embed) { %><header class="history-hero">
       <div class="hero-copy">
         <p class="eyebrow">PATIENT CARE · CLINICAL OVERVIEW</p>
         <h1>Screening history</h1>
         <span class="patient-id">Patient ID <strong><%= html(patientId) %></strong></span>
       </div>
       <a class="back-link" href="psychologistPatientList.jsp" onclick="return navigateAppPanel('psychologistPatientList.jsp');">Back to Patient List</a>
-    </header>
+    </header><% } %>
     <% if (error != null) { %>
       <div class="error"><%= html(error) %></div>
     <% } else { %>
@@ -583,8 +598,8 @@
       <nav class="pagination-row" aria-label="Screening history pages">
         <span class="muted">Page <%= pageNumber %> of <%= totalPages %></span>
         <span>
-          <% if (pageNumber > 1) { %><a class="page-link" href="patientScreeningReport.jsp?pat_id=<%= java.net.URLEncoder.encode(patientId, "UTF-8") %>&amp;page=<%= pageNumber - 1 %>" onclick="return navigateAppPanel('patientScreeningReport.jsp?pat_id=<%= java.net.URLEncoder.encode(patientId, "UTF-8") %>&page=<%= pageNumber - 1 %>');">Previous</a><% } %>
-          <% if (pageNumber < totalPages) { %><a class="page-link" href="patientScreeningReport.jsp?pat_id=<%= java.net.URLEncoder.encode(patientId, "UTF-8") %>&amp;page=<%= pageNumber + 1 %>" onclick="return navigateAppPanel('patientScreeningReport.jsp?pat_id=<%= java.net.URLEncoder.encode(patientId, "UTF-8") %>&page=<%= pageNumber + 1 %>');">Next</a><% } %>
+          <% if (pageNumber > 1) { %><a class="page-link" href="patientScreeningReport.jsp?pat_id=<%= java.net.URLEncoder.encode(patientId, "UTF-8") %>&amp;page=<%= pageNumber - 1 %><%= embed ? "&amp;embed=1" : "" %>" <%= embed ? "" : "onclick=\"return navigateAppPanel('patientScreeningReport.jsp?pat_id=" + java.net.URLEncoder.encode(patientId, "UTF-8") + "&page=" + (pageNumber - 1) + "');\"" %>>Previous</a><% } %>
+          <% if (pageNumber < totalPages) { %><a class="page-link" href="patientScreeningReport.jsp?pat_id=<%= java.net.URLEncoder.encode(patientId, "UTF-8") %>&amp;page=<%= pageNumber + 1 %><%= embed ? "&amp;embed=1" : "" %>" <%= embed ? "" : "onclick=\"return navigateAppPanel('patientScreeningReport.jsp?pat_id=" + java.net.URLEncoder.encode(patientId, "UTF-8") + "&page=" + (pageNumber + 1) + "');\"" %>>Next</a><% } %>
         </span>
       </nav>
       </section>

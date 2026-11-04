@@ -325,3 +325,70 @@
     border: 0;
   }
 }
+.patient-monitoring .monitoring-stats { margin-bottom: 15px; }
+.patient-monitoring .monitoring-stat { background: #f7f9fc; border: 1px solid #e1e6ef; border-radius: 8px; padding: 12px; margin-bottom: 10px; text-align: center; }
+.patient-monitoring .monitoring-stat-value { display: block; font-size: 26px; font-weight: 700; color: #1f4e8c; }
+.patient-monitoring .monitoring-stat-label { font-size: 12px; color: #667; }
+.patient-monitoring .monitoring-gauge { display: block; height: 14px; background: #e9edf3; border-radius: 7px; overflow: hidden; }
+.patient-monitoring .monitoring-gauge.small { height: 10px; flex: 1; margin: 0 10px; }
+.patient-monitoring .monitoring-gauge-fill { display: block; height: 100%; border-radius: 7px; transition: width .4s; }
+.patient-monitoring .monitoring-gauge-fill.low { background: #3c9d5d; }
+.patient-monitoring .monitoring-gauge-fill.mid { background: #e0a526; }
+.patient-monitoring .monitoring-gauge-fill.high { background: #d64545; }
+.patient-monitoring .monitoring-gauge-scale { display: flex; justify-content: space-between; font-size: 11px; color: #889; margin-bottom: 10px; }
+.patient-monitoring .monitoring-trend-row { display: flex; align-items: center; padding: 8px 10px; border-bottom: 1px solid #eef0f4; cursor: pointer; }
+.patient-monitoring .monitoring-trend-row:hover, .patient-monitoring .monitoring-trend-row.open { background: #f3f7fd; }
+.patient-monitoring .monitoring-trend-date { width: 100px; font-weight: 600; }
+.patient-monitoring .monitoring-trend-label { width: 170px; color: #667; }
+.patient-monitoring .monitoring-trend-score { width: 50px; text-align: right; font-weight: 700; }
+.patient-monitoring .monitoring-trend-detail { padding: 8px 20px 4px; background: #fafbfd; }
+
+.patient-monitoring .monitoring-hero { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; position: relative; overflow: hidden; border: 0; color: #fff; background: linear-gradient(120deg, #164763, #247a9b); border-radius: 0 0 20px 20px; box-shadow: 0 14px 32px rgba(22,71,99,.16); }
+.patient-monitoring .monitoring-hero h2 { color: #fff; margin: 4px 0 12px; font-size: 30px; letter-spacing: -.5px; }
+.patient-monitoring .hero-eyebrow { color: #d5ebf2; font-size: 11px !important; font-weight: 700; letter-spacing: 1.5px; }
+.patient-monitoring .hero-chip { display: inline-block; margin: 0 8px 6px 0; padding: 6px 12px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.2); border-radius: 30px; font-size: 13px; }
+.patient-monitoring .hero-status.high { background: #d64545; border-color: #d64545; font-weight: 700; }
+.patient-monitoring .hero-status.low { background: #3c9d5d; border-color: #3c9d5d; font-weight: 700; }
+.patient-monitoring .hero-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.patient-monitoring .hero-btn { padding: 8px 14px; color: #fff; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.45); border-radius: 9px; font-size: 13px; font-weight: 600; }
+.patient-monitoring .hero-btn:hover { background: rgba(255,255,255,.22); }
+.patient-monitoring .monitoring-tabs { display: flex; gap: 6px; margin: 0 0 18px; padding: 5px; list-style: none; background: #fff; border: 1px solid #d8e5eb; border-radius: 12px; }
+.patient-monitoring .monitoring-tabs li { flex: 1; padding: 10px 14px; text-align: center; color: #526877; font-weight: 600; border-radius: 9px; cursor: pointer; transition: background .15s, color .15s; }
+.patient-monitoring .monitoring-tabs li:hover { background: #eef5f8; }
+.patient-monitoring .monitoring-tabs li.active { color: #fff; background: #247a9b; }
+.patient-monitoring .monitoring-iframe { width: 100%; height: 900px; border: 0; background: transparent; border-radius: 14px; }
+.patient-monitoring .monitoring-card { border: 1px solid #d8e5eb; border-radius: 14px; box-shadow: 0 5px 16px rgba(31,62,82,.05); overflow: hidden; }
+.patient-monitoring .monitoring-card > .panel-heading { background: #fff; border-bottom: 1px solid #e6eef2; }
+.patient-monitoring .monitoring-card .panel-title { color: #164763; font-weight: 700; }
+.patient-monitoring .monitoring-stat { border-radius: 14px; background: #fff; border-color: #d8e5eb; box-shadow: 0 4px 13px rgba(31,62,82,.04); transition: transform .15s; }
+.patient-monitoring .monitoring-stat:hover { transform: translateY(-2px); }
+.patient-monitoring .monitoring-stat-value { color: #247a9b; }
+@media (max-width: 760px) { .patient-monitoring .monitoring-hero { flex-direction: column; } }
+
+.patient-monitoring .monitoring-card, .patient-monitoring .monitoring-stat { animation: mmFadeUp .45s ease both; }
+@keyframes mmFadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.patient-monitoring .monitoring-card { transition: box-shadow .2s, transform .2s; }
+.patient-monitoring .monitoring-card:hover { box-shadow: 0 10px 26px rgba(31,62,82,.10); }
+.patient-monitoring .monitoring-stat { position: relative; padding: 16px 12px 14px; border-top: 3px solid #247a9b; }
+.patient-monitoring .monitoring-stat-icon { position: absolute; top: 10px; right: 12px; color: #b9d3de; font-size: 18px; }
+.patient-monitoring .monitoring-stat-label { text-transform: uppercase; letter-spacing: .5px; font-weight: 700; }
+.patient-monitoring .monitoring-gauge-fill { transition: width .9s cubic-bezier(.2,.8,.2,1); }
+.patient-monitoring .monitoring-gauge { height: 16px; box-shadow: inset 0 1px 3px rgba(0,0,0,.08); }
+.patient-monitoring .monitoring-status { padding: 6px 16px; border-radius: 20px; font-size: 14px; font-weight: 700; color: #1f6b3a; background: #e1f3e8; }
+.patient-monitoring .monitoring-status.high { color: #fff; background: #d64545; animation: mmPulse 1.8s infinite; }
+@keyframes mmPulse { 0% { box-shadow: 0 0 0 0 rgba(214,69,69,.5); } 70% { box-shadow: 0 0 0 10px rgba(214,69,69,0); } 100% { box-shadow: 0 0 0 0 rgba(214,69,69,0); } }
+.patient-monitoring .monitoring-trend-row { position: relative; margin-left: 14px; border-left: 3px solid #cfe3ea; border-radius: 0 10px 10px 0; transition: background .15s, transform .15s; }
+.patient-monitoring .monitoring-trend-row:before { content: ""; position: absolute; left: -9px; top: 50%; width: 15px; height: 15px; margin-top: -7px; background: #247a9b; border: 3px solid #fff; border-radius: 50%; box-shadow: 0 0 0 1px #cfe3ea; }
+.patient-monitoring .monitoring-trend-row:hover { transform: translateX(3px); }
+.patient-monitoring .monitoring-trend-row:after { content: "\25BE"; margin-left: 10px; color: #8aa; transition: transform .2s; }
+.patient-monitoring .monitoring-trend-row.open:after { transform: rotate(180deg); }
+.patient-monitoring .monitoring-trend-detail { margin-left: 14px; border-left: 3px solid #cfe3ea; border-radius: 0 0 10px 0; }
+.patient-monitoring .monitoring-tabs li { position: relative; }
+.patient-monitoring .monitoring-tabs li.active { box-shadow: 0 4px 12px rgba(36,122,155,.35); }
+.patient-monitoring .btn-primary { background: #247a9b; border-color: #1e657f; border-radius: 8px; transition: transform .15s, box-shadow .15s; }
+.patient-monitoring .btn-primary:hover { background: #1e657f; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(30,101,127,.3); }
+.patient-monitoring .form-control { border-radius: 8px; transition: border-color .15s, box-shadow .15s; }
+.patient-monitoring .form-control:focus { border-color: #247a9b; box-shadow: 0 0 0 3px rgba(36,122,155,.15); }
+.patient-monitoring .monitoring-hero { margin-top: 0; }
+.patient-monitoring .monitoring-hero:after { position: absolute; right: -54px; bottom: -132px; width: 290px; height: 290px; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; content: ""; box-shadow: 0 0 0 32px rgba(255,255,255,.035), 0 0 0 68px rgba(255,255,255,.025); pointer-events: none; }
+.patient-monitoring .hero-copy, .patient-monitoring .hero-actions { position: relative; z-index: 1; }

@@ -32,8 +32,15 @@ class LoginPage extends StatefulWidget {
   //static String domainName = "matrikaruna.in";
   //static String domainName="10.5.29.236:9090";
   //static String domainName = "10.5.29.226:9090";
-  static String domainName =
-      const String.fromEnvironment('API_HOST', defaultValue: 'localhost:9090');
+  static const String _configuredApiHost = String.fromEnvironment('API_HOST');
+  static String get domainName {
+    if (kIsWeb) {
+      return _configuredApiHost.isEmpty
+          ? Uri.base.authority
+          : _configuredApiHost;
+    }
+    return _configuredApiHost.isEmpty ? 'localhost:9090' : _configuredApiHost;
+  }
 
   static bool get isClinician {
     final type = userType.trim().toLowerCase();

@@ -290,9 +290,18 @@
 									}
 									tar = "updatephysician.jsp?regcode=" + phy + "&" + str
 									if (str.length > 0) {
-										$.get(tar, function (data, status) { alert("Assigned Successfully"); });
-										//showselected("curCCode="+phy.substring(3,(phy.length-4))+"&F=0&L=25");
-										showselected("curCCode=" + ccode + "&F=0&L=25");
+										$.get(tar, function (data) {
+											if (data.indexOf("Update Data Successfully") === -1) {
+												alert("Unable to assign physician. Please try again.");
+												return;
+											}
+
+											alert("Assigned Successfully");
+											//showselected("curCCode="+phy.substring(3,(phy.length-4))+"&F=0&L=25");
+											showselected("curCCode=" + ccode + "&F=0&L=25");
+										}).fail(function () {
+											alert("Unable to assign physician. Please try again.");
+										});
 									}
 									else { alert("Choose Physician and select patient"); }
 									//window.location=tar

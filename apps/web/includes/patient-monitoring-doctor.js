@@ -46,34 +46,16 @@
     $(panel).html(table + '</tbody></table></div>');
   }
 
-  function renderDistress(distress) {
-    if (!distress) {
-      $('#distress-status-panel').html('<div class="monitoring-empty">No records available yet.</div>');
-      return;
-    }
-
-    var statusClass = distress.status === 'High' ? 'high' : '';
-    var statusHtml = '<p><span class="monitoring-status ' + statusClass + '">' + escapeHtml(distress.status) + '</span></p>';
-    statusHtml += '<p>Score: ' + escapeHtml(distress.score) + '</p>';
-    statusHtml += '<p>Assessment date: ' + escapeHtml(distress.assessmentDate) + '</p>';
-    $('#distress-status-panel').html(statusHtml);
-
-    if (distress.physicalMeetingRecommended) {
-      $('#distress-action-section').show();
-    }
-  }
-
   function loadMonitoringSummary() {
     service.getPatientMonitoring(patientId)
       .done(function (data) {
-        var summary = data && data.summary ? '<p>' + escapeHtml(data.summary) + '</p>' : '<div class="monitoring-empty">No records available yet.</div>';
-        $('#patient-summary-panel').html(summary);
         $('#current-therapy').text(data && data.currentTherapy ? data.currentTherapy : 'Not available');
-        renderDistress(data && data.distress);
+        if (data && data.distress && data.distress.physicalMeetingRecommended) {
+          $('#distress-action-section').show();
+        }
       })
       .fail(function () {
-        showUnavailable('#patient-summary-panel');
-        showUnavailable('#distress-status-panel');
+        $('#current-therapy').text('Not available');
       });
   }
 
@@ -103,6 +85,10 @@
       .fail(function () {
         showUnavailable('#metastasis-history-panel');
       });
+  }
+
+  function refreshCounts() {
+    setTimeout(function () { if (window.reloadMonitoringPage) { window.reloadMonitoringPage(); } }, 900);
   }
 
   function load() {
@@ -141,6 +127,7 @@
       showMessage('Information saved successfully.', 'success');
       form.reset();
       load();
+      refreshCounts();
     }).fail(function () {
       showMessage('Unable to save monitoring data. Please try again.', 'danger');
     });
@@ -162,6 +149,7 @@
         showMessage('Information saved successfully.', 'success');
         form.reset();
         load();
+        refreshCounts();
       })
       .fail(function () {
         showMessage('Unable to save monitoring data. Please try again.', 'danger');
@@ -181,6 +169,7 @@
       remarks: form.remarks.value
     }).done(function () {
       showMessage('Information saved successfully.', 'success');
+      setTimeout(function () { if (window.reloadMonitoringPage) { window.reloadMonitoringPage(); } }, 700);
     }).fail(function () {
       showMessage('Unable to save monitoring data. Please try again.', 'danger');
     });

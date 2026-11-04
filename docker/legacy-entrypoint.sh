@@ -5,11 +5,13 @@ umask 077
 mode="${1:-}"
 
 write_legacy_config() {
+  config_dir="${1:-/opt/mdosthi/services/legacy/runtime}"
+  mkdir -p "$config_dir"
   : "${LEGACY_DB_URL:?LEGACY_DB_URL is required}"
   : "${LEGACY_DB_USERNAME:?LEGACY_DB_USERNAME is required}"
   : "${LEGACY_DB_PASSWORD:?LEGACY_DB_PASSWORD is required}"
 
-  cat > /opt/mdosthi/services/legacy/runtime/gblinfo.inf <<EOF
+  cat > "$config_dir/gblinfo.inf" <<EOF
 gblcentercode = ${IMEDIX_CENTER_CODE:-VBCR019}
 gbldbjdbccriver = com.mysql.cj.jdbc.Driver
 gbldburl = ${LEGACY_DB_URL}
@@ -43,6 +45,8 @@ case "$mode" in
       -jar iMediXBusinessLogic.jar
     ;;
   web)
+    # JSPs read the DB settings from <tomcat root>/services/legacy/runtime/gblinfo.inf
+    write_legacy_config /usr/local/tomcat/services/legacy/runtime
       awk '
         BEGIN {
           center = ENVIRON["IMEDIX_CENTER_CODE"]
