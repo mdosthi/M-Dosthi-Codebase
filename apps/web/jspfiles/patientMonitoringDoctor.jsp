@@ -180,7 +180,7 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/style/patient-monitoring.css?v=<%=new File(application.getRealPath("/style/patient-monitoring.css")).lastModified()%>">
 <script src="<%=request.getContextPath()%>/includes/patient-monitoring-doctor-adapter.js"></script>
 <script src="<%=request.getContextPath()%>/includes/patient-monitoring-api.js"></script>
-<div class="patient-monitoring" data-patient-id="<%=monitoringHtml(monitoringPatientId)%>">
+<div class="patient-monitoring patient-monitoring-detail" data-patient-id="<%=monitoringHtml(monitoringPatientId)%>">
   <div class="monitoring-header monitoring-hero">
     <div class="hero-copy">
       <p class="hero-eyebrow">PATIENT CARE &middot; <%=monitoringIsPsychologist ? "PSYCHOLOGIST" : "DOCTOR"%> VIEW</p>
@@ -200,9 +200,9 @@
     <div class="monitoring-error" role="alert"><%=monitoringHtml(monitoringError)%></div>
   <% } else { %>
   <ul class="monitoring-tabs" role="tablist">
-    <li class="active" data-tab="overview" role="tab" tabindex="0">Overview</li>
-    <li data-tab="screening" role="tab" tabindex="0">Screening History</li>
-    <li data-tab="treatment" role="tab" tabindex="0">Treatment &amp; Actions</li>
+    <li class="active" data-tab="overview" role="tab" tabindex="0" aria-selected="true">Overview</li>
+    <li data-tab="screening" role="tab" tabindex="0" aria-selected="false">Screening History</li>
+    <li data-tab="treatment" role="tab" tabindex="0" aria-selected="false">Treatment &amp; Actions</li>
   </ul>
   <div class="monitoring-tabpane" data-pane="overview">
   <div class="row">
@@ -330,6 +330,8 @@ $(document).off("click.mtab keydown.mtab").on("click.mtab keydown.mtab", ".monit
   var tab = $(this).data("tab");
   $(".monitoring-tabs li").removeClass("active");
   $(this).addClass("active");
+  $(".monitoring-tabs li").attr("aria-selected", "false");
+  $(this).attr("aria-selected", "true");
   $(".monitoring-tabpane").hide();
   $(".monitoring-tabpane[data-pane='" + tab + "']").fadeIn(150);
   var frame = document.getElementById("screening-history-frame");

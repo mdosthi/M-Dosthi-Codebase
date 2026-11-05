@@ -18,6 +18,8 @@
 			ccode=cookx.getCookieValue("center", request.getCookies ()); String
 			curCCode=request.getParameter("curCCode"); String cname=cookx.getCookieValue("centername",
 			request.getCookies ()); //out.println(usertype+"<br>"+tmpid+"<br>"+menuid);
+			if(cname==null) cname="";
+			if(username==null) username="";
 			String str,str1;
 			str1="<FONT COLOR=#003300 size='5' face='Times'><B>"+cname.toUpperCase()+"</B></FONT>";
 			str = "&nbsp;&nbsp;&nbsp;(<b>"
