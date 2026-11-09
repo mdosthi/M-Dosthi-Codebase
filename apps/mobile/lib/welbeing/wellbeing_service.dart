@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:app_001/login_page.dart';
+import 'package:mdosthi_app/login_page.dart';
 import 'package:http/http.dart' as http;
 
 class WellbeingService {
@@ -93,6 +93,26 @@ class WellbeingService {
     }
   }
 
+  static Future<Map<String, dynamic>> getPatientScreeningHistory({
+    required String patientId,
+    int offset = 0,
+    int limit = 50,
+  }) async {
+    if (!hasPatientId(patientId)) {
+      throw ArgumentError.value(patientId, 'patientId', 'must not be empty');
+    }
+
+    final result = await _postJson('/get-screening-history', {
+      'patientId': patientId.trim(),
+      'offset': offset,
+      'limit': limit,
+    });
+    if (result['status'] != 'success') {
+      throw Exception(result['message'] ?? 'Unable to load screening history');
+    }
+    return result;
+  }
+
   static Future<Map<String, dynamic>> getDistressStatus(
       String patientId) async {
     final result = await getPatientMonitoring(patientId);
@@ -119,15 +139,8 @@ class WellbeingService {
         'reason': reason,
         'date': date,
       });
-    } catch (_) {
-      return {
-        'status': 'success',
-        'patientId': patientId,
-        'previousTherapy': previousTherapy,
-        'newTherapy': newTherapy,
-        'reason': reason,
-        'date': date,
-      };
+    } catch (error) {
+      return {'status': 'error', 'message': error.toString()};
     }
   }
 
@@ -151,14 +164,8 @@ class WellbeingService {
         'notes': notes,
         'date': date,
       });
-    } catch (_) {
-      return {
-        'status': 'success',
-        'patientId': patientId,
-        'state': state,
-        'notes': notes,
-        'date': date,
-      };
+    } catch (error) {
+      return {'status': 'error', 'message': error.toString()};
     }
   }
 
@@ -180,13 +187,8 @@ class WellbeingService {
         'action': action,
         'remarks': remarks,
       });
-    } catch (_) {
-      return {
-        'status': 'success',
-        'patientId': patientId,
-        'action': action,
-        'remarks': remarks,
-      };
+    } catch (error) {
+      return {'status': 'error', 'message': error.toString()};
     }
   }
 

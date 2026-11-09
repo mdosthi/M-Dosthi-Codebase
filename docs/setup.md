@@ -12,6 +12,19 @@ This guide covers the independently runnable parts of the M-Dosthi repository. T
 
 You do not need to start both Java servers for the Flutter workflow. The JSP application is not the Flutter app's API server.
 
+## Choose A Platform And Run Mode
+
+The Flutter client and Spring API can run on macOS, Linux, and Windows. Use Docker Compose for a consistent multi-service stack, or run the Flutter/API components directly with the platform's native tools.
+
+| Run mode | macOS | Linux | Windows |
+|---|---|---|---|
+| Docker | Install Docker Desktop or Docker Engine with Compose. Run `docker compose` from Terminal. | Install Docker Engine and the Compose plugin. Run `docker compose` from a shell. | Install Docker Desktop. Run `docker compose` from PowerShell. |
+| Without Docker | Use `scripts/setup.sh` and `scripts/api.sh` from Terminal; Flutter runs natively. | Use `scripts/setup.sh` and `scripts/api.sh` from a shell; Flutter runs natively. | Use `scripts/setup.ps1` and `scripts/api.ps1` from PowerShell; Flutter runs natively. |
+
+The no-Docker path requires you to install and configure JDK 25, Flutter, and MySQL 8 yourself (MySQL may be local or remote). For Windows, the legacy JSP/RMI scripts are Bash scripts and require Git Bash or WSL; alternatively, use Docker Compose for those services. The Compose stack uses Linux containers and is supported through Docker Desktop on macOS/Windows and Docker Engine on Linux.
+
+To start the Docker stack, first prepare `.env` as described below, then follow [Run The Apps With Docker Compose](#run-the-apps-with-docker-compose). To start Flutter and the API without Docker, follow [Run Flutter And The API](#4-run-flutter-and-the-api). Compose initializes an empty database only; neither setup mode supplies clinical schemas or patient data.
+
 ## Prerequisites
 
 Install the tools needed for your chosen workflow. The repository setup scripts do not install Java, Flutter, Python, MySQL, or Ollama.
@@ -25,9 +38,9 @@ Install the tools needed for your chosen workflow. The repository setup scripts 
 | Flutter SDK | `apps/mobile` | Chrome is needed for the Chrome target; `web-server` can be used with another browser. |
 | Python 3.10+ | `services/annotate` | Create an isolated environment and install the package's declared dependencies. |
 | Ollama | Annotation and configured API features | Install separately, start the service, and download/configure the model names required by your workflow. |
-| Docker Compose | Optional MySQL | `docker compose` is included with current Docker Desktop and many Docker Engine installations. |
+| Docker Compose | Unified web/API/database stack and Android APK build | `docker compose` is included with current Docker Desktop and many Docker Engine installations. |
 
-On Windows, run setup and the API in PowerShell. The legacy scripts are Bash scripts; use Git Bash or WSL. Flutter can use native Windows tooling for the desired target.
+On Windows, run setup and the API in PowerShell. The legacy scripts are Bash scripts; use Git Bash or WSL. Flutter can use native Windows tooling for targets supported by the installed Flutter SDK.
 
 ## 1. Clone And Prepare Local Files
 
@@ -47,13 +60,13 @@ Set-Location M-Dosthi
 powershell -ExecutionPolicy Bypass -File scripts/setup.ps1
 ```
 
-The setup script prepares local configuration and Tomcat, then reports which prerequisite commands are on `PATH`. It does not install those prerequisites or initialize application tables. It creates `.env` from `.env.example` if needed. It also creates `services/legacy/runtime/gblinfo.inf` and `apps/web/config.info` from templates, replacing `@PROJECT_ROOT@` with this checkout's absolute path. Generated files are not overwritten on later setup runs, so preserve your local edits.
+The setup script prepares local configuration and Tomcat, then reports which prerequisite commands are on `PATH`. It does not install those prerequisites or initialize application tables. If `.env` is missing, it copies `.env.example` to `.env`; the tracked `.env.example` template is not modified. Edit only `.env` with local values. It also creates `services/legacy/runtime/gblinfo.inf` and `apps/web/config.info` from templates, replacing `@PROJECT_ROOT@` with this checkout's absolute path. Generated files are not overwritten on later setup runs, so preserve your local edits.
 
 `tools/` is Git-ignored. Setup downloads Tomcat 9 there if it is missing, but a Java distribution is not automatically downloaded. Install the needed JDKs yourself and keep their paths outside version control.
 
 ## 2. Configure Java And Secrets
 
-Copy/edit `.env` in the repository root. It is ignored by Git; keep one value per line as `NAME=value` and do not add real values to `.env.example`.
+Copy `.env.example` to `.env` in the repository root, then edit `.env`. It is ignored by Git; keep one value per line as `NAME=value`. Never put passwords, API tokens, or other credentials in `.env.example`; it is a tracked template shared with the repository.
 
 For the API, select JDK 25 before launching. Bash example:
 
@@ -171,7 +184,35 @@ Only import schemas you actually have and intend to use. Do not assume the API a
 
 The PO Bado migrations in `database/migrations` are for the `mDosthi` legacy schema. They are not general database initialization scripts and are not applied automatically. Back up first and follow [the migration runner guide](../database/migration-runner/README.md); its database guard rejects other schema names.
 
-## 4. Run Flutter And The API
+## Run The Apps With Docker Compose
+
+The root `docker-compose.yml` is the single Docker entry point. From the repository root, copy `.env.example` to `.env`, set unique local values for `MYSQL_ROOT_PASSWORD`, `SPRING_DATASOURCE_PASSWORD`, `LEGACY_DB_PASSWORD`, and `SECRETKEY`, then start the services:
+
+```bash
+docker compose up --build -d
+```
+
+Compose starts MySQL, the Spring API, the legacy RMI service and JSP site, and the Flutter web app. Open:
+
+| App | URL |
+|---|---|
+| Legacy JSP site | `http://localhost:8080/M-Dosthi/` |
+| Flutter web app | `http://localhost:8081/` |
+| Spring API | `http://localhost:9090/` |
+
+Compose creates an empty database and does not import schemas or patient data. Import the approved API and/or legacy schema into the configured database before using database-backed features. By default, the legacy service uses the same database name as `MYSQL_DATABASE`; set `LEGACY_DB_DATABASE` if it needs a separate schema and provision its account as needed. The default legacy DB username/password are separate `.env` values and must match a provisioned MySQL account. MySQL initialization settings only apply when its named volume is first created.
+
+Build an Android APK separately:
+
+```bash
+docker compose run --build --rm android-apk
+```
+
+The output is `dist/android/app-release.apk`. This checkout has no `apps/mobile/android/` project, so the build container creates the Android platform runner before building. The APK allows cleartext HTTP to match the app's current API protocol; use this local-development build only, not for production. The default application ID is `com.example.mdosthi_app`; set `ANDROID_ORG` to your organization's reverse-DNS prefix before distributing the APK. `ANDROID_API_HOST` defaults to `10.0.2.2:9090` for the standard Android emulator. Set it to a reachable LAN hostname/IP for a physical device. Flutter web uses the browser's current origin and the same-origin Nginx `/api/` proxy by default. Set `FLUTTER_API_HOST` only when intentionally targeting a separately hosted API.
+
+Use the unified stack for local development only. It does not initialize clinical schemas, configure production secrets, or expose the RMI port on the host. A clean-checkout legacy image build may also require separately approved prebuilt artifacts documented in [the legacy build limitation](#legacy-clean-checkout-limitation).
+
+## 3. Run Flutter And The API
 
 ### Start the API
 
@@ -210,7 +251,9 @@ Open the URL printed by Flutter (for the example, `http://127.0.0.1:3001/`). Kee
 
 The client screen can render without the API, but login and server-backed features require a reachable API and populated compatible database. A web UI returning successfully does not prove credentials or the database are valid.
 
-## 5. Run The Legacy JSP And RMI System
+Flutter selects among devices available to the installed SDK. The web commands above work across macOS, Linux, and Windows. For a device or emulator, set `API_HOST` to an address reachable from that target; `localhost` inside a mobile emulator/device does not refer to the development computer.
+
+## 4. Run The Legacy JSP And RMI System
 
 This workflow requires JDK 11 or later, Tomcat 9, a compatible `mDosthi` schema and the legacy configuration files. Confirm `services/legacy/runtime/gblinfo.inf` contains the right local DB connection before starting.
 
@@ -234,7 +277,7 @@ The script prints the web URL based on `tools/tomcat9/conf/server.xml`; open tha
 
 Some old legacy components do not have corresponding Java source in this repository. In particular, `drawchart` has historically been available only as a compiled class, while `.class` files and generated jars are ignored by Git. Therefore a legacy rebuild from a clean clone may fail or need a separately supplied, approved legacy artifact. A successful run on a developer machine with local build output does not establish a reproducible cross-platform build. Do not copy arbitrary compiled classes from patient or production systems; arrange for the missing source/artifact to be reviewed and distributed through an approved channel.
 
-## 6. Optional Annotation Pipeline
+## 5. Optional Annotation Pipeline
 
 Read [the annotation package README](../services/annotate/README.md) for supported inputs and commands. Use an isolated Python environment and install the shared dependencies from the repository-root `requirements.txt`, then start/configure Ollama if the selected workflow calls a local model. Do not place patient data in example inputs or generated logs unless it is authorized and protected.
 
@@ -253,10 +296,10 @@ Read [the annotation package README](../services/annotate/README.md) for support
 
 - **API reports that JDK 25 is required:** install JDK 25, set `JAVA_HOME` to the JDK installation directory (not `bin/java`), and verify `"$JAVA_HOME/bin/java" -version` before running `scripts/api.sh`. On macOS with Homebrew, use `brew install openjdk@25`.
 - **Suicide ideation tracking is disabled because database tables are missing:** the API can start, but the background alert poller remains disabled. Import the approved schema containing `signal_history`, `session_history`, and `login`, then restart the API. Do not create placeholder tables.
-- **Login returns “Invalid Credential” for an account created by an older API:** restart with the current API; when the correct password is entered, legacy plaintext password rows are migrated to the format expected by login. If it still fails, verify the account and password in the database configured by `SPRING_DATASOURCE_URL`.
+- **Login returns “Invalid Credential” for an account created by an older API:** restart with the current API; when the correct password is entered, legacy plaintext password rows are migrated to the format expected by login. Login resolves User IDs case-insensitively and retries after trimming surrounding whitespace from the username and password, matching the legacy JSP login while preserving exact credentials when they work. If it still fails, verify the account and password in the database configured by `SPRING_DATASOURCE_URL`.
 - **`Access denied` or connection refused from MySQL:** verify the server is running, host/port are reachable, and that the credentials in `.env` (API) or `gblinfo.inf` (legacy) match the DB user. Test the exact JDBC schema name.
 - **Unknown database/table:** Compose creates an empty schema, not application tables. Import the correct approved dump before using the app; apply only the migrations intended for that schema.
-- **Flutter login says failed to fetch:** confirm the API is listening on 9090, set the correct `API_HOST` for the target device, and check browser/network CORS errors.
+- **Flutter login says failed to fetch:** confirm the API is listening on 9090 and `API_HOST` is reachable from the target. For Flutter web, leave `FLUTTER_API_HOST` unset to use the same-origin Nginx `/api/` proxy; direct cross-origin API hosts must allow the browser origin through CORS.
 - **Flutter web asset manifest is missing:** stop the stale Flutter process, run `flutter pub get`, then start Flutter again from `apps/mobile` and open the new URL it prints.
 - **`JDK 11 or later with javac required`:** set `JAVA_HOME` to a JDK installation. The legacy build uses dynamic RMI stubs and does not invoke `rmic`.
 - **Tomcat or RMI port is occupied:** inspect listeners on the configured HTTP port and 1099, stop the conflicting application, and start again. Do not kill unrelated Java processes indiscriminately.

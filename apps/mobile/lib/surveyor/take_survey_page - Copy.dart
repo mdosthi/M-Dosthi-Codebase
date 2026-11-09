@@ -1,7 +1,7 @@
-// import 'package:app_001/surveyor/biomeric_page.dart';
-// import 'package:app_001/surveyor/family_details.dart';
-// import 'package:app_001/surveyor/form_details.dart';
-// import 'package:app_001/surveyor/survery_page_util.dart';
+// import 'package:mdosthi_app/surveyor/biomeric_page.dart';
+// import 'package:mdosthi_app/surveyor/family_details.dart';
+// import 'package:mdosthi_app/surveyor/form_details.dart';
+// import 'package:mdosthi_app/surveyor/survery_page_util.dart';
 // import 'package:flutter/material.dart';
 // import 'package:sqflite/sqflite.dart';
 // import '../backend/database_helper.dart';

@@ -37,12 +37,14 @@ import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 import imedix.saMiX.service.OllamaService;
 import imedix.saMiX.service.OllamaSpeechService;
+import imedix.saMiX.service.PatientScreeningReportService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.codec.Hex;
+import org.springframework.web.server.ResponseStatusException;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -89,6 +91,9 @@ public class UserController {
     @Autowired
     private OllamaSpeechService ollamaSpeechService;
 
+    @Autowired
+    private PatientScreeningReportService patientScreeningReportService;
+
     @Value("${imedix.center.code}")
     String centerCode;
 
@@ -109,53 +114,85 @@ public class UserController {
 
     @PostMapping("/login")
     public JwtResponse login(@RequestBody JwtReqest jwtReqest) throws Exception {
-        if (jwtReqest.getUsername() == null || jwtReqest.getUsername().isBlank()
-                || jwtReqest.getPassword() == null || jwtReqest.getPassword().isEmpty()) {
+        String username = jwtReqest.getUsername();
+        String password = jwtReqest.getPassword();
+        if (username == null || username.isBlank() || password == null || password.isBlank()) {
             return invalidCredentials();
         }
+        username = resolveUserId(username);
 
-        String encodedPassword = userRepository.encodePassword(jwtReqest.getPassword());
-        if (encodedPassword == null || encodedPassword.isBlank()) {
-            throw new IllegalStateException("Could not encode login password.");
-        }
         try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            jwtReqest.getUsername(), encodedPassword
-                    )
-            );
-        } catch (BadCredentialsException e) {
-            Map<String, Object> existingUser;
+            authenticateLogin(username, password);
+        } catch (BadCredentialsException invalidCredentials) {
+            String trimmedUsername = username.trim();
+            String trimmedPassword = password.trim();
+            if (username.equals(trimmedUsername) && password.equals(trimmedPassword)) {
+                return invalidCredentials();
+            }
+
             try {
-                existingUser = userRepository.getUserInfo(jwtReqest.getUsername());
-            } catch (EmptyResultDataAccessException missingUser) {
+                username = trimmedUsername;
+                password = trimmedPassword;
+                authenticateLogin(username, password);
+            } catch (BadCredentialsException stillInvalid) {
                 return invalidCredentials();
             }
-
-            String storedPassword = Objects.toString(existingUser.get("pwd"), "");
-            String submittedPassword = Objects.toString(jwtReqest.getPassword(), "");
-            String userId = Objects.toString(existingUser.get("uid"), "");
-            if (userId.isBlank() || storedPassword.isEmpty()
-                    || !MessageDigest.isEqual(
-                            storedPassword.getBytes(StandardCharsets.UTF_8),
-                            submittedPassword.getBytes(StandardCharsets.UTF_8))
-                    || !userRepository.updatePassword(userId, encodedPassword)) {
-                return invalidCredentials();
-            }
-
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            jwtReqest.getUsername(), encodedPassword));
         }
 
         final UserDetails userDetails =
-                imedixUserDetailService.loadUserByUsername(jwtReqest.getUsername());
+                imedixUserDetailService.loadUserByUsername(username);
         final String token = jwtUtil.generateToken(userDetails);
-        Map<String, Object> userinfo = userRepository.getUserInfo(jwtReqest.getUsername());
+        Map<String, Object> userinfo = userRepository.getUserInfo(username);
         System.out.println("Returning response from /api/user/login");
         int dpdpAgreed = userinfo.get("dpdp_agreed") != null ? ((Number) userinfo.get("dpdp_agreed")).intValue() : 0;
         //return new JwtResponse(token, (String) userinfo.get("user_type"), (String) userinfo.get("name"), (String) userinfo.get("userid"), "success", "Login Successful");
         return new JwtResponse(token, (String) userinfo.get("type"), (String) userinfo.get("name"), (String) userinfo.get("uid"), "success", "Login Successful", dpdpAgreed);
+    }
+
+    private String resolveUserId(String identifier) {
+        String normalizedIdentifier = identifier.trim();
+        try {
+            Map<String, Object> userinfo = userRepository.getUserInfo(normalizedIdentifier);
+            String userId = Objects.toString(userinfo.get("uid"), "");
+            if (!userId.isBlank() && userId.equalsIgnoreCase(normalizedIdentifier)) {
+                return userId;
+            }
+        } catch (EmptyResultDataAccessException missingUser) {
+            return normalizedIdentifier;
+        }
+        return normalizedIdentifier;
+    }
+
+    private void authenticateLogin(String username, String password) {
+        String encodedPassword = userRepository.encodePassword(password);
+        if (encodedPassword == null || encodedPassword.isBlank()) {
+            throw new IllegalStateException("Could not encode login password.");
+        }
+
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, encodedPassword));
+        } catch (BadCredentialsException invalidCredentials) {
+            Map<String, Object> existingUser;
+            try {
+                existingUser = userRepository.getUserInfo(username);
+            } catch (EmptyResultDataAccessException missingUser) {
+                throw invalidCredentials;
+            }
+
+            String storedPassword = Objects.toString(existingUser.get("pwd"), "");
+            String userId = Objects.toString(existingUser.get("uid"), "");
+            if (userId.isBlank() || storedPassword.isEmpty()
+                    || !MessageDigest.isEqual(
+                            storedPassword.getBytes(StandardCharsets.UTF_8),
+                            password.getBytes(StandardCharsets.UTF_8))
+                    || !userRepository.updatePassword(userId, encodedPassword)) {
+                throw invalidCredentials;
+            }
+
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, encodedPassword));
+        }
     }
 
     private JwtResponse invalidCredentials() {
@@ -2206,6 +2243,12 @@ public class UserController {
                 result.put("message", "Password is required");
                 return result;
             }
+            String registrationNo = req.get("rg_no");
+            if (registrationNo == null || registrationNo.isBlank()) {
+                result.put("status", "error");
+                result.put("message", "Registration number is required");
+                return result;
+            }
             String encodedPassword = userRepository.encodePassword(submittedPassword);
             if (encodedPassword == null || encodedPassword.isBlank()) {
                 result.put("status", "error");
@@ -2217,6 +2260,7 @@ public class UserController {
             data.put("pwd", encodedPassword);
             data.put("name", req.get("name"));
             data.put("crtdate", req.get("crtdate"));
+            data.put("rg_no", registrationNo);
             data.put("center", req.get("center"));
             //data.put("userid", req.get("userid"));
             data.put("type", req.get("type"));
@@ -2375,8 +2419,8 @@ public class UserController {
                         "WHERE pat_id=? ORDER BY id DESC LIMIT 1", patientId);
             result.put("status", "success");
             result.put("patientId", patientId);
-            result.put("therapyHistory", Collections.emptyList());
-            result.put("metastasisHistory", Collections.emptyList());
+            result.put("therapyHistory", loadTherapyHistory(patientId));
+            result.put("metastasisHistory", loadMetastasisHistory(patientId));
             if (records.isEmpty()) {
                 result.put("distressStatus", "Not assessed");
                 result.put("distressBit", false);
@@ -2422,6 +2466,173 @@ public class UserController {
         return result;
     }
 
+    private String checkMonitoringAccess(String patientId) {
+        String role = jwtFilter.getType();
+        String actor = jwtFilter.getUsername();
+        if (role == null || (!"doc".equalsIgnoreCase(role) && !"psy".equalsIgnoreCase(role))) {
+            return "Only doctors and psychologists can access patient monitoring";
+        }
+        if (patientId == null || patientId.trim().isEmpty()) {
+            return "Patient ID is required";
+        }
+        Integer patientExists = jdbcTemplate.queryForObject(
+                "SELECT COUNT(*) FROM med WHERE pat_id=?", Integer.class, patientId);
+        if (patientExists == null || patientExists == 0) {
+            return "Patient not found";
+        }
+        if ("doc".equalsIgnoreCase(role)) {
+            Integer assigned = jdbcTemplate.queryForObject(
+                    "SELECT COUNT(*) FROM lpatq lp JOIN login d ON UPPER(d.rg_no)=UPPER(lp.assigneddoc) " +
+                            "WHERE lp.pat_id=? AND UPPER(d.uid)=UPPER(?) AND UPPER(lp.delflag)='N'",
+                    Integer.class, patientId, actor);
+            if (assigned == null || assigned == 0) {
+                return "Doctor is not assigned to this patient";
+            }
+        }
+        return null;
+    }
+
+    private List<Map<String, Object>> loadTherapyHistory(String patientId) {
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(
+                "SELECT previous_therapy, new_therapy, reason, change_date FROM patient_therapy_change " +
+                        "WHERE pat_id=? ORDER BY change_date DESC, id DESC LIMIT 100", patientId);
+        List<Map<String, Object>> history = new ArrayList<>();
+        for (Map<String, Object> row : rows) {
+            Map<String, Object> entry = new LinkedHashMap<>();
+            entry.put("previousTherapy", row.get("previous_therapy") == null ? "" : row.get("previous_therapy"));
+            entry.put("newTherapy", row.get("new_therapy"));
+            entry.put("reason", row.get("reason") == null ? "" : row.get("reason"));
+            entry.put("date", String.valueOf(row.get("change_date")));
+            history.add(entry);
+        }
+        return history;
+    }
+
+    private List<Map<String, Object>> loadMetastasisHistory(String patientId) {
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(
+                "SELECT state, notes, recorded_at FROM patient_metastasis_state " +
+                        "WHERE pat_id=? ORDER BY id DESC LIMIT 100", patientId);
+        List<Map<String, Object>> history = new ArrayList<>();
+        for (Map<String, Object> row : rows) {
+            Map<String, Object> entry = new LinkedHashMap<>();
+            entry.put("state", row.get("state"));
+            entry.put("notes", row.get("notes") == null ? "" : row.get("notes"));
+            String recordedAt = String.valueOf(row.get("recorded_at"));
+            entry.put("date", recordedAt.length() >= 10 ? recordedAt.substring(0, 10) : recordedAt);
+            history.add(entry);
+        }
+        return history;
+    }
+
+    private Map<String, Object> monitoringError(String message) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("status", "error");
+        result.put("message", message);
+        return result;
+    }
+
+    @PostMapping("/create-therapy-change")
+    public Map<String, Object> createTherapyChange(@RequestBody Map<String, String> request) {
+        String patientId = request.get("patientId");
+        try {
+            String denied = checkMonitoringAccess(patientId);
+            if (denied != null) return monitoringError(denied);
+            String newTherapy = request.get("newTherapy") == null ? "" : request.get("newTherapy").trim();
+            if (newTherapy.isEmpty() || newTherapy.length() > 255) return monitoringError("New therapy is required (max 255 characters)");
+            String previous = request.get("previousTherapy") == null ? "" : request.get("previousTherapy").trim();
+            String reason = request.get("reason") == null ? "" : request.get("reason").trim();
+            if (previous.length() > 255 || reason.length() > 1000) return monitoringError("Therapy details are too long");
+            String date = request.get("date");
+            if (date == null || date.trim().isEmpty()) date = java.time.LocalDate.now().toString();
+            java.sql.Date changeDate = java.sql.Date.valueOf(java.time.LocalDate.parse(date.trim()));
+            jdbcTemplate.update(
+                    "INSERT INTO patient_therapy_change (pat_id, previous_therapy, new_therapy, reason, change_date, recorded_by) VALUES (?,?,?,?,?,?)",
+                    patientId, previous, newTherapy, reason, changeDate, jwtFilter.getUsername());
+            Map<String, Object> result = new HashMap<>();
+            result.put("status", "success");
+            result.put("therapyHistory", loadTherapyHistory(patientId));
+            return result;
+        } catch (java.time.format.DateTimeParseException e) {
+            return monitoringError("Invalid date");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return monitoringError("Unable to save therapy change");
+        }
+    }
+
+    @PostMapping("/create-metastasis-state")
+    public Map<String, Object> createMetastasisState(@RequestBody Map<String, String> request) {
+        String patientId = request.get("patientId");
+        try {
+            String denied = checkMonitoringAccess(patientId);
+            if (denied != null) return monitoringError(denied);
+            String state = request.get("state") == null ? "" : request.get("state").trim();
+            String notes = request.get("notes") == null ? "" : request.get("notes").trim();
+            if (state.isEmpty() || state.length() > 2000 || notes.length() > 1000) {
+                return monitoringError("Metastasis state is required (max 2000 characters)");
+            }
+            jdbcTemplate.update(
+                    "INSERT INTO patient_metastasis_state (pat_id, state, notes, recorded_by) VALUES (?,?,?,?)",
+                    patientId, state, notes, jwtFilter.getUsername());
+            Map<String, Object> result = new HashMap<>();
+            result.put("status", "success");
+            result.put("metastasisHistory", loadMetastasisHistory(patientId));
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return monitoringError("Unable to save metastasis state");
+        }
+    }
+
+    @PostMapping("/record-distress-action")
+    public Map<String, Object> recordDistressAction(@RequestBody Map<String, String> request) {
+        String patientId = request.get("patientId");
+        try {
+            String denied = checkMonitoringAccess(patientId);
+            if (denied != null) return monitoringError(denied);
+            String action = request.get("action") == null ? "" : request.get("action").trim();
+            String remarks = request.get("remarks") == null ? "" : request.get("remarks").trim();
+            if (action.isEmpty() || action.length() > 100 || remarks.length() > 1000) {
+                return monitoringError("Action is required");
+            }
+            jdbcTemplate.update(
+                    "INSERT INTO patient_distress_action (pat_id, action, remarks, recorded_by) VALUES (?,?,?,?)",
+                    patientId, action, remarks, jwtFilter.getUsername());
+            Map<String, Object> result = new HashMap<>();
+            result.put("status", "success");
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return monitoringError("Unable to record action");
+        }
+    }
+
+    @PostMapping("/get-screening-history")
+    public ResponseEntity<Map<String, Object>> getPatientScreeningHistory(
+            @RequestBody Map<String, Object> request, Authentication authentication) {
+        String patientId = Objects.toString(request.get("patientId"), "");
+        int offset;
+        int limit;
+        try {
+            offset = request.get("offset") == null ? 0
+                    : Integer.parseInt(request.get("offset").toString());
+            limit = request.get("limit") == null ? 50
+                    : Integer.parseInt(request.get("limit").toString());
+        } catch (NumberFormatException exception) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "status", "error", "message", "Offset and limit must be integers"));
+        }
+
+        try {
+            return ResponseEntity.ok(patientScreeningReportService.getHistory(
+                    patientId, authentication == null ? null : authentication.getName(), offset, limit));
+        } catch (ResponseStatusException exception) {
+            Map<String, Object> error = new HashMap<>();
+            error.put("status", "error");
+            error.put("message", Objects.toString(exception.getReason(), "Request denied"));
+            return ResponseEntity.status(exception.getStatusCode()).body(error);
+        }
+    }
 
 
     @GetMapping("/")

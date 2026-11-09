@@ -1,10 +1,10 @@
 // import 'package:flutter/material.dart';
 // import 'dart:convert';
-// import 'package:app_001/backend/database_helper.dart';
+// import 'package:mdosthi_app/backend/database_helper.dart';
 // import 'package:http/http.dart' as http;
-// import 'package:app_001/login_page.dart';
-// import 'package:app_001/surveyor/past_responses_page.dart';
-// import 'package:app_001/surveyor/view_submitted_response.dart';
+// import 'package:mdosthi_app/login_page.dart';
+// import 'package:mdosthi_app/surveyor/past_responses_page.dart';
+// import 'package:mdosthi_app/surveyor/view_submitted_response.dart';
 // import '../service/language_service.dart';
 
 // class TakeTestPage extends StatefulWidget {
@@ -448,11 +448,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:app_001/backend/database_helper.dart';
+import 'package:mdosthi_app/backend/database_helper.dart';
 import 'package:http/http.dart' as http;
-import 'package:app_001/login_page.dart';
-import 'package:app_001/surveyor/past_responses_page.dart';
-import 'package:app_001/surveyor/view_submitted_response.dart';
+import 'package:mdosthi_app/login_page.dart';
+import 'package:mdosthi_app/surveyor/past_responses_page.dart';
+import 'package:mdosthi_app/surveyor/view_submitted_response.dart';
 import '../service/language_service.dart';
 
 class TakeTestPage extends StatefulWidget {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../login_page.dart';
+import 'patient_screening_report_page.dart';
 import 'wellbeing_service.dart';
 
 class DoctorMonitoringPage extends StatefulWidget {
@@ -70,6 +71,14 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
     });
   }
 
+  void _showSaveError(Map<String, dynamic> result) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+          content: Text(result['message']?.toString() ??
+              'Unable to save. Please try again.')),
+    );
+  }
+
   Future<void> _saveTherapyChange() async {
     final previous = _therapyPreviousController.text.trim();
     final next = _therapyNewController.text.trim();
@@ -109,6 +118,8 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Therapy change saved.')),
       );
+    } else {
+      _showSaveError(result);
     }
   }
 
@@ -144,6 +155,8 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Metastasis state saved.')),
       );
+    } else {
+      _showSaveError(result);
     }
   }
 
@@ -159,6 +172,8 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Patient monitoring action recorded.')),
       );
+    } else {
+      _showSaveError(result);
     }
   }
 
@@ -254,6 +269,23 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
                         Text('Registered: ${_patientValue('entry_date')}'),
                       ],
                     ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton.icon(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (_) => PatientScreeningReportPage(
+                                patientId: widget.patientId,
+                              ),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.history),
+                        label: const Text('Screening History & Follow-up'),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
                     _buildSectionCard(
                       title: 'Distress Status',
                       children: [

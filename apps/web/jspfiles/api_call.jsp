@@ -172,6 +172,7 @@
         payload.put("pwd",obj.getValue("pwd"));
         payload.put("name",obj.getValue("name"));
         payload.put("crtdate", obj.getValue("crtdate"));
+        payload.put("rg_no", obj.getValue("rg_no"));
         payload.put("center", obj.getValue("center"));
         //payload.put("userid", obj.getValue("userid"));
         payload.put("type",obj.getValue("type"));

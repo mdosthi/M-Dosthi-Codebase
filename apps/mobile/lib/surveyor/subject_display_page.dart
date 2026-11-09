@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:app_001/Audio/audio_player.dart';
-import 'package:app_001/login_page.dart';
-import 'package:app_001/surveyor/hamburger_menu.dart';
-import 'package:app_001/surveyor/survery_page_util.dart';
-import 'package:app_001/utils/NetworkSpeedChecker.dart';
+import 'package:mdosthi_app/Audio/audio_player.dart';
+import 'package:mdosthi_app/login_page.dart';
+import 'package:mdosthi_app/surveyor/hamburger_menu.dart';
+import 'package:mdosthi_app/surveyor/survery_page_util.dart';
+import 'package:mdosthi_app/utils/NetworkSpeedChecker.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import '../backend/database_helper.dart';

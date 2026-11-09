@@ -1,8 +1,8 @@
-import 'package:app_001/login_page.dart';
-import 'package:app_001/utils/NetworkSpeedChecker.dart';
+import 'package:mdosthi_app/login_page.dart';
+import 'package:mdosthi_app/utils/NetworkSpeedChecker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:app_001/main.dart';
+import 'package:mdosthi_app/main.dart';
 import 'dart:io';
 
 import '../EditProfilePage.dart';

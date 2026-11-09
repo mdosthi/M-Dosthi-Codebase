@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:app_001/services/user_profile_service.dart';
+import 'package:mdosthi_app/services/user_profile_service.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});

@@ -1,6 +1,6 @@
 // import 'package:flutter/material.dart';
 // import 'dart:convert';
-// import 'package:app_001/login_page.dart';
+// import 'package:mdosthi_app/login_page.dart';
 // import '../service/language_service.dart';
 // import 'package:http/http.dart' as http;
 // import 'package:intl/intl.dart';
@@ -226,7 +226,7 @@
 
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:app_001/login_page.dart';
+import 'package:mdosthi_app/login_page.dart';
 import '../service/language_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';

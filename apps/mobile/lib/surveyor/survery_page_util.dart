@@ -1,19 +1,19 @@
-import 'package:app_001/EditProfilePage.dart';
-import 'package:app_001/surveyor/video_playback.dart';
+import 'package:mdosthi_app/EditProfilePage.dart';
+import 'package:mdosthi_app/surveyor/video_playback.dart';
 import 'package:flutter/material.dart';
 import '../service/language_service.dart';
 import './form_list_page.dart';
 import './chat_page.dart';
 import './chat_history_page.dart';
-import 'package:app_001/surveyor/hamburger_menu.dart';
-import 'package:app_001/utils/NetworkSpeedChecker.dart';
+import 'package:mdosthi_app/surveyor/hamburger_menu.dart';
+import 'package:mdosthi_app/utils/NetworkSpeedChecker.dart';
 import '../login_page.dart';
 import '../main.dart';
 import '../welbeing/welbeing_home_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:app_001/surveyor/readable_library.dart';
+import 'package:mdosthi_app/surveyor/readable_library.dart';
 
 class SurveyorPageUtil extends StatefulWidget {
   const SurveyorPageUtil({super.key});

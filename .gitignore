@@ -14,6 +14,11 @@ apps/web/config.info
 /database/snapshots/
 /Downloads/
 
+# Local tunnel config and credentials
+deploy/cloudflared/
+cert.pem
+.cloudflared/
+
 # OS and IDE files
 .DS_Store
 ._*

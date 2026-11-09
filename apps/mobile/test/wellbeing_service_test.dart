@@ -1,4 +1,4 @@
-import 'package:app_001/welbeing/wellbeing_service.dart';
+import 'package:mdosthi_app/welbeing/wellbeing_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

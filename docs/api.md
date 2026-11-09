@@ -48,6 +48,16 @@ Before publishing a complete endpoint catalog, inspect the controller mappings f
 
 Speech generation is explicit and on demand; the complete audio is returned after synthesis rather than streamed. See the [speech setup](setup.md#optional-english-speech-playback) for model installation, configuration, language limits, and data handling.
 
+### Patient screening history
+
+`POST /api/user/get-screening-history` returns persisted PO Bado, Distress Thermometer, PHQ-9, and GAD-7 records for a patient. A JWT-authenticated doctor or psychologist may call it; doctors are restricted to assigned patients. The request accepts `patientId`, with optional `offset` (default `0`) and `limit` (default `50`, maximum `100`). Records are ordered newest first.
+
+The response contains saved scores, answers, assessment checkpoints, and recorded interpretations where present, plus `followUpDate` from the latest PO Bado record. It also contains `screeningSchedule`, with a separate timeline for each instrument. Each timeline uses that instrument's earliest saved baseline date to calculate the next 4-, 8-, or 12-week checkpoint. The PO Bado saved follow-up date is used when present; otherwise the due date is calculated from the baseline. If the baseline is absent, no due date is invented. A past due date is displayed as overdue without changing the saved screening record's completed status.
+
+```json
+{"patientId":"<patient-id>","offset":0,"limit":50}
+```
+
 ## Python CLI API
 
 The annotation package exposes:
