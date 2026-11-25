@@ -577,14 +577,14 @@ class _LoginPageState extends State<LoginPage>
                     final bool isShortDesktop = isDesktop && h < 760;
 
                     final double horizontalGutter = isDesktop
-                        ? 28
+                        ? (w >= 1400 ? 32 : 24)
                         : (isTablet ? 20 : (isSmallPhone ? 12 : 16));
                     final double verticalGutter = isDesktop
-                        ? (isShortDesktop ? 16 : 28)
-                        : (isTablet ? 24 : 18);
-                    final double gridMaxWidth = isDesktop
-                        ? (w >= 1400 ? 1220 : 1160)
-                        : (isTablet ? 460 : double.infinity);
+                        ? (isShortDesktop ? 14 : 26)
+                        : (isTablet ? 22 : 14);
+                    final double maxContentWidth = isDesktop
+                        ? (w >= 1400 ? 1280 : 1200)
+                        : (isTablet ? 560 : double.infinity);
 
                     return Column(
                       children: [
@@ -593,61 +593,40 @@ class _LoginPageState extends State<LoginPage>
                           isDesktop: isDesktop,
                           isTablet: isTablet,
                           isSmallPhone: isSmallPhone,
-                          gridMaxWidth: w >= 1400 ? 1220 : 1160,
-                          horizontalGutter: horizontalGutter,
                         ),
                         Expanded(
-                          child: LayoutBuilder(
-                            builder: (context, bodyConstraints) {
-                              final double minBodyHeight =
-                                  (bodyConstraints.maxHeight -
-                                          verticalGutter * 2)
-                                      .clamp(0.0, double.infinity);
-                              return SingleChildScrollView(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: horizontalGutter,
-                                  vertical: verticalGutter,
-                                ),
-                                child: ConstrainedBox(
-                                  constraints: BoxConstraints(
-                                    minHeight: minBodyHeight,
-                                  ),
-                                  child: Center(
-                                    child: ConstrainedBox(
-                                      constraints: BoxConstraints(
-                                        maxWidth: gridMaxWidth,
-                                      ),
-                                      child: SizedBox(
-                                        width: double.infinity,
-                                        child: FadeTransition(
-                                          opacity: _fadeAnim,
-                                          child: SlideTransition(
-                                            position: _slideAnim,
-                                            child: isDesktop
-                                                ? _buildDesktopSplitLayout(
-                                                    isBn,
-                                                    wideGap:
-                                                        w >= 1400 ? 64 : 48,
-                                                    cardWidth:
-                                                        w >= 1400 ? 430 : 420,
-                                                    isShortDesktop:
-                                                        isShortDesktop,
-                                                  )
-                                                : _buildCompactStackedLayout(
-                                                    isBn,
-                                                    isTablet: isTablet,
-                                                    isSmallPhone: isSmallPhone,
-                                                    stackPartnersVertically:
-                                                        w < 600,
-                                                  ),
+                          child: Align(
+                            alignment: isDesktop
+                                ? Alignment.center
+                                : Alignment.topCenter,
+                            child: SingleChildScrollView(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: horizontalGutter,
+                                vertical: verticalGutter,
+                              ),
+                              child: ConstrainedBox(
+                                constraints:
+                                    BoxConstraints(maxWidth: maxContentWidth),
+                                child: FadeTransition(
+                                  opacity: _fadeAnim,
+                                  child: SlideTransition(
+                                    position: _slideAnim,
+                                    child: isDesktop
+                                        ? _buildDesktopSplitLayout(
+                                            isBn,
+                                            wideGap: w >= 1280 ? 52 : 34,
+                                            isShortDesktop: isShortDesktop,
+                                          )
+                                        : _buildCompactStackedLayout(
+                                            isBn,
+                                            isTablet: isTablet,
+                                            isSmallPhone: isSmallPhone,
+                                            stretchPartners: w < 540,
                                           ),
-                                        ),
-                                      ),
-                                    ),
                                   ),
                                 ),
-                              );
-                            },
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -667,16 +646,17 @@ class _LoginPageState extends State<LoginPage>
     required bool isDesktop,
     required bool isTablet,
     required bool isSmallPhone,
-    required double gridMaxWidth,
-    required double horizontalGutter,
   }) {
-    final double barMinHeight = isDesktop ? 72 : (isTablet ? 64 : 58);
-    final double logoHeight = isDesktop ? 42 : (isTablet ? 36 : 32);
+    final double barMinHeight =
+        isDesktop ? 76 : (isTablet ? 68 : kToolbarHeight);
+    final double horizPad = isDesktop ? 24 : (isTablet ? 16 : 16);
+    final double logoHeight = isDesktop ? 46 : (isTablet ? 38 : 32);
 
     return Container(
       width: double.infinity,
+      constraints: BoxConstraints(minHeight: barMinHeight),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.86),
+        color: Colors.white.withValues(alpha: 0.88),
         border: Border(
           bottom: BorderSide(
             color: BrandColors.navy.withValues(alpha: 0.08),
@@ -701,118 +681,112 @@ class _LoginPageState extends State<LoginPage>
               gradient: BrandColors.ctaGradient,
             ),
           ),
-          Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: isDesktop ? gridMaxWidth + horizontalGutter * 2 : double.infinity,
-                minHeight: barMinHeight - 3,
+          ConstrainedBox(
+            constraints: BoxConstraints(minHeight: barMinHeight - 3),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: horizPad,
+                vertical: isDesktop ? 10 : 8,
               ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: horizontalGutter,
-                  vertical: isDesktop ? 10 : 8,
-                ),
-                child: Row(
-                  children: [
-                    Flexible(
-                      flex: 0,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: isDesktop ? 180 : (isTablet ? 155 : 135),
-                        ),
-                        child: Image.asset(
-                          'assets/images/mdosthi-horizontal-logo.png',
-                          height: logoHeight,
-                          alignment: Alignment.centerLeft,
-                          fit: BoxFit.contain,
-                          errorBuilder: (_, __, ___) => MdosthiWordmark(
-                            fontSize: isDesktop ? 22 : 19,
-                          ),
+              child: Row(
+                children: [
+                  Flexible(
+                    flex: 0,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: isDesktop ? 190 : (isTablet ? 155 : 132),
+                      ),
+                      child: Image.asset(
+                        'assets/images/mdosthi-horizontal-logo.png',
+                        height: logoHeight,
+                        fit: BoxFit.contain,
+                        errorBuilder: (_, __, ___) => MdosthiWordmark(
+                          fontSize: isDesktop ? 22 : 19,
                         ),
                       ),
                     ),
-                    if (isDesktop) ...[
-                      const SizedBox(width: 14),
-                      Container(
-                        height: 20,
-                        width: 1.5,
-                        color: BrandColors.navy.withValues(alpha: 0.14),
+                  ),
+                  if (isDesktop) ...[
+                    const SizedBox(width: 14),
+                    Container(
+                      height: 22,
+                      width: 1.2,
+                      color: BrandColors.navy.withValues(alpha: 0.14),
+                    ),
+                    const SizedBox(width: 14),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: BrandColors.ice,
+                        borderRadius: BorderRadius.circular(999),
+                        border: Border.all(
+                          color: BrandColors.teal.withValues(alpha: 0.28),
+                        ),
                       ),
-                      const SizedBox(width: 14),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 5),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.favorite_rounded,
+                              size: 14, color: BrandColors.tealDark),
+                          const SizedBox(width: 6),
+                          Text(
+                            isBn
+                                ? 'রোগী ও মনোবিদ পোর্টাল'
+                                : 'Patient & Psychologist Portal',
+                            style: BrandTypography.body(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: BrandColors.navy,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                  const Spacer(),
+                  _buildLanguageToggle(isBn, compact: isSmallPhone),
+                  SizedBox(width: isSmallPhone ? 6 : 8),
+                  Tooltip(
+                    message: isBn ? 'সহায়তা' : 'Sign-in help',
+                    child: InkWell(
+                      onTap: () => _showHelpModal(isBn),
+                      borderRadius: BorderRadius.circular(999),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal:
+                              isDesktop ? 14 : (isSmallPhone ? 9 : 11),
+                          vertical: isSmallPhone ? 7 : 8,
+                        ),
                         decoration: BoxDecoration(
-                          color: BrandColors.ice,
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(999),
                           border: Border.all(
-                            color: BrandColors.teal.withValues(alpha: 0.28),
+                            color: BrandColors.navy.withValues(alpha: 0.15),
                           ),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Icon(Icons.favorite_rounded,
-                                size: 14, color: BrandColors.tealDark),
-                            const SizedBox(width: 6),
-                            Text(
-                              isBn
-                                  ? 'রোগী ও মনোবিদ পোর্টাল'
-                                  : 'Patient & Psychologist Portal',
-                              style: BrandTypography.body(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: BrandColors.navy,
+                            const Icon(Icons.help_outline_rounded,
+                                size: 17, color: BrandColors.navy),
+                            if (isDesktop || isTablet) ...[
+                              const SizedBox(width: 6),
+                              Text(
+                                isBn ? 'সহায়তা' : 'Help',
+                                style: BrandTypography.body(
+                                  fontSize: 12.5,
+                                  fontWeight: FontWeight.w600,
+                                  color: BrandColors.navy,
+                                ),
                               ),
-                            ),
+                            ],
                           ],
                         ),
                       ),
-                    ],
-                    const Spacer(),
-                    _buildLanguageToggle(isBn, compact: isSmallPhone),
-                    SizedBox(width: isSmallPhone ? 6 : 8),
-                    Tooltip(
-                      message: isBn ? 'সহায়তা' : 'Sign-in help',
-                      child: InkWell(
-                        onTap: () => _showHelpModal(isBn),
-                        borderRadius: BorderRadius.circular(999),
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal:
-                                isDesktop ? 14 : (isSmallPhone ? 9 : 11),
-                            vertical: isSmallPhone ? 7 : 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(999),
-                            border: Border.all(
-                              color: BrandColors.navy.withValues(alpha: 0.15),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(Icons.help_outline_rounded,
-                                  size: 17, color: BrandColors.navy),
-                              if (isDesktop || isTablet) ...[
-                                const SizedBox(width: 6),
-                                Text(
-                                  isBn ? 'সহায়তা' : 'Help',
-                                  style: BrandTypography.body(
-                                    fontSize: 12.5,
-                                    fontWeight: FontWeight.w600,
-                                    color: BrandColors.navy,
-                                  ),
-                                ),
-                              ],
-                            ],
-                          ),
-                        ),
-                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -856,27 +830,35 @@ class _LoginPageState extends State<LoginPage>
   Widget _buildDesktopSplitLayout(
     bool isBn, {
     required double wideGap,
-    required double cardWidth,
     required bool isShortDesktop,
   }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
-          child: _buildDesktopBrandColumn(
-            isBn,
-            isShortDesktop: isShortDesktop,
+          flex: 11,
+          child: Padding(
+            padding: EdgeInsets.only(right: wideGap),
+            child: _buildBrandOverview(
+              isBn,
+              isCompact: false,
+              isTablet: false,
+              isShortDesktop: isShortDesktop,
+              stretchPartners: false,
+            ),
           ),
         ),
-        SizedBox(width: wideGap),
-        SizedBox(
-          width: cardWidth,
-          child: _buildSignInCard(
-            isBn,
-            isDesktop: true,
-            isTablet: false,
-            isSmallPhone: false,
-            isShortDesktop: isShortDesktop,
+        Expanded(
+          flex: 9,
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: _buildSignInCard(
+              isBn,
+              isDesktop: true,
+              isTablet: false,
+              isSmallPhone: false,
+              isShortDesktop: isShortDesktop,
+            ),
           ),
         ),
       ],
@@ -887,10 +869,9 @@ class _LoginPageState extends State<LoginPage>
     bool isBn, {
     required bool isTablet,
     required bool isSmallPhone,
-    required bool stackPartnersVertically,
+    required bool stretchPartners,
   }) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       children: [
         _buildSignInCard(
           isBn,
@@ -899,15 +880,25 @@ class _LoginPageState extends State<LoginPage>
           isSmallPhone: isSmallPhone,
           isShortDesktop: false,
         ),
-        const SizedBox(height: 16),
-        _buildPartnerRow(stacked: stackPartnersVertically),
+        SizedBox(height: isTablet ? 28 : 22),
+        _buildBrandOverview(
+          isBn,
+          isCompact: true,
+          isTablet: isTablet,
+          isShortDesktop: false,
+          stretchPartners: stretchPartners,
+        ),
+        const SizedBox(height: 12),
       ],
     );
   }
 
-  Widget _buildDesktopBrandColumn(
+  Widget _buildBrandOverview(
     bool isBn, {
+    required bool isCompact,
+    required bool isTablet,
     required bool isShortDesktop,
+    required bool stretchPartners,
   }) {
     final chips = isBn
         ? const [
@@ -921,64 +912,78 @@ class _LoginPageState extends State<LoginPage>
             (Icons.favorite_border_rounded, 'Supportive Care'),
           ];
 
+    const partnerItems = [
+      (
+        'assets/images/iitkgp.png',
+        'Developed By',
+        'IIT Kharagpur',
+      ),
+      (
+        'assets/images/All_India_Institute_of_Medical_Sciences,_Kalyani.png',
+        'Collaborated With',
+        'AIIMS Kalyani',
+      ),
+      (
+        'assets/images/icmr.png',
+        'Funded By',
+        'ICMR',
+      ),
+    ];
+
+    final double titleSize = isCompact
+        ? (isTablet ? 23 : 19.5)
+        : (isShortDesktop ? 24 : 28);
+
     return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment:
+          isCompact ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
-        ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: isShortDesktop ? 310 : 360),
-          child: Image.asset(
-            'assets/images/mdosthi-primary-logo.png',
-            alignment: Alignment.centerLeft,
-            fit: BoxFit.contain,
-            errorBuilder: (_, __, ___) =>
-                const MdosthiWordmark(fontSize: 32, showTagline: true),
-          ),
-        ),
-        SizedBox(height: isShortDesktop ? 12 : 18),
-        ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 540),
-          child: Text(
-            isBn
-                ? 'ভিজিটের মাঝে আন্তরিক যত্ন ও মানসিক সহায়তা'
-                : 'Warm Support Between Clinic Visits',
-            textAlign: TextAlign.left,
-            style: BrandTypography.heading(
-              fontSize: isShortDesktop ? 24 : 27,
-              fontWeight: FontWeight.w800,
-              color: BrandColors.navy,
-              height: 1.25,
-            ),
+        if (!isCompact) ...[
+          MdosthiPrimaryLogo(maxWidth: isShortDesktop ? 330 : 400),
+          SizedBox(height: isShortDesktop ? 12 : 20),
+        ],
+        Text(
+          isBn
+              ? 'ভিজিটের মাঝে আন্তরিক যত্ন ও মানসিক সহায়তা'
+              : 'Warm Support Between Clinic Visits',
+          textAlign: isCompact ? TextAlign.center : TextAlign.left,
+          style: BrandTypography.heading(
+            fontSize: titleSize,
+            fontWeight: FontWeight.w800,
+            color: BrandColors.navy,
+            height: 1.24,
           ),
         ),
         SizedBox(height: isShortDesktop ? 6 : 10),
         ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 510),
+          constraints: const BoxConstraints(maxWidth: 500),
           child: Text(
             isBn
                 ? 'নিয়মিত চিকিৎসার পাশাপাশি রোগী ও মনোবিদদের যুক্ত রাখার একটি শান্ত, নিরাপদ ও দ্বিভাষিক পরিসর।'
                 : 'A calm space in English and Bengali connecting patients and psychologists alongside routine hospital care.',
-            textAlign: TextAlign.left,
+            textAlign: isCompact ? TextAlign.center : TextAlign.left,
             style: BrandTypography.subtitle(
-              fontSize: isShortDesktop ? 14.5 : 15,
+              fontSize: isCompact ? (isTablet ? 14.5 : 13.5) : 15.5,
               fontStyle: FontStyle.italic,
               color: BrandColors.bodyInk,
-              height: 1.55,
+              height: 1.5,
             ),
           ),
         ),
         SizedBox(height: isShortDesktop ? 14 : 20),
         Wrap(
-          alignment: WrapAlignment.start,
+          alignment: isCompact ? WrapAlignment.center : WrapAlignment.start,
           spacing: 8,
           runSpacing: 8,
           children: chips
               .map(
                 (c) => Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 13, vertical: 7),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isCompact && !isTablet ? 11 : 13,
+                    vertical: isCompact && !isTablet ? 6 : 7,
+                  ),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.92),
+                    color: Colors.white.withValues(alpha: 0.90),
                     borderRadius: BorderRadius.circular(999),
                     border: Border.all(
                       color: BrandColors.teal.withValues(alpha: 0.25),
@@ -999,7 +1004,7 @@ class _LoginPageState extends State<LoginPage>
                       Text(
                         c.$2,
                         style: BrandTypography.body(
-                          fontSize: 12.5,
+                          fontSize: isCompact && !isTablet ? 12 : 12.5,
                           fontWeight: FontWeight.w600,
                           color: BrandColors.navy,
                         ),
@@ -1010,68 +1015,40 @@ class _LoginPageState extends State<LoginPage>
               )
               .toList(),
         ),
-        SizedBox(height: isShortDesktop ? 16 : 24),
-        ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 580),
-          child: _buildPartnerRow(stacked: false),
-        ),
+        SizedBox(height: isShortDesktop ? 16 : 22),
+        if (stretchPartners)
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 360),
+            child: Column(
+              children: [
+                for (int i = 0; i < partnerItems.length; i++) ...[
+                  if (i > 0) const SizedBox(height: 8),
+                  _PartnerBadge(
+                    assetPath: partnerItems[i].$1,
+                    roleLabel: partnerItems[i].$2,
+                    label: partnerItems[i].$3,
+                    fullWidth: true,
+                  ),
+                ],
+              ],
+            ),
+          )
+        else
+          Wrap(
+            alignment: isCompact ? WrapAlignment.center : WrapAlignment.start,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 10,
+            runSpacing: 10,
+            children: [
+              for (final item in partnerItems)
+                _PartnerBadge(
+                  assetPath: item.$1,
+                  roleLabel: item.$2,
+                  label: item.$3,
+                ),
+            ],
+          ),
       ],
-    );
-  }
-
-  Widget _buildPartnerRow({required bool stacked}) {
-    const partnerItems = [
-      (
-        'assets/images/iitkgp.png',
-        'Developed By',
-        'IIT Kharagpur',
-      ),
-      (
-        'assets/images/All_India_Institute_of_Medical_Sciences,_Kalyani.png',
-        'Collaborated With',
-        'AIIMS Kalyani',
-      ),
-      (
-        'assets/images/icmr.png',
-        'Funded By',
-        'ICMR',
-      ),
-    ];
-
-    if (stacked) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          for (int i = 0; i < partnerItems.length; i++) ...[
-            if (i > 0) const SizedBox(height: 8),
-            _PartnerBadge(
-              assetPath: partnerItems[i].$1,
-              roleLabel: partnerItems[i].$2,
-              label: partnerItems[i].$3,
-              fullWidth: true,
-            ),
-          ],
-        ],
-      );
-    }
-
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (int i = 0; i < partnerItems.length; i++) ...[
-            if (i > 0) const SizedBox(width: 10),
-            Expanded(
-              child: _PartnerBadge(
-                assetPath: partnerItems[i].$1,
-                roleLabel: partnerItems[i].$2,
-                label: partnerItems[i].$3,
-                fullWidth: true,
-              ),
-            ),
-          ],
-        ],
-      ),
     );
   }
 
@@ -1083,16 +1060,19 @@ class _LoginPageState extends State<LoginPage>
     required bool isShortDesktop,
   }) {
     final role = _roleOptions[_selectedRoleIndex];
-    final double cardRadius = isDesktop ? 24 : 20;
+    final double cardRadius = isDesktop ? 26 : 20;
+    final double cardMaxWidth =
+        isDesktop ? 430 : (isTablet ? 460 : double.infinity);
     final double cardHorizPad =
-        isDesktop ? 28 : (isTablet ? 26 : (isSmallPhone ? 14 : 18));
+        isDesktop ? 30 : (isTablet ? 26 : (isSmallPhone ? 14 : 18));
     final double cardVertPad = isDesktop
-        ? (isShortDesktop ? 20 : 26)
+        ? (isShortDesktop ? 20 : 28)
         : (isTablet ? 24 : (isSmallPhone ? 18 : 22));
-    final double emblemSize = isShortDesktop ? 58 : 68;
+    final double emblemSize = isShortDesktop ? 66 : 80;
 
     return Container(
       width: double.infinity,
+      constraints: BoxConstraints(maxWidth: cardMaxWidth),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(cardRadius),
@@ -1131,7 +1111,7 @@ class _LoginPageState extends State<LoginPage>
                   children: [
                     if (!isDesktop) ...[
                       MdosthiPrimaryLogo(
-                        maxWidth: isTablet ? 245 : (isSmallPhone ? 205 : 225),
+                        maxWidth: isTablet ? 260 : (isSmallPhone ? 210 : 235),
                       ),
                       const SizedBox(height: 14),
                     ] else ...[
@@ -1147,7 +1127,7 @@ class _LoginPageState extends State<LoginPage>
                           child: Container(
                             width: emblemSize,
                             height: emblemSize,
-                            padding: const EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(9),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.circle,
@@ -1170,14 +1150,14 @@ class _LoginPageState extends State<LoginPage>
                               fit: BoxFit.contain,
                               errorBuilder: (_, __, ___) => const Icon(
                                 Icons.volunteer_activism_rounded,
-                                size: 32,
+                                size: 36,
                                 color: BrandColors.teal,
                               ),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(height: isShortDesktop ? 8 : 12),
+                      SizedBox(height: isShortDesktop ? 10 : 14),
                     ],
 
                     Text(
