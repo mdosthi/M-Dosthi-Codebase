@@ -288,11 +288,13 @@ class MdosthiWordmark extends StatelessWidget {
 class MdosthiPrimaryLogo extends StatelessWidget {
   final double maxWidth;
   final double? height;
+  final AlignmentGeometry alignment;
 
   const MdosthiPrimaryLogo({
     super.key,
     this.maxWidth = 300,
     this.height,
+    this.alignment = Alignment.center,
   });
 
   @override
@@ -303,8 +305,44 @@ class MdosthiPrimaryLogo extends StatelessWidget {
         'assets/images/mdosthi-primary-logo.png',
         height: height,
         fit: BoxFit.contain,
-        errorBuilder: (_, __, ___) => const MdosthiWordmark(fontSize: 32, showTagline: true),
+        alignment: alignment,
+        errorBuilder: (_, __, ___) =>
+            const MdosthiWordmark(fontSize: 32, showTagline: true),
       ),
     );
+  }
+}
+
+/// Official mDosthi Horizontal Logo (for top navbars, app bars, and report headers)
+class MdosthiHorizontalLogo extends StatelessWidget {
+  final double height;
+  final double? maxWidth;
+  final AlignmentGeometry alignment;
+
+  const MdosthiHorizontalLogo({
+    super.key,
+    this.height = 36,
+    this.maxWidth,
+    this.alignment = Alignment.centerLeft,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final image = Image.asset(
+      'assets/images/mdosthi-horizontal-logo.png',
+      height: height,
+      fit: BoxFit.contain,
+      alignment: alignment,
+      errorBuilder: (_, __, ___) => MdosthiWordmark(
+        fontSize: (height * 0.56).clamp(16.0, 26.0),
+      ),
+    );
+    if (maxWidth != null) {
+      return ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: maxWidth!),
+        child: image,
+      );
+    }
+    return image;
   }
 }

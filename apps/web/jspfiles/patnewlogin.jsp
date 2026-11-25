@@ -22,19 +22,37 @@ body {
     font-family: var(--font-body, 'Inter', sans-serif);
     color: var(--color-navy, #0B2D6B);
     min-height: 100vh;
+    margin: 0;
+    padding: 24px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .im-login-form {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto !important;
+    float: none !important;
     background: #FFFFFF;
     border-radius: 20px;
     border: 1.5px solid rgba(0, 191, 166, 0.25);
     box-shadow: 0 14px 36px rgba(11, 45, 107, 0.10);
+    padding: 28px 26px !important;
 }
-.im-login-form h2 { font-family: var(--font-heading, 'Poppins', sans-serif); color: var(--color-navy, #0B2D6B); }
+.im-login-form h2 { font-family: var(--font-heading, 'Poppins', sans-serif); color: var(--color-navy, #0B2D6B); margin-top: 4px; }
 .im-login-form a { color: var(--color-blue, #007BFF); }
 .im-login-form .btn-primary, .im-login-form input[type="submit"] {
     background: var(--gradient-cta, linear-gradient(135deg, #0B2D6B 0%, #007BFF 50%, #00BFA6 100%));
     border: none;
     border-radius: 999px;
+    width: 100%;
+    height: 44px;
+    font-weight: 600;
+}
+.im-login-form .capcode { max-width: 100%; height: auto; }
+@media (max-width: 480px) {
+    body { padding: 14px 10px; }
+    .im-login-form { padding: 20px 16px !important; border-radius: 16px; }
 }
 input:invalid,
 input:out-of-range {
@@ -44,14 +62,14 @@ input:out-of-range {
 </style>
 </head>
 <body>
-<br><br>
-  <div class="im-login-form col-sm-6 col-sm-offset-3 well well-lg">
-  <div style="text-align:center; margin-bottom:10px;">
-    <img src="<%=request.getContextPath()%>/images/mdosthi-primary-logo.png" alt="mDosthi" style="max-width:300px; width:100%; height:auto;" />
+  <div class="im-login-form well well-lg">
+  <div style="text-align:center; margin-bottom:14px;">
+    <img src="<%=request.getContextPath()%>/images/mdosthi-primary-logo.png" alt="mDosthi" style="max-width:260px; width:100%; height:auto; display:inline-block;" />
   </div>
-  <br>
-  <a href="https://imedix.iitkgp.ac.in/iMediX/" target=_self>iMediX Home</a> | 
-    <a href="javascript:window.history.go(-1)" target=_self>Go Back</a>
+  <div style="text-align:center; margin-bottom:8px;">
+    <a href="<%=request.getContextPath()%>/">mDosthi Home</a> |
+    <a href="javascript:window.history.go(-1)" target="_self">Go Back</a>
+  </div>
  <hr>
  <%
 	if(request.getParameter("submit")!=null)
@@ -91,7 +109,7 @@ input:out-of-range {
 	else {
 %>
     <form METHOD="POST" ACTION="patnewlogin.jsp" name="frmLog" role = "form" onSubmit="return CheckCaptcha()">
-	<center><h2>iMediX</h2><p>Request for New Login?</p></center>
+	<center><h2>mDosthi</h2><p>Request for New Login?</p></center>
 	Dear Patient, <br>
 	Please provide your EmailID,UID and Patient Name and click Submit button.
       <input class="form-control inpt-bx"  type = "email" name="emailid" id="emailid" placeholder = "EmailID" class="required  email" required/><br>

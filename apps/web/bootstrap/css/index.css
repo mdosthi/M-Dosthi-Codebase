@@ -160,11 +160,12 @@ h6,
 
 .header-horiz-logo {
     display: block !important;
-    height: 46px !important;
-    max-height: 46px !important;
+    height: 44px !important;
+    max-height: 44px !important;
     width: auto !important;
-    max-width: 190px !important;
+    max-width: 180px !important;
     object-fit: contain !important;
+    object-position: left center !important;
     border: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;
@@ -173,27 +174,6 @@ h6,
 
 .brand-link:hover .header-horiz-logo {
     transform: scale(1.03) !important;
-}
-
-@media (max-width: 992px) {
-    .header {
-        min-height: 68px;
-        padding: 8px 16px !important;
-    }
-
-    .header-horiz-logo {
-        height: 38px !important;
-        max-height: 38px !important;
-        max-width: 155px !important;
-    }
-}
-
-@media (max-width: 600px) {
-    .header-horiz-logo {
-        height: 34px !important;
-        max-height: 34px !important;
-        max-width: 135px !important;
-    }
 }
 
 .brand-text {
@@ -210,25 +190,165 @@ h6,
     display: flex !important;
     justify-content: flex-end !important;
     align-items: center !important;
-    flex-grow: 1 !important;
-    max-width: 75% !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
 }
 
 .header-block>.row {
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: wrap !important;
-    gap: 12px !important;
+    gap: 10px !important;
     margin: 0 !important;
     width: 100% !important;
     justify-content: flex-end !important;
 }
 
 .header-block .row>div {
-    flex: 1 1 0px !important;
-    max-width: 200px !important;
+    flex: 1 1 140px !important;
+    max-width: 190px !important;
     margin: 0 !important;
     float: none !important;
+}
+
+/* Responsive Legacy Dashboard Header, Brand Logo & Workspace */
+@media (max-width: 1200px) {
+    .header {
+        padding: 10px 18px !important;
+        gap: 12px !important;
+    }
+
+    .header-horiz-logo {
+        height: 40px !important;
+        max-height: 40px !important;
+        max-width: 160px !important;
+    }
+
+    .rect {
+        min-height: 76px !important;
+        min-width: 120px !important;
+        padding: 12px 14px !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .header {
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        min-height: 64px !important;
+        padding: 10px 16px !important;
+        gap: 10px 12px !important;
+        position: relative !important;
+    }
+
+    .brand-container {
+        order: 1 !important;
+        flex: 1 1 auto !important;
+        max-width: calc(100% - 104px) !important;
+        width: auto !important;
+        padding: 0 !important;
+    }
+
+    .header .account {
+        order: 2 !important;
+        flex: 0 0 auto !important;
+        width: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        position: static !important;
+    }
+
+    .header-block,
+    .header > .col-md-8 {
+        order: 3 !important;
+        flex: 1 0 100% !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 0 !important;
+        justify-content: flex-start !important;
+    }
+
+    .header-block > .row {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+        gap: 8px !important;
+    }
+
+    .header-block .row > div,
+    .header-block > .rect {
+        max-width: 100% !important;
+        min-width: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .header-horiz-logo {
+        height: 36px !important;
+        max-height: 36px !important;
+        max-width: 148px !important;
+    }
+
+    .row.body > .col-sm-3,
+    .row.body > .col-sm-9 {
+        width: 100% !important;
+        float: none !important;
+        margin-top: 14px !important;
+    }
+
+    .username-title {
+        top: 0 !important;
+        margin-top: 14px !important;
+        margin-bottom: 6px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .header {
+        padding: 10px 12px !important;
+        gap: 8px !important;
+    }
+
+    .header-horiz-logo {
+        height: 32px !important;
+        max-height: 32px !important;
+        max-width: 130px !important;
+    }
+
+    .profile,
+    .logout {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    .header-block > .row {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .rect {
+        min-height: 68px !important;
+        padding: 10px 12px !important;
+        border-radius: 14px !important;
+    }
+
+    .header-block .title {
+        font-size: 11.5px !important;
+    }
+
+    .main-body {
+        padding: 14px !important;
+        border-radius: 16px !important;
+        min-height: 360px !important;
+        overflow-x: auto !important;
+    }
+
+    .verification-panel {
+        flex-wrap: wrap !important;
+    }
+
+    .skeleton-form-grid {
+        grid-template-columns: 1fr !important;
+    }
 }
 
 /* Queue Queue/Dashboard Cards */

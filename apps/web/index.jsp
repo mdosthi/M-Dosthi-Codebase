@@ -18,7 +18,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="theme-color" content="#0B2D6B">
-	<title>mDosthi — Admin &amp; Clinical Portal</title>
+	<title>mDosthi</title>
 
 	<link rel="icon" type="image/png" sizes="32x32" href="<%=ctx%>/images/icons/mdosthi-favicon-32.png?v=4">
 	<link rel="icon" type="image/png" sizes="256x256" href="<%=ctx%>/images/icons/mdosthi-favicon.png?v=4">
@@ -27,8 +27,8 @@
 
 	<link rel="stylesheet" href="<%=ctx%>/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<%=ctx%>/bootstrap/font-awesome-4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="<%=ctx%>/style/mdosthi-brand-tokens.css?v=4">
-	<link rel="stylesheet" href="<%=ctx%>/style/mdosthi-login.css?v=2">
+	<link rel="stylesheet" href="<%=ctx%>/style/mdosthi-brand-tokens.css?v=5">
+	<link rel="stylesheet" href="<%=ctx%>/style/mdosthi-login.css?v=3">
 </head>
 <body>
 

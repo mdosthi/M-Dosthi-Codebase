@@ -538,26 +538,34 @@ class _PatientScreeningReportPageState
                 ? const Center(child: CircularProgressIndicator())
                 : RefreshIndicator(
                     onRefresh: () => _loadHistory(),
-                    child: ListView(
-                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 28),
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 12),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 14, vertical: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            border: const Border(
-                              bottom: BorderSide(
-                                  color: BrandColors.teal, width: 2.5),
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 920),
+                        child: ListView(
+                          padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 12),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                border: const Border(
+                                  bottom: BorderSide(
+                                      color: BrandColors.teal, width: 2.5),
+                                ),
+                              ),
+                              child: const Align(
+                                alignment: Alignment.centerLeft,
+                                child: MdosthiHorizontalLogo(
+                                  height: 36,
+                                  maxWidth: 160,
+                                  alignment: Alignment.centerLeft,
+                                ),
+                              ),
                             ),
-                          ),
-                          child: const Align(
-                            alignment: Alignment.centerLeft,
-                            child: MdosthiPrimaryLogo(maxWidth: 230, height: 54),
-                          ),
-                        ),
                         Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
@@ -827,6 +835,8 @@ class _PatientScreeningReportPageState
                             ),
                           ),
                       ],
+                    ),
+                      ),
                     ),
                   ),
           );

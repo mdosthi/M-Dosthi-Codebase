@@ -520,13 +520,12 @@ class SurveyorPageUtilState extends State<SurveyorPageUtil> {
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Colors.white,
-            foregroundColor: Colors.grey.shade800,
-            title: Text(
-              languageService.getText('home'),
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+            foregroundColor: BrandColors.navy,
+            titleSpacing: 8,
+            title: const MdosthiHorizontalLogo(
+              height: 32,
+              maxWidth: 145,
+              alignment: Alignment.centerLeft,
             ),
             actions: [
               // Only show chat icon if enrolled in RCT
@@ -580,218 +579,283 @@ class SurveyorPageUtilState extends State<SurveyorPageUtil> {
           body: RefreshIndicator(
             onRefresh: _initializeStatus,
             color: BrandColors.navy,
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: Center(
-                child: Container(
-                  constraints: const BoxConstraints(maxWidth: 600),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Welcome section
-                      Container(
-                        width: double.infinity,
-                        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        decoration: BoxDecoration(
-                          gradient: BrandColors.heroHeaderGradient,
-                          borderRadius: BorderRadius.circular(24),
-                          boxShadow: [
-                            BoxShadow(
-                              color: BrandColors.navy.withOpacity(0.18),
-                              blurRadius: 14,
-                              offset: const Offset(0, 6),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final double w = constraints.maxWidth;
+                final bool isDesktop = w >= 960;
+                final bool isTablet = w >= 600 && w < 960;
+                final bool isTiny = w < 360;
+                final double maxBodyWidth =
+                    isDesktop ? 1040 : (isTablet ? 760 : double.infinity);
+                final int gridCols = w >= 840 ? 3 : (w < 340 ? 1 : 2);
+                final double cardExtent = w >= 840 ? 156 : (isTiny ? 156 : 148);
+
+                return SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Center(
+                    child: Container(
+                      constraints: BoxConstraints(maxWidth: maxBodyWidth),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isDesktop ? 24 : (isTablet ? 16 : 0),
+                        vertical: isDesktop ? 22 : 16,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Welcome section
+                          Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            decoration: BoxDecoration(
+                              gradient: BrandColors.heroHeaderGradient,
+                              borderRadius: BorderRadius.circular(24),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: BrandColors.navy.withOpacity(0.18),
+                                  blurRadius: 14,
+                                  offset: const Offset(0, 6),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(24),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                right: -30,
-                                top: -30,
-                                child: Container(
-                                  width: 120,
-                                  height: 120,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.05),
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                left: -40,
-                                bottom: -40,
-                                child: Container(
-                                  width: 150,
-                                  height: 150,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.03),
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(24.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      languageService.getText('welcome'),
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 26,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        letterSpacing: -0.5,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 6),
-                                    Text(
-                                      loginAccount.isNotEmpty ? loginAccount : "mDosthi Patient Dashboard",
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 15,
-                                        color: Colors.white.withOpacity(0.9),
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 12),
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(24),
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    right: -30,
+                                    top: -30,
+                                    child: Container(
+                                      width: 120,
+                                      height: 120,
                                       decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.12),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Text(
-                                        languageService.isBengali 
-                                            ? "আপনার স্বাস্থ্য আমাদের অগ্রাধিকার" 
-                                            : "Your health is our priority",
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 12,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                        color: Colors.white.withOpacity(0.05),
+                                        shape: BoxShape.circle,
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  Positioned(
+                                    left: -40,
+                                    bottom: -40,
+                                    child: Container(
+                                      width: 150,
+                                      height: 150,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withOpacity(0.03),
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(isTiny ? 18.0 : 24.0),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                languageService.getText('welcome'),
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: isTiny ? 22 : 26,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                  letterSpacing: -0.5,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 6),
+                                              Text(
+                                                loginAccount.isNotEmpty
+                                                    ? loginAccount
+                                                    : "mDosthi Patient Dashboard",
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 15,
+                                                  color: Colors.white
+                                                      .withOpacity(0.9),
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 12),
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12,
+                                                        vertical: 6),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white
+                                                      .withOpacity(0.12),
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                                child: Text(
+                                                  languageService.isBengali
+                                                      ? "আপনার স্বাস্থ্য আমাদের অগ্রাধিকার"
+                                                      : "Your health is our priority",
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 12,
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        if (!isTiny) ...[
+                                          const SizedBox(width: 14),
+                                          Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(18),
+                                            ),
+                                            child: Image.asset(
+                                              'assets/images/mdosthi-emblem.png',
+                                              width: isDesktop ? 64 : 52,
+                                              height: isDesktop ? 64 : 52,
+                                              fit: BoxFit.contain,
+                                              errorBuilder: (_, __, ___) =>
+                                                  const SizedBox.shrink(),
+                                            ),
+                                          ),
+                                        ],
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          // Chat section - Only show if enrolled in RCT
+                          if (isEnrolledInRCT) ...[
+                            _buildChatButton(),
+                            _buildChatHistoryButton(),
+                            const SizedBox(height: 12),
+                          ],
+
+                          if (!isEnrolledInRCT && !isLoadingRCTStatus) ...[
+                            const SizedBox(height: 12),
+                          ],
+
+                          // Loading indicator for RCT status
+                          if (isLoadingRCTStatus) ...[
+                            const Padding(
+                              padding: EdgeInsets.all(16),
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                    color: BrandColors.navy),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                          ],
+
+                          // Quick Actions Grid Title
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 8.0),
+                            child: Text(
+                              languageService.isBengali
+                                  ? "দ্রুত মেনু"
+                                  : "Quick Actions",
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey.shade800,
+                              ),
+                            ),
+                          ),
+
+                          // Responsive Grid of Actions
+                          GridView(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: gridCols,
+                              crossAxisSpacing: 12,
+                              mainAxisSpacing: 12,
+                              mainAxisExtent: cardExtent,
+                            ),
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 4),
+                            children: [
+                              _buildGridActionCard(
+                                icon: Icons.monitor_heart_rounded,
+                                title: 'Well-Being',
+                                color: BrandColors.tealDark,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const WelbeingHomePage(),
+                                    ),
+                                  );
+                                },
+                              ),
+                              _buildGridActionCard(
+                                icon: Icons.assignment_turned_in_rounded,
+                                title: languageService.getText('takeTest'),
+                                color: Colors.indigo.shade600,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const FormListPage(),
+                                    ),
+                                  );
+                                },
+                              ),
+                              _buildGridActionCard(
+                                icon: Icons.video_library_rounded,
+                                title: languageService.getText('video'),
+                                color: Colors.red.shade600,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => VideoPlayerScreen(),
+                                    ),
+                                  );
+                                },
+                              ),
+                              _buildGridActionCard(
+                                icon: Icons.picture_as_pdf_rounded,
+                                title: languageService.getText('readables'),
+                                color: Colors.amber.shade700,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ReadableLibraryScreen(),
+                                    ),
+                                  );
+                                },
+                              ),
+                              _buildGridActionCard(
+                                icon: Icons.privacy_tip_rounded,
+                                title:
+                                    languageService.getText('withdraw_consent'),
+                                color: Colors.blueGrey.shade600,
+                                onTap: _withdrawDpdpConsent,
                               ),
                             ],
                           ),
-                        ),
-                      ),
 
-                      // Chat section - Only show if enrolled in RCT
-                      if (isEnrolledInRCT) ...[
-                        _buildChatButton(),
-                        _buildChatHistoryButton(),
-                        const SizedBox(height: 12),
-                      ],
-
-                      if (!isEnrolledInRCT && !isLoadingRCTStatus) ...[
-                        const SizedBox(height: 12),
-                      ],
-
-                      // Loading indicator for RCT status
-                      if (isLoadingRCTStatus) ...[
-                        const Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Center(
-                            child: CircularProgressIndicator(color: BrandColors.navy),
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                      ],
-
-                      // Quick Actions Grid Title
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-                        child: Text(
-                          languageService.isBengali ? "দ্রুত মেনু" : "Quick Actions",
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey.shade800,
-                          ),
-                        ),
-                      ),
-
-                      // 2x2 Grid of Actions
-                      GridView.count(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                        childAspectRatio: 1.15,
-                        children: [
-                          _buildGridActionCard(
-                            icon: Icons.monitor_heart_rounded,
-                            title: 'Well-Being',
-                            color: BrandColors.tealDark,
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const WelbeingHomePage(),
-                                ),
-                              );
-                            },
-                          ),
-                          _buildGridActionCard(
-                            icon: Icons.assignment_turned_in_rounded,
-                            title: languageService.getText('takeTest'),
-                            color: Colors.indigo.shade600,
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const FormListPage(),
-                                ),
-                              );
-                            },
-                          ),
-                          _buildGridActionCard(
-                            icon: Icons.video_library_rounded,
-                            title: languageService.getText('video'),
-                            color: Colors.red.shade600,
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => VideoPlayerScreen(),
-                                ),
-                              );
-                            },
-                          ),
-                          _buildGridActionCard(
-                            icon: Icons.picture_as_pdf_rounded,
-                            title: languageService.getText('readables'),
-                            color: Colors.amber.shade700,
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ReadableLibraryScreen(),
-                                ),
-                              );
-                            },
-                          ),
-                          _buildGridActionCard(
-                            icon: Icons.privacy_tip_rounded,
-                            title: languageService.getText('withdraw_consent'),
-                            color: Colors.blueGrey.shade600,
-                            onTap: _withdrawDpdpConsent,
-                          ),
+                          const SizedBox(height: 24),
                         ],
                       ),
-
-                      const SizedBox(height: 24),
-                    ],
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
           ),
           // Only show floating action button if enrolled in RCT and has active session

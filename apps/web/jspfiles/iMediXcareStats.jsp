@@ -8,19 +8,21 @@
 		%>
 		<%@ include file="../includes/chkcook.jsp" %>
 			<html>
-			<title>M-Dosthi</title>
+			<title>mDosthi</title>
 
 			<head>
 				<meta charset="utf-8">
 				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<link rel="icon" type="image/png" sizes="32x32"
+					href="<%=request.getContextPath()%>/images/icons/mdosthi-favicon-32.png?v=4" />
 				<link rel="icon" type="image/png"
-					href="<%=request.getContextPath()%>/images/icons/mdosthi-favicon.png" />
-				<link rel="alternate icon" type="image/x-icon" href="<%=request.getContextPath()%>/favicon.ico" />
+					href="<%=request.getContextPath()%>/images/icons/mdosthi-favicon.png?v=4" />
+				<link rel="alternate icon" type="image/x-icon" href="<%=request.getContextPath()%>/favicon.ico?v=4" />
 				<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.min.css">
 				<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/toastr.css">
 				<!--<link rel="stylesheet" href="../bootstrap/jquery.dataTables.min.css">-->
 				<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/dataTables.bootstrap.min.css">
-				<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=3.0">
+				<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=4.0">
 
 				<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/jquery-ui.min.css">
 				<link rel="stylesheet" href="<%=request.getContextPath()%>/vc/vc.css?" +n>
@@ -47,13 +49,7 @@
 				/* If the screen size is 600px wide or less, set the font-size of <div> to 24px */
 				@media screen and (max-width: 600px) {
 					.module-name {
-						font-size: 24px;
-					}
-
-					.account {
-						top: -13px;
-						position: absolute;
-						right: 4px;
+						font-size: 20px;
 					}
 
 					.img2-responsive.logo2 {
@@ -87,14 +83,13 @@
 				.module-name {
 					font-weight: 700;
 					text-align: center;
-					font-family: serif;
-					text-shadow: 2px 2px 4px #000000;
-					color: #fff;
+					font-family: 'Poppins', sans-serif;
+					color: var(--brand-navy, #0B2D6B);
+					margin: 0;
 				}
 
 				.center-name {
-
-					<body class="index"><div class="container-fluid"><div class="row header" style="background: var(--gradient-cta, linear-gradient(135deg, #0B2D6B 0%, #007BFF 50%, #00BFA6 100%));"><div class="col-md-3"><a href="<%=request.getContextPath()%>/" class="brand-link"><img class="header-horiz-logo" src="<%=request.getContextPath()%>/images/mdosthi-horizontal-logo.png" alt="mDosthi" style="height:42px; max-height:42px; width:auto; max-width:175px; object-fit:contain; background:#fff; padding:4px 10px; border-radius:10px;" /></a></div>background-color: steelblue;
+					background-color: steelblue;
 				}
 
 				.di .chk-lg {
@@ -139,17 +134,16 @@
 
 			<body class="index">
 				<div class="container-fluid">
-					<div class="row header" style="background-color: steelblue;">
+					<div class="row header">
 
-						<div class="col-md-3">
-							<a href="<%=request.getContextPath()%>/"><img class="header-horiz-logo"
-									src="<%=request.getContextPath()%>/images/mdosthi-horizontal-logo.svg" alt="mDosthi"
-									style="background:#fff; padding:6px 12px; border-radius:12px;" /></a>
+						<div class="col-md-3 brand-container">
+							<a href="<%=request.getContextPath()%>/" class="brand-link"><img class="header-horiz-logo"
+									src="<%=request.getContextPath()%>/images/mdosthi-horizontal-logo.png" alt="mDosthi" /></a>
 						</div>
 
 
 						<div class="col-md-8">
-							<p class="module-name">M-Dosthi Statistics</p>
+							<p class="module-name">mDosthi Statistics</p>
 						</div>
 
 						<div class="col-md-1 account">

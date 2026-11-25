@@ -269,6 +269,8 @@ class _HamburgerMenuState extends State<HamburgerMenu> {
             ),
             accountName: Text(
               loginAccount,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: BrandTypography.heading(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
@@ -277,14 +279,27 @@ class _HamburgerMenuState extends State<HamburgerMenu> {
             ),
             accountEmail: Text(
               "Username - ${widget.email}",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: BrandTypography.body(
                 fontSize: 12.5,
                 color: BrandColors.ice,
               ),
             ),
-            currentAccountPicture: const CircleAvatar(
-              backgroundColor: Colors.white,
-              backgroundImage: AssetImage('assets/icons/mdosthi-favicon.png'),
+            currentAccountPicture: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              ),
+              child: Image.asset(
+                'assets/images/mdosthi-emblem.png',
+                fit: BoxFit.contain,
+                errorBuilder: (_, __, ___) => const Icon(
+                  Icons.health_and_safety_rounded,
+                  color: BrandColors.navy,
+                ),
+              ),
             ),
           ),
           Expanded(

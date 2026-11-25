@@ -3,7 +3,7 @@
 	%>
 	<%@ include file="..//includes/chkcook.jsp" %>
 		<html>
-		<title>iMediXcare</title>
+		<title>mDosthi</title>
 		<script>
 			var d = new Date();
 			var n = d.getMilliseconds();
@@ -100,14 +100,18 @@
 					<head>
 						<meta charset="utf-8">
 						<meta name="viewport" content="width=device-width, initial-scale=1">
+						<link rel="icon" type="image/png" sizes="32x32"
+							href="<%=request.getContextPath()%>/images/icons/mdosthi-favicon-32.png?v=4" />
 						<link rel="icon" type="image/png"
-							href="<%=request.getContextPath()%>/images/icons/imedix.ico" />
+							href="<%=request.getContextPath()%>/images/icons/mdosthi-favicon.png?v=4" />
+						<link rel="alternate icon" type="image/x-icon"
+							href="<%=request.getContextPath()%>/favicon.ico?v=4" />
 						<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.min.css">
 						<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/toastr.css">
 						<!--<link rel="stylesheet" href="../bootstrap/jquery.dataTables.min.css">-->
 						<link rel="stylesheet"
 							href="<%=request.getContextPath()%>/bootstrap/dataTables.bootstrap.min.css">
-						<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=2.0">
+						<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=4.0">
 
 						<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/jquery-ui.min.css">
 						<link rel="stylesheet" href="<%=request.getContextPath()%>/vc/vc.css?" +n>
@@ -136,12 +140,6 @@
 						@media screen and (max-width: 600px) {
 							.center-name {
 								font-size: 24px;
-							}
-
-							.account {
-								top: -13px;
-								position: absolute;
-								right: 4px;
 							}
 
 							.img2-responsive.logo2 {
@@ -524,9 +522,9 @@
 								<div class="row header">
 									<div class="col-md-3 brand-container">
 										<a href="<%=request.getContextPath()%>/jspfiles/home" class="brand-link">
-											<img class="logo-img logo1"
-												src="<%=request.getContextPath()%>/images/imlogo.jpg" />
-											<span class="brand-text">M-Dosthi</span>
+											<img class="header-horiz-logo"
+												src="<%=request.getContextPath()%>/images/mdosthi-horizontal-logo.png"
+												alt="mDosthi" />
 										</a>
 									</div>
 

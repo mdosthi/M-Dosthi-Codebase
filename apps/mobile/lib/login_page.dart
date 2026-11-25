@@ -578,18 +578,21 @@ class _LoginPageState extends State<LoginPage>
 
                     final double horizontalGutter = isDesktop
                         ? (w >= 1400 ? 32 : 24)
-                        : (isTablet ? 20 : (isSmallPhone ? 12 : 16));
+                        : (isTablet ? 20 : (isSmallPhone ? 10 : 14));
                     final double verticalGutter = isDesktop
                         ? (isShortDesktop ? 14 : 26)
-                        : (isTablet ? 22 : 14);
+                        : (isTablet ? 22 : 16);
                     final double maxContentWidth = isDesktop
                         ? (w >= 1400 ? 1280 : 1200)
-                        : (isTablet ? 560 : double.infinity);
+                        : (isTablet ? 640 : double.infinity);
 
                     return Column(
                       children: [
                         _buildTopUtilityBar(
                           isBn: isBn,
+                          viewportWidth: w,
+                          maxContentWidth: maxContentWidth,
+                          horizontalGutter: horizontalGutter,
                           isDesktop: isDesktop,
                           isTablet: isTablet,
                           isSmallPhone: isSmallPhone,
@@ -614,14 +617,16 @@ class _LoginPageState extends State<LoginPage>
                                     child: isDesktop
                                         ? _buildDesktopSplitLayout(
                                             isBn,
-                                            wideGap: w >= 1280 ? 52 : 34,
+                                            wideGap: w >= 1280
+                                                ? 52
+                                                : (w >= 1120 ? 38 : 28),
                                             isShortDesktop: isShortDesktop,
                                           )
                                         : _buildCompactStackedLayout(
                                             isBn,
                                             isTablet: isTablet,
                                             isSmallPhone: isSmallPhone,
-                                            stretchPartners: w < 540,
+                                            stretchPartners: w < 600,
                                           ),
                                   ),
                                 ),
@@ -643,14 +648,21 @@ class _LoginPageState extends State<LoginPage>
 
   Widget _buildTopUtilityBar({
     required bool isBn,
+    required double viewportWidth,
+    required double maxContentWidth,
+    required double horizontalGutter,
     required bool isDesktop,
     required bool isTablet,
     required bool isSmallPhone,
   }) {
     final double barMinHeight =
-        isDesktop ? 76 : (isTablet ? 68 : kToolbarHeight);
-    final double horizPad = isDesktop ? 24 : (isTablet ? 16 : 16);
-    final double logoHeight = isDesktop ? 46 : (isTablet ? 38 : 32);
+        isDesktop ? 74 : (isTablet ? 66 : kToolbarHeight);
+    final double logoHeight = isDesktop
+        ? 44
+        : (isTablet ? 38 : (viewportWidth < 360 ? 28 : 32));
+    final double logoMaxWidth = isDesktop
+        ? 176
+        : (isTablet ? 152 : (viewportWidth < 360 ? 102 : (isSmallPhone ? 114 : 132)));
 
     return Container(
       width: double.infinity,
@@ -681,112 +693,109 @@ class _LoginPageState extends State<LoginPage>
               gradient: BrandColors.ctaGradient,
             ),
           ),
-          ConstrainedBox(
-            constraints: BoxConstraints(minHeight: barMinHeight - 3),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: horizPad,
-                vertical: isDesktop ? 10 : 8,
+          Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: maxContentWidth,
+                minHeight: barMinHeight - 3,
               ),
-              child: Row(
-                children: [
-                  Flexible(
-                    flex: 0,
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxWidth: isDesktop ? 190 : (isTablet ? 155 : 132),
-                      ),
-                      child: Image.asset(
-                        'assets/images/mdosthi-horizontal-logo.png',
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: horizontalGutter,
+                  vertical: isDesktop ? 10 : 8,
+                ),
+                child: Row(
+                  children: [
+                    Flexible(
+                      flex: 0,
+                      child: MdosthiHorizontalLogo(
                         height: logoHeight,
-                        fit: BoxFit.contain,
-                        errorBuilder: (_, __, ___) => MdosthiWordmark(
-                          fontSize: isDesktop ? 22 : 19,
-                        ),
+                        maxWidth: logoMaxWidth,
+                        alignment: Alignment.centerLeft,
                       ),
                     ),
-                  ),
-                  if (isDesktop) ...[
-                    const SizedBox(width: 14),
-                    Container(
-                      height: 22,
-                      width: 1.2,
-                      color: BrandColors.navy.withValues(alpha: 0.14),
-                    ),
-                    const SizedBox(width: 14),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 5),
-                      decoration: BoxDecoration(
-                        color: BrandColors.ice,
-                        borderRadius: BorderRadius.circular(999),
-                        border: Border.all(
-                          color: BrandColors.teal.withValues(alpha: 0.28),
-                        ),
+                    if (isDesktop) ...[
+                      const SizedBox(width: 14),
+                      Container(
+                        height: 22,
+                        width: 1.2,
+                        color: BrandColors.navy.withValues(alpha: 0.14),
                       ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(Icons.favorite_rounded,
-                              size: 14, color: BrandColors.tealDark),
-                          const SizedBox(width: 6),
-                          Text(
-                            isBn
-                                ? 'রোগী ও মনোবিদ পোর্টাল'
-                                : 'Patient & Psychologist Portal',
-                            style: BrandTypography.body(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: BrandColors.navy,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                  const Spacer(),
-                  _buildLanguageToggle(isBn, compact: isSmallPhone),
-                  SizedBox(width: isSmallPhone ? 6 : 8),
-                  Tooltip(
-                    message: isBn ? 'সহায়তা' : 'Sign-in help',
-                    child: InkWell(
-                      onTap: () => _showHelpModal(isBn),
-                      borderRadius: BorderRadius.circular(999),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal:
-                              isDesktop ? 14 : (isSmallPhone ? 9 : 11),
-                          vertical: isSmallPhone ? 7 : 8,
-                        ),
+                      const SizedBox(width: 14),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 5),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: BrandColors.ice,
                           borderRadius: BorderRadius.circular(999),
                           border: Border.all(
-                            color: BrandColors.navy.withValues(alpha: 0.15),
+                            color: BrandColors.teal.withValues(alpha: 0.28),
                           ),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Icon(Icons.help_outline_rounded,
-                                size: 17, color: BrandColors.navy),
-                            if (isDesktop || isTablet) ...[
-                              const SizedBox(width: 6),
-                              Text(
-                                isBn ? 'সহায়তা' : 'Help',
-                                style: BrandTypography.body(
-                                  fontSize: 12.5,
-                                  fontWeight: FontWeight.w600,
-                                  color: BrandColors.navy,
-                                ),
+                            const Icon(Icons.favorite_rounded,
+                                size: 14, color: BrandColors.tealDark),
+                            const SizedBox(width: 6),
+                            Text(
+                              isBn
+                                  ? 'রোগী ও মনোবিদ পোর্টাল'
+                                  : 'Patient & Psychologist Portal',
+                              style: BrandTypography.body(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: BrandColors.navy,
                               ),
-                            ],
+                            ),
                           ],
                         ),
                       ),
+                    ],
+                    const Spacer(),
+                    _buildLanguageToggle(isBn, compact: isSmallPhone),
+                    SizedBox(width: isSmallPhone ? 6 : 8),
+                    Tooltip(
+                      message: isBn ? 'সহায়তা' : 'Sign-in help',
+                      child: InkWell(
+                        onTap: () => _showHelpModal(isBn),
+                        borderRadius: BorderRadius.circular(999),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal:
+                                isDesktop ? 14 : (isSmallPhone ? 8 : 11),
+                            vertical: isSmallPhone ? 7 : 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(999),
+                            border: Border.all(
+                              color: BrandColors.navy.withValues(alpha: 0.15),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.help_outline_rounded,
+                                  size: 17, color: BrandColors.navy),
+                              if (isDesktop || isTablet) ...[
+                                const SizedBox(width: 6),
+                                Text(
+                                  isBn ? 'সহায়তা' : 'Help',
+                                  style: BrandTypography.body(
+                                    fontSize: 12.5,
+                                    fontWeight: FontWeight.w600,
+                                    color: BrandColors.navy,
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -836,29 +845,23 @@ class _LoginPageState extends State<LoginPage>
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
-          flex: 11,
-          child: Padding(
-            padding: EdgeInsets.only(right: wideGap),
-            child: _buildBrandOverview(
-              isBn,
-              isCompact: false,
-              isTablet: false,
-              isShortDesktop: isShortDesktop,
-              stretchPartners: false,
-            ),
+          child: _buildBrandOverview(
+            isBn,
+            isCompact: false,
+            isTablet: false,
+            isShortDesktop: isShortDesktop,
+            stretchPartners: false,
           ),
         ),
-        Expanded(
-          flex: 9,
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: _buildSignInCard(
-              isBn,
-              isDesktop: true,
-              isTablet: false,
-              isSmallPhone: false,
-              isShortDesktop: isShortDesktop,
-            ),
+        SizedBox(width: wideGap),
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 430),
+          child: _buildSignInCard(
+            isBn,
+            isDesktop: true,
+            isTablet: false,
+            isSmallPhone: false,
+            isShortDesktop: isShortDesktop,
           ),
         ),
       ],
@@ -938,10 +941,13 @@ class _LoginPageState extends State<LoginPage>
       crossAxisAlignment:
           isCompact ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
-        if (!isCompact) ...[
-          MdosthiPrimaryLogo(maxWidth: isShortDesktop ? 330 : 400),
-          SizedBox(height: isShortDesktop ? 12 : 20),
-        ],
+        MdosthiPrimaryLogo(
+          maxWidth: isCompact
+              ? (isTablet ? 280 : 240)
+              : (isShortDesktop ? 310 : 365),
+          alignment: isCompact ? Alignment.center : Alignment.centerLeft,
+        ),
+        SizedBox(height: isCompact ? 14 : (isShortDesktop ? 12 : 20)),
         Text(
           isBn
               ? 'ভিজিটের মাঝে আন্তরিক যত্ন ও মানসিক সহায়তা'
@@ -1018,7 +1024,7 @@ class _LoginPageState extends State<LoginPage>
         SizedBox(height: isShortDesktop ? 16 : 22),
         if (stretchPartners)
           ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 360),
+            constraints: const BoxConstraints(maxWidth: 380),
             child: Column(
               children: [
                 for (int i = 0; i < partnerItems.length; i++) ...[
@@ -1034,19 +1040,23 @@ class _LoginPageState extends State<LoginPage>
             ),
           )
         else
-          Wrap(
-            alignment: isCompact ? WrapAlignment.center : WrapAlignment.start,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: 10,
-            runSpacing: 10,
-            children: [
-              for (final item in partnerItems)
-                _PartnerBadge(
-                  assetPath: item.$1,
-                  roleLabel: item.$2,
-                  label: item.$3,
-                ),
-            ],
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 580),
+            child: Row(
+              children: [
+                for (int i = 0; i < partnerItems.length; i++) ...[
+                  if (i > 0) const SizedBox(width: 10),
+                  Expanded(
+                    child: _PartnerBadge(
+                      assetPath: partnerItems[i].$1,
+                      roleLabel: partnerItems[i].$2,
+                      label: partnerItems[i].$3,
+                      fullWidth: true,
+                    ),
+                  ),
+                ],
+              ],
+            ),
           ),
       ],
     );
@@ -1068,7 +1078,10 @@ class _LoginPageState extends State<LoginPage>
     final double cardVertPad = isDesktop
         ? (isShortDesktop ? 20 : 28)
         : (isTablet ? 24 : (isSmallPhone ? 18 : 22));
-    final double emblemSize = isShortDesktop ? 66 : 80;
+    final double emblemSize = isDesktop
+        ? (isShortDesktop ? 64 : 76)
+        : (isTablet ? 66 : 60);
+    final double emblemPad = isDesktop ? (isShortDesktop ? 9 : 11) : 9;
 
     return Container(
       width: double.infinity,
@@ -1109,56 +1122,49 @@ class _LoginPageState extends State<LoginPage>
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (!isDesktop) ...[
-                      MdosthiPrimaryLogo(
-                        maxWidth: isTablet ? 260 : (isSmallPhone ? 210 : 235),
-                      ),
-                      const SizedBox(height: 14),
-                    ] else ...[
-                      MouseRegion(
-                        onEnter: (_) =>
-                            setState(() => _isHoveringEmblem = true),
-                        onExit: (_) =>
-                            setState(() => _isHoveringEmblem = false),
-                        child: AnimatedScale(
-                          scale: _isHoveringEmblem ? 1.06 : 1.0,
-                          duration: const Duration(milliseconds: 220),
-                          curve: Curves.easeOutBack,
-                          child: Container(
-                            width: emblemSize,
-                            height: emblemSize,
-                            padding: const EdgeInsets.all(9),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color:
-                                    BrandColors.teal.withValues(alpha: 0.32),
-                                width: 2,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color:
-                                      BrandColors.navy.withValues(alpha: 0.09),
-                                  blurRadius: 16,
-                                  offset: const Offset(0, 5),
-                                ),
-                              ],
+                    MouseRegion(
+                      onEnter: (_) =>
+                          setState(() => _isHoveringEmblem = true),
+                      onExit: (_) =>
+                          setState(() => _isHoveringEmblem = false),
+                      child: AnimatedScale(
+                        scale: _isHoveringEmblem ? 1.06 : 1.0,
+                        duration: const Duration(milliseconds: 220),
+                        curve: Curves.easeOutBack,
+                        child: Container(
+                          width: emblemSize,
+                          height: emblemSize,
+                          padding: EdgeInsets.all(emblemPad),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color:
+                                  BrandColors.teal.withValues(alpha: 0.30),
+                              width: 2,
                             ),
-                            child: Image.asset(
-                              'assets/images/mdosthi-emblem.png',
-                              fit: BoxFit.contain,
-                              errorBuilder: (_, __, ___) => const Icon(
-                                Icons.volunteer_activism_rounded,
-                                size: 36,
-                                color: BrandColors.teal,
+                            boxShadow: [
+                              BoxShadow(
+                                color:
+                                    BrandColors.navy.withValues(alpha: 0.09),
+                                blurRadius: 16,
+                                offset: const Offset(0, 5),
                               ),
+                            ],
+                          ),
+                          child: Image.asset(
+                            'assets/images/mdosthi-emblem.png',
+                            fit: BoxFit.contain,
+                            errorBuilder: (_, __, ___) => const Icon(
+                              Icons.volunteer_activism_rounded,
+                              size: 34,
+                              color: BrandColors.teal,
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(height: isShortDesktop ? 10 : 14),
-                    ],
+                    ),
+                    SizedBox(height: isShortDesktop ? 10 : 12),
 
                     Text(
                       isBn ? 'স্বাগতম' : 'Welcome',
