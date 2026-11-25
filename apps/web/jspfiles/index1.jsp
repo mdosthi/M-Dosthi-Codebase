@@ -3,7 +3,7 @@
 	%>
 	<%@ include file="..//includes/chkcook.jsp" %>
 		<html>
-		<title>iMediXcare</title>
+		<title>mDosthi — Clinical Portal</title>
 		<script>
 			var d = new Date();
 			var n = d.getMilliseconds();
@@ -43,8 +43,10 @@
 				int total_lpat = 0,total_tpat=0;
 				if(usertype.equals("adm") || usertype.equals("usr") || usertype.equals("sup") ||
 				usertype.equals("con")){
-				try { total_lpat = Integer.parseInt(rcpqi.getTotal("lpatq")); } catch(Exception ignored) { total_lpat = 0; }
-				try { total_tpat = Integer.parseInt(rcpqi.getTotal("tpatq")); } catch(Exception ignored) { total_tpat = 0; }
+				try { total_lpat = Integer.parseInt(rcpqi.getTotal("lpatq")); } catch(Exception ignored) { total_lpat =
+				0; }
+				try { total_tpat = Integer.parseInt(rcpqi.getTotal("tpatq")); } catch(Exception ignored) { total_tpat =
+				0; }
 				}
 				else if(usertype.equals("doc")){
 				String dreg=rcui.getreg_no(userid);
@@ -72,447 +74,474 @@
 
 				<% layout LayoutMenu=new layout(request.getRealPath("/")); // authorization point // adm,1,head1,top,1
 					// out.println(menuid+" "+menu);
-					String menu=LayoutMenu.getMainMenu(usertype,tmpid,menuid,"new" + "_sk","1"); String[] parts=menu.split(":", -1); if(parts.length<10) parts=new String[]{"dashb.jsp,Dash Board","browse.jsp,Local Patient","patientAlldata.jsp,Patient Data","patientAlldata.jsp,Patient Data","editprofile.jsp,Edit Profile","logout.jsp,Log Out","dashb.jsp,Dashboard","jobadmin.jsp,Admin Jobs","editprofile.jsp,Edit Profile","logout.jsp,Log Out"}; String
-					lpatq_link="" ,tpatq_link="" ,tpatwaitq_link="" ,reff_status_link="" ,admjobs_link=""
-					,edtProfile_link="" ,logout_link="" ,pat_reg="" ,viewpres="" ; int par_len=parts.length; int
-					utypeInt=utypeI(usertype); switch(utypeInt){ case 0 : lpatq_link=parts[0];
-					reff_status_link=parts[1]; tpatwaitq_link=parts[2]; tpatq_link=parts[3]; edtProfile_link=parts[4];
-					logout_link=parts[5]; break; case 1 : pat_reg=parts[1]; lpatq_link=parts[3]; tpatq_link=parts[5];
-					admjobs_link=parts[7]; reff_status_link=parts[4]; edtProfile_link=parts[8]; logout_link=parts[9];
-					break; case 2 : lpatq_link=parts[2]; viewpres=parts[3]; edtProfile_link=parts[4];
-					logout_link=parts[5]; break; case 3 : edtProfile_link=parts[2]; logout_link=parts[3]; break; case 4
-					: edtProfile_link=parts[1]; logout_link=parts[2]; break; case 5 : edtProfile_link=parts[1];
-					logout_link=parts[2]; break; default : lpatq_link="" ; tpatq_link="" ; tpatwaitq_link="" ;
-					reff_status_link="" ; } //out.println("<script>console.log("+lpatq_link+")</script>");
+					String menu=LayoutMenu.getMainMenu(usertype,tmpid,menuid," new" + "_sk" ,"1"); String[] parts=menu.split(":", -1);
+					if(parts.length<10) parts=new String[]{"dashb.jsp,Dash Board","browse.jsp,Local
+					Patient","patientAlldata.jsp,Patient Data","patientAlldata.jsp,Patient Data","editprofile.jsp,Edit
+					Profile","logout.jsp,Log Out","dashb.jsp,Dashboard","jobadmin.jsp,Admin Jobs","editprofile.jsp,Edit
+					Profile","logout.jsp,Log Out"}; String lpatq_link="" ,tpatq_link="" ,tpatwaitq_link=""
+					,reff_status_link="" ,admjobs_link="" ,edtProfile_link="" ,logout_link="" ,pat_reg="" ,viewpres="" ;
+					int par_len=parts.length; int utypeInt=utypeI(usertype); switch(utypeInt){ case 0 :
+					lpatq_link=parts[0]; reff_status_link=parts[1]; tpatwaitq_link=parts[2]; tpatq_link=parts[3];
+					edtProfile_link=parts[4]; logout_link=parts[5]; break; case 1 : pat_reg=parts[1];
+					lpatq_link=parts[3]; tpatq_link=parts[5]; admjobs_link=parts[7]; reff_status_link=parts[4];
+					edtProfile_link=parts[8]; logout_link=parts[9]; break; case 2 : lpatq_link=parts[2];
+					viewpres=parts[3]; edtProfile_link=parts[4]; logout_link=parts[5]; break; case 3 :
+					edtProfile_link=parts[2]; logout_link=parts[3]; break; case 4 : edtProfile_link=parts[1];
+					logout_link=parts[2]; break; case 5 : edtProfile_link=parts[1]; logout_link=parts[2]; break; default
+					: lpatq_link="" ; tpatq_link="" ; tpatwaitq_link="" ; reff_status_link="" ; }
+					//out.println("<script>console.log("+lpatq_link+")</script>");
 					// The switch above guesses edtProfile_link/logout_link by fixed position, which breaks
 					// whenever the XML menu item count changes. Override with a content-based lookup so the
 					// Edit Profile and Log Out links are always resolved correctly regardless of position.
-					for (int __li = 0; __li < parts.length; __li++) { if(parts[__li].startsWith("editprofile.jsp")) edtProfile_link=parts[__li]; else if(parts[__li].startsWith("logout.jsp")) logout_link=parts[__li]; }
-					if(lpatq_link.indexOf(",")<0) lpatq_link="browse.jsp,Local Patient"; if(tpatq_link.indexOf(",")<0) tpatq_link="telebrowse.jsp,Tele Patient"; if(tpatwaitq_link.indexOf(",")<0) tpatwaitq_link="telewaitbrowse.jsp,Tele Wait"; if(reff_status_link.indexOf(",")<0) reff_status_link="telebrowse.jsp,Tele Patient"; if(admjobs_link.indexOf(",")<0) admjobs_link="jobadmin.jsp,Admin Jobs"; if(edtProfile_link.indexOf(",")<0) edtProfile_link="editprofile.jsp,Edit Profile"; if(logout_link.indexOf(",")<0) logout_link="logout.jsp,Log Out"; if(pat_reg.indexOf(",")<0) pat_reg="select.jsp,Registration"; if(viewpres.indexOf(",")<0) viewpres="viewPrescriptions.jsp,View Prescription";
-					//String part4=part3.insertAll("data-target=\"#navbarCollapse\" data-toggle=\"collapse\"");
+					for (int __li = 0; __li < parts.length; __li++) { if(parts[__li].startsWith("editprofile.jsp"))
+						edtProfile_link=parts[__li]; else if(parts[__li].startsWith("logout.jsp"))
+						logout_link=parts[__li]; } if(lpatq_link.indexOf(",")<0) lpatq_link="browse.jsp,Local Patient" ;
+						if(tpatq_link.indexOf(",")<0) tpatq_link="telebrowse.jsp,Tele Patient" ;
+						if(tpatwaitq_link.indexOf(",")<0) tpatwaitq_link="telewaitbrowse.jsp,Tele Wait" ;
+						if(reff_status_link.indexOf(",")<0) reff_status_link="telebrowse.jsp,Tele Patient" ;
+						if(admjobs_link.indexOf(",")<0) admjobs_link="jobadmin.jsp,Admin Jobs" ;
+						if(edtProfile_link.indexOf(",")<0) edtProfile_link="editprofile.jsp,Edit Profile" ;
+						if(logout_link.indexOf(",")<0) logout_link="logout.jsp,Log Out" ; if(pat_reg.indexOf(",")<0)
+						pat_reg="select.jsp,Registration" ; if(viewpres.indexOf(",")<0)
+						viewpres="viewPrescriptions.jsp,View Prescription" ; //String
+						part4=part3.insertAll("data-target=\"#navbarCollapse\" data-toggle=\"collapse\""); String
+						menul=LayoutMenu.getMainMenu(usertype,tmpid,"left","new" + "_sk" ,"1"); // authorization point
+						//out.println("<div>"+menul+"</div>");
+						%>
+
+						<head>
+							<meta charset="utf-8">
+							<meta name="viewport" content="width=device-width, initial-scale=1">
+							<link rel="icon" type="image/svg+xml"
+								href="<%=request.getContextPath()%>/images/icons/m-dosthi-favicon.svg" />
+							<link rel="alternate icon" type="image/x-icon"
+								href="<%=request.getContextPath()%>/favicon.ico" />
+							<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.min.css">
+							<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/toastr.css">
+							<!--<link rel="stylesheet" href="../bootstrap/jquery.dataTables.min.css">-->
+							<link rel="stylesheet"
+								href="<%=request.getContextPath()%>/bootstrap/dataTables.bootstrap.min.css">
+							<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=2.0">
+
+							<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/jquery-ui.min.css">
+							<link rel="stylesheet" href="<%=request.getContextPath()%>/vc/vc.css?" +n>
+
+							<script src="<%=request.getContextPath()%>/bootstrap/jquery-2.2.1.min.js"></script>
+							<script src="<%=request.getContextPath()%>/bootstrap/toastr.js"></script>
+							<script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap.min.js"></script>
+							<script src="<%=request.getContextPath()%>/bootstrap/jquery.dataTables.min.js"></script>
+							<script src="<%=request.getContextPath()%>/bootstrap/dataTables.bootstrap.min.js"></script>
+							<script src="<%=request.getContextPath()%>/bootstrap/jquery-ui.min.js?" +n></script>
+							<script src="https://<%=vidServerUrl%>/external_api.js"></script>
+							<script src="<%=request.getContextPath()%>/bootstrap/js/skeleton-loader.js"></script>
+
+							<head>
+								<meta charset="utf-8">
+								<meta name="viewport" content="width=device-width, initial-scale=1">
+								<link rel="icon" type="image/png"
+									href="<%=request.getContextPath()%>/images/icons/mdosthi-favicon.png" />
+								<link rel="alternate icon" type="image/x-icon"
+									href="<%=request.getContextPath()%>/favicon.ico" />
+								<link rel="stylesheet"
+									href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.min.css">
+								<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/toastr.css">
+								<!--<link rel="stylesheet" href="../bootstrap/jquery.dataTables.min.css">-->
+								<link rel="stylesheet"
+									href="<%=request.getContextPath()%>/bootstrap/dataTables.bootstrap.min.css">
+								<link rel="stylesheet"
+									href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=3.0">
 
 
-
-					String menul=LayoutMenu.getMainMenu(usertype,tmpid,"left","new" + "_sk","1"); // authorization point
-					//out.println("<div>"+menul+"</div>");
-					%>
-
-					<head>
-						<meta charset="utf-8">
-						<meta name="viewport" content="width=device-width, initial-scale=1">
-						<link rel="icon" type="image/png"
-							href="<%=request.getContextPath()%>/images/icons/imedix.ico" />
-						<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.min.css">
-						<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/toastr.css">
-						<!--<link rel="stylesheet" href="../bootstrap/jquery.dataTables.min.css">-->
-						<link rel="stylesheet"
-							href="<%=request.getContextPath()%>/bootstrap/dataTables.bootstrap.min.css">
-						<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=2.0">
-
-						<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/jquery-ui.min.css">
-						<link rel="stylesheet" href="<%=request.getContextPath()%>/vc/vc.css?" +n>
-
-						<script src="<%=request.getContextPath()%>/bootstrap/jquery-2.2.1.min.js"></script>
-						<script src="<%=request.getContextPath()%>/bootstrap/toastr.js"></script>
-						<script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap.min.js"></script>
-						<script src="<%=request.getContextPath()%>/bootstrap/jquery.dataTables.min.js"></script>
-						<script src="<%=request.getContextPath()%>/bootstrap/dataTables.bootstrap.min.js"></script>
-						<script src="<%=request.getContextPath()%>/bootstrap/jquery-ui.min.js?" +n></script>
-						<script src="https://<%=vidServerUrl%>/external_api.js"></script>
-						<script src="<%=request.getContextPath()%>/bootstrap/js/skeleton-loader.js"></script>
-
-
-
-					</head>
-					<style>
-						/* If the screen size is 601px wide or more, set the font-size of <div> to 40px */
-						@media screen and (min-width: 601px) {
-							.center-name {
-								font-size: 40px;
-							}
-						}
-
-						/* If the screen size is 600px wide or less, set the font-size of <div> to 24px */
-						@media screen and (max-width: 600px) {
-							.center-name {
-								font-size: 24px;
-							}
-
-							.account {
-								top: -13px;
-								position: absolute;
-								right: 4px;
-							}
-
-							.img2-responsive.logo2 {
-								border-radius: 50%;
-							}
-						}
-
-						.img1-responsive.logo1 {
-							left: -10px;
-							top: 20px;
-							width: 290px;
-							padding: 0px 6px;
-							position: relative;
-
-						}
-
-						.img2-responsive.logo2 {
-							top: 4px;
-							left: 12px;
-							height: 90px;
-							padding: 4px 4px;
-							z-index: 9;
-							position: absolute;
-							border: 1px solid #ddd;
-							box-shadow: 0px 0px 8px 3px #ccc;
-
-						}
-
-						.center-name {
-
-							font-weight: 500;
-							color: #fff;
-							text-shadow: 2px 2px 4px #000000;
-							font-family: serif;
-							text-align: center;
-							font-variant: small-caps;
-							height: 100px;
-
-							background-color: steelblue;
-						}
-
-						.di .chk-lg {
-							width: 20px;
-							height: 16px;
-						}
-
-						.left>div.active {
-							border: 2px solid #607D8B;
-							background: #eef;
-							color: #333;
-						}
-
-						#search-result {
-							margin-top: 20px;
-						}
-					</style>
-
-					<script language="javascript">
-
-						function searchPatient() {
-							$('#search-result').html('');
-							var key = $('#patid').val();
-							$.ajax({
-								type: "GET",
-								url: 'search_patient.jsp',
-								data: { key: key },
-								success: function (data) {
-									var res = JSON.parse(data);
-									if (res.status == 'success') {
-										if (res.data.length > 0) {
-											var pat_list = '<table class="table table-striped">';
-											pat_list += '<thead><tr>';
-											pat_list += '<th>Patient ID</th><th>Name</th><th>Phone</th><th>Contact Person</th>';
-											pat_list += '</tr></thead>';
-											res.data.forEach(element => {
-												pat_list += '<tr>';
-												pat_list += '<td><a href="#" onClick="selectPatient(this)">' + element.pat_id + '</a></td>';
-												pat_list += '<td>' + element.pat_name + ' ' + element.l_name + '</td>';
-												pat_list += '<td>' + element.phone + '</td>';
-												//pat_list += '<td>'+element.emailid + '</td>';
-												pat_list += '<td>' + element.pat_person + '</td>';
-												pat_list += '</tr>';
-											});
-											pat_list += '</table>';
-											$('#search-result').html(pat_list);
-										}
+							</head>
+							<style>
+								/* If the screen size is 601px wide or more, set the font-size of <div> to 40px */
+								@media screen and (min-width: 601px) {
+									.center-name {
+										font-size: 40px;
 									}
 								}
-							});
-						}
+
+								/* If the screen size is 600px wide or less, set the font-size of <div> to 24px */
+								@media screen and (max-width: 600px) {
+									.center-name {
+										font-size: 24px;
+									}
+
+									.account {
+										top: -13px;
+										position: absolute;
+										right: 4px;
+									}
+
+									.img2-responsive.logo2 {
+										border-radius: 50%;
+									}
+								}
+
+								.img1-responsive.logo1 {
+									left: -10px;
+									top: 20px;
+									width: 290px;
+									padding: 0px 6px;
+									position: relative;
+
+								}
+
+								.img2-responsive.logo2 {
+									top: 4px;
+									left: 12px;
+									height: 90px;
+									padding: 4px 4px;
+									z-index: 9;
+									position: absolute;
+									border: 1px solid #ddd;
+									box-shadow: 0px 0px 8px 3px #ccc;
+
+								}
+
+								.center-name {
+
+									font-weight: 500;
+									color: #fff;
+									text-shadow: 2px 2px 4px #000000;
+									font-family: serif;
+									text-align: center;
+									font-variant: small-caps;
+									height: 100px;
+
+									background-color: steelblue;
+								}
+
+								.di .chk-lg {
+									width: 20px;
+									height: 16px;
+								}
+
+								.left>div.active {
+									border: 2px solid #607D8B;
+									background: #eef;
+									color: #333;
+								}
+
+								#search-result {
+									margin-top: 20px;
+								}
+							</style>
+
+							<script language="javascript">
+
+								function searchPatient() {
+									$('#search-result').html('');
+									var key = $('#patid').val();
+									$.ajax({
+										type: "GET",
+										url: 'search_patient.jsp',
+										data: { key: key },
+										success: function (data) {
+											var res = JSON.parse(data);
+											if (res.status == 'success') {
+												if (res.data.length > 0) {
+													var pat_list = '<table class="table table-striped">';
+													pat_list += '<thead><tr>';
+													pat_list += '<th>Patient ID</th><th>Name</th><th>Phone</th><th>Contact Person</th>';
+													pat_list += '</tr></thead>';
+													res.data.forEach(element => {
+														pat_list += '<tr>';
+														pat_list += '<td><a href="#" onClick="selectPatient(this)">' + element.pat_id + '</a></td>';
+														pat_list += '<td>' + element.pat_name + ' ' + element.l_name + '</td>';
+														pat_list += '<td>' + element.phone + '</td>';
+														//pat_list += '<td>'+element.emailid + '</td>';
+														pat_list += '<td>' + element.pat_person + '</td>';
+														pat_list += '</tr>';
+													});
+													pat_list += '</table>';
+													$('#search-result').html(pat_list);
+												}
+											}
+										}
+									});
+								}
 
 
-						function selectPatient(element) {
-							event.preventDefault();
-							var patid = $(element).html();
-							$('#patid').val(patid);
-							$('#search-result').html('');
-						}
+								function selectPatient(element) {
+									event.preventDefault();
+									var patid = $(element).html();
+									$('#patid').val(patid);
+									$('#search-result').html('');
+								}
 
 
-						// Patient registration autocomplete end
+								// Patient registration autocomplete end
 
 
-						$.ajaxSetup({
-							cache: false
-						});
-						function clearPanel(fileName) {
-							$(".left div.getId").removeClass("active");
-							$(".pat-prof-sum").remove();
-							var patque = fileName.match("browse.jsp");
-							var oldpat = fileName.match("oldpat.jsp");
-							if (patque == "browse.jsp" || oldpat == "oldpat.jsp" || patque == "totalsummary.jsp" || fileName.indexOf("poBadoPending.jsp") == 0 || fileName == "psychologistPatientMenu.jsp" || fileName.indexOf("psychologistPatientList.jsp") == 0 || fileName.indexOf("patientMonitoring") == 0) {
-								var loadUrl = "<%=request.getContextPath()%>/jspfiles/" + fileName;
-								var ajax_load = "<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>";
-								$("#main_frame").html(ajax_load).load(loadUrl);
-								$("#main_frame").css("min-height", "100%");
-								//$("#main_frame").css("max-height", "100%");
-							}
-							else {
-								document.getElementById("main_frame").innerHTML = "<object class='responsive obj' type='text/html' data=<%=request.getContextPath()%>/jspfiles/" + fileName + " style='width:100%; height:100%;'>> </object>";
-							}
-						}
-						function ajaxRedirect(fileName) {
-							var loadUrl = "./" + fileName;
-							var ajax_load = "<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>";
-							$(".main-body").html(ajax_load).load(loadUrl);
-						}
+								$.ajaxSetup({
+									cache: false
+								});
+								function clearPanel(fileName) {
+									$(".left div.getId").removeClass("active");
+									$(".pat-prof-sum").remove();
+									var patque = fileName.match("browse.jsp");
+									var oldpat = fileName.match("oldpat.jsp");
+									if (patque == "browse.jsp" || oldpat == "oldpat.jsp" || patque == "totalsummary.jsp" || fileName.indexOf("poBadoPending.jsp") == 0 || fileName == "psychologistPatientMenu.jsp" || fileName.indexOf("psychologistPatientList.jsp") == 0 || fileName.indexOf("patientMonitoring") == 0) {
+										var loadUrl = "<%=request.getContextPath()%>/jspfiles/" + fileName;
+										var ajax_load = "<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>";
+										$("#main_frame").html(ajax_load).load(loadUrl);
+										$("#main_frame").css("min-height", "100%");
+										//$("#main_frame").css("max-height", "100%");
+									}
+									else {
+										document.getElementById("main_frame").innerHTML = "<object class='responsive obj' type='text/html' data=<%=request.getContextPath()%>/jspfiles/" + fileName + " style='width:100%; height:100%;'>> </object>";
+									}
+								}
+								function ajaxRedirect(fileName) {
+									var loadUrl = "./" + fileName;
+									var ajax_load = "<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>";
+									$(".main-body").html(ajax_load).load(loadUrl);
+								}
 
-						function viewReport(fileName) {
-							var loadUrl = "./" + fileName;
-							var ajax_load = "<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>";
-							$(".report-sheet").html(ajax_load).load(loadUrl);
-							$(".report-sheet").css("min-height", "100%");
-							$(".report-sheet").css("max-height", "100%");
-							$(".report-close").show();
-							$(".prc").attr("style", "filter:blur(5px)");
-						}
-						function clearPanelRight(fileName) {
-							$(".left div.getId").removeClass("active");
-							$(".pat-prof-sum").remove();
+								function viewReport(fileName) {
+									var loadUrl = "./" + fileName;
+									var ajax_load = "<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>";
+									$(".report-sheet").html(ajax_load).load(loadUrl);
+									$(".report-sheet").css("min-height", "100%");
+									$(".report-sheet").css("max-height", "100%");
+									$(".report-close").show();
+									$(".prc").attr("style", "filter:blur(5px)");
+								}
+								function clearPanelRight(fileName) {
+									$(".left div.getId").removeClass("active");
+									$(".pat-prof-sum").remove();
 
-							$(".right-div.report-sheet").html("<object class='responsive obj' type='text/html' data=<%=request.getContextPath()%>/jspfiles/" + fileName + " style='width:100%; height:100%;'>> </object>");
+									$(".right-div.report-sheet").html("<object class='responsive obj' type='text/html' data=<%=request.getContextPath()%>/jspfiles/" + fileName + " style='width:100%; height:100%;'>> </object>");
 
-						}
-						var Counter = (function () {
-							var i = 0;
-							return function () { i += 1; return i }
-						})();
-					</script>
+								}
+								var Counter = (function () {
+									var i = 0;
+									return function () { i += 1; return i }
+								})();
+							</script>
 
-					<script>
-						function home(fileName) {
-							var obj = { "adm": "dashb.jsp", "doc": ".vis_pat", "user": ".pat_reg ", "pOP": "getPendingPatientPatho.jsp", "rOP": "getStudyUID.jsp", "psy": "getPendingTobacco.jsp" };
-							var loadUrl = "";
-							/*if(fileName == "adm")
-								loadUrl = "<%=request.getContextPath()%>/jspfiles/" + obj.adm;
-							else if(fileName == "doc")
-								loadUrl = obj.doc;
-							else
-								loadUrl = obj.user;*/
+							<script>
+								function home(fileName) {
+									var obj = { "adm": "dashb.jsp", "doc": ".vis_pat", "user": ".pat_reg ", "pOP": "getPendingPatientPatho.jsp", "rOP": "getStudyUID.jsp", "psy": "getPendingTobacco.jsp" };
+									var loadUrl = "";
+									/*if(fileName == "adm")
+										loadUrl = "<%=request.getContextPath()%>/jspfiles/" + obj.adm;
+									else if(fileName == "doc")
+										loadUrl = obj.doc;
+									else
+										loadUrl = obj.user;*/
 
-							for (let i = 0; i < Object.keys(obj).length; i++) {
-								if (Object.keys(obj)[i] == fileName)
-									loadUrl = Object.values(obj)[i];
-							}
+									for (let i = 0; i < Object.keys(obj).length; i++) {
+										if (Object.keys(obj)[i] == fileName)
+											loadUrl = Object.values(obj)[i];
+									}
 
-							if (fileName == "adm") {
-								var ajax_load = "<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>";
-								$("#main_frame").html(ajax_load).load(loadUrl);
-								$("#main_frame").css("min-height", "100%");
-								//$("#main_frame").css("max-height", "100%");
-							}
-							if (fileName == "pOP" || fileName == "rOP" || fileName == "psy")
-								clearPanel(loadUrl);
-							else {
-								$(loadUrl).click();
-							}
-							//document.getElementById("main_frame").innerHTML= "<object class='responsive obj' type='text/html' data='welcome.jsp' style='width:100%; height:100%;'>> </object>";
-						}
+									if (fileName == "adm") {
+										var ajax_load = "<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>";
+										$("#main_frame").html(ajax_load).load(loadUrl);
+										$("#main_frame").css("min-height", "100%");
+										//$("#main_frame").css("max-height", "100%");
+									}
+									if (fileName == "pOP" || fileName == "rOP" || fileName == "psy")
+										clearPanel(loadUrl);
+									else {
+										$(loadUrl).click();
+									}
+									//document.getElementById("main_frame").innerHTML= "<object class='responsive obj' type='text/html' data='welcome.jsp' style='width:100%; height:100%;'>> </object>";
+								}
 
-						$(document).ready(function () {
+								$(document).ready(function () {
 
-							sessionStorage.removeItem("patlist");
-							sessionStorage.removeItem("currentpat");
+									sessionStorage.removeItem("patlist");
+									sessionStorage.removeItem("currentpat");
 
-							var redPage = "<%=redPage%>";
+									var redPage = "<%=redPage%>";
 		<% if (redPage == "" || redPage == null) { %>
 
 		<%} else {%>
-								pageRedirection("<%=redPage%>" + ".jsp?id=<%=id%>", "<%=id%>");
+										pageRedirection("<%=redPage%>" + ".jsp?id=<%=id%>", "<%=id%>");
 		<%}%>
 		/*
 		$("body").click(function(){$("input.id").focus();});
 		*/
 		var left_menu = eval(<%=menul %>);
-							//console.log(left_menu);
-							var len = Object.keys(left_menu).length;
-							for (var i = 0; i < len; i++) {
-								$(".index .left").append("<div class='" + left_menu[i][1].substring(0, 3).toLowerCase() + '_' + left_menu[i][1].substring(left_menu[i][1].indexOf(' ') + 1, left_menu[i][1].indexOf(' ') + 4).toLowerCase() + " getId' trackId='" + i + "'>" + left_menu[i][1] + "<span class='glyphicon glyphicon-circle-arrow-right pull-right sn'></span></div>");
-							}
-							//console.log(left_menu);
+									//console.log(left_menu);
+									var len = Object.keys(left_menu).length;
+									for (var i = 0; i < len; i++) {
+										$(".index .left").append("<div class='" + left_menu[i][1].substring(0, 3).toLowerCase() + '_' + left_menu[i][1].substring(left_menu[i][1].indexOf(' ') + 1, left_menu[i][1].indexOf(' ') + 4).toLowerCase() + " getId' trackId='" + i + "'>" + left_menu[i][1] + "<span class='glyphicon glyphicon-circle-arrow-right pull-right sn'></span></div>");
+									}
+									//console.log(left_menu);
 
-							$(".left div.getId").click(function () {
-								var body = "";
-								if ($(this).attr("class").match("pat_reg") != null) {
-									//body = "<div class='new-reg'><a onclick=\"clearPanel('selectdoc.jsp')\" class='btn btn-block'><span>New Patient Registration</span> </a></div><div class='pat-id'><span>Old Patient Registration<p>(Enter patient id into the testbox)</p></span><div class='input-group'><input class='form-control id' name='patid' placeholder='Patient id Ex: EXTR2011170001' /><div class='input-group-btn'><button class='btn btn-primary pull-right id-submit'>GO</button></div></div></div>";
-									//body = "<div class='new-reg'><a onclick=\"clearPanel('../forms/med1.jsp?')\" class='btn btn-block'><span>New Patient Registration</span> </a></div><div class='pat-id'><span>Old Patient Registration<p>(Enter patient id into the testbox)</p></span><div class='input-group'><input class='form-control id' name='patid' placeholder='Patient id Ex: EXTR2011170001' /><div class='input-group-btn'><button class='btn btn-primary pull-right id-submit'>GO</button></div></div></div>";
-									body = "<div class='new-reg'><a onclick=\"clearPanel('../forms/med1.jsp?')\" class='btn btn-block'>" +
-										"<span>New Patient Registration</span> </a></div><div class='pat-id'><span>Old Patient Registration<p>(Enter patient id into the testbox)</p>" +
-										"</span><div class='input-group'><input class='form-control' data-toggle='popover' data-toggle='popover' id='patid' name='patid' placeholder='Patient id Ex: EXTR2011170001 or Name or Mobile Number or Contact Person' />" +
-										"<div class='input-group-btn'><button class='btn btn-success' onClick='searchPatient()'>Search</button><button class='btn btn-primary id-submit' id='patid-submit'>GO</button></div></div>" +
-										"<div id='search-result'></div></div>";
-								}
-								else if ($(this).attr("class").match("vid_con") != null);
-								//body = "<A class='responsive obj' target=_blank href='../vc/main.jsp' style='width:100%; height:100%;'>Goto Video Conference System</a>";
-								//body = <button id="vc" name="vc" class="btn responsive obj" >
-								else
-									body = "<div class='pat-id'><span>Enter Patient Id : </span><div class='input-group'><input class='form-control id' name='patid' placeholder='Patient id Ex: EXTR2011170001' /><div class='input-group-btn'><button class='btn btn-primary pull-right id-submit'>GO</button></div></div>" +
-										"<div class='row' style='padding-top:20px;padding-right:20px;'>" +
-										"<div class='col-sm-4'><div class='jumbotron'><h3 class='text-center'>Pending Appointments To Set (Local)&nbsp;&nbsp;</h3><div class='text-center' style='margin-top:30px;'><div class='label label-info' style='font-size: 2em;'><%=objstatV.get(0)%></div></div></div></div>" +
-										"<div class='col-sm-4'><div class='jumbotron'><h3 class='text-center'>Today's No Of Patient (Local)</h3><div class='text-center' style='margin-top:30px;'><div class='label label-info' style='font-size: 2em;'><%=objstatV.get(1)%></div></div></div></div>" +
-										"<div class='col-sm-4'><div class='jumbotron'><h3 class='text-center'>Pending Appointments To Set (Referral)</h3><div class='text-center' style='margin-top:30px;'><div class='label label-info' style='font-size: 2em;'><%=objstatV.get(2)%></div></div></div></div>" +
-										"<div class='col-sm-6'><div class='jumbotron'><h3 class='text-center'>Pending Referred Cases Waiting for Acceptance</h3><div class='text-center' style='margin-top:30px;'><div class='label label-info' style='font-size: 2em;'><%=objstatV.get(3)%></div></div></div></div>" +
-										"<div class='col-sm-6'><div class='jumbotron'><h3 class='text-center'>Today's No Of Patient (Referral)</h3><div class='text-center' style='margin-top:35px;'><div class='label label-info' style='font-size: 2em;'><%=objstatV.get(4)%></div></div><br></div></div>" +
+									$(".left div.getId").click(function () {
+										var body = "";
+										if ($(this).attr("class").match("pat_reg") != null) {
+											//body = "<div class='new-reg'><a onclick=\"clearPanel('selectdoc.jsp')\" class='btn btn-block'><span>New Patient Registration</span> </a></div><div class='pat-id'><span>Old Patient Registration<p>(Enter patient id into the testbox)</p></span><div class='input-group'><input class='form-control id' name='patid' placeholder='Patient id Ex: EXTR2011170001' /><div class='input-group-btn'><button class='btn btn-primary pull-right id-submit'>GO</button></div></div></div>";
+											//body = "<div class='new-reg'><a onclick=\"clearPanel('../forms/med1.jsp?')\" class='btn btn-block'><span>New Patient Registration</span> </a></div><div class='pat-id'><span>Old Patient Registration<p>(Enter patient id into the testbox)</p></span><div class='input-group'><input class='form-control id' name='patid' placeholder='Patient id Ex: EXTR2011170001' /><div class='input-group-btn'><button class='btn btn-primary pull-right id-submit'>GO</button></div></div></div>";
+											body = "<div class='new-reg'><a onclick=\"clearPanel('../forms/med1.jsp?')\" class='btn btn-block'>" +
+												"<span>New Patient Registration</span> </a></div><div class='pat-id'><span>Old Patient Registration<p>(Enter patient id into the testbox)</p>" +
+												"</span><div class='input-group'><input class='form-control' data-toggle='popover' data-toggle='popover' id='patid' name='patid' placeholder='Patient id Ex: EXTR2011170001 or Name or Mobile Number or Contact Person' />" +
+												"<div class='input-group-btn'><button class='btn btn-success' onClick='searchPatient()'>Search</button><button class='btn btn-primary id-submit' id='patid-submit'>GO</button></div></div>" +
+												"<div id='search-result'></div></div>";
+										}
+										else if ($(this).attr("class").match("vid_con") != null);
+										//body = "<A class='responsive obj' target=_blank href='../vc/main.jsp' style='width:100%; height:100%;'>Goto Video Conference System</a>";
+										//body = <button id="vc" name="vc" class="btn responsive obj" >
+										else
+											body = "<div class='pat-id'><span>Enter Patient Id : </span><div class='input-group'><input class='form-control id' name='patid' placeholder='Patient id Ex: EXTR2011170001' /><div class='input-group-btn'><button class='btn btn-primary pull-right id-submit'>GO</button></div></div>" +
+												"<div class='row' style='padding-top:20px;padding-right:20px;'>" +
+												"<div class='col-sm-4'><div class='jumbotron'><h3 class='text-center'>Pending Appointments To Set (Local)&nbsp;&nbsp;</h3><div class='text-center' style='margin-top:30px;'><div class='label label-info' style='font-size: 2em;'><%=objstatV.get(0)%></div></div></div></div>" +
+												"<div class='col-sm-4'><div class='jumbotron'><h3 class='text-center'>Today's No Of Patient (Local)</h3><div class='text-center' style='margin-top:30px;'><div class='label label-info' style='font-size: 2em;'><%=objstatV.get(1)%></div></div></div></div>" +
+												"<div class='col-sm-4'><div class='jumbotron'><h3 class='text-center'>Pending Appointments To Set (Referral)</h3><div class='text-center' style='margin-top:30px;'><div class='label label-info' style='font-size: 2em;'><%=objstatV.get(2)%></div></div></div></div>" +
+												"<div class='col-sm-6'><div class='jumbotron'><h3 class='text-center'>Pending Referred Cases Waiting for Acceptance</h3><div class='text-center' style='margin-top:30px;'><div class='label label-info' style='font-size: 2em;'><%=objstatV.get(3)%></div></div></div></div>" +
+												"<div class='col-sm-6'><div class='jumbotron'><h3 class='text-center'>Today's No Of Patient (Referral)</h3><div class='text-center' style='margin-top:35px;'><div class='label label-info' style='font-size: 2em;'><%=objstatV.get(4)%></div></div><br></div></div>" +
 
 
-										"</div></div>";
+												"</div></div>";
 
-								$(".main-body").html(body);
-								$("input.id").focus();
-								$(".continue").attr("style", "display:block");
-								$(".left div.getId").removeClass("active");
-								$(this).addClass("active");
-								//alert($(this).attr("trackId"));
-								var trackId = $(this).attr("trackId");
+										$(".main-body").html(body);
+										$("input.id").focus();
+										$(".continue").attr("style", "display:block");
+										$(".left div.getId").removeClass("active");
+										$(this).addClass("active");
+										//alert($(this).attr("trackId"));
+										var trackId = $(this).attr("trackId");
 
-								$(".tele").click(function () { $("input.id").focus(); });
+										$(".tele").click(function () { $("input.id").focus(); });
 
-								//$(".id").change(function(){
-								//	var url = left_menu;
-								//	if($(this).val().length>=14 && $(this).val().length <=18){
-								$("#patid-submit").click(function () {
-									console.log("patid-submit");
-									event.preventDefault();
-									var url = left_menu;
-									var patient_id = $('input#patid').val();
-									// alert(patient_id);
-									// return;
-									if (patient_id.length >= 14 && patient_id.length <= 18) {
-										var currpatqtype = "local";
-										/*	if($(".tele").prop("checked")==true){
-												currpatqtype="tele";
-											}
-											if($(".tele").prop("checked")==false){
-												currpatqtype = "local";
-											}*/
+										//$(".id").change(function(){
+										//	var url = left_menu;
+										//	if($(this).val().length>=14 && $(this).val().length <=18){
+										$("#patid-submit").click(function () {
+											console.log("patid-submit");
+											event.preventDefault();
+											var url = left_menu;
+											var patient_id = $('input#patid').val();
+											// alert(patient_id);
+											// return;
+											if (patient_id.length >= 14 && patient_id.length <= 18) {
+												var currpatqtype = "local";
+												/*	if($(".tele").prop("checked")==true){
+														currpatqtype="tele";
+													}
+													if($(".tele").prop("checked")==false){
+														currpatqtype = "local";
+													}*/
 
-										$(".pat-id").remove();
-										var head_url = "patSortinfo.jsp?id=" + patient_id + "&usr=<%=usertype%>&nam=*&patdis=<%=distype%>&currpatqtype=" + currpatqtype;
-										//var head_url = "patSortinfo.jsp?id="+$(this).val()+"&usr=<%=usertype%>&nam=*&patdis=<%=distype%>&currpatqtype="+currpatqtype;
-										$.get(head_url, function (data, status) {
-											$(".pat-head-title").html(data);
-											if (status == "success" && url[trackId][2] == "ajax") {
-												$(".main-body").html("<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>");
-												$.get(url[trackId][0], function (data, status) {
-													$(".main-body").html(data);
+												$(".pat-id").remove();
+												var head_url = "patSortinfo.jsp?id=" + patient_id + "&usr=<%=usertype%>&nam=*&patdis=<%=distype%>&currpatqtype=" + currpatqtype;
+												//var head_url = "patSortinfo.jsp?id="+$(this).val()+"&usr=<%=usertype%>&nam=*&patdis=<%=distype%>&currpatqtype="+currpatqtype;
+												$.get(head_url, function (data, status) {
+													$(".pat-head-title").html(data);
+													if (status == "success" && url[trackId][2] == "ajax") {
+														$(".main-body").html("<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>");
+														$.get(url[trackId][0], function (data, status) {
+															$(".main-body").html(data);
+														});
+														//console.log("gg : "+url[trackId][0]);
+													}
+													else { clearPanel(url[trackId][0]) }
 												});
-												//console.log("gg : "+url[trackId][0]);
+
+												//$(".main-body").html("<h1>Form</h1><div class=aa>Patient Id : "+$(this).val()+"</div>");
 											}
-											else { clearPanel(url[trackId][0]) }
+											else {
+												alert("Invalid patient id");
+												//$(this).val("")}
+												$('#patid').val("");
+											}
+										});
+										$(".id").change(function () {
+											var url = left_menu;
+											if ($(this).val().length >= 14 && $(this).val().length <= 18) {
+
+												var currpatqtype = "local";
+												/*	if($(".tele").prop("checked")==true){
+														currpatqtype="tele";
+													}
+													if($(".tele").prop("checked")==false){
+														currpatqtype = "local";
+													}*/
+
+												$(".pat-id").remove();
+												var head_url = "patSortinfo.jsp?id=" + $(this).val() + "&usr=<%=usertype%>&nam=*&patdis=<%=distype%>&currpatqtype=" + currpatqtype;
+												$.get(head_url, function (data, status) {
+													$(".pat-head-title").html(data);
+													if (status == "success" && url[trackId][2] == "ajax") {
+														$(".main-body").html("<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>");
+														$.get(url[trackId][0], function (data, status) {
+															$(".main-body").html(data);
+														});
+														console.log("gg : " + url[trackId][0]);
+													}
+													else { clearPanel(url[trackId][0]) }
+												});
+
+												//$(".main-body").html("<h1>Form</h1><div class=aa>Patient Id : "+$(this).val()+"</div>");
+											}
+											else { alert("Invalid patient id"); $(this).val("") }
 										});
 
-										//$(".main-body").html("<h1>Form</h1><div class=aa>Patient Id : "+$(this).val()+"</div>");
-									}
-									else {
-										alert("Invalid patient id");
-										//$(this).val("")}
-										$('#patid').val("");
-									}
-								});
-								$(".id").change(function () {
-									var url = left_menu;
-									if ($(this).val().length >= 14 && $(this).val().length <= 18) {
+										$(".continue").click(function () {
+											var trackId = $(".left div.getId.active").attr("trackId");
+											var url = left_menu;
+											$(".pat-id").remove();
+											$(".main-body").html("<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>");
+											$.get(url[trackId][0], function (data, status) {
+												$(".main-body").html(data);
+												if (status == "success")
+													$(".continue").attr("style", "display:none");
+											});
 
-										var currpatqtype = "local";
-										/*	if($(".tele").prop("checked")==true){
-												currpatqtype="tele";
-											}
-											if($(".tele").prop("checked")==false){
-												currpatqtype = "local";
-											}*/
-
-										$(".pat-id").remove();
-										var head_url = "patSortinfo.jsp?id=" + $(this).val() + "&usr=<%=usertype%>&nam=*&patdis=<%=distype%>&currpatqtype=" + currpatqtype;
-										$.get(head_url, function (data, status) {
-											$(".pat-head-title").html(data);
-											if (status == "success" && url[trackId][2] == "ajax") {
-												$(".main-body").html("<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>");
-												$.get(url[trackId][0], function (data, status) {
-													$(".main-body").html(data);
-												});
-												console.log("gg : " + url[trackId][0]);
-											}
-											else { clearPanel(url[trackId][0]) }
 										});
 
-										//$(".main-body").html("<h1>Form</h1><div class=aa>Patient Id : "+$(this).val()+"</div>");
-									}
-									else { alert("Invalid patient id"); $(this).val("") }
-								});
 
-								$(".continue").click(function () {
-									var trackId = $(".left div.getId.active").attr("trackId");
-									var url = left_menu;
-									$(".pat-id").remove();
-									$(".main-body").html("<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>");
-									$.get(url[trackId][0], function (data, status) {
-										$(".main-body").html(data);
-										if (status == "success")
-											$(".continue").attr("style", "display:none");
 									});
 
+									$(".collapse.in").each(function () {
+										$(this).siblings(".panel-heading").find(".glyphicon").addClass("glyphicon-minus").removeClass("glyphicon-plus");
+									});
+
+									// Toggle plus minus icon on show hide of collapse element
+									$(".collapse").on('show.bs.collapse', function () {
+										$(this).parent().find(".glyphicon").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+									}).on('hide.bs.collapse', function () {
+										$(this).parent().find(".glyphicon").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+									});
+
+									home('<%=usertype%>');
+									if ($(window).width() < 768) {
+										$(".rect").click(function () {
+											$("#main_frame").attr("tabindex", "1");
+											$("#main_frame").focus();
+										});
+									}
+
 								});
 
-
-							});
-
-							$(".collapse.in").each(function () {
-								$(this).siblings(".panel-heading").find(".glyphicon").addClass("glyphicon-minus").removeClass("glyphicon-plus");
-							});
-
-							// Toggle plus minus icon on show hide of collapse element
-							$(".collapse").on('show.bs.collapse', function () {
-								$(this).parent().find(".glyphicon").removeClass("glyphicon-plus").addClass("glyphicon-minus");
-							}).on('hide.bs.collapse', function () {
-								$(this).parent().find(".glyphicon").removeClass("glyphicon-minus").addClass("glyphicon-plus");
-							});
-
-							home('<%=usertype%>');
-							if ($(window).width() < 768) {
-								$(".rect").click(function () {
-									$("#main_frame").attr("tabindex", "1");
-									$("#main_frame").focus();
-								});
-							}
-
-						});
-
-						function pageRedirection(page, id) {
-							var head_url = "patSortinfo.jsp?id=" + id + "&usr=<%=usertype%>&nam=*&patdis=<%=distype%>&currpatqtype=local";
-							$.get(head_url, function (data, status) {
-								$(".pat-head-title").html(data);
-								if (status == "success") {
-									$(".main-body").html("<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>");
-									$.get(page, function (data, status) {
-										$(".main-body").html(data);
+								function pageRedirection(page, id) {
+									var head_url = "patSortinfo.jsp?id=" + id + "&usr=<%=usertype%>&nam=*&patdis=<%=distype%>&currpatqtype=local";
+									$.get(head_url, function (data, status) {
+										$(".pat-head-title").html(data);
+										if (status == "success") {
+											$(".main-body").html("<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>");
+											$.get(page, function (data, status) {
+												$(".main-body").html(data);
+											});
+										}
 									});
 								}
-							});
-						}
 
 
-					</script>
+							</script>
 
 
 
 
-					<%! public int utypeI(String utype){ int utypei=-1; if(utype.equals("doc")) utypei=0; else
-						if(utype.equals("adm")) utypei=1; else if(utype.equals("usr")) utypei=2; else
-						if(utype.equals("rOP")) utypei=3; else if(utype.equals("pOP")) utypei=4; else
-						if(utype.equals("psy")) utypei=5; else utypei=-1; return utypei; } %>
+							<%! public int utypeI(String utype){ int utypei=-1; if(utype.equals("doc")) utypei=0; else
+								if(utype.equals("adm")) utypei=1; else if(utype.equals("usr")) utypei=2; else
+								if(utype.equals("rOP")) utypei=3; else if(utype.equals("pOP")) utypei=4; else
+								if(utype.equals("psy")) utypei=5; else utypei=-1; return utypei; } %>
 
 
 						<body class="index">
@@ -524,112 +553,119 @@
 								<div class="row header">
 									<div class="col-md-3 brand-container">
 										<a href="<%=request.getContextPath()%>/jspfiles/home" class="brand-link">
-											<img class="logo-img logo1"
-												src="<%=request.getContextPath()%>/images/imlogo.jpg" />
-											<span class="brand-text">M-Dosthi</span>
+											<img class="header-horiz-logo"
+												src="<%=request.getContextPath()%>/images/mdosthi-horizontal-logo.svg"
+												alt="mDosthi" />
 										</a>
 									</div>
 
 
-									<div class="col-md-8 header-block">
+									<div class="container-fluid">
+										<div class="row header">
+											<div class="col-md-3 brand-container">
+												<a href="<%=request.getContextPath()%>/jspfiles/home"
+													class="brand-link">
+													<img class="header-horiz-logo"
+														src="<%=request.getContextPath()%>/images/mdosthi-horizontal-logo.png"
+														alt="mDosthi"
+														style="height:46px; max-height:46px; width:auto; max-width:190px; object-fit:contain;" />
+												</a>
+											</div>
 
-										<%-- <% if(!(usertype.equals("pOP") || !usertype.equals("psy")
-											||usertype.equals("rOP"))){ %> --%>
-											<% if(!(usertype.equals("pOP") || usertype.equals("rOP") ||
-												usertype.equals("psy"))){ %>
-												<div class="row">
-													<% if(usertype.equals("adm")){ %>
-														<div class="col-sm-3 patq rect"
-															onclick='clearPanel("poBadoPending.jsp")'><span class="title">Pending Screening</span>
-															<div class="cnt"><span></span></div>
-														</div>
-														<div class="col-sm-3 tpatq rect"
-															onclick='clearPanel("browse.jsp")'><span class="title">Local Patient</span>
-															<div class="cnt"><span></span></div>
-														</div>
-														<div class="col-sm-3 reff-sts rect"
-															onclick='clearPanel("jobadmin.jsp")'><span class="title">Admin Jobs</span>
-															<div class="cnt"><span></span></div>
-														</div>
-													<% } else { %>
-													<div class="col-sm-3 patq rect"
-														onclick='clearPanel("<%=lpatq_link.split(",")[0]%>")'><span
-															class="title">
-															<%=lpatq_link.split(",")[1]%>
-														</span>
-														<div class="cnt"><span><!--<%=total_lpat%>--></span></div>
-													</div>
-													<% if(!usertype.equals("usr")) { %>
-														<div class="col-sm-3 tpatq rect"
-															onclick='clearPanel("<%=tpatq_link.split(",")[0]%>")'><span
-																class="title">
-																<%=tpatq_link.split(",")[1]%>
-															</span>
-															<div class="cnt"><span><!--<%=total_tpat%>--></span></div>
-														</div>
-														<div class="col-sm-3 reff-sts rect"
-															onclick='clearPanel("<%=reff_status_link.split(",")[0]%>")'>
-															<span class="title">
-																<%=reff_status_link.split(",")[1]%>
-															</span>
-															<div class="cnt"><span></span></div>
-														</div>
-														<% } %>
-															<% if(usertype.equals("doc")) {%>
-																<div class="col-sm-3 twaitq rect"
-																	onclick='clearPanel("<%=tpatwaitq_link.split(",")[0]%>")'>
+											<%-- <% if(!(usertype.equals("pOP") || !usertype.equals("psy")
+												||usertype.equals("rOP"))){ %> --%>
+												<% if(!(usertype.equals("pOP") || usertype.equals("rOP") ||
+													usertype.equals("psy"))){ %>
+													<div class="row">
+														<% if(usertype.equals("adm")){ %>
+															<div class="col-sm-3 patq rect"
+																onclick='clearPanel("poBadoPending.jsp")'><span
+																	class="title">Pending Screening</span>
+																<div class="cnt"><span></span></div>
+															</div>
+															<div class="col-sm-3 tpatq rect"
+																onclick='clearPanel("browse.jsp")'><span
+																	class="title">Local Patient</span>
+																<div class="cnt"><span></span></div>
+															</div>
+															<div class="col-sm-3 reff-sts rect"
+																onclick='clearPanel("jobadmin.jsp")'><span
+																	class="title">Admin Jobs</span>
+																<div class="cnt"><span></span></div>
+															</div>
+															<% } else { %>
+																<div class="col-sm-3 patq rect"
+																	onclick='clearPanel("<%=lpatq_link.split(",")[0]%>")'>
 																	<span class="title">
-																		<%=tpatwaitq_link.split(",")[1]%>
+																		<%=lpatq_link.split(",")[1]%>
 																	</span>
-																	<div class="cnt"><span></span></div>
+																	<div class="cnt"><span><!--<%=total_lpat%>--></span>
+																	</div>
 																</div>
-																<div class="col-sm-3 annotq rect" onclick="openPipelineQueueModal()">
-																	<span class="title">Annotation Queue</span>
-																	<div class="cnt"><span class="glyphicon glyphicon-tasks"></span></div>
-																</div>
-																<div class="col-sm-3 monitoring rect" onclick="clearPanel('patientMonitoringDoctorList.jsp')">
-																	<span class="title">Patient Monitoring</span>
-																	<div class="cnt"><span class="glyphicon glyphicon-heart"></span></div>
-																</div>
-																<% } if(usertype.equals("adm")){%>
-																	<div class="col-sm-3 reff-sts rect"
-																		onclick='clearPanel("<%=admjobs_link.split(",")[0]%>")'>
+																<% if(!usertype.equals("usr")) { %>
+																	<div class="col-sm-3 tpatq rect"
+																		onclick='clearPanel("<%=tpatq_link.split(",")[0]%>")'>
 																		<span class="title">
-																			<%=admjobs_link.split(",")[1]%>
+																			<%=tpatq_link.split(",")[1]%>
+																		</span>
+																		<div class="cnt">
+																			<span><!--<%=total_tpat%>--></span>
+																		</div>
+																	</div>
+																	<div class="col-sm-3 reff-sts rect"
+																		onclick='clearPanel("<%=reff_status_link.split(",")[0]%>")'>
+																		<span class="title">
+																			<%=reff_status_link.split(",")[1]%>
 																		</span>
 																		<div class="cnt"><span></span></div>
 																	</div>
-																	<% } if(usertype.equals("usr")){%>
-																		<div class="col-sm-3 viewpres rect"
-																			onclick='clearPanel("<%=viewpres.split(",")[0]%>")'>
-																			<span class="title">
-																				<%=viewpres.split(",")[1]%>
-																			</span>
-																			<div class="cnt">
-																				<span><!--<%=total_lpat%>--></span>
+																	<% } %>
+																		<% if(usertype.equals("doc")) {%>
+																			<div class="col-sm-3 twaitq rect"
+																				onclick='clearPanel("<%=tpatwaitq_link.split(",")[0]%>")'>
+																				<span class="title">
+																					<%=tpatwaitq_link.split(",")[1]%>
+																				</span>
+																				<div class="cnt"><span></span></div>
 																			</div>
-																		</div>
-																		<%}%>
-														<% } %>
-												</div>
-												<%} if(usertype.equals("rOP")) {%>
-													<div class="col-sm-3 pendTest rect"
-														onclick='clearPanel("<%=parts[0].split(",")[0]%>")'><span
-															class="title">
-															<%=parts[0].split(",")[1]%>
-														</span>
-														<div class="cnt"><span><!--<%=total_lpat%>--></span></div>
+																			<div class="col-sm-3 annotq rect"
+																				onclick="openPipelineQueueModal()">
+																				<span class="title">Annotation
+																					Queue</span>
+																				<div class="cnt"><span
+																						class="glyphicon glyphicon-tasks"></span>
+																				</div>
+																			</div>
+																			<div class="col-sm-3 monitoring rect"
+																				onclick="clearPanel('patientMonitoringDoctorList.jsp')">
+																				<span class="title">Patient
+																					Monitoring</span>
+																				<div class="cnt"><span
+																						class="glyphicon glyphicon-heart"></span>
+																				</div>
+																			</div>
+																			<% } if(usertype.equals("adm")){%>
+																				<div class="col-sm-3 reff-sts rect"
+																					onclick='clearPanel("<%=admjobs_link.split(",")[0]%>")'>
+																					<span class="title">
+																						<%=admjobs_link.split(",")[1]%>
+																					</span>
+																					<div class="cnt"><span></span></div>
+																				</div>
+																				<% } if(usertype.equals("usr")){%>
+																					<div class="col-sm-3 viewpres rect"
+																						onclick='clearPanel("<%=viewpres.split(",")[0]%>")'>
+																						<span class="title">
+																							<%=viewpres.split(",")[1]%>
+																						</span>
+																						<div class="cnt">
+																							<span><!--<%=total_lpat%>--></span>
+																						</div>
+																					</div>
+																					<%}%>
+																						<% } %>
 													</div>
-													<div class="col-sm-3 actvTest rect"
-														onclick='clearPanel("<%=parts[1].split(",")[0]%>")'><span
-															class="title">
-															<%=parts[1].split(",")[1]%>
-														</span>
-														<div class="cnt"><span><!--<%=total_lpat%>--></span></div>
-													</div>
-													<!--<div class="col-sm-3 actvTest rect" onclick='clearPanel("<%=parts[2].split(",")[0]%>")'><span class="title"><%=parts[2].split(",")[1]%></span><div class="cnt"><span><%=total_lpat%></span></div></div>-->
-
-													<%} else if(usertype.equals("pOP")) {%>
+													<%} if(usertype.equals("rOP")) {%>
 														<div class="col-sm-3 pendTest rect"
 															onclick='clearPanel("<%=parts[0].split(",")[0]%>")'><span
 																class="title">
@@ -637,184 +673,213 @@
 															</span>
 															<div class="cnt"><span><!--<%=total_lpat%>--></span></div>
 														</div>
-														<!--<div class="col-sm-3 actvTest rect" onclick='clearPanel("<%=parts[1].split(",")[0]%>")'><span class="title"><%=parts[1].split(",")[1]%></span><div class="cnt"><span><%=total_lpat%></span></div></div>-->
+														<div class="col-sm-3 actvTest rect"
+															onclick='clearPanel("<%=parts[1].split(",")[0]%>")'><span
+																class="title">
+																<%=parts[1].split(",")[1]%>
+															</span>
+															<div class="cnt"><span><!--<%=total_lpat%>--></span></div>
+														</div>
+														<!--<div class="col-sm-3 actvTest rect" onclick='clearPanel("<%=parts[2].split(",")[0]%>")'><span class="title"><%=parts[2].split(",")[1]%></span><div class="cnt"><span><%=total_lpat%></span></div></div>-->
 
-														<%-- <% } %> --%>
-															<%} else if(usertype.equals("psy")) {%>
-																<div class="col-sm-3 pendTest rect"
-																	onclick='clearPanel("<%=parts[0].split(",")[0]%>")'>
-																	<span class="title">
-																		<%=parts[0].split(",")[1]%>
-																	</span>
-																	<div class="cnt"><span><!--<%=total_lpat%>--></span>
+														<%} else if(usertype.equals("pOP")) {%>
+															<div class="col-sm-3 pendTest rect"
+																onclick='clearPanel("<%=parts[0].split(",")[0]%>")'>
+																<span class="title">
+																	<%=parts[0].split(",")[1]%>
+																</span>
+																<div class="cnt"><span><!--<%=total_lpat%>--></span>
+																</div>
+															</div>
+															<!--<div class="col-sm-3 actvTest rect" onclick='clearPanel("<%=parts[1].split(",")[0]%>")'><span class="title"><%=parts[1].split(",")[1]%></span><div class="cnt"><span><%=total_lpat%></span></div></div>-->
+
+															<%-- <% } %> --%>
+																<%} else if(usertype.equals("psy")) {%>
+																	<div class="col-sm-3 pendTest rect"
+																		onclick='clearPanel("<%=parts[0].split(",")[0]%>")'>
+																		<span class="title">
+																			<%=parts[0].split(",")[1]%>
+																		</span>
+																		<div class="cnt">
+																			<span><!--<%=total_lpat%>--></span>
+																		</div>
 																	</div>
-																</div>
-																<div class="col-sm-3 patq rect"
-																	onclick='clearPanel("psychologistPatientMenu.jsp")'>
-																	<span class="title">Patient Details</span>
-																	<div class="cnt"><span></span></div>
-																</div>
-																<div class="col-sm-3 monitoring rect" onclick="clearPanel('patientMonitoringDoctorList.jsp')">
-																	<span class="title">Patient Monitoring</span>
-																	<div class="cnt"><span class="glyphicon glyphicon-heart"></span></div>
-																</div>
-																<!--<div class="col-sm-3 actvTest rect" onclick='clearPanel("<%=parts[1].split(",")[0]%>")'><span class="title"><%=parts[1].split(",")[1]%></span><div class="cnt"><span><%=total_lpat%></span></div></div>-->
+																	<div class="col-sm-3 patq rect"
+																		onclick='clearPanel("psychologistPatientMenu.jsp")'>
+																		<span class="title">Patient Details</span>
+																		<div class="cnt"><span></span></div>
+																	</div>
+																	<div class="col-sm-3 monitoring rect"
+																		onclick="clearPanel('patientMonitoringDoctorList.jsp')">
+																		<span class="title">Patient Monitoring</span>
+																		<div class="cnt"><span
+																				class="glyphicon glyphicon-heart"></span>
+																		</div>
+																	</div>
+																	<!--<div class="col-sm-3 actvTest rect" onclick='clearPanel("<%=parts[1].split(",")[0]%>")'><span class="title"><%=parts[1].split(",")[1]%></span><div class="cnt"><span><%=total_lpat%></span></div></div>-->
 
-																<% } %>
+																	<% } %>
 
 
-									</div>
-
-									<div class="col-md-1 account">
-										<div class="profile" onclick='clearPanel("<%=edtProfile_link.split(",")[0]%>")'>
-											<span class="glyphicon glyphicon-user glph-lg"
-												title='<%=edtProfile_link.split(",")[1]%>'></span>
 										</div>
-										<div class="logout" onclick='window.top.location.href="<%=request.getContextPath()%>/jspfiles/logout.jsp"'><span
-												class="glyphicon glyphicon-off glph-lg"
-												title='<%=logout_link.split(",")[1]%>'></span></div>
+
+										<div class="col-md-1 account">
+											<div class="profile"
+												onclick='clearPanel("<%=edtProfile_link.split(",")[0]%>")'>
+												<span class="glyphicon glyphicon-user glph-lg"
+													title='<%=edtProfile_link.split(",")[1]%>'></span>
+											</div>
+											<div class="logout"
+												onclick='window.top.location.href="<%=request.getContextPath()%>/jspfiles/logout.jsp"'>
+												<span class="glyphicon glyphicon-off glph-lg"
+													title='<%=logout_link.split(",")[1]%>'></span>
+											</div>
+										</div>
+
 									</div>
 
-								</div>
+									<div class="row body">
+										<div class="col-sm-12 username-title" style="top: 30px;">Welcome, <%=username%>
+										</div>
+										<!-- jq dialog Mithuns Update-->
+										<div style="display:none" id="dialog" title="iMediX-Video Conferencing">
+											<div class="row-fluid">
+												<div class="col-sm-12">
+													<div id="inner-container2">
+														<div id="meet" style="background-color: grey"></div>
+													</div>
+													<div class="" style='text-align:center; margin: auto'>
 
-								<div class="row body">
-									<div class="col-sm-12 username-title" style="top: 30px;">Welcome, <%=username%>
-									</div>
-									<!-- jq dialog Mithuns Update-->
-									<div style="display:none" id="dialog" title="iMediX-Video Conferencing">
-										<div class="row-fluid">
-											<div class="col-sm-12">
-												<div id="inner-container2">
-													<div id="meet" style="background-color: grey"></div>
-												</div>
-												<div class="" style='text-align:center; margin: auto'>
-
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-									<!-- jq dialog end -->
-									<div class="col-sm-3" style="margin-top:40px">
-										<div class='row verification-panel'>
-											<% String verifEmail="X" , verifMobile="X" , emIndicate, phIndicate; Object
-												resu=rcui.getValues("*"," uid='"+userid+"'" );
+										<!-- jq dialog end -->
+										<div class="col-sm-3" style="margin-top:40px">
+											<div class='row verification-panel'>
+												<% String verifEmail="X" , verifMobile="X" , emIndicate, phIndicate;
+													Object resu=rcui.getValues("*"," uid='"+userid+"'" );
 						Vector vtmp = (Vector)resu;
 						int vsz = vtmp.size();
 						if(vtmp.size()>0) {
 						dataobj datatemp = (dataobj) vtmp.get(0);
 						verifEmail=datatemp.getValue(" verifemail"); verifMobile=datatemp.getValue("verifphone"); } if (
-												verifMobile.equalsIgnoreCase("Y") )
-												phIndicate="<span class='label label-success'><span class='glyphicon glyphicon-phone-alt'></span>&nbsp; <span class='glyphicon glyphicon-ok'></span></span>"
-												; else
-												phIndicate="<span class='label label-warning'><span class='glyphicon glyphicon-phone-alt'></span>&nbsp;<span class='glyphicon glyphicon-remove'></span></span>"
-												; if ( verifEmail.equalsIgnoreCase("Y") )
-												emIndicate="<span class='label label-success'><span class='glyphicon glyphicon-envelope'></span> &nbsp;<span class='glyphicon glyphicon-ok'></span></span>"
-												; else
-												emIndicate="<span class='label label-warning'><span class='glyphicon glyphicon-envelope'></span>&nbsp;<span class='glyphicon glyphicon-remove'></span></span>"
-												; out.println
-												( "<div class='col-sm-6'><h3 style='font-weight:normal; font-size: 20px; font-weight:normal;margin: 2px;padding: 3px;float:left;'>"
-												+ emIndicate + "</h3></div>" ); out.println
-												( "<div class='col-sm-6'><h3 style='font-weight:normal; font-size: 20px; font-weight:normal;margin: 2px;padding: 3px;float:right;'>"
-												+ phIndicate + "</h3></div>" ); %>
-												<br>
-										</div>
-										<div class="left"></div>
-										<br>
-										<!---------- Accordion Starts -->
-										<div id="accordion">
-											<h3>Chat Module</h3>
-											<div class="left-chat">
-												<span id=wsUri name=wsUri>
-													<%=wsPath %>
-												</span>
-												<div id="output" style="height: 80px; overflow-y: auto"></div>
-												<div class="input-group" style="margin-top:5px;">
-													<input id="mesg-txt" class="form-control" type="text"
-														name="mesg-txt" placeholder="Type Message"></input>
-													<div class="input-group-btn">
-														<a class="btn btn-default" id="send-msgbtn"
-															name="send-msgbtn">Send</a>
+													verifMobile.equalsIgnoreCase("Y") )
+													phIndicate="<span class='label label-success'><span class='glyphicon glyphicon-phone-alt'></span>&nbsp; <span class='glyphicon glyphicon-ok'></span></span>"
+													; else
+													phIndicate="<span class='label label-warning'><span class='glyphicon glyphicon-phone-alt'></span>&nbsp;<span class='glyphicon glyphicon-remove'></span></span>"
+													; if ( verifEmail.equalsIgnoreCase("Y") )
+													emIndicate="<span class='label label-success'><span class='glyphicon glyphicon-envelope'></span> &nbsp;<span class='glyphicon glyphicon-ok'></span></span>"
+													; else
+													emIndicate="<span class='label label-warning'><span class='glyphicon glyphicon-envelope'></span>&nbsp;<span class='glyphicon glyphicon-remove'></span></span>"
+													; out.println
+													( "<div class='col-sm-6'><h3 style='font-weight:normal; font-size: 20px; font-weight:normal;margin: 2px;padding: 3px;float:left;'>"
+													+ emIndicate + "</h3></div>" ); out.println
+													( "<div class='col-sm-6'><h3 style='font-weight:normal; font-size: 20px; font-weight:normal;margin: 2px;padding: 3px;float:right;'>"
+													+ phIndicate + "</h3></div>" ); %>
+													<br>
+											</div>
+											<div class="left"></div>
+											<br>
+											<!---------- Accordion Starts -->
+											<div id="accordion">
+												<h3>Chat Module</h3>
+												<div class="left-chat">
+													<span id=wsUri name=wsUri>
+														<%=wsPath %>
+													</span>
+													<div id="output" style="height: 80px; overflow-y: auto"></div>
+													<div class="input-group" style="margin-top:5px;">
+														<input id="mesg-txt" class="form-control" type="text"
+															name="mesg-txt" placeholder="Type Message"></input>
+														<div class="input-group-btn">
+															<a class="btn btn-default" id="send-msgbtn"
+																name="send-msgbtn">Send</a>
+														</div>
 													</div>
 												</div>
-											</div>
 
-											<h3>Video Conference Application</h3>
-											<div>
-												<p>
-													<button class="btn btn-primary btnShow">Show</button> &nbsp;|&nbsp;
-													<button class="btn btn-success btnStart"
-														onClick="start()">Start</button> &nbsp;|&nbsp;
-													<button class="btn btn-danger btnStop" disabled="disabled"
-														onClick="stop()">Stop</button>
-												</p>
-											</div>
+												<h3>Video Conference Application</h3>
+												<div>
+													<p>
+														<button class="btn btn-primary btnShow">Show</button>
+														&nbsp;|&nbsp;
+														<button class="btn btn-success btnStart"
+															onClick="start()">Start</button> &nbsp;|&nbsp;
+														<button class="btn btn-danger btnStop" disabled="disabled"
+															onClick="stop()">Stop</button>
+													</p>
+												</div>
 
-											<h3>Invite Doctors for VC</h3>
-											<div>
-												<div class="left-doclist">
-													<% Vector tmp=null; rcVideoConference vidconf=new
-														rcVideoConference(request.getRealPath("/"));
-														userid=cookx.getCookieValue("userid", request.getCookies());
-														username=cookx.getCookieValue("username", request.getCookies());
-														Object res=null; try{ res=vidconf.GetDoctors(); }
-														catch(Exception ex){out.println("Errr0345: "+ex.toString());}
+												<h3>Invite Doctors for VC</h3>
+												<div>
+													<div class="left-doclist">
+														<% Vector tmp=null; rcVideoConference vidconf=new
+															rcVideoConference(request.getRealPath("/"));
+															userid=cookx.getCookieValue("userid", request.getCookies());
+															username=cookx.getCookieValue("username",
+															request.getCookies()); Object res=null; try{
+															res=vidconf.GetDoctors(); } catch(Exception
+															ex){out.println("Errr0345: "+ex.toString());}
 									tmp = (Vector)res;
 								%>
 
 							<div class=" panel-body" style="padding: 1px;">
-														<div class="input-group" style="margin-bottom:10px;">
-															<input id="search-doctor" class="form-control" type="text"
-																name="search-doctor"
-																placeholder="Doctor Name/userid"></input>
-															<div class="input-group-btn">
-																<a class="btn btn-default" id="clear-docbtn"
-																	name="clear-docbtn">Clear</a>
+															<div class="input-group" style="margin-bottom:10px;">
+																<input id="search-doctor" class="form-control"
+																	type="text" name="search-doctor"
+																	placeholder="Doctor Name/userid"></input>
+																<div class="input-group-btn">
+																	<a class="btn btn-default" id="clear-docbtn"
+																		name="clear-docbtn">Clear</a>
+																</div>
 															</div>
-														</div>
 
-														<div id="doctors" style="overflow-y: auto; height:150px">
-															<ul class="doctors" id="doctors">
-																<% for(int i=0;i<tmp.size();i++){ dataobj temp=(dataobj)
-																	tmp.get(i); out.print("<" + "li>" ); out.print("<"
-																	+ "a onClick=\" selectItem(this)\" href=\"#\">");
-																	out.print("<" + "span style=\" display:none\">");
-																		out.print(temp.getValue("name") + "|" +
-																		temp.getValue("uid"));
-																		out.print("</" + "span>" );
-																		out.print(temp.getValue("name") + " (" +
-																		temp.getValue("uid") + ") </" + "a>" );
-																		out.print("</" + "li>\n" ); } %>
-															</ul>
-														</div>
-														<div
-															class="col-sm-12 col-sm-12 col-xs-12 text-right pull-right">
-															<button class="btn btn-primary btn-xs"
-																onClick="invite()">Invite</button>
-														</div>
+															<div id="doctors" style="overflow-y: auto; height:150px">
+																<ul class="doctors" id="doctors">
+																	<% for(int i=0;i<tmp.size();i++){ dataobj
+																		temp=(dataobj) tmp.get(i); out.print("<" + "li>"
+																		); out.print("<" + "a onClick=\"
+																		selectItem(this)\" href=\"#\">");
+																		out.print("<" + "span style=\" display:none\">
+																			");
+																			out.print(temp.getValue("name") + "|" +
+																			temp.getValue("uid"));
+																			out.print("</" + "span>" );
+																			out.print(temp.getValue("name") + " (" +
+																			temp.getValue("uid") + ") </" + "a>" );
+																			out.print("</" + "li>\n" ); } %>
+																</ul>
+															</div>
+															<div
+																class="col-sm-12 col-sm-12 col-xs-12 text-right pull-right">
+																<button class="btn btn-primary btn-xs"
+																	onClick="invite()">Invite</button>
+															</div>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
 
 
-									<!---------- Accordion Ends ---->
+										<!---------- Accordion Ends ---->
 
 
-
-								</div>
-								<div class="col-sm-9 right">
-									<div class="row pat-head-title">
 
 									</div>
+									<div class="col-sm-9 right">
+										<div class="row pat-head-title">
 
-									<div class="row">
-										<div class="col-sm-12 main-body" id="main_frame" style="margin-top:40px">
+										</div>
+
+										<div class="row">
+											<div class="col-sm-12 main-body" id="main_frame" style="margin-top:40px">
+											</div>
+
 										</div>
 
 									</div>
-
 								</div>
-							</div>
 
 
 							</div>
@@ -956,8 +1021,10 @@ Author: Sayantan Patra
 
 												<p
 													style="font-size: 12px; color: var(--text-muted); margin-top: 8px; margin-bottom: 0;">
-													<span class="glyphicon glyphicon-info-sign"></span> Messages will be
-													sent in order of the latest registration dates. Patients who have
+													<span class="glyphicon glyphicon-info-sign"></span> Messages
+													will be
+													sent in order of the latest registration dates. Patients who
+													have
 													already received this template will be skipped automatically.
 												</p>
 											</div>
@@ -1383,187 +1450,212 @@ Author: Sayantan Patra
 
 						</script>
 
-<!-- ===== Clear Pipeline Queue Confirmation Modal ===== -->
-<div class="modal fade" id="clearQueueConfirmModal" tabindex="-1" role="dialog" style="z-index:1100;">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header" style="background:#c0392b;color:#fff;border-radius:4px 4px 0 0;">
-        <button type="button" class="close" data-dismiss="modal" style="color:#fff;opacity:1;">&times;</button>
-        <h4 class="modal-title"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp; Delete Queue</h4>
-      </div>
-      <div class="modal-body" style="text-align:center;padding:24px;">
-        <p style="font-size:15px;">This will delete <strong>all jobs</strong> from the annotation queue.</p>
-        <p style="color:#e74c3c;">This action cannot be undone.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" onclick="executeClearPipelineQueue()">Yes, Delete All</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">No, Cancel</button>
-      </div>
-    </div>
-  </div>
-</div>
+						<!-- ===== Clear Pipeline Queue Confirmation Modal ===== -->
+						<div class="modal fade" id="clearQueueConfirmModal" tabindex="-1" role="dialog"
+							style="z-index:1100;">
+							<div class="modal-dialog modal-sm" role="document">
+								<div class="modal-content">
+									<div class="modal-header"
+										style="background:#c0392b;color:#fff;border-radius:4px 4px 0 0;">
+										<button type="button" class="close" data-dismiss="modal"
+											style="color:#fff;opacity:1;">&times;</button>
+										<h4 class="modal-title"><span
+												class="glyphicon glyphicon-warning-sign"></span>&nbsp; Delete Queue
+										</h4>
+									</div>
+									<div class="modal-body" style="text-align:center;padding:24px;">
+										<p style="font-size:15px;">This will delete <strong>all jobs</strong> from
+											the annotation queue.</p>
+										<p style="color:#e74c3c;">This action cannot be undone.</p>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-danger"
+											onclick="executeClearPipelineQueue()">Yes, Delete All</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">No,
+											Cancel</button>
+									</div>
+								</div>
+							</div>
+						</div>
 
-<!-- ===== Annotation Pipeline Queue Modal ===== -->
-<div class="modal fade" id="pipelineQueueModal" tabindex="-1" role="dialog"
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header" style="background:#2c3e50;color:#fff;border-radius:4px 4px 0 0;">
-        <button type="button" class="close" data-dismiss="modal" style="color:#fff;opacity:1;">&times;</button>
-        <h4 class="modal-title"><span class="glyphicon glyphicon-tasks"></span>&nbsp; Annotation Pipeline Queue</h4>
-      </div>
-      <div class="modal-body" id="pipelineQueueModalBody">
-        <div id="pipelineSettingsPanel" style="display:none;background:#f7f7f7;border:1px solid #ddd;border-radius:6px;padding:14px;margin-bottom:16px;">
-          <h5 style="margin-top:0;"><span class="glyphicon glyphicon-cog"></span>&nbsp; Annotation Window</h5>
-          <div class="row">
-            <div class="col-sm-4">
-              <label style="font-weight:normal;">Start Time</label>
-              <input type="time" id="pipelineWindowStart" class="form-control input-sm">
-            </div>
-            <div class="col-sm-4">
-              <label style="font-weight:normal;">End Time</label>
-              <input type="time" id="pipelineWindowEnd" class="form-control input-sm">
-            </div>
-          </div>
-          <div style="margin-top:10px;">
-            <button type="button" class="btn btn-primary btn-sm" onclick="savePipelineSettings()"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-            <button type="button" class="btn btn-default btn-sm" onclick="togglePipelineSettings(false)">Cancel</button>
-            <span id="pipelineSettingsMsg" style="margin-left:10px;"></span>
-          </div>
-        </div>
-        <div id="pipelineQueueContent">
-          <div style="text-align:center;padding:30px;"><span class="glyphicon glyphicon-refresh" style="font-size:24px;"></span> Loading...</div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" onclick="togglePipelineSettings()"><span class="glyphicon glyphicon-cog"></span> Settings</button>
-        <button type="button" class="btn btn-danger" onclick="confirmClearPipelineQueue()"><span class="glyphicon glyphicon-trash"></span> Delete Queue</button>
-        <button type="button" class="btn btn-default" onclick="openPipelineQueueModal()"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+						<!-- ===== Annotation Pipeline Queue Modal ===== -->
+						<div class="modal fade" id="pipelineQueueModal" tabindex="-1" role="dialog" <div
+							class="modal-dialog modal-lg" role="document">
+							<div class="modal-content">
+								<div class="modal-header"
+									style="background:#2c3e50;color:#fff;border-radius:4px 4px 0 0;">
+									<button type="button" class="close" data-dismiss="modal"
+										style="color:#fff;opacity:1;">&times;</button>
+									<h4 class="modal-title"><span class="glyphicon glyphicon-tasks"></span>&nbsp;
+										Annotation Pipeline Queue</h4>
+								</div>
+								<div class="modal-body" id="pipelineQueueModalBody">
+									<div id="pipelineSettingsPanel"
+										style="display:none;background:#f7f7f7;border:1px solid #ddd;border-radius:6px;padding:14px;margin-bottom:16px;">
+										<h5 style="margin-top:0;"><span class="glyphicon glyphicon-cog"></span>&nbsp;
+											Annotation Window</h5>
+										<div class="row">
+											<div class="col-sm-4">
+												<label style="font-weight:normal;">Start Time</label>
+												<input type="time" id="pipelineWindowStart"
+													class="form-control input-sm">
+											</div>
+											<div class="col-sm-4">
+												<label style="font-weight:normal;">End Time</label>
+												<input type="time" id="pipelineWindowEnd" class="form-control input-sm">
+											</div>
+										</div>
+										<div style="margin-top:10px;">
+											<button type="button" class="btn btn-primary btn-sm"
+												onclick="savePipelineSettings()"><span
+													class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+											<button type="button" class="btn btn-default btn-sm"
+												onclick="togglePipelineSettings(false)">Cancel</button>
+											<span id="pipelineSettingsMsg" style="margin-left:10px;"></span>
+										</div>
+									</div>
+									<div id="pipelineQueueContent">
+										<div style="text-align:center;padding:30px;"><span
+												class="glyphicon glyphicon-refresh" style="font-size:24px;"></span>
+											Loading...</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										onclick="togglePipelineSettings()"><span class="glyphicon glyphicon-cog"></span>
+										Settings</button>
+									<button type="button" class="btn btn-danger"
+										onclick="confirmClearPipelineQueue()"><span
+											class="glyphicon glyphicon-trash"></span> Delete Queue</button>
+									<button type="button" class="btn btn-default"
+										onclick="openPipelineQueueModal()"><span
+											class="glyphicon glyphicon-refresh"></span> Refresh</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+						</div>
 
-<script>
-function openPipelineQueueModal() {
-    $('#pipelineQueueModal').modal('show');
-    togglePipelineSettings(false);
-    $('#pipelineQueueContent').html('<div style="text-align:center;padding:30px;"><span class="glyphicon glyphicon-refresh" style="font-size:24px;"></span> Loading...</div>');
+						<script>
+							function openPipelineQueueModal() {
+								$('#pipelineQueueModal').modal('show');
+								togglePipelineSettings(false);
+								$('#pipelineQueueContent').html('<div style="text-align:center;padding:30px;"><span class="glyphicon glyphicon-refresh" style="font-size:24px;"></span> Loading...</div>');
 
-    $.getJSON('pipelineQueueStatus.jsp', function(data) {
-        if (!data.success) {
-            $('#pipelineQueueContent').html('<div class="alert alert-danger">Failed to load queue: ' + data.error + '</div>');
-            return;
-        }
+								$.getJSON('pipelineQueueStatus.jsp', function (data) {
+									if (!data.success) {
+										$('#pipelineQueueContent').html('<div class="alert alert-danger">Failed to load queue: ' + data.error + '</div>');
+										return;
+									}
 
-        var c = data.counts || {};
-        var statusBadge = function(status) {
-            var colors = { pending:'#e67e22', running:'#2980b9', completed:'#27ae60', failed:'#e74c3c' };
-            var color = colors[status] || '#888';
-            return '<span style="background:'+color+';color:#fff;padding:3px 8px;border-radius:10px;font-size:11px;font-weight:bold;">'+status.toUpperCase()+'</span>';
-        };
+									var c = data.counts || {};
+									var statusBadge = function (status) {
+										var colors = { pending: '#e67e22', running: '#2980b9', completed: '#27ae60', failed: '#e74c3c' };
+										var color = colors[status] || '#888';
+										return '<span style="background:' + color + ';color:#fff;padding:3px 8px;border-radius:10px;font-size:11px;font-weight:bold;">' + status.toUpperCase() + '</span>';
+									};
 
-        var html = '<div class="row" style="margin-bottom:16px;text-align:center;">'
-            + '<div class="col-sm-3"><div style="background:#fff3e0;border-radius:8px;padding:12px;border:1px solid #e67e22;">'
-            + '<div style="font-size:28px;font-weight:bold;color:#e67e22;">'+(c.pending||0)+'</div><div style="color:#888;">Pending</div></div></div>'
-            + '<div class="col-sm-3"><div style="background:#e3f2fd;border-radius:8px;padding:12px;border:1px solid #2980b9;">'
-            + '<div style="font-size:28px;font-weight:bold;color:#2980b9;">'+(c.running||0)+'</div><div style="color:#888;">Running</div></div></div>'
-            + '<div class="col-sm-3"><div style="background:#e8f5e9;border-radius:8px;padding:12px;border:1px solid #27ae60;">'
-            + '<div style="font-size:28px;font-weight:bold;color:#27ae60;">'+(c.completed||0)+'</div><div style="color:#888;">Completed</div></div></div>'
-            + '<div class="col-sm-3"><div style="background:#fdecea;border-radius:8px;padding:12px;border:1px solid #e74c3c;">'
-            + '<div style="font-size:28px;font-weight:bold;color:#e74c3c;">'+(c.failed||0)+'</div><div style="color:#888;">Failed</div></div></div>'
-            + '</div>';
+									var html = '<div class="row" style="margin-bottom:16px;text-align:center;">'
+										+ '<div class="col-sm-3"><div style="background:#fff3e0;border-radius:8px;padding:12px;border:1px solid #e67e22;">'
+										+ '<div style="font-size:28px;font-weight:bold;color:#e67e22;">' + (c.pending || 0) + '</div><div style="color:#888;">Pending</div></div></div>'
+										+ '<div class="col-sm-3"><div style="background:#e3f2fd;border-radius:8px;padding:12px;border:1px solid #2980b9;">'
+										+ '<div style="font-size:28px;font-weight:bold;color:#2980b9;">' + (c.running || 0) + '</div><div style="color:#888;">Running</div></div></div>'
+										+ '<div class="col-sm-3"><div style="background:#e8f5e9;border-radius:8px;padding:12px;border:1px solid #27ae60;">'
+										+ '<div style="font-size:28px;font-weight:bold;color:#27ae60;">' + (c.completed || 0) + '</div><div style="color:#888;">Completed</div></div></div>'
+										+ '<div class="col-sm-3"><div style="background:#fdecea;border-radius:8px;padding:12px;border:1px solid #e74c3c;">'
+										+ '<div style="font-size:28px;font-weight:bold;color:#e74c3c;">' + (c.failed || 0) + '</div><div style="color:#888;">Failed</div></div></div>'
+										+ '</div>';
 
-        html += '<table id="pipelineQueueTable" class="table table-bordered table-condensed" style="font-size:12px;width:100%;">'
-            + '<thead style="background:#2c3e50;color:#fff;"><tr>'
-            + '<th>#</th><th>Patient ID</th><th>Patient Name</th><th>Session ID</th><th>Status</th><th>Queued At</th><th>Started</th><th>Finished</th><th>Error</th>'
-            + '</tr></thead><tbody>';
+									html += '<table id="pipelineQueueTable" class="table table-bordered table-condensed" style="font-size:12px;width:100%;">'
+										+ '<thead style="background:#2c3e50;color:#fff;"><tr>'
+										+ '<th>#</th><th>Patient ID</th><th>Patient Name</th><th>Session ID</th><th>Status</th><th>Queued At</th><th>Started</th><th>Finished</th><th>Error</th>'
+										+ '</tr></thead><tbody>';
 
-        $.each(data.jobs, function(i, job) {
-            var err = job.error_message ? '<span title="'+job.error_message+'" style="cursor:help;color:#e74c3c;">&#9888; hover</span>' : '&mdash;';
-            html += '<tr>'
-                + '<td>' + job.id + '</td>'
-                + '<td><b>' + job.pat_id + '</b></td>'
-                + '<td>' + (job.pat_name || '&mdash;') + '</td>'
-                + '<td>' + (job.session_id || '&mdash;') + '</td>'
-                + '<td>' + statusBadge(job.status) + '</td>'
-                + '<td>' + (job.created_at || '&mdash;') + '</td>'
-                + '<td>' + (job.started_at || '&mdash;') + '</td>'
-                + '<td>' + (job.finished_at || '&mdash;') + '</td>'
-                + '<td>' + err + '</td>'
-                + '</tr>';
-        });
+									$.each(data.jobs, function (i, job) {
+										var err = job.error_message ? '<span title="' + job.error_message + '" style="cursor:help;color:#e74c3c;">&#9888; hover</span>' : '&mdash;';
+										html += '<tr>'
+											+ '<td>' + job.id + '</td>'
+											+ '<td><b>' + job.pat_id + '</b></td>'
+											+ '<td>' + (job.pat_name || '&mdash;') + '</td>'
+											+ '<td>' + (job.session_id || '&mdash;') + '</td>'
+											+ '<td>' + statusBadge(job.status) + '</td>'
+											+ '<td>' + (job.created_at || '&mdash;') + '</td>'
+											+ '<td>' + (job.started_at || '&mdash;') + '</td>'
+											+ '<td>' + (job.finished_at || '&mdash;') + '</td>'
+											+ '<td>' + err + '</td>'
+											+ '</tr>';
+									});
 
-        html += '</tbody></table>';
-        $('#pipelineQueueContent').html(html);
-        $('#pipelineQueueTable').DataTable({ order: [[0,'desc']], pageLength: 10, language: { search: 'Filter:' } });
-    }).fail(function() {
-        $('#pipelineQueueContent').html('<div class="alert alert-danger">Could not reach pipelineQueueStatus.jsp</div>');
-    });
-}
+									html += '</tbody></table>';
+									$('#pipelineQueueContent').html(html);
+									$('#pipelineQueueTable').DataTable({ order: [[0, 'desc']], pageLength: 10, language: { search: 'Filter:' } });
+								}).fail(function () {
+									$('#pipelineQueueContent').html('<div class="alert alert-danger">Could not reach pipelineQueueStatus.jsp</div>');
+								});
+							}
 
-function togglePipelineSettings(show) {
-    var panel = $('#pipelineSettingsPanel');
-    var willShow = (typeof show === 'boolean') ? show : !panel.is(':visible');
-    $('#pipelineSettingsMsg').text('');
-    if (willShow) {
-        panel.show();
-        $.getJSON('pipelineQueueSettings.jsp', function(data) {
-            if (data.success) {
-                $('#pipelineWindowStart').val(data.start_time);
-                $('#pipelineWindowEnd').val(data.end_time);
-            } else {
-                $('#pipelineSettingsMsg').css('color', '#e74c3c').text('Failed to load settings: ' + data.error);
-            }
-        }).fail(function() {
-            $('#pipelineSettingsMsg').css('color', '#e74c3c').text('Could not reach pipelineQueueSettings.jsp');
-        });
-    } else {
-        panel.hide();
-    }
-}
+							function togglePipelineSettings(show) {
+								var panel = $('#pipelineSettingsPanel');
+								var willShow = (typeof show === 'boolean') ? show : !panel.is(':visible');
+								$('#pipelineSettingsMsg').text('');
+								if (willShow) {
+									panel.show();
+									$.getJSON('pipelineQueueSettings.jsp', function (data) {
+										if (data.success) {
+											$('#pipelineWindowStart').val(data.start_time);
+											$('#pipelineWindowEnd').val(data.end_time);
+										} else {
+											$('#pipelineSettingsMsg').css('color', '#e74c3c').text('Failed to load settings: ' + data.error);
+										}
+									}).fail(function () {
+										$('#pipelineSettingsMsg').css('color', '#e74c3c').text('Could not reach pipelineQueueSettings.jsp');
+									});
+								} else {
+									panel.hide();
+								}
+							}
 
-function confirmClearPipelineQueue() {
-    $('#clearQueueConfirmModal').modal('show');
-    $('#clearQueueConfirmModal').on('shown.bs.modal', function() {
-        $('.modal-backdrop').last().css('z-index', 1090);
-    });
-}
+							function confirmClearPipelineQueue() {
+								$('#clearQueueConfirmModal').modal('show');
+								$('#clearQueueConfirmModal').on('shown.bs.modal', function () {
+									$('.modal-backdrop').last().css('z-index', 1090);
+								});
+							}
 
-function executeClearPipelineQueue() {
-    $('#clearQueueConfirmModal').modal('hide');
-    $('#pipelineSettingsMsg').css('color', '#888').text('Deleting...');
-    $.post('clearPipelineQueue.jsp', function(data) {
-        if (data.success) {
-            $('#pipelineSettingsMsg').css('color', '#27ae60').text('Queue cleared.');
-            openPipelineQueueModal();
-        } else {
-            $('#pipelineSettingsMsg').css('color', '#e74c3c').text('Failed: ' + data.error);
-        }
-    }, 'json').fail(function() {
-        $('#pipelineSettingsMsg').css('color', '#e74c3c').text('Could not reach clearPipelineQueue.jsp');
-    });
-}
+							function executeClearPipelineQueue() {
+								$('#clearQueueConfirmModal').modal('hide');
+								$('#pipelineSettingsMsg').css('color', '#888').text('Deleting...');
+								$.post('clearPipelineQueue.jsp', function (data) {
+									if (data.success) {
+										$('#pipelineSettingsMsg').css('color', '#27ae60').text('Queue cleared.');
+										openPipelineQueueModal();
+									} else {
+										$('#pipelineSettingsMsg').css('color', '#e74c3c').text('Failed: ' + data.error);
+									}
+								}, 'json').fail(function () {
+									$('#pipelineSettingsMsg').css('color', '#e74c3c').text('Could not reach clearPipelineQueue.jsp');
+								});
+							}
 
-function savePipelineSettings() {
-    var startTime = $('#pipelineWindowStart').val();
-    var endTime = $('#pipelineWindowEnd').val();
-    if (!startTime || !endTime) {
-        $('#pipelineSettingsMsg').css('color', '#e74c3c').text('Please set both start and end time.');
-        return;
-    }
-    $.post('pipelineQueueSettings.jsp', { start_time: startTime, end_time: endTime }, function(data) {
-        if (data.success) {
-            $('#pipelineSettingsMsg').css('color', '#27ae60').text('Saved.');
-            setTimeout(function() { togglePipelineSettings(false); }, 800);
-        } else {
-            $('#pipelineSettingsMsg').css('color', '#e74c3c').text('Failed to save: ' + data.error);
-        }
-    }, 'json').fail(function() {
-        $('#pipelineSettingsMsg').css('color', '#e74c3c').text('Could not reach pipelineQueueSettings.jsp');
-    });
-}
-</script>
-<!-- ===== End Annotation Pipeline Queue Modal ===== -->
+							function savePipelineSettings() {
+								var startTime = $('#pipelineWindowStart').val();
+								var endTime = $('#pipelineWindowEnd').val();
+								if (!startTime || !endTime) {
+									$('#pipelineSettingsMsg').css('color', '#e74c3c').text('Please set both start and end time.');
+									return;
+								}
+								$.post('pipelineQueueSettings.jsp', { start_time: startTime, end_time: endTime }, function (data) {
+									if (data.success) {
+										$('#pipelineSettingsMsg').css('color', '#27ae60').text('Saved.');
+										setTimeout(function () { togglePipelineSettings(false); }, 800);
+									} else {
+										$('#pipelineSettingsMsg').css('color', '#e74c3c').text('Failed to save: ' + data.error);
+									}
+								}, 'json').fail(function () {
+									$('#pipelineSettingsMsg').css('color', '#e74c3c').text('Could not reach pipelineQueueSettings.jsp');
+								});
+							}
+						</script>
+						<!-- ===== End Annotation Pipeline Queue Modal ===== -->
 
 		</html>

@@ -18,15 +18,18 @@
   src: url('../fonts/montserrat/Montserrat-Bold.ttf'); 
 }
 
+@import url('../../style/mdosthi-brand-tokens.css');
+
 body, html {
 	height: 100%;
-	font-family: Poppins-Regular, sans-serif;
+	font-family: var(--font-body, 'Inter', Poppins-Regular, sans-serif);
+	color: var(--color-navy, #0B2D6B);
 }
 a {
-	font-family: Poppins-Regular;
+	font-family: var(--font-body, 'Inter', Poppins-Regular, sans-serif);
 	font-size: 14px;
 	line-height: 1.7;
-	color: #666666;
+	color: var(--color-blue, #007BFF);
 	margin: 0px;
 	transition: all 0.4s;
 	-webkit-transition: all 0.4s;
@@ -40,18 +43,20 @@ a:focus {
 
 a:hover {
 	text-decoration: none;
-  color: #337ab7;
+  color: var(--color-teal, #00BFA6);
 }
 
 h1,h2,h3,h4,h5,h6 {
 	margin: 0px;
+	font-family: var(--font-heading, 'Poppins', Poppins-Bold, sans-serif);
+	color: var(--color-navy, #0B2D6B);
 }
 
 p {
-	font-family: Poppins-Regular;
+	font-family: var(--font-body, 'Inter', Poppins-Regular, sans-serif);
 	font-size: 14px;
 	line-height: 1.7;
-	color: #666666;
+	color: #47627B;
 	margin: 0px;
 }
 
@@ -256,16 +261,24 @@ body{background:#f5f5f5;}
 }
 
 .input100 {
-    font-family: sans-serif;
+    font-family: var(--font-body, 'Inter', sans-serif);
     font-size: 15px;
     line-height: 1.5;
-    color: #666666;
+    color: var(--color-navy, #0B2D6B);
     display: block;
     width: 100%;
-    border-radius: 2px;
+    border-radius: 14px;
     height: 50px;
-    border-bottom: 1px solid #43796c;
-    padding: 0 30px 0 68px;
+    background: #F4FBFC;
+    border: 1.5px solid rgba(11, 45, 107, 0.16);
+    padding: 0 24px 0 56px;
+    transition: all 0.25s ease;
+}
+
+.input100:focus {
+    background: #FFFFFF;
+    border-color: var(--color-blue, #007BFF);
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.12);
 }
 
 
@@ -304,9 +317,9 @@ body{background:#f5f5f5;}
   left: 0;
   width: 100%;
   height: 100%;
-  padding-left: 35px;
+  padding-left: 22px;
   pointer-events: none;
-  color: #666666;
+  color: var(--color-teal, #00BFA6);
 
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
@@ -315,8 +328,8 @@ body{background:#f5f5f5;}
 }
 
 .input100:focus + .focus-input100 + .symbol-input100 {
-  color: #337ab7;
-  padding-left: 28px;
+  color: var(--color-blue, #007BFF);
+  padding-left: 18px;
 }
 
 .container-login100-form-btn {
@@ -332,16 +345,19 @@ body{background:#f5f5f5;}
 }
 
 .login100-form-btn {
-  font-family: Montserrat-Bold;
+  font-family: var(--font-heading, 'Poppins', Montserrat-Bold, sans-serif);
   font-size: 15px;
+  font-weight: 700;
   line-height: 1.5;
   color: #fff;
   text-transform: uppercase;
+  letter-spacing: 0.6px;
 
   width: 100%;
   height: 50px;
-  border-radius: 25px;
-  background: #337ab7;
+  border-radius: 999px;
+  background: var(--gradient-cta, linear-gradient(135deg, #0B2D6B 0%, #007BFF 50%, #00BFA6 100%));
+  box-shadow: 0 10px 24px rgba(11, 45, 107, 0.20);
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -350,15 +366,18 @@ body{background:#f5f5f5;}
   justify-content: center;
   align-items: center;
   padding: 0 25px;
+  cursor: pointer;
 
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  transition: all 0.4s;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .login100-form-btn:hover {
-  background: #45796c;
+  background: linear-gradient(135deg, #082354 0%, #0069D9 50%, #00A892 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(0, 123, 255, 0.28);
 }
 
 @media (max-width: 992px) {

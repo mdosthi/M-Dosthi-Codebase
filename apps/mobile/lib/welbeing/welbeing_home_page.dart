@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'doctor_patient_list_page.dart';
 import 'education_page.dart';
 import 'patient_wellbeing_page.dart';
 import '../login_page.dart';
 import '../service/language_service.dart';
+import '../theme/brand_theme.dart';
 
 class WelbeingHomePage extends StatelessWidget {
   const WelbeingHomePage({super.key});
@@ -53,18 +53,18 @@ class WelbeingHomePage extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: GoogleFonts.outfit(
+                      style: BrandTypography.heading(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
-                        color: Colors.grey.shade800,
+                        color: BrandColors.navy,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       subtitle,
-                      style: GoogleFonts.outfit(
+                      style: BrandTypography.body(
                         fontSize: 12,
-                        color: Colors.grey.shade600,
+                        color: BrandColors.mutedInk,
                         height: 1.4,
                       ),
                     ),
@@ -87,15 +87,15 @@ class WelbeingHomePage extends StatelessWidget {
     return AnimatedBuilder(
       animation: LanguageService(),
       builder: (context, _) => Scaffold(
-        backgroundColor: Colors.grey.shade50,
+        backgroundColor: BrandColors.pageBg,
         appBar: AppBar(
           title: Text(
             'Well-Being',
-            style: GoogleFonts.outfit(fontWeight: FontWeight.w700),
+            style: BrandTypography.heading(fontSize: 20, fontWeight: FontWeight.w700),
           ),
           centerTitle: false,
           backgroundColor: Colors.white,
-          foregroundColor: Colors.grey.shade900,
+          foregroundColor: BrandColors.navy,
           elevation: 0,
         ),
         body: SafeArea(
@@ -108,35 +108,52 @@ class WelbeingHomePage extends StatelessWidget {
                   width: double.infinity,
                   padding: const EdgeInsets.all(18),
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Color(0xFF1B5E20), Color(0xFF2E7D32)],
-                    ),
+                    gradient: BrandColors.heroHeaderGradient,
                     borderRadius: BorderRadius.circular(22),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
-                      Text(
-                        isClinician
-                            ? 'Patient Monitoring'
-                            : 'Patient Well-being',
-                        style: GoogleFonts.outfit(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 22,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              isClinician
+                                  ? 'Patient Monitoring'
+                                  : 'Patient Well-being',
+                              style: BrandTypography.heading(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 22,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              isClinician
+                                  ? 'Review Distress Status, Therapy Change and Metastasis Update'
+                                  : 'Track sleep, mood, activities, and supportive education.',
+                              style: BrandTypography.body(
+                                color: Colors.white.withOpacity(0.92),
+                                fontSize: 13,
+                                height: 1.4,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        isClinician
-                            ? 'Review Distress Status, Therapy Change and Metastasis Update'
-                            : 'Track sleep, mood, activities, and supportive education.',
-                        style: GoogleFonts.outfit(
-                          color: Colors.white.withOpacity(0.9),
-                          fontSize: 13,
-                          height: 1.4,
+                      const SizedBox(width: 12),
+                      Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Image.asset(
+                          'assets/images/mdosthi-emblem.png',
+                          width: 56,
+                          height: 56,
+                          fit: BoxFit.contain,
+                          errorBuilder: (_, __, ___) => const SizedBox.shrink(),
                         ),
                       ),
                     ],

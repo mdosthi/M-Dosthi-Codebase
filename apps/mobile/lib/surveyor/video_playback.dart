@@ -64,7 +64,7 @@ class VideoPlayerScreen extends StatelessWidget {
             title: Text(
               languageService.getText('video_library'),
               style:
-                  GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 20),
+                  GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
           body: Center(
@@ -81,7 +81,7 @@ class VideoPlayerScreen extends StatelessWidget {
                       children: [
                         Text(
                           languageService.getText('educational_videos'),
-                          style: GoogleFonts.outfit(
+                          style: GoogleFonts.poppins(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey.shade900,
@@ -90,7 +90,7 @@ class VideoPlayerScreen extends StatelessWidget {
                         const SizedBox(height: 6),
                         Text(
                           languageService.getText('select_video_learn'),
-                          style: GoogleFonts.outfit(
+                          style: GoogleFonts.poppins(
                             fontSize: 14,
                             color: Colors.grey.shade600,
                             height: 1.3,
@@ -193,7 +193,7 @@ class VideoPlayerScreen extends StatelessWidget {
                                               const SizedBox(width: 4),
                                               Text(
                                                 video.duration,
-                                                style: GoogleFonts.outfit(
+                                                style: GoogleFonts.poppins(
                                                   color: Colors.white,
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.bold,
@@ -216,7 +216,7 @@ class VideoPlayerScreen extends StatelessWidget {
                                     children: [
                                       Text(
                                         languageService.getText(video.title),
-                                        style: GoogleFonts.outfit(
+                                        style: GoogleFonts.poppins(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.grey.shade900,
@@ -226,7 +226,7 @@ class VideoPlayerScreen extends StatelessWidget {
                                       Text(
                                         languageService
                                             .getText(video.description),
-                                        style: GoogleFonts.outfit(
+                                        style: GoogleFonts.poppins(
                                           fontSize: 13,
                                           color: Colors.grey.shade600,
                                           height: 1.4,
@@ -341,7 +341,7 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
       appBar: AppBar(
         title: Text(
           languageService.getText(widget.video.title),
-          style: GoogleFonts.outfit(fontWeight: FontWeight.w600, fontSize: 18),
+          style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 18),
         ),
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
@@ -430,7 +430,7 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
                                       // Time Label
                                       Text(
                                         "${_formatDuration(_controller.value.position)} / ${_formatDuration(_controller.value.duration)}",
-                                        style: GoogleFonts.outfit(
+                                        style: GoogleFonts.poppins(
                                           color: Colors.white,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500,

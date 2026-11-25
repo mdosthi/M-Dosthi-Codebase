@@ -15,7 +15,7 @@
 	<script src="../bootstrap/dataTables.bootstrap.min.js"></script>
 
 <!--<link rel="stylesheet" type="text/css" href="../style/tabmenu.css" />-->
-	<LINK REL="SHORTCUT ICON" HREF="../images/icon1.ico"> 
+	<LINK REL="SHORTCUT ICON" HREF="../images/icons/mdosthi-favicon.png"> 
 <STYLE>
 	table{
     border: 1px solid #ccc;
@@ -131,8 +131,8 @@ $.ajaxSetup ({
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="#" value="welcome.jsp?templateid=1&menuid=null" class="navbar-brand" onclick="clearPanel(this.getAttribute('value'))">
-            <img class="img-responsive" src="../images/imlogo.jpg"width=50/>
+            <a href="#" value="welcome.jsp?templateid=1&menuid=null" class="navbar-brand" style="padding:8px 15px;" onclick="clearPanel(this.getAttribute('value'))">
+            <img class="img-responsive" src="../images/mdosthi-horizontal-logo.png" alt="mDosthi" style="height:32px; max-height:32px; width:auto; max-width:140px; object-fit:contain; background:#fff; border-radius:8px; padding:2px 6px;"/>
             </a>
         </div>
         <!-- Collection of nav links, forms, and other content for toggling -->

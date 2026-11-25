@@ -127,7 +127,7 @@ class ReadableLibraryScreen extends StatelessWidget {
             title: Text(
               languageService.getText('readable_materials'),
               style:
-                  GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 20),
+                  GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
           body: Center(
@@ -144,7 +144,7 @@ class ReadableLibraryScreen extends StatelessWidget {
                       children: [
                         Text(
                           languageService.getText('educational_docs'),
-                          style: GoogleFonts.outfit(
+                          style: GoogleFonts.poppins(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey.shade900,
@@ -153,7 +153,7 @@ class ReadableLibraryScreen extends StatelessWidget {
                         const SizedBox(height: 6),
                         Text(
                           languageService.getText('select_doc_read'),
-                          style: GoogleFonts.outfit(
+                          style: GoogleFonts.poppins(
                             fontSize: 14,
                             color: Colors.grey.shade600,
                             height: 1.3,
@@ -227,7 +227,7 @@ class ReadableLibraryScreen extends StatelessWidget {
                                               : pdf.titleEn,
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.outfit(
+                                          style: GoogleFonts.poppins(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.grey.shade900,
@@ -241,7 +241,7 @@ class ReadableLibraryScreen extends StatelessWidget {
                                               : pdf.descriptionEn,
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.outfit(
+                                          style: GoogleFonts.poppins(
                                             fontSize: 12,
                                             color: Colors.grey.shade600,
                                             height: 1.3,

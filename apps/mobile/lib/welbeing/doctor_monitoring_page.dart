@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/brand_theme.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../login_page.dart';
@@ -204,7 +205,7 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
         children: [
           Text(
             title,
-            style: GoogleFonts.outfit(
+            style: GoogleFonts.poppins(
               fontSize: 18,
               fontWeight: FontWeight.w700,
               color: Colors.grey.shade900,
@@ -235,7 +236,7 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Patient Monitoring: ${widget.patientId}',
-            style: GoogleFonts.outfit(fontWeight: FontWeight.w700)),
+            style: GoogleFonts.poppins(fontWeight: FontWeight.w700)),
         actions: [
           IconButton(
             onPressed: _loadMonitoringData,
@@ -257,7 +258,7 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
                       children: [
                         Text(
                           _patientValue('name'),
-                          style: GoogleFonts.outfit(
+                          style: GoogleFonts.poppins(
                               fontSize: 20, fontWeight: FontWeight.w700),
                         ),
                         const SizedBox(height: 8),
@@ -303,7 +304,7 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
                             children: [
                               Text(
                                 _distressStatus,
-                                style: GoogleFonts.outfit(
+                                style: GoogleFonts.poppins(
                                   fontSize: 24,
                                   fontWeight: FontWeight.w800,
                                   color: distressColor,
@@ -312,7 +313,7 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
                               const SizedBox(height: 8),
                               Text(
                                 _distressMessage,
-                                style: GoogleFonts.outfit(
+                                style: GoogleFonts.poppins(
                                     fontSize: 14,
                                     height: 1.5,
                                     color: Colors.grey.shade700),
@@ -320,7 +321,7 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
                               const SizedBox(height: 16),
                               Text(
                                 'Problem List',
-                                style: GoogleFonts.outfit(
+                                style: GoogleFonts.poppins(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
                                   color: Colors.grey.shade900,
@@ -330,7 +331,7 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
                               if (_problemList.isEmpty)
                                 Text(
                                   'No concerns selected.',
-                                  style: GoogleFonts.outfit(
+                                  style: GoogleFonts.poppins(
                                     fontSize: 14,
                                     color: Colors.grey.shade700,
                                   ),
@@ -344,7 +345,7 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
                                       padding: const EdgeInsets.only(top: 6),
                                       child: Text(
                                         group['category']?.toString() ?? '',
-                                        style: GoogleFonts.outfit(
+                                        style: GoogleFonts.poppins(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600,
                                           color: Colors.grey.shade800,
@@ -365,7 +366,7 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
                         ),
                         const SizedBox(height: 14),
                         Text('Doctor action',
-                            style: GoogleFonts.outfit(
+                            style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 color: Colors.grey.shade700)),
                         const SizedBox(height: 8),
@@ -405,7 +406,7 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
                                 const Icon(Icons.check_circle_outline_rounded),
                             label: const Text('Save Action'),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF1B5E20),
+                              backgroundColor: BrandColors.navy,
                               foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(vertical: 14),
                             ),
@@ -460,13 +461,13 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
                         ),
                         const SizedBox(height: 14),
                         Text('Therapy History',
-                            style: GoogleFonts.outfit(
+                            style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w700,
                                 color: Colors.grey.shade800)),
                         const SizedBox(height: 8),
                         if (_therapyHistory.isEmpty)
                           Text('No therapy history available yet.',
-                              style: GoogleFonts.outfit(
+                              style: GoogleFonts.poppins(
                                   color: Colors.grey.shade600))
                         else
                           ..._therapyHistory.map((entry) => Container(
@@ -484,14 +485,14 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
                                   children: [
                                     Text(
                                         'Previous: ${entry['previousTherapy'] ?? '-'}',
-                                        style: GoogleFonts.outfit(
+                                        style: GoogleFonts.poppins(
                                             fontWeight: FontWeight.w600)),
                                     Text('New: ${entry['newTherapy'] ?? '-'}',
-                                        style: GoogleFonts.outfit()),
+                                        style: GoogleFonts.poppins()),
                                     Text('Reason: ${entry['reason'] ?? '-'}',
-                                        style: GoogleFonts.outfit()),
+                                        style: GoogleFonts.poppins()),
                                     Text('Date: ${entry['date'] ?? '-'}',
-                                        style: GoogleFonts.outfit(
+                                        style: GoogleFonts.poppins(
                                             color: Colors.grey.shade700)),
                                   ],
                                 ),
@@ -526,13 +527,13 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
                         ),
                         const SizedBox(height: 14),
                         Text('History',
-                            style: GoogleFonts.outfit(
+                            style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w700,
                                 color: Colors.grey.shade800)),
                         const SizedBox(height: 8),
                         if (_metastasisHistory.isEmpty)
                           Text('No metastasis history available yet.',
-                              style: GoogleFonts.outfit(
+                              style: GoogleFonts.poppins(
                                   color: Colors.grey.shade600))
                         else
                           ..._metastasisHistory.map((entry) => Container(
@@ -549,15 +550,15 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('State: ${entry['state'] ?? '-'}',
-                                        style: GoogleFonts.outfit(
+                                        style: GoogleFonts.poppins(
                                             fontWeight: FontWeight.w600)),
                                     if ((entry['notes'] ?? '')
                                         .toString()
                                         .isNotEmpty)
                                       Text('Notes: ${entry['notes']}',
-                                          style: GoogleFonts.outfit()),
+                                          style: GoogleFonts.poppins()),
                                     Text('Date: ${entry['date'] ?? '-'}',
-                                        style: GoogleFonts.outfit(
+                                        style: GoogleFonts.poppins(
                                             color: Colors.grey.shade700)),
                                   ],
                                 ),

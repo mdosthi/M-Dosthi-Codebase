@@ -6,6 +6,7 @@ import 'package:mdosthi_app/main.dart';
 import 'dart:io';
 
 import '../EditProfilePage.dart';
+import '../theme/brand_theme.dart';
 
 class HamburgerMenu extends StatefulWidget {
   final String userName;
@@ -263,10 +264,27 @@ class _HamburgerMenuState extends State<HamburgerMenu> {
       child: Column(
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text(loginAccount),
-            accountEmail: Text("Username - ${widget.email}"),
+            decoration: const BoxDecoration(
+              gradient: BrandColors.heroHeaderGradient,
+            ),
+            accountName: Text(
+              loginAccount,
+              style: BrandTypography.heading(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
+            ),
+            accountEmail: Text(
+              "Username - ${widget.email}",
+              style: BrandTypography.body(
+                fontSize: 12.5,
+                color: BrandColors.ice,
+              ),
+            ),
             currentAccountPicture: const CircleAvatar(
-              child: Icon(Icons.person),
+              backgroundColor: Colors.white,
+              backgroundImage: AssetImage('assets/icons/mdosthi-favicon.png'),
             ),
           ),
           Expanded(

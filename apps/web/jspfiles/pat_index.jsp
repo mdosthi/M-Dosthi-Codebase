@@ -76,7 +76,7 @@
 					<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/toastr.css">
 					<!--<link rel="stylesheet" href="../bootstrap/jquery.dataTables.min.css">-->
 					<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/dataTables.bootstrap.min.css">
-					<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=2.0">
+					<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=3.0">
 
 					<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/jquery-ui.min.css">
 					<link rel="stylesheet" href="<%=request.getContextPath()%>/vc/vc.css?" +n>
@@ -329,9 +329,10 @@
 							<div class="row header">
 								<div class="col-sm-3 brand-container">
 									<a href="<%=request.getContextPath()%>/jspfiles/home" class="brand-link">
-										<img class="logo-img logo"
-											src="<%=request.getContextPath()%>/images/imlogo.jpg" />
-										<span class="brand-text">M-Dosthi</span>
+										<img class="header-horiz-logo"
+											src="<%=request.getContextPath()%>/images/mdosthi-horizontal-logo.png"
+											alt="mDosthi"
+											style="height:46px; max-height:46px; width:auto; max-width:190px; object-fit:contain;" />
 									</a>
 								</div>
 

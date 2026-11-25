@@ -38,13 +38,13 @@ class EducationPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title,
-                    style: GoogleFonts.outfit(
+                    style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w700,
                         fontSize: 16,
                         color: Colors.grey.shade900)),
                 const SizedBox(height: 6),
                 Text(description,
-                    style: GoogleFonts.outfit(
+                    style: GoogleFonts.poppins(
                         fontSize: 13,
                         height: 1.5,
                         color: Colors.grey.shade700)),
@@ -87,7 +87,7 @@ class EducationPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Education', style: GoogleFonts.outfit(fontWeight: FontWeight.w700)),
+        title: Text('Education', style: GoogleFonts.poppins(fontWeight: FontWeight.w700)),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -112,7 +112,7 @@ class EducationPage extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 'Cognitive Distortions',
-                style: GoogleFonts.outfit(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.grey.shade900),
+                style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.grey.shade900),
               ),
               const SizedBox(height: 8),
               ...distortions.map((item) => Container(
@@ -127,9 +127,9 @@ class EducationPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(item['title'] as String, style: GoogleFonts.outfit(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.grey.shade900)),
+                        Text(item['title'] as String, style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.grey.shade900)),
                         const SizedBox(height: 8),
-                        Text(item['description'] as String, style: GoogleFonts.outfit(fontSize: 13, height: 1.5, color: Colors.grey.shade700)),
+                        Text(item['description'] as String, style: GoogleFonts.poppins(fontSize: 13, height: 1.5, color: Colors.grey.shade700)),
                       ],
                     ),
                   )),

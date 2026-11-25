@@ -1,8 +1,10 @@
+@import url('./mdosthi-brand-tokens.css');
+
 .patient-monitoring {
   max-width: 1440px;
   margin: 0 auto;
   padding: 28px;
-  background: linear-gradient(180deg, #f5f8fb 0%, #eef3f7 100%);
+  background: linear-gradient(180deg, #E0F7FA 0%, #F4FBFC 45%, #FFFFFF 100%);
   color: #263746;
 }
 
@@ -15,7 +17,7 @@
 
 .patient-monitoring .monitoring-header h2 {
   margin: 0 0 8px;
-  color: #123f5a;
+  color: var(--color-navy, #0B2D6B);
   font-size: 28px;
   font-weight: 700;
 }
@@ -29,9 +31,9 @@
   display: inline-block;
   margin-top: 12px !important;
   padding: 8px 12px;
-  border-left: 3px solid #337ab7;
-  background: #eef6fb;
-  color: #174a68;
+  border-left: 3px solid var(--color-blue, #007BFF);
+  background: var(--color-ice, #E0F7FA);
+  color: var(--color-navy, #0B2D6B);
 }
 
 .patient-monitoring .monitoring-list-summary {
@@ -43,7 +45,7 @@
   border: 1px solid #d9e4eb;
   border-radius: 6px;
   background: #f5f9fb;
-  color: #174a68;
+  color: var(--color-navy, #0B2D6B);
 }
 
 .patient-monitoring .monitoring-summary-label {
@@ -92,8 +94,8 @@
 
 .patient-monitoring .monitoring-search input:focus {
   outline: 0;
-  border-color: #2384a8;
-  box-shadow: 0 0 0 3px rgba(35, 132, 168, .14);
+  border-color: var(--color-teal, #00BFA6);
+  box-shadow: 0 0 0 3px rgba(0, 191, 166, .14);
 }
 
 .patient-monitoring .monitoring-patient-table {
@@ -103,7 +105,7 @@
 .patient-monitoring .monitoring-patient-table thead th {
   padding: 14px 16px;
   border-bottom: 0;
-  background: #174a68;
+  background: var(--color-navy, #0B2D6B);
   color: #fff;
   font-size: 12px;
   font-weight: 700;
@@ -161,7 +163,7 @@
   padding: 16px 18px;
   border: 0;
   background: #e8f2f7;
-  color: #174a68;
+  color: var(--color-navy, #0B2D6B);
   font-weight: 600;
 }
 
@@ -202,8 +204,8 @@
 }
 
 .patient-monitoring .form-control:focus {
-  border-color: #2384a8;
-  box-shadow: 0 0 0 3px rgba(35, 132, 168, .14);
+  border-color: var(--color-teal, #00BFA6);
+  box-shadow: 0 0 0 3px rgba(0, 191, 166, .14);
 }
 
 .patient-monitoring textarea.form-control {
@@ -277,7 +279,7 @@
 
 .patient-monitoring .education-card h4 {
   margin-top: 0;
-  color: #174a68;
+  color: var(--color-navy, #0B2D6B);
 }
 
 @media (max-width: 767px) {

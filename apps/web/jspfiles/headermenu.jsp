@@ -2,7 +2,7 @@
 <html>
 <HEAD>
 <link rel="stylesheet" type="text/css" href="../style/tabmenu.css" />
-	<LINK REL="SHORTCUT ICON" HREF="../images/icon1.ico"> 
+	<LINK REL="SHORTCUT ICON" HREF="../images/icons/mdosthi-favicon.png"> 
 <STYLE>
 
 body { 
@@ -46,9 +46,9 @@ function clearPanel()
 
 <table border =0 width=100%  cellpadding='1' cellspacing='0'>
 	<tr>
-		<td width=90px align=left> 
+		<td width=165px align=left> 
 			<table cellspacing=0 border=0 cellpadding=0 >
-				<tr><td><img src="../images/logo2.jpg" height=58 width=96><td></tr>
+				<tr><td><img src="../images/mdosthi-horizontal-logo.png" alt="mDosthi" style="height:38px; max-height:38px; width:auto; max-width:155px; object-fit:contain;"><td></tr>
 			</table>
 		</td>
 		<td align=center>

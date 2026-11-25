@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="apps/web/images/mdosthi-primary-logo.png" alt="mDosthi — Digital Health &amp; Well-Being · Healthcare as Homecare" width="540" />
+</p>
+
 # M-Dosthi
 
 M-Dosthi is a healthcare application monorepo containing the legacy JSP/Tomcat system, a Flutter client, a Spring Boot REST API, and a Python annotation pipeline. The system has more than one application path: the legacy web application uses its Java RMI business logic, while the Flutter client calls the Spring Boot API. They have separate configuration and may use different MySQL schemas.
