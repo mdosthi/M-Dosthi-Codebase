@@ -12,18 +12,17 @@ This guide covers the independently runnable parts of the M-Dosthi repository. T
 
 You do not need to start both Java servers for the Flutter workflow. The JSP application is not the Flutter app's API server.
 
-## Choose A Platform And Run Mode
+## Choose A Platform
 
-The Flutter client and Spring API can run on macOS, Linux, and Windows. Use Docker Compose for a consistent multi-service stack, or run the Flutter/API components directly with the platform's native tools.
+The Flutter client and Spring API can run natively on macOS, Linux, and Windows.
 
-| Run mode | macOS | Linux | Windows |
-|---|---|---|---|
-| Docker | Install Docker Desktop or Docker Engine with Compose. Run `docker compose` from Terminal. | Install Docker Engine and the Compose plugin. Run `docker compose` from a shell. | Install Docker Desktop. Run `docker compose` from PowerShell. |
-| Without Docker | Use `scripts/setup.sh` and `scripts/api.sh` from Terminal; Flutter runs natively. | Use `scripts/setup.sh` and `scripts/api.sh` from a shell; Flutter runs natively. | Use `scripts/setup.ps1` and `scripts/api.ps1` from PowerShell; Flutter runs natively. |
+| macOS | Linux | Windows |
+|---|---|---|
+| Use `scripts/setup.sh`, `scripts/api.sh`, and `scripts/legacy.sh` from Terminal; Flutter runs natively. | Use `scripts/setup.sh`, `scripts/api.sh`, and `scripts/legacy.sh` from a shell; Flutter runs natively. | Use `scripts/setup.ps1`, `scripts/api.ps1`, and `scripts/legacy.ps1` from PowerShell (or the `.sh` scripts in Git Bash/WSL); Flutter runs natively. |
 
-The no-Docker path requires you to install and configure JDK 25, Flutter, and MySQL 8 yourself (MySQL may be local or remote). For Windows, the legacy JSP/RMI scripts are Bash scripts and require Git Bash or WSL; alternatively, use Docker Compose for those services. The Compose stack uses Linux containers and is supported through Docker Desktop on macOS/Windows and Docker Engine on Linux.
+This requires you to install and configure JDK 25, Flutter, and MySQL 8 yourself (MySQL may be local or remote).
 
-To start the Docker stack, first prepare `.env` as described below, then follow [Run The Apps With Docker Compose](#run-the-apps-with-docker-compose). To start Flutter and the API without Docker, follow [Run Flutter And The API](#4-run-flutter-and-the-api). Compose initializes an empty database only; neither setup mode supplies clinical schemas or patient data.
+To start Flutter and the API, follow [Run Flutter And The API](#4-run-flutter-and-the-api).
 
 ## Prerequisites
 
@@ -34,20 +33,62 @@ Install the tools needed for your chosen workflow. The repository setup scripts 
 | Git | All workflows | Clone this repository. |
 | JDK 25 | `services/api` | Required by `services/api/pom.xml`; set `JAVA_HOME` and `PATH` before starting Maven. |
 | JDK 11 or later | Legacy build and runtime | Must include `javac`. The legacy RMI service uses dynamic stubs and does not require the removed `rmic` tool; builds target Java 11 bytecode. A local `tools/jdk11` may still be used; `tools/` is not part of Git. |
-| MySQL 8 | API and legacy workflows | Use a local server, a remote server, or the optional Compose service. You need a compatible database dump/schema; Compose alone creates an empty database. |
+| MySQL 8 | API and legacy workflows | Use a local server or a remote server. You need a compatible database dump/schema. |
 | Flutter SDK | `apps/mobile` | Chrome is needed for the Chrome target; `web-server` can be used with another browser. |
 | Python 3.10+ | `services/annotate` | Create an isolated environment and install the package's declared dependencies. |
 | Ollama | Annotation and configured API features | Install separately, start the service, and download/configure the model names required by your workflow. |
-| Docker Compose | Unified web/API/database stack and Android APK build | `docker compose` is included with current Docker Desktop and many Docker Engine installations. |
 
-On Windows, run setup and the API in PowerShell. The legacy scripts are Bash scripts; use Git Bash or WSL. Flutter can use native Windows tooling for targets supported by the installed Flutter SDK.
+### Install dependencies by platform
+
+**macOS (Homebrew):**
+
+```bash
+brew install git openjdk@25 maven mysql python
+brew install --cask flutter ollama
+brew services start mysql
+```
+
+**Linux (Ubuntu / Debian):**
+
+```bash
+sudo apt update
+sudo apt install -y git curl unzip mysql-server maven python3 python3-venv python3-pip
+# Install JDK 25 (or via SDKMAN: curl -s "https://get.sdkman.io" | bash && sdk install java 25-open)
+sudo apt install -y openjdk-25-jdk || sudo apt install -y openjdk-21-jdk
+sudo systemctl enable --now mysql
+# Flutter (Linux desktop/web dependencies + SDK)
+sudo apt install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev
+sudo snap install flutter --classic
+# Ollama
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+**Linux (Fedora / RHEL):**
+
+```bash
+sudo dnf install -y git curl unzip mysql-server maven python3 clang cmake ninja-build gtk3-devel xz-devel
+sudo systemctl enable --now mysqld
+```
+
+**Windows (PowerShell / winget):**
+
+```powershell
+winget install Git.Git
+winget install EclipseAdoptium.Temurin.25.JDK
+winget install Oracle.MySQL
+winget install Google.Flutter
+winget install Python.Python.3.12
+winget install Ollama.Ollama
+```
+
+On Windows, run `scripts/setup.ps1`, `scripts/provision-api-db-user.ps1`, `scripts/api.ps1`, and `scripts/legacy.ps1` in PowerShell (or run the `.sh` scripts in Git Bash or WSL). Flutter can use native Windows tooling for targets supported by the installed Flutter SDK.
 
 ## 1. Clone And Prepare Local Files
 
 From a terminal:
 
 ```bash
-git clone <repository-url> M-Dosthi
+git clone REPOSITORY_URL M-Dosthi
 cd M-Dosthi
 scripts/setup.sh
 ```
@@ -55,20 +96,22 @@ scripts/setup.sh
 PowerShell:
 
 ```powershell
-git clone <repository-url> M-Dosthi
+git clone REPOSITORY_URL M-Dosthi
 Set-Location M-Dosthi
 powershell -ExecutionPolicy Bypass -File scripts/setup.ps1
 ```
 
-The setup script prepares local configuration and Tomcat, then reports which prerequisite commands are on `PATH`. It does not install those prerequisites or initialize application tables. If `.env` is missing, it copies `.env.example` to `.env`; the tracked `.env.example` template is not modified. Edit only `.env` with local values. It also creates `services/legacy/runtime/gblinfo.inf` and `apps/web/config.info` from templates, replacing `@PROJECT_ROOT@` with this checkout's absolute path. Generated files are not overwritten on later setup runs, so preserve your local edits.
+The setup script prepares local configuration and Tomcat, then reports which prerequisite commands are on `PATH`. It does not install those prerequisites or initialize application tables. If `.env` is missing, it copies `.env.example` to `.env`; the tracked `.env.example` template is not modified. Edit only `.env` with local values. It also creates `services/legacy/runtime/gblinfo.inf` and `apps/web/config.info` from templates, replacing `@PROJECT_ROOT@` with this checkout's absolute path, `@TOMCAT_HTTP_PORT@` with the active Tomcat port (`8081` for Individual Tomcat, `8080` for Shared Tomcat), and `@LEGACY_RMI_PORT@` with the RMI port (default `1100` in both modes so it does not collide with eDosthi's `1099`). Set `LEGACY_RMI_PORT` before setup to choose another port. Generated files are not overwritten on later setup runs, so preserve your local edits.
 
-`tools/` is Git-ignored. Setup downloads Tomcat 9 there if it is missing, but a Java distribution is not automatically downloaded. Install the needed JDKs yourself and keep their paths outside version control.
+`tools/tomcat9/` is bundled and tracked in Git (with the `Tomcat9 -> tools/tomcat9` symlink on macOS/Linux) as M-Dosthi's Individual Tomcat (`:8081`, shutdown `:8006`), while other local runtimes under `tools/` remain Git-ignored. If `tools/tomcat9` is absent, setup downloads Tomcat 9 there automatically; a Java distribution is not automatically downloaded. Install the needed JDKs yourself and keep their paths outside version control.
 
 ## 2. Configure Java And Secrets
 
 Copy `.env.example` to `.env` in the repository root, then edit `.env`. It is ignored by Git; keep one value per line as `NAME=value`. Never put passwords, API tokens, or other credentials in `.env.example`; it is a tracked template shared with the repository.
 
-For the API, select JDK 25 before launching. Bash example:
+For the API, select JDK 25 before launching.
+
+macOS (Homebrew):
 
 ```bash
 brew install openjdk@25
@@ -77,15 +120,23 @@ export PATH="$JAVA_HOME/bin:$PATH"
 java -version
 ```
 
-On macOS, `scripts/api.sh` can also find a JDK 25 installed by Homebrew or registered with the system when `JAVA_HOME` is unset. If the JDK is installed elsewhere, set `JAVA_HOME` to its installation directory. The API script checks that `JAVA_HOME` contains JDK 25 before starting Maven.
+Linux:
 
-PowerShell example:
+```bash
+export JAVA_HOME=/usr/lib/jvm/java-25-openjdk-amd64   # or your JDK 25 path
+export PATH="$JAVA_HOME/bin:$PATH"
+java -version
+```
+
+Windows (PowerShell):
 
 ```powershell
-$env:JAVA_HOME = 'C:\path\to\jdk-25'
+$env:JAVA_HOME = 'C:\Program Files\Eclipse Adoptium\jdk-25'
 $env:Path = "$env:JAVA_HOME\bin;$env:Path"
 java -version
 ```
+
+`scripts/api.sh` and `scripts/api.ps1` also auto-discover JDK 25 in standard macOS Homebrew, Linux (`/usr/lib/jvm`, `/opt`, SDKMAN), and Windows (`C:\Program Files\Eclipse Adoptium`, `C:\Program Files\Java`, `C:\Program Files\Microsoft`) locations when `JAVA_HOME` is unset. If the JDK is installed elsewhere, set `JAVA_HOME` to its installation directory. The API script checks that `JAVA_HOME` contains JDK 25 before starting Maven.
 
 For legacy build commands, select JDK 11 or later:
 
@@ -95,7 +146,7 @@ export PATH="$JAVA_HOME/bin:$PATH"
 "$JAVA_HOME/bin/javac" -version
 ```
 
-The most important API values in `.env` are `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, `SPRING_DATASOURCE_PASSWORD`, and `SECRETKEY`. Use a dedicated, non-root MySQL account for `SPRING_DATASOURCE_USERNAME`; `MYSQL_ROOT_PASSWORD` is only for database administration and must not be used as the API password. For the local Compose database, Compose creates the API account using the Spring datasource username and password. Replace the example database password with a strong, unique value. Generate a unique key, for example with `openssl rand -base64 32`; do not reuse any credentials from historical files. Ollama model settings and `IMEDIX_WHATSAPP_*` values are only needed for those integrations. Set `OLLAMA_LOG_PAYLOAD_ENABLED=false` where prompt payloads may contain patient data.
+The most important API values in `.env` are `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, `SPRING_DATASOURCE_PASSWORD`, and `SECRETKEY`. Use a dedicated, non-root MySQL account for `SPRING_DATASOURCE_USERNAME`; `MYSQL_ROOT_PASSWORD` is only for database administration and must not be used as the API password. For a local MySQL database, `scripts/provision-api-db-user.sh` creates the API account using the Spring datasource username and password. Replace the example database password with a strong, unique value. Generate a unique key, for example with `openssl rand -base64 32`; do not reuse any credentials from historical files. Ollama model settings and `IMEDIX_WHATSAPP_*` values are only needed for those integrations. Set `OLLAMA_LOG_PAYLOAD_ENABLED=false` where prompt payloads may contain patient data.
 
 The legacy RMI server does not automatically load `.env`. Edit the generated `services/legacy/runtime/gblinfo.inf` for its JDBC URL, username, password, FTP credentials, and local paths. The legacy website has its own generated `apps/web/config.info`; provide any required external integration credentials there too. Both files are ignored by Git.
 
@@ -146,28 +197,25 @@ If synthesis fails, confirm that `ollama show phonon` lists the configured voice
 
 ## 3. Start MySQL And Prepare Schemas
 
-### Optional local MySQL with Docker
+### Provision local MySQL database and user
 
-Set `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `SPRING_DATASOURCE_USERNAME`, and `SPRING_DATASOURCE_PASSWORD` in `.env`, then run:
+Start your MySQL 8 server using your operating system's service manager, then set `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `SPRING_DATASOURCE_USERNAME`, and `SPRING_DATASOURCE_PASSWORD` in `.env`. Provision the schema and dedicated non-root application user using:
 
-```bash
-docker compose up -d mysql
-docker compose ps
-```
-
-On the first initialization of the Docker volume, Compose creates the schema named by `MYSQL_DATABASE` and a non-root application account whose credentials match `SPRING_DATASOURCE_USERNAME` and `SPRING_DATASOURCE_PASSWORD`. Set `SPRING_DATASOURCE_URL` to that MySQL server and schema. Docker does not copy data from an existing local MySQL server; import an approved dump into the container before using the app.
-
-For local legacy testing without a backup, the repository README documents a guarded [minimal local development bootstrap](../README.md#fresh-local-database-local-legacy-testing). It supports local accounts, basic patient registration, screening checkpoints, and chat persistence tables, but is not a full database initialization and does not enable the other clinical workflows. Chat remains restricted to patients explicitly enrolled in the RCT.
-
-Existing MySQL Docker volumes are not reinitialized when these values change. If the volume already exists, changing `.env` alone does not create or update the application account. Provision or update it safely using the configured MySQL administrator credentials:
+macOS / Linux:
 
 ```bash
 bash scripts/provision-api-db-user.sh
 ```
 
-The script uses `MYSQL_ROOT_PASSWORD` only to administer the database; it creates or updates the dedicated API user and grants it access only to `MYSQL_DATABASE`. For a database server not on `127.0.0.1:3306`, set `MYSQL_ADMIN_HOST` and `MYSQL_ADMIN_PORT` in `.env` to the server's administration endpoint. The failure `Access denied for user ...` means MySQL rejected the configured credentials or the account lacks access from the API host; restarting the API alone will not repair credentials.
+Windows (PowerShell):
 
-Without Docker, start your MySQL 8 server using your operating system's service manager, then create the required schema(s) and a least-privilege application user. The JDBC URL host/port/database must match that server.
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/provision-api-db-user.ps1
+```
+
+The script uses `MYSQL_ROOT_PASSWORD` only to administer the database; it creates the `MYSQL_DATABASE` schema and the dedicated API user, granting it access only to `MYSQL_DATABASE`. For a database server not on `127.0.0.1:3306`, set `MYSQL_ADMIN_HOST` and `MYSQL_ADMIN_PORT` in `.env` to the server's administration endpoint. The failure `Access denied for user ...` means MySQL rejected the configured credentials or the account lacks access from the API host; restarting the API alone will not repair credentials.
+
+For local legacy testing without a backup, the repository README documents a guarded [minimal local development bootstrap](../README.md#fresh-local-database-local-legacy-testing). It supports local accounts, basic patient registration, screening checkpoints, and chat persistence tables, but is not a full database initialization and does not enable the other clinical workflows. Chat remains restricted to patients explicitly enrolled in the RCT.
 
 ### Import an approved database
 
@@ -178,41 +226,14 @@ Example import commands (the password is prompted, not placed in shell history):
 ```bash
 mysql --host=127.0.0.1 --user=YOUR_USER --password mDosthi < /secure/path/to/approved-api-dump.sql
 mysql --host=127.0.0.1 --user=YOUR_USER --password mDosthi < /secure/path/to/approved-legacy-dump.sql
+mysql --host=127.0.0.1 --user=YOUR_USER --password mDosthi < services/api/src/main/resources/db/manual/V20261029_01__pipeline_job_queue.sql
 ```
 
 Only import schemas you actually have and intend to use. Do not assume the API and legacy application can share a database simply because both use MySQL; confirm the schema and tables in the supplied dump first.
 
 The PO Bado migrations in `database/migrations` are for the `mDosthi` legacy schema. They are not general database initialization scripts and are not applied automatically. Back up first and follow [the migration runner guide](../database/migration-runner/README.md); its database guard rejects other schema names.
 
-## Run The Apps With Docker Compose
-
-The root `docker-compose.yml` is the single Docker entry point. From the repository root, copy `.env.example` to `.env`, set unique local values for `MYSQL_ROOT_PASSWORD`, `SPRING_DATASOURCE_PASSWORD`, `LEGACY_DB_PASSWORD`, and `SECRETKEY`, then start the services:
-
-```bash
-docker compose up --build -d
-```
-
-Compose starts MySQL, the Spring API, the legacy RMI service and JSP site, and the Flutter web app. Open:
-
-| App | URL |
-|---|---|
-| Legacy JSP site | `http://localhost:8080/M-Dosthi/` |
-| Flutter web app | `http://localhost:8081/` |
-| Spring API | `http://localhost:9090/` |
-
-Compose creates an empty database and does not import schemas or patient data. Import the approved API and/or legacy schema into the configured database before using database-backed features. By default, the legacy service uses the same database name as `MYSQL_DATABASE`; set `LEGACY_DB_DATABASE` if it needs a separate schema and provision its account as needed. The default legacy DB username/password are separate `.env` values and must match a provisioned MySQL account. MySQL initialization settings only apply when its named volume is first created.
-
-Build an Android APK separately:
-
-```bash
-docker compose run --build --rm android-apk
-```
-
-The output is `dist/android/app-release.apk`. This checkout has no `apps/mobile/android/` project, so the build container creates the Android platform runner before building. The APK allows cleartext HTTP to match the app's current API protocol; use this local-development build only, not for production. The default application ID is `com.example.mdosthi_app`; set `ANDROID_ORG` to your organization's reverse-DNS prefix before distributing the APK. `ANDROID_API_HOST` defaults to `10.0.2.2:9090` for the standard Android emulator. Set it to a reachable LAN hostname/IP for a physical device. Flutter web uses the browser's current origin and the same-origin Nginx `/api/` proxy by default. Set `FLUTTER_API_HOST` only when intentionally targeting a separately hosted API.
-
-Use the unified stack for local development only. It does not initialize clinical schemas, configure production secrets, or expose the RMI port on the host. A clean-checkout legacy image build may also require separately approved prebuilt artifacts documented in [the legacy build limitation](#legacy-clean-checkout-limitation).
-
-## 3. Run Flutter And The API
+## 4. Run Flutter And The API
 
 ### Start the API
 
@@ -259,19 +280,57 @@ This workflow requires JDK 11 or later, Tomcat 9, a compatible `mDosthi` schema 
 
 ```bash
 export JAVA_HOME=/path/to/jdk-11
-scripts/legacy.sh start
+scripts/legacy.sh start --individual   # or --shared
 ```
 
-Commands:
+Commands (pass `--individual` [default] or `--shared` / `SHARED_TOMCAT_HOME` on Linux/macOS, and `-Mode individual|shared` on Windows):
 
 | Command | Effect |
 |---|---|
-| `scripts/legacy.sh start` | Starts Tomcat and the existing RMI business-logic jar. |
-| `scripts/legacy.sh stop` | Stops Tomcat and the legacy RMI process. |
-| `scripts/legacy.sh build` | Recompiles legacy modules and generates jars. |
-| `scripts/legacy.sh run` | Builds, stops the old process, then starts both services. |
+| `scripts/legacy.sh start` | Starts M-Dosthi's Individual Tomcat (`:8081`) and RMI business-logic jar (`:1100`); with `--shared` / `SHARED_TOMCAT_HOME`, starts only M-Dosthi RMI. |
+| `scripts/legacy.sh stop` | Stops M-Dosthi's Individual Tomcat and RMI process; with `--shared` / `SHARED_TOMCAT_HOME`, stops only M-Dosthi RMI. |
+| `scripts/legacy.sh build` | Recompiles legacy modules and generates jars against the selected Tomcat's `servlet-api.jar`. |
+| `scripts/legacy.sh run` | Builds and restarts the stack; with `--shared` / `SHARED_TOMCAT_HOME`, leaves Shared Tomcat running and restarts only M-Dosthi RMI. |
+| `scripts/legacy.sh status` | Shows live PID and port status for M-Dosthi RMI, Individual Tomcat (`:8081`), and (with `--shared`) Shared Tomcat (`:8080`). |
 
-The script prints the web URL based on `tools/tomcat9/conf/server.xml`; open that URL with `/M-Dosthi/`. The default Tomcat port is 8080, but local configurations can use a different port (for example 8081). The RMI service normally uses port 1099. Check the ports and stop any conflicting services before starting.
+The Individual Tomcat defaults to `http://localhost:8081/M-Dosthi/` (shutdown port `8006`, configurable via `TOMCAT_HTTP_PORT` / `TOMCAT_SHUTDOWN_PORT`), while Shared Tomcat typically uses `http://localhost:8080/M-Dosthi/`. Both default M-Dosthi's RMI port (`blport`) to `1100`. Check the ports and stop any conflicting services before starting.
+
+### Run M-Dosthi in an existing Tomcat 9
+
+Use this workflow when eDosthi already runs in Tomcat 9 and you want M-Dosthi served by the same Tomcat instance as well as (or instead of) M-Dosthi's Individual Tomcat, without changing eDosthi application source. `SHARED_TOMCAT_HOME` (or `--shared` / `-Mode shared`) must point to the Tomcat 9 installation directory (the directory containing `bin/`, `conf/`, and `lib/`). The setup script adds only `conf/Catalina/localhost/M-Dosthi.xml` to that Tomcat and points it at this checkout's `apps/web` (while also configuring M-Dosthi's Individual Tomcat in `tools/tomcat9`); it does not edit eDosthi source or its application files. If eDosthi's Tomcat installation is inside its repository, this adds a Tomcat deployment descriptor there; use a Tomcat installation outside that repository if you need to keep every file in it untouched.
+
+Linux/macOS or Git Bash:
+
+```bash
+export SHARED_TOMCAT_HOME=/absolute/path/to/tomcat9
+scripts/setup.sh --shared
+```
+
+PowerShell:
+
+```powershell
+$env:SHARED_TOMCAT_HOME = 'C:\path\to\tomcat9'
+powershell -ExecutionPolicy Bypass -File scripts/setup.ps1 -Mode shared
+```
+
+Setup writes the M-Dosthi context descriptor into both M-Dosthi's Individual Tomcat (`tools/tomcat9`) and the shared Tomcat configuration. Configure the generated local files and build the web application before restarting the shared Tomcat to deploy `/M-Dosthi`; do not use M-Dosthi's script to restart or stop that Tomcat:
+
+- In `apps/web/config.info`, set `gblhome` to the externally reachable M-Dosthi URL (`http://localhost:8080/M-Dosthi` for Shared Tomcat, `http://localhost:8081/M-Dosthi` for Individual Tomcat). Set `gbltelemedix` to `/M-Dosthi`.
+- In **both** `apps/web/config.info` and `services/legacy/runtime/gblinfo.inf`, set `blport` to the same unused RMI port (default `1100`; override at setup with `LEGACY_RMI_PORT`). Ensure firewall rules permit the selected port as required. `scripts/legacy.sh start` and `scripts/legacy.ps1 start` check that the two configured port values match.
+- Confirm M-Dosthi's DB credentials, temp/log paths, and integrations are configured for its intended environment. These are separate from the shared Tomcat and should not be assumed to match eDosthi's.
+
+Keep the same `SHARED_TOMCAT_HOME` (or `--shared`) when running build/start/stop for shared mode:
+
+```bash
+export JAVA_HOME=/path/to/jdk-11
+scripts/legacy.sh build --shared
+# Restart the shared Tomcat now so it loads the built /M-Dosthi app.
+scripts/legacy.sh start --shared
+```
+
+`scripts/legacy.sh stop` stops only the M-Dosthi RMI process in shared-Tomcat mode. The script tracks its own RMI process by PID so it does not terminate eDosthi's service. The servlet build uses the shared Tomcat's `lib/servlet-api.jar`. If the legacy RMI service was started by an older script version and has no M-Dosthi PID file, stop that known M-Dosthi process once before using the updated script; do not terminate Java processes by matching the shared jar name. The web UI should be available at the `gblhome` URL, commonly `http://localhost:8080/M-Dosthi/` for local testing.
+
+The Spring Boot API is not deployed inside Tomcat 9; it remains a separate process on its configured port. The Flutter/API workflow is independent of this shared JSP deployment.
 
 ### Legacy clean-checkout limitation
 
@@ -285,23 +344,24 @@ Read [the annotation package README](../services/annotate/README.md) for support
 
 | Port | Service | Notes |
 |---:|---|---|
-| 3306 | MySQL | Local default; may be changed in JDBC URLs/Compose. |
-| 8080 | Tomcat | Legacy web default; inspect `server.xml` for the configured port. |
-| 1099 | Java RMI | Legacy business-logic service. |
+| 3306 | MySQL | Local default; may be changed in JDBC URLs. |
+| 8080 | Shared Tomcat | Shared Tomcat default (serves `/eDosthi` and `/M-Dosthi` when configured). |
+| 8081 | Individual Tomcat | M-Dosthi bundled Tomcat (`tools/tomcat9`, shutdown `8006`, configurable via `TOMCAT_HTTP_PORT`). |
+| 1100 | Java RMI | M-Dosthi RMI default in both Individual and Shared modes (avoids collision with eDosthi `1099`). |
 | 9090 | Spring Boot API | Flutter app's default API port. |
 | 11434 | Ollama | Optional local model server. |
 | 3000/3001 | Flutter web development server | Selected by Flutter; use the actual URL it prints. |
 
 ## Troubleshooting
 
-- **`permission denied` connecting to `/var/run/docker.sock` on Linux:** Docker is installed, but your user cannot access the daemon socket. Check that the Docker service is running with `sudo systemctl status docker`; if it is stopped, start it with `sudo systemctl start docker`. To use Docker without `sudo`, add your account to the `docker` group with `sudo usermod -aG docker "$USER"`, then sign out and back in (or start a new login session). The group change does not apply to terminals opened before it. Membership in the `docker` group grants root-equivalent control of the machine, so only do this for a trusted account. As a temporary alternative, run the Compose commands with `sudo` (for example, `sudo docker compose ps`).
 - **API reports that JDK 25 is required:** install JDK 25, set `JAVA_HOME` to the JDK installation directory (not `bin/java`), and verify `"$JAVA_HOME/bin/java" -version` before running `scripts/api.sh`. On macOS with Homebrew, use `brew install openjdk@25`.
 - **Suicide ideation tracking is disabled because database tables are missing:** the API can start, but the background alert poller remains disabled. Import the approved schema containing `signal_history`, `session_history`, and `login`, then restart the API. Do not create placeholder tables.
 - **Login returns “Invalid Credential” for an account created by an older API:** restart with the current API; when the correct password is entered, legacy plaintext password rows are migrated to the format expected by login. Login resolves User IDs case-insensitively and retries after trimming surrounding whitespace from the username and password, matching the legacy JSP login while preserving exact credentials when they work. If it still fails, verify the account and password in the database configured by `SPRING_DATASOURCE_URL`.
 - **`Access denied` or connection refused from MySQL:** verify the server is running, host/port are reachable, and that the credentials in `.env` (API) or `gblinfo.inf` (legacy) match the DB user. Test the exact JDBC schema name.
-- **Unknown database/table:** Compose creates an empty schema, not application tables. Import the correct approved dump before using the app; apply only the migrations intended for that schema.
-- **Flutter login says failed to fetch:** confirm the API is listening on 9090 and `API_HOST` is reachable from the target. For Flutter web, leave `FLUTTER_API_HOST` unset to use the same-origin Nginx `/api/` proxy; direct cross-origin API hosts must allow the browser origin through CORS.
+- **Unknown database/table:** Import the correct approved dump before using the app; apply only the migrations intended for that schema.
+- **Flutter login says failed to fetch:** confirm the API is listening on 9090 and `API_HOST` is reachable from the target. For Flutter web, pass `--dart-define=API_HOST=localhost:9090` (or the reachable API host and port) and ensure cross-origin API hosts allow the browser origin through CORS.
 - **Flutter web asset manifest is missing:** stop the stale Flutter process, run `flutter pub get`, then start Flutter again from `apps/mobile` and open the new URL it prints.
 - **`JDK 11 or later with javac required`:** set `JAVA_HOME` to a JDK installation. The legacy build uses dynamic RMI stubs and does not invoke `rmic`.
-- **Tomcat or RMI port is occupied:** inspect listeners on the configured HTTP port and 1099, stop the conflicting application, and start again. Do not kill unrelated Java processes indiscriminately.
+- **Tomcat or RMI port is occupied:** inspect listeners on the configured HTTP port and the RMI port in both M-Dosthi config files. For a shared Tomcat, leave Tomcat running and choose an unused M-Dosthi RMI port. Do not kill unrelated Java processes indiscriminately.
+- **M-Dosthi does not appear in the shared Tomcat:** confirm `SHARED_TOMCAT_HOME` points at the right Tomcat 9 installation, that `conf/Catalina/localhost/M-Dosthi.xml` points to the M-Dosthi `apps/web` directory, and that Tomcat was restarted after setup.
 - **Legacy rebuild errors for absent classes:** see the clean-checkout limitation above; local ignored build output may have hidden the missing artifact.

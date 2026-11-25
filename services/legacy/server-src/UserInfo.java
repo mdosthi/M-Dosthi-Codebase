@@ -343,7 +343,7 @@ public class UserInfo extends UnicastRemoteObject implements UserInfoInterface {
     		
     		
     		//String query="insert into users (loginid,name,userid,pwd,age,sex,ccode,user_type,address,mobile,email,qualification,designation,verifemail,verifphone,active) values ('"+loginid+"','"+name+"','"+userid+"',SHA1('"+pwd+"'),'"+age+"','"+sex+"','"+ccode+"','"+user_type+"','"+address+"','"+mobile+"','"+email+"','"+qualification+"','"+designation+"','"+verifemail+"','"+verifphone+"','"+active+"')";
-    		String query="insert into users (loginid,name,userid,pwd,user_type,address,qualification,designation,verifemail,verifphone,active) values ('"+loginid+"','"+name+"','"+userid+"',MD5('"+pwd+"'),'"+user_type+"','"+address+"','"+qualification+"','"+designation+"','"+verifemail+"','"+verifphone+"','"+active+"')";
+    		String query="insert into users (loginid,name,userid,pwd,user_type,address,qualification,designation,verifemail,verifphone,active) values ('"+loginid+"','"+name+"','"+userid+"','"+getMD5(pwd)+"','"+user_type+"','"+address+"','"+qualification+"','"+designation+"','"+verifemail+"','"+verifphone+"','"+active+"')";
 		
 		String str="";
 		

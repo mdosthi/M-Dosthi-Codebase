@@ -29,12 +29,6 @@ Open the local URL Flutter prints. Keep the Flutter process running during use. 
 
 `API_HOST` accepts only the hostname and port; the client uses HTTP. Never add credentials or patient data to Dart source, command-line arguments, or committed files.
 
-## Run Or Build With Docker
-
-From the repository root, `docker compose up --build -d` starts the legacy JSP site, Flutter web app, Spring API, RMI service, and MySQL. Open `http://localhost:8080/M-Dosthi/` for the JSP app and `http://localhost:8081/` for Flutter web. Flutter web reaches the API through the same-origin Nginx proxy. See the [Docker Compose setup guide](../../docs/setup.md#run-the-apps-with-docker-compose) for database and API-host configuration.
-
-Build an Android APK with `docker compose run --build --rm android-apk`. The APK is written to `dist/android/app-release.apk`. The Android platform runner is generated inside the build container because this checkout does not include `apps/mobile/android/`. Set `ANDROID_API_HOST` in the root `.env` to the reachable API host and port; the default `10.0.2.2:9090` is for the standard Android emulator.
-
 ## Project Areas
 
 - `lib/`: screens and workflows including admin, chat, surveyor and wellbeing features; shared services and utilities are also here.

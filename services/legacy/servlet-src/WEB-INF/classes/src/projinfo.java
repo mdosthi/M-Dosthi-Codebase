@@ -42,6 +42,9 @@ public class projinfo{
 				if (catalinaBase.length() > 0) {
 					configPath = catalinaBase + "/webapps/M-Dosthi/config.info";
 				}
+				if (!new File(configPath).isFile()) {
+					configPath = configFromWebappLocation(configPath);
+				}
 			}
 			FileInputStream gblfin = new FileInputStream(configPath);
 			System.out.println("Config path:--->"+configPath);
@@ -87,9 +90,25 @@ public class projinfo{
 			System.out.println("projInfo.java error:-");
 	    	System.out.println(e.toString());
 	    }
-	    
-		
-	} 
-	
 	}
-	
+
+	private String configFromWebappLocation(String fallbackPath) {
+		try {
+			File location = new File(projinfo.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+			File webRoot;
+			if (location.isDirectory() && "classes".equals(location.getName())) {
+				webRoot = location.getParentFile().getParentFile();
+			} else {
+				webRoot = location.getParentFile().getParentFile().getParentFile();
+			}
+			File config = new File(webRoot, "config.info");
+			if (config.isFile()) {
+				return config.getAbsolutePath();
+			}
+		} catch (Exception e) {
+			System.out.println("Unable to locate M-Dosthi config.info from the web application.");
+		}
+		return fallbackPath;
+	}
+
+}

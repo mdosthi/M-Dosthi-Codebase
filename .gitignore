@@ -7,8 +7,13 @@
 services/legacy/runtime/gblinfo.inf
 apps/web/config.info
 
-# Local-only material: runtimes, backups, data, old copies
-/tools/
+# Local-only material: runtimes, backups, data, old copies (keep bundled M-Dosthi Tomcat 9)
+/tools/*
+!/tools/tomcat9/
+/tools/tomcat9/logs/*
+/tools/tomcat9/temp/*
+/tools/tomcat9/work/
+/tools/tomcat9/conf/Catalina/localhost/*.xml
 /local-archive/
 /database/backups/
 /database/snapshots/
@@ -35,9 +40,14 @@ target/
 *.out
 hs_err_pid*
 
-# Jars: ignored by default, but the legacy stack depends on these checked-in libraries
+# Jars: ignored by default, but the legacy stack and bundled Tomcat depend on these checked-in libraries
 *.jar
 *.war
+!tools/tomcat9/bin/*.jar
+!tools/tomcat9/lib/*.jar
+!tools/tomcat9/webapps/**/*.jar
+!tools/tomcat9/webapps/**/*.war
+!tools/tomcat9/webapps/**/*.class
 !services/legacy/external-lib/**/*.jar
 !services/legacy/runtime/lib/**/*.jar
 !services/legacy/runtime/*.jar
@@ -92,6 +102,7 @@ services/legacy/server-src/*.jar
 !services/legacy/server-src/ftp.jar
 services/legacy/servlet-src/**/*.jar
 services/legacy/runtime/iMediXBusinessLogic.jar
+services/legacy/runtime/iMediXBusinessLogic.pid
 services/legacy/runtime/lib/imedix.jar
 services/legacy/runtime/lib/telem.jar
 services/legacy/runtime/lib/tuberculosis.jar

@@ -1,6 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+case "$(uname -s)" in
+  Darwin)
+    for p in /opt/homebrew/opt/mysql/bin /opt/homebrew/bin /usr/local/mysql/bin /usr/local/bin; do
+      [ -d "$p" ] && export PATH="$p:$PATH"
+    done
+    ;;
+  MINGW*|MSYS*|CYGWIN*)
+    for p in "/c/Program Files/MySQL"/MySQL\ Server*/bin; do
+      [ -d "$p" ] && export PATH="$p:$PATH"
+    done
+    ;;
+esac
+
 ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 ENV_FILE="$ROOT/.env"
 
@@ -59,9 +72,14 @@ MYSQL_PWD="$root_password" mysql \
   --port="$admin_port" \
   --user=root \
   <<SQL
+CREATE DATABASE IF NOT EXISTS \`$database\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE USER IF NOT EXISTS $quoted_user@'%' IDENTIFIED BY $quoted_password;
 ALTER USER $quoted_user@'%' IDENTIFIED BY $quoted_password;
 GRANT ALL PRIVILEGES ON \`$database\`.* TO $quoted_user@'%';
+CREATE USER IF NOT EXISTS $quoted_user@'localhost' IDENTIFIED BY $quoted_password;
+ALTER USER $quoted_user@'localhost' IDENTIFIED BY $quoted_password;
+GRANT ALL PRIVILEGES ON \`$database\`.* TO $quoted_user@'localhost';
+FLUSH PRIVILEGES;
 SQL
 
 echo "Provisioned the non-root API account for database '$database'."

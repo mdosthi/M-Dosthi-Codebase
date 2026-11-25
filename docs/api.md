@@ -14,7 +14,7 @@ The process is launched from:
 services/legacy/runtime/RunServer.sh
 ```
 
-It binds the RMI registry on port `1099`.
+It binds the RMI registry on the port configured by `blport` in `services/legacy/runtime/gblinfo.inf` (standalone setup defaults to `1099`; shared-Tomcat setup defaults to `1100`). Keep it aligned with `blport` in `apps/web/config.info`.
 
 ## JSP and Servlet Endpoints
 

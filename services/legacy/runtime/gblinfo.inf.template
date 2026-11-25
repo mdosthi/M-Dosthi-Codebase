@@ -3,7 +3,7 @@ gbldbjdbccriver = com.mysql.cj.jdbc.Driver
 gbldburl = jdbc:mysql://127.0.0.1:3306/mDosthi?useUnicode=true&characterEncoding=UTF-8
 gbldbusername =mDosthi
 gbldbpasswd =Dipu
-blport = 1099
+blport = @LEGACY_RMI_PORT@
 tempdatadir = @PROJECT_ROOT@/services/legacy/runtime/temp
 ftphost = 127.0.0.1
 ftpuser = imedixftp
@@ -15,5 +15,4 @@ SystemLogger = yes
 SystemLoggerPath = @PROJECT_ROOT@/services/legacy/runtime/SystemLog
 GeneralSqlLog = yes
 GeneralSqlLogPath = @PROJECT_ROOT@/services/legacy/runtime/GenSqlLog
-
 
