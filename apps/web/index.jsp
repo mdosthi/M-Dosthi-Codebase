@@ -112,11 +112,8 @@ else
 				</div>
 
 				<div class="col-md-4 col-35">
-					<!-- <div class="login100-pic js-tilt" data-tilt>
-						<img src="images/imlogoOS.jpg" alt="IMG">
-					</div> -->
-					<div class="login100-pic " style="padding: 40px;">
-						<div role="img" aria-label="M-Dosthi" style="display: inline-block; width: 240px; padding: 28px 12px; border-radius: 50%; background: #1976b8; color: #fff; font-family: Georgia, 'Times New Roman', Times, serif; font-size: 38px; font-weight: bold; text-align: center; text-shadow: 2px 2px #12517d; box-shadow: 0 6px 14px rgba(0,0,0,.25);">M-Dosthi</div>
+					<div class="login100-pic js-tilt" data-tilt>
+						<img src="images/mDosthi-logo.jpg" alt="mDosthi">
 					</div>
 				<form class="login100-form validate-form" METHOD="POST" ACTION="jspfiles/login_n.jsp" name="frmLog" role = "form" >
 					<!--<span class="login100-form-title">
