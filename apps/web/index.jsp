@@ -28,7 +28,7 @@
 	<link rel="stylesheet" href="<%=ctx%>/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<%=ctx%>/bootstrap/font-awesome-4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="<%=ctx%>/style/mdosthi-brand-tokens.css?v=5">
-	<link rel="stylesheet" href="<%=ctx%>/style/mdosthi-login.css?v=3">
+	<link rel="stylesheet" href="<%=ctx%>/style/mdosthi-login.css?v=4">
 </head>
 <body>
 
@@ -96,23 +96,22 @@
 				</div>
 			</section>
 
-			<!-- Right Sign-In Card -->
+			<!-- Right Sign-In Card (Matched Branded Header Template) -->
 			<section class="md-login-col" aria-label="Portal Sign In">
 				<div class="md-login-card">
-					<div class="md-login-accent"></div>
-					<div class="md-login-body">
-
-						<img src="<%=ctx%>/images/mdosthi-primary-logo.png"
-						     alt="mDosthi — Digital Health &amp; Well-Being"
-						     class="md-mobile-primary-logo">
-
-						<div class="md-emblem-wrap js-tilt" data-tilt>
-							<img src="<%=ctx%>/images/mdosthi-emblem.png" alt="mDosthi Emblem">
+					<div class="md-login-header">
+						<div class="md-login-header-inner">
+							<div class="md-emblem-wrap js-tilt" data-tilt>
+								<img src="<%=ctx%>/images/mdosthi-emblem.png" alt="mDosthi Emblem">
+							</div>
+							<div class="md-header-copy">
+								<span class="md-header-kicker">mDosthi Workspace</span>
+								<h2 class="md-card-title">Staff Sign In</h2>
+								<p class="md-card-subtitle">For Administrators, Psychologists &amp; Doctors</p>
+							</div>
 						</div>
-
-						<h2 class="md-card-title">Staff Sign In</h2>
-						<p class="md-card-subtitle">For Administrators, Psychologists &amp; Doctors</p>
-
+					</div>
+					<div class="md-login-body">
 						<!-- Role Tabs: Admin | Psychologist | Doctor -->
 						<div class="md-role-tabs" role="tablist" aria-label="Select Staff Role">
 							<button type="button" class="md-role-tab active" data-role="adm">
@@ -133,7 +132,7 @@
 							<div class="md-field">
 								<label for="uid">Username</label>
 								<div class="md-input-wrap">
-									<i class="fa fa-user-o md-input-icon" aria-hidden="true"></i>
+									<span class="md-input-icon-badge" aria-hidden="true"><i class="fa fa-user-o"></i></span>
 									<input class="md-input" type="text" name="uid" id="uid" placeholder="Enter Admin username" autocomplete="username" autofocus>
 									<button type="button" class="md-input-action" id="mdClearUid" title="Clear username" style="display:none;">
 										<i class="fa fa-times-circle" aria-hidden="true"></i>
@@ -144,7 +143,7 @@
 							<div class="md-field">
 								<label for="pwd">Password</label>
 								<div class="md-input-wrap">
-									<i class="fa fa-lock md-input-icon" aria-hidden="true"></i>
+									<span class="md-input-icon-badge" aria-hidden="true"><i class="fa fa-lock"></i></span>
 									<input class="md-input" type="password" name="pwd" id="pwd" placeholder="Enter your password" autocomplete="current-password">
 									<button type="button" class="md-input-action" id="mdTogglePwd" title="Show password" aria-label="Toggle password visibility">
 										<i class="fa fa-eye-slash" aria-hidden="true"></i>
@@ -159,7 +158,8 @@
 						</form>
 
 						<div class="md-trust-bar">
-							<i class="fa fa-lock" aria-hidden="true"></i>
+							<span class="md-trust-dot" aria-hidden="true"></span>
+							<i class="fa fa-shield" aria-hidden="true"></i>
 							<span>Authorized Clinical &amp; Admin Access</span>
 						</div>
 					</div>

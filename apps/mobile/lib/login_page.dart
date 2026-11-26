@@ -1070,18 +1070,16 @@ class _LoginPageState extends State<LoginPage>
     required bool isShortDesktop,
   }) {
     final role = _roleOptions[_selectedRoleIndex];
-    final double cardRadius = isDesktop ? 26 : 20;
+    final double cardRadius = isDesktop ? 22 : 20;
     final double cardMaxWidth =
-        isDesktop ? 430 : (isTablet ? 460 : double.infinity);
+        isDesktop ? 438 : (isTablet ? 460 : double.infinity);
     final double cardHorizPad =
-        isDesktop ? 30 : (isTablet ? 26 : (isSmallPhone ? 14 : 18));
+        isDesktop ? 26 : (isTablet ? 24 : (isSmallPhone ? 14 : 18));
     final double cardVertPad = isDesktop
-        ? (isShortDesktop ? 20 : 28)
-        : (isTablet ? 24 : (isSmallPhone ? 18 : 22));
-    final double emblemSize = isDesktop
-        ? (isShortDesktop ? 64 : 76)
-        : (isTablet ? 66 : 60);
-    final double emblemPad = isDesktop ? (isShortDesktop ? 9 : 11) : 9;
+        ? (isShortDesktop ? 18 : 24)
+        : (isTablet ? 22 : (isSmallPhone ? 16 : 20));
+    final double emblemSize =
+        isDesktop ? (isShortDesktop ? 50 : 58) : (isSmallPhone ? 46 : 52);
 
     return Container(
       width: double.infinity,
@@ -1090,14 +1088,19 @@ class _LoginPageState extends State<LoginPage>
         color: Colors.white,
         borderRadius: BorderRadius.circular(cardRadius),
         border: Border.all(
-          color: BrandColors.teal.withValues(alpha: 0.24),
-          width: 1.4,
+          color: BrandColors.navy.withValues(alpha: 0.10),
+          width: 1.0,
         ),
         boxShadow: [
           BoxShadow(
-            color: BrandColors.navy.withValues(alpha: 0.10),
-            blurRadius: isDesktop ? 34 : 24,
-            offset: Offset(0, isDesktop ? 14 : 8),
+            color: BrandColors.navy.withValues(alpha: 0.14),
+            blurRadius: isDesktop ? 44 : 26,
+            offset: Offset(0, isDesktop ? 18 : 10),
+          ),
+          BoxShadow(
+            color: BrandColors.teal.withValues(alpha: 0.08),
+            blurRadius: 14,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -1106,13 +1109,135 @@ class _LoginPageState extends State<LoginPage>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // Signature Branded Gradient Header Banner
             Container(
-              height: 6,
               width: double.infinity,
               decoration: const BoxDecoration(
-                gradient: BrandColors.ctaGradient,
+                gradient: BrandColors.heroHeaderGradient,
+              ),
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: -34,
+                    right: -26,
+                    child: IgnorePointer(
+                      child: Container(
+                        width: 132,
+                        height: 132,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: BrandColors.teal.withValues(alpha: 0.22),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: -42,
+                    left: 64,
+                    child: IgnorePointer(
+                      child: Container(
+                        width: 112,
+                        height: 112,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white.withValues(alpha: 0.07),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: cardHorizPad,
+                      vertical: isShortDesktop ? 16 : (isDesktop ? 22 : 18),
+                    ),
+                    child: Row(
+                      children: [
+                        MouseRegion(
+                          onEnter: (_) =>
+                              setState(() => _isHoveringEmblem = true),
+                          onExit: (_) =>
+                              setState(() => _isHoveringEmblem = false),
+                          child: AnimatedScale(
+                            scale: _isHoveringEmblem ? 1.05 : 1.0,
+                            duration: const Duration(milliseconds: 220),
+                            curve: Curves.easeOutBack,
+                            child: Container(
+                              width: emblemSize,
+                              height: emblemSize,
+                              padding: const EdgeInsets.all(7),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(
+                                  color: BrandColors.ice.withValues(alpha: 0.85),
+                                  width: 2,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: BrandColors.navyDark
+                                        .withValues(alpha: 0.28),
+                                    blurRadius: 16,
+                                    offset: const Offset(0, 6),
+                                  ),
+                                ],
+                              ),
+                              child: Image.asset(
+                                'assets/images/mdosthi-emblem.png',
+                                fit: BoxFit.contain,
+                                errorBuilder: (_, __, ___) => const Icon(
+                                  Icons.volunteer_activism_rounded,
+                                  size: 28,
+                                  color: BrandColors.teal,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                isBn ? 'MDOSTHI পোর্টাল' : 'MDOSTHI CARE',
+                                style: BrandTypography.body(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w700,
+                                  color: const Color(0xFFB2F5EA),
+                                ).copyWith(letterSpacing: 0.8),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                isBn ? 'স্বাগতম' : 'Welcome Back',
+                                style: BrandTypography.heading(
+                                  fontSize: isDesktop ? 21 : 19,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                  height: 1.2,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                isBn
+                                    ? 'রোগী ও মনোবিদদের জন্য সাইন ইন'
+                                    : 'For Patients & Psychologists',
+                                style: BrandTypography.body(
+                                  fontSize: 12.5,
+                                  color: BrandColors.ice.withValues(alpha: 0.90),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
+
+            // Form Body
             Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: cardHorizPad,
@@ -1121,79 +1246,16 @@ class _LoginPageState extends State<LoginPage>
               child: AutofillGroup(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    MouseRegion(
-                      onEnter: (_) =>
-                          setState(() => _isHoveringEmblem = true),
-                      onExit: (_) =>
-                          setState(() => _isHoveringEmblem = false),
-                      child: AnimatedScale(
-                        scale: _isHoveringEmblem ? 1.06 : 1.0,
-                        duration: const Duration(milliseconds: 220),
-                        curve: Curves.easeOutBack,
-                        child: Container(
-                          width: emblemSize,
-                          height: emblemSize,
-                          padding: EdgeInsets.all(emblemPad),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color:
-                                  BrandColors.teal.withValues(alpha: 0.30),
-                              width: 2,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color:
-                                    BrandColors.navy.withValues(alpha: 0.09),
-                                blurRadius: 16,
-                                offset: const Offset(0, 5),
-                              ),
-                            ],
-                          ),
-                          child: Image.asset(
-                            'assets/images/mdosthi-emblem.png',
-                            fit: BoxFit.contain,
-                            errorBuilder: (_, __, ___) => const Icon(
-                              Icons.volunteer_activism_rounded,
-                              size: 34,
-                              color: BrandColors.teal,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: isShortDesktop ? 10 : 12),
-
-                    Text(
-                      isBn ? 'স্বাগতম' : 'Welcome',
-                      style: BrandTypography.heading(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w700,
-                        color: BrandColors.navy,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      isBn
-                          ? 'রোগী ও মনোবিদদের জন্য সাইন ইন'
-                          : 'For Patients & Psychologists',
-                      style: BrandTypography.body(
-                        fontSize: 13,
-                        color: BrandColors.mutedInk,
-                      ),
-                    ),
-                    const SizedBox(height: 18),
-
-                    // Clean 2-Role Selector: Patient | Psychologist
+                    // High-Contrast 2-Role Selector: Patient | Psychologist
                     Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: BrandColors.pageBg,
+                        color: const Color(0xFFEFF8FB),
                         borderRadius: BorderRadius.circular(13),
                         border: Border.all(
-                          color: BrandColors.navy.withValues(alpha: 0.10),
+                          color: BrandColors.navy.withValues(alpha: 0.09),
                         ),
                       ),
                       child: Row(
@@ -1214,16 +1276,16 @@ class _LoginPageState extends State<LoginPage>
                                       const EdgeInsets.symmetric(vertical: 9),
                                   decoration: BoxDecoration(
                                     color: active
-                                        ? Colors.white
+                                        ? BrandColors.navy
                                         : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(9),
                                     boxShadow: active
                                         ? [
                                             BoxShadow(
                                               color: BrandColors.navy
-                                                  .withValues(alpha: 0.08),
-                                              blurRadius: 8,
-                                              offset: const Offset(0, 2),
+                                                  .withValues(alpha: 0.24),
+                                              blurRadius: 10,
+                                              offset: const Offset(0, 3),
                                             ),
                                           ]
                                         : null,
@@ -1235,8 +1297,8 @@ class _LoginPageState extends State<LoginPage>
                                         opt.icon,
                                         size: 16,
                                         color: active
-                                            ? BrandColors.tealDark
-                                            : BrandColors.mutedInk,
+                                            ? const Color(0xFF5EEAD4)
+                                            : const Color(0xFF4F6880),
                                       ),
                                       const SizedBox(width: 6),
                                       Flexible(
@@ -1247,10 +1309,10 @@ class _LoginPageState extends State<LoginPage>
                                             fontSize: 12.5,
                                             fontWeight: active
                                                 ? FontWeight.w700
-                                                : FontWeight.w500,
+                                                : FontWeight.w600,
                                             color: active
-                                                ? BrandColors.navy
-                                                : BrandColors.mutedInk,
+                                                ? Colors.white
+                                                : const Color(0xFF4F6880),
                                           ),
                                         ),
                                       ),
@@ -1278,7 +1340,7 @@ class _LoginPageState extends State<LoginPage>
                                   horizontal: 12, vertical: 10),
                               decoration: BoxDecoration(
                                 color: const Color(0xFFFEF2F2),
-                                borderRadius: BorderRadius.circular(13),
+                                borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
                                   color: const Color(0xFFFCA5A5),
                                 ),
@@ -1320,7 +1382,16 @@ class _LoginPageState extends State<LoginPage>
                             ),
                     ),
 
-                    // Username Field
+                    // Username Label + Field
+                    Text(
+                      isBn ? 'ইউজারনেম' : 'USERNAME',
+                      style: BrandTypography.body(
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w700,
+                        color: const Color(0xFF47627B),
+                      ).copyWith(letterSpacing: 0.5),
+                    ),
+                    const SizedBox(height: 6),
                     ValueListenableBuilder<TextEditingValue>(
                       valueListenable: usernameController,
                       builder: (context, value, _) {
@@ -1332,26 +1403,31 @@ class _LoginPageState extends State<LoginPage>
                           autofillHints: const [AutofillHints.username],
                           onSubmitted: (_) => _passwordFocus.requestFocus(),
                           style: BrandTypography.body(
-                            fontSize: 15,
+                            fontSize: 14.5,
                             color: BrandColors.navy,
                             fontWeight: FontWeight.w500,
                           ),
                           decoration: InputDecoration(
-                            labelText: isBn ? 'ইউজারনেম' : 'Username',
-                            labelStyle: BrandTypography.body(
-                              color: BrandColors.mutedInk,
-                              fontSize: 13.5,
-                              fontWeight: FontWeight.w500,
-                            ),
                             hintText: isBn ? role.hintBn : role.hintEn,
                             hintStyle: BrandTypography.body(
-                              color: Colors.grey.shade400,
-                              fontSize: 13,
+                              color: const Color(0xFF94A3B8),
+                              fontSize: 13.5,
                             ),
-                            prefixIcon: const Icon(
-                              Icons.person_outline_rounded,
-                              color: BrandColors.tealDark,
-                              size: 21,
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(7),
+                              child: Container(
+                                width: 34,
+                                height: 34,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFE6F8F7),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: const Icon(
+                                  Icons.person_outline_rounded,
+                                  color: BrandColors.tealDark,
+                                  size: 19,
+                                ),
+                              ),
                             ),
                             suffixIcon: value.text.isNotEmpty
                                 ? IconButton(
@@ -1368,22 +1444,22 @@ class _LoginPageState extends State<LoginPage>
                                   )
                                 : null,
                             filled: true,
-                            fillColor: BrandColors.pageBg,
+                            fillColor: const Color(0xFFFAFEFF),
                             contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 18, vertical: 16),
+                                horizontal: 16, vertical: 15),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
                               borderSide: BorderSide(
                                 color:
-                                    BrandColors.navy.withValues(alpha: 0.15),
-                                width: 1.3,
+                                    BrandColors.navy.withValues(alpha: 0.14),
+                                width: 1.4,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
                               borderSide: const BorderSide(
                                 color: BrandColors.blue,
-                                width: 2.0,
+                                width: 1.8,
                               ),
                             ),
                           ),
@@ -1392,7 +1468,16 @@ class _LoginPageState extends State<LoginPage>
                     ),
                     const SizedBox(height: 15),
 
-                    // Password Field
+                    // Password Label + Field
+                    Text(
+                      isBn ? 'পাসওয়ার্ড' : 'PASSWORD',
+                      style: BrandTypography.body(
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w700,
+                        color: const Color(0xFF47627B),
+                      ).copyWith(letterSpacing: 0.5),
+                    ),
+                    const SizedBox(height: 6),
                     TextField(
                       controller: passwordController,
                       focusNode: _passwordFocus,
@@ -1402,28 +1487,33 @@ class _LoginPageState extends State<LoginPage>
                       autofillHints: const [AutofillHints.password],
                       onSubmitted: (_) => handleLogin(),
                       style: BrandTypography.body(
-                        fontSize: 15,
+                        fontSize: 14.5,
                         color: BrandColors.navy,
                         fontWeight: FontWeight.w500,
                       ),
                       decoration: InputDecoration(
-                        labelText: isBn ? 'পাসওয়ার্ড' : 'Password',
-                        labelStyle: BrandTypography.body(
-                          color: BrandColors.mutedInk,
-                          fontSize: 13.5,
-                          fontWeight: FontWeight.w500,
-                        ),
                         hintText: isBn
                             ? 'আপনার পাসওয়ার্ড লিখুন'
                             : 'Enter your password',
                         hintStyle: BrandTypography.body(
-                          color: Colors.grey.shade400,
-                          fontSize: 13,
+                          color: const Color(0xFF94A3B8),
+                          fontSize: 13.5,
                         ),
-                        prefixIcon: const Icon(
-                          Icons.lock_outline_rounded,
-                          color: BrandColors.tealDark,
-                          size: 21,
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.all(7),
+                          child: Container(
+                            width: 34,
+                            height: 34,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFE6F8F7),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Icon(
+                              Icons.lock_outline_rounded,
+                              color: BrandColors.tealDark,
+                              size: 19,
+                            ),
+                          ),
                         ),
                         suffixIcon: Padding(
                           padding: const EdgeInsets.only(right: 4),
@@ -1448,28 +1538,28 @@ class _LoginPageState extends State<LoginPage>
                           ),
                         ),
                         filled: true,
-                        fillColor: BrandColors.pageBg,
+                        fillColor: const Color(0xFFFAFEFF),
                         contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 18, vertical: 16),
+                            horizontal: 16, vertical: 15),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(14),
                           borderSide: BorderSide(
-                            color: BrandColors.navy.withValues(alpha: 0.15),
-                            width: 1.3,
+                            color: BrandColors.navy.withValues(alpha: 0.14),
+                            width: 1.4,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(14),
                           borderSide: const BorderSide(
                             color: BrandColors.blue,
-                            width: 2.0,
+                            width: 1.8,
                           ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 20),
 
-                    // Sign-In Button
+                    // Matched 14px Rounded Gradient CTA Button
                     MouseRegion(
                       cursor: _isLoading
                           ? SystemMouseCursors.wait
@@ -1481,7 +1571,7 @@ class _LoginPageState extends State<LoginPage>
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
                         width: double.infinity,
-                        height: 52,
+                        height: 50,
                         transform: Matrix4.translationValues(
                           0,
                           (_isHoveringLoginBtn && !_isLoading) ? -1.5 : 0,
@@ -1489,13 +1579,13 @@ class _LoginPageState extends State<LoginPage>
                         ),
                         decoration: BoxDecoration(
                           gradient: BrandColors.ctaGradient,
-                          borderRadius: BorderRadius.circular(999),
+                          borderRadius: BorderRadius.circular(14),
                           boxShadow: [
                             BoxShadow(
                               color: BrandColors.blue.withValues(
-                                alpha: _isHoveringLoginBtn ? 0.32 : 0.20,
+                                alpha: _isHoveringLoginBtn ? 0.30 : 0.22,
                               ),
-                              blurRadius: _isHoveringLoginBtn ? 20 : 12,
+                              blurRadius: _isHoveringLoginBtn ? 22 : 14,
                               offset: const Offset(0, 6),
                             ),
                           ],
@@ -1507,7 +1597,9 @@ class _LoginPageState extends State<LoginPage>
                             disabledBackgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent,
                             foregroundColor: Colors.white,
-                            shape: const StadiumBorder(),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
                           ),
                           child: _isLoading
                               ? Row(
@@ -1538,7 +1630,7 @@ class _LoginPageState extends State<LoginPage>
                                     Text(
                                       isBn ? 'লগইন করুন' : 'Sign In',
                                       style: BrandTypography.heading(
-                                        fontSize: 15.5,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.white,
                                       ),
@@ -1547,40 +1639,52 @@ class _LoginPageState extends State<LoginPage>
                                     const Icon(
                                       Icons.arrow_forward_rounded,
                                       color: Colors.white,
-                                      size: 19,
+                                      size: 18,
                                     ),
                                   ],
                                 ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 18),
 
-                    // Minimal Security Line
+                    // Clean Hairline Security Footer
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 9),
+                      padding: const EdgeInsets.only(top: 14),
                       decoration: BoxDecoration(
-                        color: BrandColors.pageBg,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: BrandColors.navy.withValues(alpha: 0.07),
+                        border: Border(
+                          top: BorderSide(
+                            color: BrandColors.navy.withValues(alpha: 0.08),
+                          ),
                         ),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          Container(
+                            width: 7,
+                            height: 7,
+                            decoration: BoxDecoration(
+                              color: BrandColors.teal,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: BrandColors.teal.withValues(alpha: 0.25),
+                                  spreadRadius: 3,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 8),
                           const Icon(
-                            Icons.lock_outline_rounded,
-                            size: 15,
+                            Icons.verified_user_outlined,
+                            size: 14,
                             color: BrandColors.tealDark,
                           ),
                           const SizedBox(width: 6),
                           Flexible(
                             child: Text(
-                              isBn
-                                  ? 'গোপনীয় ও সুরক্ষিত'
-                                  : 'Private & Secure',
+                              isBn ? 'গোপনীয় ও সুরক্ষিত' : 'Private & Secure',
                               style: BrandTypography.body(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,

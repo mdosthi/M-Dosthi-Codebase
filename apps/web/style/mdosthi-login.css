@@ -288,36 +288,67 @@ html, body {
 
 .md-login-card {
 	background: #FFFFFF;
-	border-radius: 26px;
-	border: 1.4px solid rgba(0, 191, 166, 0.24);
-	box-shadow: 0 20px 48px rgba(11, 45, 107, 0.10);
+	border-radius: 22px;
+	border: 1px solid rgba(11, 45, 107, 0.10);
+	box-shadow:
+		0 22px 50px -12px rgba(11, 45, 107, 0.14),
+		0 4px 14px rgba(0, 191, 166, 0.08);
 	overflow: hidden;
-	max-width: 430px;
+	max-width: 438px;
 	width: 100%;
 }
 
-.md-login-accent {
-	height: 6px;
-	width: 100%;
-	background: var(--gradient-cta, linear-gradient(135deg, #0B2D6B 0%, #007BFF 50%, #00BFA6 100%));
+.md-login-header {
+	position: relative;
+	padding: 22px 26px;
+	background: linear-gradient(135deg, #0B2D6B 0%, #0D4A8A 56%, #00897B 100%);
+	overflow: hidden;
 }
 
-.md-login-body {
-	padding: 28px 30px 26px;
+.md-login-header::before {
+	content: '';
+	position: absolute;
+	top: -36px;
+	right: -28px;
+	width: 140px;
+	height: 140px;
+	border-radius: 50%;
+	background: rgba(0, 191, 166, 0.22);
+	pointer-events: none;
+}
+
+.md-login-header::after {
+	content: '';
+	position: absolute;
+	bottom: -44px;
+	left: 18%;
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.07);
+	pointer-events: none;
+}
+
+.md-login-header-inner {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	gap: 15px;
 }
 
 .md-emblem-wrap {
-	width: 76px;
-	height: 76px;
-	margin: 0 auto 14px;
-	padding: 11px;
-	border-radius: 50%;
+	width: 58px;
+	height: 58px;
+	padding: 7px;
+	border-radius: 16px;
 	background: #FFFFFF;
-	border: 2px solid rgba(0, 191, 166, 0.30);
-	box-shadow: 0 8px 20px rgba(11, 45, 107, 0.09);
+	border: 2px solid rgba(224, 247, 250, 0.85);
+	box-shadow: 0 8px 20px rgba(7, 31, 74, 0.28);
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	flex-shrink: 0;
 	transition: transform 0.25s ease;
 }
 
@@ -332,43 +363,65 @@ html, body {
 	display: block;
 }
 
-.md-card-title {
-	text-align: center;
-	font-family: var(--font-heading, 'Poppins', sans-serif);
-	font-size: 22px;
+.md-header-copy {
+	min-width: 0;
+}
+
+.md-header-kicker {
+	display: inline-block;
+	font-family: var(--font-body, 'Inter', sans-serif);
+	font-size: 10px;
 	font-weight: 700;
-	color: var(--color-navy, #0B2D6B);
-	margin: 0 0 4px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #B2F5EA;
+	margin-bottom: 2px;
+}
+
+.md-card-title {
+	text-align: left;
+	font-family: var(--font-heading, 'Poppins', sans-serif);
+	font-size: 21px;
+	font-weight: 700;
+	line-height: 1.2;
+	color: #FFFFFF;
+	margin: 0 0 3px;
 }
 
 .md-card-subtitle {
-	text-align: center;
-	font-size: 13px;
-	color: #5A7188;
-	margin: 0 0 18px;
+	text-align: left;
+	font-size: 12.5px;
+	color: rgba(224, 247, 250, 0.88);
+	margin: 0;
+	line-height: 1.35;
 }
 
-/* Role Selector: Admin | Psychologist | Doctor */
+.md-login-body {
+	padding: 24px 26px 22px;
+	background: #FFFFFF;
+}
+
+/* High-Contrast Role Selector: Admin | Psychologist | Doctor */
 .md-role-tabs {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 4px;
+	gap: 5px;
 	padding: 4px;
 	border-radius: 13px;
-	background: #F3FAFC;
-	border: 1px solid rgba(11, 45, 107, 0.10);
-	margin-bottom: 18px;
+	background: #EFF8FB;
+	border: 1px solid rgba(11, 45, 107, 0.09);
+	margin-bottom: 20px;
 }
 
 .md-role-tab {
 	border: none;
 	background: transparent;
 	border-radius: 9px;
-	padding: 8px 6px;
+	padding: 9px 6px;
 	font-family: var(--font-heading, 'Poppins', sans-serif);
 	font-size: 12px;
 	font-weight: 600;
-	color: #5A7188;
+	color: #4F6880;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -381,14 +434,19 @@ html, body {
 	transition: all 0.2s ease;
 }
 
-.md-role-tab.active {
-	background: #FFFFFF;
+.md-role-tab:hover:not(.active) {
 	color: var(--color-navy, #0B2D6B);
-	box-shadow: 0 2px 8px rgba(11, 45, 107, 0.08);
+	background: rgba(255, 255, 255, 0.65);
+}
+
+.md-role-tab.active {
+	background: var(--color-navy, #0B2D6B);
+	color: #FFFFFF;
+	box-shadow: 0 4px 12px rgba(11, 45, 107, 0.24);
 }
 
 .md-role-tab.active i {
-	color: #00897B;
+	color: #5EEAD4;
 }
 
 /* Inline Error Alert */
@@ -397,14 +455,14 @@ html, body {
 	align-items: flex-start;
 	gap: 8px;
 	padding: 10px 12px;
-	border-radius: 13px;
+	border-radius: 12px;
 	background: #FEF2F2;
 	border: 1px solid #FCA5A5;
 	color: #991B1B;
 	font-size: 12.5px;
 	font-weight: 500;
 	line-height: 1.4;
-	margin-bottom: 15px;
+	margin-bottom: 16px;
 }
 
 .md-error-alert.visible {
@@ -416,16 +474,18 @@ html, body {
 	margin-top: 2px;
 }
 
-/* Form Fields */
+/* Refined Clinical Form Fields */
 .md-field {
-	margin-bottom: 15px;
+	margin-bottom: 16px;
 }
 
 .md-field label {
 	display: block;
-	font-size: 13px;
-	font-weight: 600;
-	color: var(--color-navy, #0B2D6B);
+	font-size: 11.5px;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	color: #47627B;
 	margin-bottom: 6px;
 }
 
@@ -433,23 +493,30 @@ html, body {
 	position: relative;
 }
 
-.md-input-icon {
+.md-input-icon-badge {
 	position: absolute;
-	left: 15px;
+	left: 8px;
 	top: 50%;
 	transform: translateY(-50%);
+	width: 34px;
+	height: 34px;
+	border-radius: 10px;
+	background: #E6F8F7;
 	color: #00897B;
-	font-size: 16px;
+	font-size: 15px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	pointer-events: none;
 }
 
 .md-input {
 	width: 100%;
-	height: 48px;
-	padding: 0 44px 0 42px;
+	height: 50px;
+	padding: 0 44px 0 52px;
 	border-radius: 14px;
-	border: 1.4px solid rgba(11, 45, 107, 0.16);
-	background: #F3FAFC;
+	border: 1.4px solid rgba(11, 45, 107, 0.14);
+	background: #FAFEFF;
 	font-family: var(--font-body, 'Inter', sans-serif);
 	font-size: 14.5px;
 	font-weight: 500;
@@ -466,7 +533,7 @@ html, body {
 	outline: none;
 	background: #FFFFFF;
 	border-color: var(--color-blue, #007BFF);
-	box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.12);
+	box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.11);
 }
 
 .md-input-action {
@@ -492,12 +559,12 @@ html, body {
 	background: rgba(11, 45, 107, 0.06);
 }
 
-/* Submit CTA Button */
+/* Matched 14px Rounded Gradient CTA Button */
 .md-submit-btn {
 	width: 100%;
 	height: 50px;
 	border: none;
-	border-radius: 999px;
+	border-radius: 14px;
 	background: var(--gradient-cta, linear-gradient(135deg, #0B2D6B 0%, #007BFF 50%, #00BFA6 100%));
 	color: #FFFFFF;
 	font-family: var(--font-heading, 'Poppins', sans-serif);
@@ -524,12 +591,11 @@ html, body {
 	cursor: wait;
 }
 
+/* Clean Hairline Security Footer */
 .md-trust-bar {
-	margin-top: 16px;
-	padding: 9px 12px;
-	border-radius: 12px;
-	background: #F3FAFC;
-	border: 1px solid rgba(11, 45, 107, 0.07);
+	margin-top: 18px;
+	padding-top: 14px;
+	border-top: 1px solid rgba(11, 45, 107, 0.08);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -539,13 +605,18 @@ html, body {
 	color: #5A7188;
 }
 
-.md-trust-bar i {
-	color: #00897B;
+.md-trust-dot {
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: #00BFA6;
+	box-shadow: 0 0 0 3px rgba(0, 191, 166, 0.18);
+	flex-shrink: 0;
 }
 
-/* Hidden to prevent redundant double-wordmark stacking when topbar logo is visible */
-.md-mobile-primary-logo {
-	display: none;
+.md-trust-bar i {
+	color: #00897B;
+	font-size: 13px;
 }
 
 /* Wide Desktop (>= 1400px) */
@@ -606,14 +677,16 @@ html, body {
 	.md-quick-chips {
 		margin-bottom: 16px;
 	}
+	.md-login-header {
+		padding: 16px 22px;
+	}
 	.md-login-body {
-		padding: 20px 26px 18px;
+		padding: 18px 22px 16px;
 	}
 	.md-emblem-wrap {
-		width: 64px;
-		height: 64px;
-		padding: 9px;
-		margin-bottom: 10px;
+		width: 50px;
+		height: 50px;
+		padding: 6px;
 	}
 }
 
@@ -652,10 +725,9 @@ html, body {
 		display: none;
 	}
 	.md-emblem-wrap {
-		width: 66px;
-		height: 66px;
-		padding: 10px;
-		margin-bottom: 12px;
+		width: 54px;
+		height: 54px;
+		padding: 7px;
 	}
 	.md-showcase-col {
 		align-items: center;
@@ -708,14 +780,17 @@ html, body {
 		max-width: 100%;
 		border-radius: 20px;
 	}
+	.md-login-header {
+		padding: 18px 18px;
+	}
 	.md-login-body {
 		padding: 20px 18px 18px;
 	}
 	.md-emblem-wrap {
-		width: 60px;
-		height: 60px;
-		padding: 9px;
-		margin-bottom: 10px;
+		width: 50px;
+		height: 50px;
+		padding: 6px;
+		border-radius: 14px;
 	}
 	.md-card-title {
 		font-size: 20px;
