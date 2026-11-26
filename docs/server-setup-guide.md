@@ -1,7 +1,7 @@
 # All-in-One Server Setup & Deployment Guide (mDosthi Alongside Existing eDosthi)
 
 Complete, copy-paste reference for uploading and running **`M-Dosthi-Codebase`** on a Linux server **where `eDosthi` is already installed and running** — supporting **both**:
-- **Guide A — Shared Tomcat Mode (`:8080`)**: Mounts `/M-Dosthi/` onto eDosthi's existing Tomcat 9 (`:8080`) alongside `/eDosthi/`, with M-Dosthi RMI on `:1100`.
+- **Guide A — Shared Tomcat Mode (`:8080`)**: Mounts `/mDosthi/` onto eDosthi's existing Tomcat 9 (`:8080`) alongside `/eDosthi/`, with M-Dosthi RMI on `:1100`.
 - **Guide B — Individual Tomcat Mode (`:8081`)**: Runs M-Dosthi on its own bundled Tomcat 9 (`M-Dosthi-Codebase/Tomcat9 -> tools/tomcat9` on `:8081`, shutdown `:8006`) + M-Dosthi RMI (`:1100`), **zero touch and zero restart to eDosthi's Tomcat (`:8080`)**.
 
 Works **with or without GitHub**, **with or without a domain / third-party tools**, and from **Linux or macOS** workstations.
@@ -29,8 +29,8 @@ Works **with or without GitHub**, **with or without a domain / third-party tools
 │       ├── lib/servlet-api.jar
 │       ├── webapps/eDosthi/                             # Existing /eDosthi/ web app + config.info
 │       ├── conf/Catalina/localhost/
-│       │   └── M-Dosthi.xml                             # [Created ONLY in Guide A: Shared Mode] -> points to M-Dosthi-Codebase/apps/web
-│       ├── work/Catalina/localhost/M-Dosthi/            # [Shared Mode] Compiled JSP cache
+│       │   └── mDosthi.xml                             # [Created ONLY in Guide A: Shared Mode] -> points to M-Dosthi-Codebase/apps/web
+│       ├── work/Catalina/localhost/mDosthi/            # [Shared Mode] Compiled JSP cache
 │       └── logs/catalina.out, tomcat.pid
 │
 └── M-Dosthi-Codebase/                                   # [UPLOADED TO SERVER — /home/YOUR_SERVER_USER/M-Dosthi-Codebase]
@@ -39,11 +39,11 @@ Works **with or without GitHub**, **with or without a domain / third-party tools
     ├── tools/tomcat9/                                   # [Individual Mode] HTTP :8081, shutdown :8006
     │   ├── bin/startup.sh, shutdown.sh, setenv.sh
     │   ├── conf/server.xml                              # Port 8081 (HTTP), Port 8006 (Shutdown)
-    │   ├── conf/Catalina/localhost/M-Dosthi.xml         # [Individual Mode] -> points docBase to $MDOSTHI_DIR/apps/web
-    │   ├── work/Catalina/localhost/M-Dosthi/            # [Individual Mode] Compiled JSP cache
+    │   ├── conf/Catalina/localhost/mDosthi.xml         # [Individual Mode] -> points docBase to $MDOSTHI_DIR/apps/web
+    │   ├── work/Catalina/localhost/mDosthi/            # [Individual Mode] Compiled JSP cache
     │   └── logs/catalina.out, tomcat.pid                # [Individual Mode] Logs & Tomcat PID
     ├── apps/web/
-    │   ├── config.info                                  # [Server-only] 03) blport=1100, 05) gblhome=..., 06) gbltelemedix=/M-Dosthi
+    │   ├── config.info                                  # [Server-only] 03) blport=1100, 05) gblhome=..., 06) gbltelemedix=/mDosthi
     │   ├── temp/                                        # [Server-only] Runtime upload/session temp dir
     │   └── WEB-INF/lib/*.jar                            # Built by ./scripts/legacy.sh build
     └── services/legacy/runtime/
@@ -99,9 +99,9 @@ CodeBase/                                                # e.g. /Users/dipayanra
 | :--- | :--- | :--- | :--- | :--- |
 | **MySQL Server** | `3306` | Native OS `mysqld` (`127.0.0.1` only) | Already running (`eDosthi` + `mDosthi` DBs) | Already running (`eDosthi` + `mDosthi` DBs) |
 | **eDosthi RMI** | `1099` | `$EDOSTHI_DIR/eDosthi-BL/gblinfo.inf` | Already running (untouched) | Already running (untouched) |
-| **eDosthi Tomcat 9** | `8080` (shutdown `8005`) | `$EDOSTHI_DIR/Tomcat9/conf/server.xml` | Serves **both** `/eDosthi/` and `/M-Dosthi/` | Serves `/eDosthi/` only (**untouched**) |
+| **eDosthi Tomcat 9** | `8080` (shutdown `8005`) | `$EDOSTHI_DIR/Tomcat9/conf/server.xml` | Serves **both** `/eDosthi/` and `/mDosthi/` | Serves `/eDosthi/` only (**untouched**) |
 | **M-Dosthi RMI** | `1100` | `$MDOSTHI_DIR/services/legacy/runtime/gblinfo.inf` | Started via `./scripts/legacy.sh start --shared` | Started via `./scripts/legacy.sh start --individual` |
-| **M-Dosthi Individual Tomcat 9** | `8081` (shutdown `8006`) | `$MDOSTHI_DIR/tools/tomcat9/conf/server.xml` | Stopped / unused | Serves `/M-Dosthi/` on `:8081` |
+| **M-Dosthi Individual Tomcat 9** | `8081` (shutdown `8006`) | `$MDOSTHI_DIR/tools/tomcat9/conf/server.xml` | Stopped / unused | Serves `/mDosthi/` on `:8081` |
 | **Spring Boot REST API** *(optional)* | `9090` | `$MDOSTHI_DIR/.env` & `scripts/api.sh` | Optional (for Flutter app) | Optional (for Flutter app) |
 
 ---
@@ -191,7 +191,7 @@ rsync -avz --progress \
   "$LOCAL_MDOSTHI_DIR/" \
   "$SERVER_USER@$SERVER_IP:$REMOTE_MDOSTHI_DIR/"
 ```
-*(Notice `tools/tomcat9/` **is included**—only its local `logs/`, `work/`, `temp/`, and local `M-Dosthi.xml` are excluded—so both `--shared` and `--individual` work out of the box on the server even without internet access!)*
+*(Notice `tools/tomcat9/` **is included**—only its local `logs/`, `work/`, `temp/`, and local `mDosthi.xml` are excluded—so both `--shared` and `--individual` work out of the box on the server even without internet access!)*
 
 ---
 
@@ -259,11 +259,11 @@ mysql --host=127.0.0.1 -u mdosthi_user -p mDosthi \
 
 ## 5. Guide A — Shared Tomcat Setup (`:8080`, Alongside Existing `/eDosthi/`)
 
-Use **Guide A** when you want `/M-Dosthi/` served on the **same `:8080` Tomcat** (and same reverse proxy / domain) that already serves `/eDosthi/`.
+Use **Guide A** when you want `/mDosthi/` served on the **same `:8080` Tomcat** (and same reverse proxy / domain) that already serves `/eDosthi/`.
 
 ### Exact Files Created / Updated in Shared Mode
-1. `$SHARED_TOMCAT_HOME/conf/Catalina/localhost/M-Dosthi.xml` → `<Context docBase="$MDOSTHI_DIR/apps/web" reloadable="false" />`
-2. `$MDOSTHI_DIR/apps/web/config.info` → `blport = 1100`, `gblhome = http://YOUR_SERVER_IP:8080/M-Dosthi`, `gbltelemedix = /M-Dosthi`
+1. `$SHARED_TOMCAT_HOME/conf/Catalina/localhost/mDosthi.xml` → `<Context docBase="$MDOSTHI_DIR/apps/web" reloadable="false" />`
+2. `$MDOSTHI_DIR/apps/web/config.info` → `blport = 1100`, `gblhome = http://YOUR_SERVER_IP:8080/mDosthi`, `gbltelemedix = /mDosthi`
 3. `$MDOSTHI_DIR/services/legacy/runtime/gblinfo.inf` → `blport = 1100`, `gbldburl = jdbc:mysql://127.0.0.1:3306/mDosthi?...`
 4. `$MDOSTHI_DIR/apps/web/WEB-INF/lib/*.jar` & `$MDOSTHI_DIR/services/legacy/runtime/iMediXBusinessLogic.jar`
 
@@ -271,7 +271,7 @@ Use **Guide A** when you want `/M-Dosthi/` served on the **same `:8080` Tomcat**
 ```bash
 SHARED_TOMCAT_HOME="/home/YOUR_SERVER_USER/eDosthi/Tomcat9"
 MDOSTHI_DIR="/home/YOUR_SERVER_USER/M-Dosthi-Codebase"
-ACCESS_URL="http://YOUR_SERVER_IP:8080/M-Dosthi"
+ACCESS_URL="http://YOUR_SERVER_IP:8080/mDosthi"
 DB_USER="mdosthi_user"
 DB_PASS="YOUR_STRONG_DB_PASSWORD"
 
@@ -293,7 +293,7 @@ sed -i "s|^08) gbltemp = .*|08) gbltemp = $MDOSTHI_DIR/apps/web/temp|" "$MDOSTHI
 ./scripts/legacy.sh stop --shared || true
 ./scripts/legacy.sh start --shared
 
-rm -rf "$SHARED_TOMCAT_HOME/work/Catalina/localhost/M-Dosthi"
+rm -rf "$SHARED_TOMCAT_HOME/work/Catalina/localhost/mDosthi"
 "$SHARED_TOMCAT_HOME/bin/shutdown.sh" || true
 sleep 4
 (cd "$SHARED_TOMCAT_HOME/webapps/eDosthi" && "$SHARED_TOMCAT_HOME/bin/startup.sh")
@@ -301,7 +301,7 @@ sleep 4
 sleep 5
 "$MDOSTHI_DIR/scripts/legacy.sh" status --shared
 curl -s -o /dev/null -w "eDosthi (:8080) -> HTTP %{http_code}\n" http://127.0.0.1:8080/eDosthi/
-curl -s -o /dev/null -w "M-Dosthi (:8080) -> HTTP %{http_code}\n" http://127.0.0.1:8080/M-Dosthi/
+curl -s -o /dev/null -w "M-Dosthi (:8080) -> HTTP %{http_code}\n" http://127.0.0.1:8080/mDosthi/
 ```
 > [!NOTE]
 > Always start Shared Tomcat from `$SHARED_TOMCAT_HOME/webapps/eDosthi` (as shown above) so existing `/eDosthi/` continues finding `$SHARED_TOMCAT_HOME/webapps/eDosthi/config.info`.
@@ -335,13 +335,13 @@ sudo systemctl daemon-reload && sudo systemctl enable --now mdosthi-rmi
 
 ## 6. Guide B — Individual Tomcat Setup (`:8081`, Dedicated Bundled Tomcat Alongside eDosthi)
 
-Use **Guide B** when you want **100% process isolation from `eDosthi`** — `eDosthi` keeps running on `:8080` completely untouched (not even a `M-Dosthi.xml` descriptor or restart!), while M-Dosthi runs on its own bundled Tomcat (`$MDOSTHI_DIR/Tomcat9` -> `$MDOSTHI_DIR/tools/tomcat9`) on **HTTP `:8081`** (shutdown `:8006`) + M-Dosthi RMI on **`:1100`**.
+Use **Guide B** when you want **100% process isolation from `eDosthi`** — `eDosthi` keeps running on `:8080` completely untouched (not even a `mDosthi.xml` descriptor or restart!), while M-Dosthi runs on its own bundled Tomcat (`$MDOSTHI_DIR/Tomcat9` -> `$MDOSTHI_DIR/tools/tomcat9`) on **HTTP `:8081`** (shutdown `:8006`) + M-Dosthi RMI on **`:1100`**.
 
 ### Exact Files Created / Updated in Individual Mode
 1. `$MDOSTHI_DIR/Tomcat9` → symlink to `$MDOSTHI_DIR/tools/tomcat9`
 2. `$MDOSTHI_DIR/tools/tomcat9/conf/server.xml` → HTTP Connector `8081`, Shutdown `8006`
-3. `$MDOSTHI_DIR/tools/tomcat9/conf/Catalina/localhost/M-Dosthi.xml` → `<Context docBase="$MDOSTHI_DIR/apps/web" reloadable="false" />`
-4. `$MDOSTHI_DIR/apps/web/config.info` → `blport = 1100`, `gblroot = $MDOSTHI_DIR/tools/tomcat9`, `gblhome = http://YOUR_SERVER_IP:8081/M-Dosthi`, `gbltelemedix = /M-Dosthi`
+3. `$MDOSTHI_DIR/tools/tomcat9/conf/Catalina/localhost/mDosthi.xml` → `<Context docBase="$MDOSTHI_DIR/apps/web" reloadable="false" />`
+4. `$MDOSTHI_DIR/apps/web/config.info` → `blport = 1100`, `gblroot = $MDOSTHI_DIR/tools/tomcat9`, `gblhome = http://YOUR_SERVER_IP:8081/mDosthi`, `gbltelemedix = /mDosthi`
 5. `$MDOSTHI_DIR/services/legacy/runtime/gblinfo.inf` → `blport = 1100`, `gbldburl = jdbc:mysql://127.0.0.1:3306/mDosthi?...`
 6. `$MDOSTHI_DIR/tools/tomcat9/logs/tomcat.pid` & `$MDOSTHI_DIR/services/legacy/runtime/iMediXBusinessLogic.pid`
 
@@ -349,7 +349,7 @@ Use **Guide B** when you want **100% process isolation from `eDosthi`** — `eDo
 ```bash
 MDOSTHI_DIR="/home/YOUR_SERVER_USER/M-Dosthi-Codebase"
 SERVER_IP="YOUR_SERVER_IP"
-ACCESS_URL="http://$SERVER_IP:8081/M-Dosthi"
+ACCESS_URL="http://$SERVER_IP:8081/mDosthi"
 DB_USER="mdosthi_user"
 DB_PASS="YOUR_STRONG_DB_PASSWORD"
 
@@ -369,13 +369,13 @@ sed -i "s|^04) gblroot = .*|04) gblroot = $MDOSTHI_DIR/tools/tomcat9|" "$MDOSTHI
 sed -i "s|^05) gblhome = .*|05) gblhome = $ACCESS_URL|" "$MDOSTHI_DIR/apps/web/config.info"
 sed -i "s|^08) gbltemp = .*|08) gbltemp = $MDOSTHI_DIR/apps/web/temp|" "$MDOSTHI_DIR/apps/web/config.info"
 
-rm -rf "$MDOSTHI_DIR/tools/tomcat9/work/Catalina/localhost/M-Dosthi"
+rm -rf "$MDOSTHI_DIR/tools/tomcat9/work/Catalina/localhost/mDosthi"
 ./scripts/legacy.sh stop --individual || true
 ./scripts/legacy.sh start --individual
 
 sleep 5
 ./scripts/legacy.sh status --individual
-curl -s -o /dev/null -w "M-Dosthi Individual (:8081) -> HTTP %{http_code}\n" http://127.0.0.1:8081/M-Dosthi/
+curl -s -o /dev/null -w "M-Dosthi Individual (:8081) -> HTTP %{http_code}\n" http://127.0.0.1:8081/mDosthi/
 ```
 
 ### Open Port `8081` in the Server Firewall (Individual Mode Only)
@@ -426,19 +426,19 @@ sudo systemctl daemon-reload && sudo systemctl enable --now mdosthi-individual
 | Deployment Mode | Direct URL (No Domain, No Third Party) | Reverse-Proxied URL (If Server Uses Nginx/Apache) |
 | :--- | :--- | :--- |
 | **Existing eDosthi** | `http://YOUR_SERVER_IP:8080/eDosthi/` | `https://edosthi.in/eDosthi/` *(unchanged)* |
-| **Guide A — M-Dosthi Shared Tomcat** | `http://YOUR_SERVER_IP:8080/M-Dosthi/` | `https://YOUR_DOMAIN/M-Dosthi/` *(proxy `127.0.0.1:8080/M-Dosthi/`)* |
-| **Guide B — M-Dosthi Individual Tomcat** | `http://YOUR_SERVER_IP:8081/M-Dosthi/` | `https://YOUR_DOMAIN/M-Dosthi/` *(proxy `127.0.0.1:8081/M-Dosthi/`)* |
+| **Guide A — M-Dosthi Shared Tomcat** | `http://YOUR_SERVER_IP:8080/mDosthi/` | `https://YOUR_DOMAIN/mDosthi/` *(proxy `127.0.0.1:8080/mDosthi/`)* |
+| **Guide B — M-Dosthi Individual Tomcat** | `http://YOUR_SERVER_IP:8081/mDosthi/` | `https://YOUR_DOMAIN/mDosthi/` *(proxy `127.0.0.1:8081/mDosthi/`)* |
 
 ### Optional Nginx Location Block (Add Inside Existing Server Block if Nginx Is Used)
 ```nginx
-# Route /M-Dosthi/ to 8080 (Guide A: Shared) or 8081 (Guide B: Individual)
-location /M-Dosthi/ {
-    proxy_pass http://127.0.0.1:8081/M-Dosthi/;
+# Route /mDosthi/ to 8080 (Guide A: Shared) or 8081 (Guide B: Individual)
+location /mDosthi/ {
+    proxy_pass http://127.0.0.1:8081/mDosthi/;
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_cookie_path /M-Dosthi /M-Dosthi;
+    proxy_cookie_path /mDosthi /mDosthi;
 }
 ```
 
@@ -486,11 +486,11 @@ flutter build web --release \
 2. **Clear Tomcat's compiled JSP cache** (Tomcat recompiles updated JSPs automatically on next browser load):
    - **Shared Mode (`:8080`):**
      ```bash
-     rm -rf "/home/YOUR_SERVER_USER/eDosthi/Tomcat9/work/Catalina/localhost/M-Dosthi"
+     rm -rf "/home/YOUR_SERVER_USER/eDosthi/Tomcat9/work/Catalina/localhost/mDosthi"
      ```
    - **Individual Mode (`:8081`):**
      ```bash
-     rm -rf "/home/YOUR_SERVER_USER/M-Dosthi-Codebase/tools/tomcat9/work/Catalina/localhost/M-Dosthi"
+     rm -rf "/home/YOUR_SERVER_USER/M-Dosthi-Codebase/tools/tomcat9/work/Catalina/localhost/mDosthi"
      ```
 
 ### 9.2 Rebuild When Java / Servlet / RMI Code Changes (`services/legacy/`)
@@ -501,7 +501,7 @@ flutter build web --release \
   cd "$MDOSTHI_DIR"
   SHARED_TOMCAT_HOME="$SHARED_TOMCAT_HOME" ./scripts/legacy.sh build --shared
   ./scripts/legacy.sh stop --shared && ./scripts/legacy.sh start --shared
-  rm -rf "$SHARED_TOMCAT_HOME/work/Catalina/localhost/M-Dosthi"
+  rm -rf "$SHARED_TOMCAT_HOME/work/Catalina/localhost/mDosthi"
   "$SHARED_TOMCAT_HOME/bin/shutdown.sh" && sleep 4 && (cd "$SHARED_TOMCAT_HOME/webapps/eDosthi" && "$SHARED_TOMCAT_HOME/bin/startup.sh")
   ```
 - **Individual Mode (`:8081`):**
@@ -509,7 +509,7 @@ flutter build web --release \
   MDOSTHI_DIR="/home/YOUR_SERVER_USER/M-Dosthi-Codebase"
   cd "$MDOSTHI_DIR"
   ./scripts/legacy.sh build --individual
-  rm -rf "$MDOSTHI_DIR/tools/tomcat9/work/Catalina/localhost/M-Dosthi"
+  rm -rf "$MDOSTHI_DIR/tools/tomcat9/work/Catalina/localhost/mDosthi"
   ./scripts/legacy.sh stop --individual && ./scripts/legacy.sh start --individual
   ```
 

@@ -20,11 +20,11 @@ flowchart TB
 
     subgraph SharedTomcat["Shared Tomcat 9 (:8080, shutdown :8005)<br/>(eDosthi/Tomcat9)"]
         eDosthiWeb["/eDosthi Context<br/>(Tomcat9/webapps/eDosthi)"]
-        mDosthiSharedWeb["/M-Dosthi Context (Shared Mode)<br/>(conf/Catalina/localhost/M-Dosthi.xml -> M-Dosthi-Codebase/apps/web)"]
+        mDosthiSharedWeb["/mDosthi Context (Shared Mode)<br/>(conf/Catalina/localhost/mDosthi.xml -> M-Dosthi-Codebase/apps/web)"]
     end
 
     subgraph IndividualTomcat["M-Dosthi Individual Tomcat 9 (:8081, shutdown :8006)<br/>(M-Dosthi-Codebase/Tomcat9 -> tools/tomcat9)"]
-        mDosthiIndWeb["/M-Dosthi Context (Individual Mode)<br/>(conf/Catalina/localhost/M-Dosthi.xml -> M-Dosthi-Codebase/apps/web)"]
+        mDosthiIndWeb["/mDosthi Context (Individual Mode)<br/>(conf/Catalina/localhost/mDosthi.xml -> M-Dosthi-Codebase/apps/web)"]
     end
 
     subgraph RMIServers["Java RMI Business Logic Processes"]
@@ -38,8 +38,8 @@ flowchart TB
     end
 
     Browser -->|"http://localhost:8080/eDosthi/"| eDosthiWeb
-    Browser -->|"http://localhost:8080/M-Dosthi/ (Shared)"| mDosthiSharedWeb
-    Browser -->|"http://localhost:8081/M-Dosthi/ (Individual)"| mDosthiIndWeb
+    Browser -->|"http://localhost:8080/mDosthi/ (Shared)"| mDosthiSharedWeb
+    Browser -->|"http://localhost:8081/mDosthi/ (Individual)"| mDosthiIndWeb
     Browser -->|"http://127.0.0.1:3001/"| Flutter
     Browser -->|"http://127.0.0.1:3002/"| eDosthiFlutter
     Flutter -->|"HTTP REST (127.0.0.1:9090)"| API
@@ -57,8 +57,8 @@ flowchart TB
 | Service | URL / Host:Port | Directory / Config File | Notes |
 | :--- | :--- | :--- | :--- |
 | **eDosthi Web UI** | `http://localhost:8080/eDosthi/` | [Tomcat9/webapps/eDosthi](CodeBase/eDosthi%20codebases/DEVELOPMENT/eDosthi/Tomcat9/webapps/eDosthi) | Context `/eDosthi` |
-| **M-Dosthi Web UI (Shared Tomcat)** | `http://localhost:8080/M-Dosthi/` | [M-Dosthi-Codebase/apps/web](CodeBase/M-Dosthi-Codebase/apps/web) | Mounted on Shared Tomcat `:8080` via `M-Dosthi.xml` |
-| **M-Dosthi Web UI (Individual Tomcat)** | `http://localhost:8081/M-Dosthi/` | [M-Dosthi-Codebase/apps/web](CodeBase/M-Dosthi-Codebase/apps/web) | Mounted on M-Dosthi Tomcat `:8081` via `M-Dosthi.xml` |
+| **M-Dosthi Web UI (Shared Tomcat)** | `http://localhost:8080/mDosthi/` | [M-Dosthi-Codebase/apps/web](CodeBase/M-Dosthi-Codebase/apps/web) | Mounted on Shared Tomcat `:8080` via `mDosthi.xml` |
+| **M-Dosthi Web UI (Individual Tomcat)** | `http://localhost:8081/mDosthi/` | [M-Dosthi-Codebase/apps/web](CodeBase/M-Dosthi-Codebase/apps/web) | Mounted on M-Dosthi Tomcat `:8081` via `mDosthi.xml` |
 | **Shared Tomcat 9** | `localhost:8080` (shutdown `8005`) | [eDosthi/Tomcat9](CodeBase/eDosthi%20codebases/DEVELOPMENT/eDosthi/Tomcat9) | Pointed to by `SHARED_TOMCAT_HOME` or `--shared` |
 | **M-Dosthi Individual Tomcat 9** | `localhost:8081` (shutdown `8006`) | [M-Dosthi-Codebase/Tomcat9](CodeBase/M-Dosthi-Codebase/Tomcat9) ([tools/tomcat9](CodeBase/M-Dosthi-Codebase/tools/tomcat9)) | Bundled in M-Dosthi (`--individual` or default) |
 | **eDosthi RMI (`eDosthi-BL`)** | `127.0.0.1:1099` | [eDosthi-BL/gblinfo.inf](CodeBase/eDosthi%20codebases/DEVELOPMENT/eDosthi/eDosthi-BL/gblinfo.inf) | `blport = 1099`, DB: `eDosthi` |
@@ -149,9 +149,9 @@ mysql --host=127.0.0.1 --user=YOUR_DB_USER --password mDosthi \
 | Aspect | Original eDosthi Implementation | M-Dosthi Shared Tomcat (`:8080`) | M-Dosthi Individual Tomcat (`:8081`) |
 | :--- | :--- | :--- | :--- |
 | **Tomcat Directory** | [eDosthi/Tomcat9](CodeBase/eDosthi%20codebases/DEVELOPMENT/eDosthi/Tomcat9) | Reuses [eDosthi/Tomcat9](CodeBase/eDosthi%20codebases/DEVELOPMENT/eDosthi/Tomcat9) via `SHARED_TOMCAT_HOME` or `--shared` | Dedicated [M-Dosthi-Codebase/Tomcat9](CodeBase/M-Dosthi-Codebase/Tomcat9) ([tools/tomcat9](CodeBase/M-Dosthi-Codebase/tools/tomcat9)) via `--individual` (default) |
-| **HTTP & Shutdown Ports** | HTTP `8080`, Shutdown `8005` | HTTP `8080`, Shutdown `8005` (`http://localhost:8080/M-Dosthi/`) | HTTP `8081`, Shutdown `8006` (`http://localhost:8081/M-Dosthi/`, configurable via `TOMCAT_HTTP_PORT`) |
-| **Web Deployment** | Physically inside `Tomcat9/webapps/eDosthi/` | Mounted from `M-Dosthi-Codebase/apps/web/` via `eDosthi/Tomcat9/conf/Catalina/localhost/M-Dosthi.xml` | Mounted from `M-Dosthi-Codebase/apps/web/` via `M-Dosthi-Codebase/tools/tomcat9/conf/Catalina/localhost/M-Dosthi.xml` |
-| **Context & Cookie Path** | `/eDosthi` (`gbltelemedix = /eDosthi`) | `/M-Dosthi` (`gbltelemedix = /M-Dosthi`), isolating `JSESSIONID` and auth cookies per app | `/M-Dosthi` (`gbltelemedix = /M-Dosthi`), allowing both `:8080/M-Dosthi/` and `:8081/M-Dosthi/` to work simultaneously |
+| **HTTP & Shutdown Ports** | HTTP `8080`, Shutdown `8005` | HTTP `8080`, Shutdown `8005` (`http://localhost:8080/mDosthi/`) | HTTP `8081`, Shutdown `8006` (`http://localhost:8081/mDosthi/`, configurable via `TOMCAT_HTTP_PORT`) |
+| **Web Deployment** | Physically inside `Tomcat9/webapps/eDosthi/` | Mounted from `M-Dosthi-Codebase/apps/web/` via `eDosthi/Tomcat9/conf/Catalina/localhost/mDosthi.xml` | Mounted from `M-Dosthi-Codebase/apps/web/` via `M-Dosthi-Codebase/tools/tomcat9/conf/Catalina/localhost/mDosthi.xml` |
+| **Context & Cookie Path** | `/eDosthi` (`gbltelemedix = /eDosthi`) | `/mDosthi` (`gbltelemedix = /mDosthi`), isolating `JSESSIONID` and auth cookies per app | `/mDosthi` (`gbltelemedix = /mDosthi`), allowing both `:8080/mDosthi/` and `:8081/mDosthi/` to work simultaneously |
 | **Finding `config.info`** | `new FileInputStream(p + "config.info")` — requires `config.info` in working directory | Enhanced [projinfo.java](CodeBase/M-Dosthi-Codebase/services/legacy/servlet-src/WEB-INF/classes/src/projinfo.java#L39-L112) to resolve `apps/web/config.info` from `projinfo.class` code-source location | Uses the exact same [projinfo.java](CodeBase/M-Dosthi-Codebase/services/legacy/servlet-src/WEB-INF/classes/src/projinfo.java#L39-L112) lookup to resolve `apps/web/config.info` |
 | **RMI Registry Port (`blport`)** | `1099` (`eDosthi-BL/gblinfo.inf`) | `1100` (`services/legacy/runtime/gblinfo.inf` & `apps/web/config.info`) | Shares M-Dosthi's `1100` RMI server without port conflicts |
 | **Tomcat & RMI Lifecycle** | `eDosthi-BL/RunServer.sh` + `Tomcat9/bin/startup.sh` | `scripts/legacy.sh start --shared` starts only M-Dosthi RMI (`1100`); leaves Shared Tomcat lifecycle external | `scripts/legacy.sh start --individual` (or `./Tomcat9/bin/startup.sh`) starts both M-Dosthi Individual Tomcat (`:8081`) and M-Dosthi RMI (`1100`) |
@@ -169,7 +169,7 @@ mysql --host=127.0.0.1 --user=YOUR_DB_USER --password mDosthi \
   - **[tools/tomcat9/bin/setenv.sh](CodeBase/M-Dosthi-Codebase/tools/tomcat9/bin/setenv.sh#L1-L39) & [setenv.bat](CodeBase/M-Dosthi-Codebase/tools/tomcat9/bin/setenv.bat#L1-L36)**:
     - Auto-detects `JAVA_HOME` across macOS, Linux, and Windows (JDK 25/21/17).
     - Exports `--add-exports` / `--add-opens` for Java 25 (and sets `CATALINA_PID="$CATALINA_BASE/logs/tomcat.pid"` on Unix).
-    - Automatically resolves the `M-Dosthi-Codebase` root (handling both `Tomcat9` symlink and `tools/tomcat9`) and generates `conf/Catalina/localhost/M-Dosthi.xml` pointing `docBase` to `apps/web` whenever Tomcat starts (even if started directly via `./Tomcat9/bin/startup.sh` or `Tomcat9\bin\startup.bat`).
+    - Automatically resolves the `M-Dosthi-Codebase` root (handling both `Tomcat9` symlink and `tools/tomcat9`) and generates `conf/Catalina/localhost/mDosthi.xml` pointing `docBase` to `apps/web` whenever Tomcat starts (even if started directly via `./Tomcat9/bin/startup.sh` or `Tomcat9\bin\startup.bat`).
   - **[tools/tomcat9/lib/mysql-connector-j-8.4.0.jar](CodeBase/M-Dosthi-Codebase/tools/tomcat9/lib/mysql-connector-j-8.4.0.jar) & Webapps Parity**:
     Added `mysql-connector-j-8.4.0.jar` to `tools/tomcat9/lib/` and restored `webapps/WSiMediX` and `webapps/examples/WEB-INF/classes` so M-Dosthi's Individual Tomcat starts with zero errors.
   - **[M-Dosthi-Codebase/.gitignore](CodeBase/M-Dosthi-Codebase/.gitignore#L10-L57)**:
@@ -179,17 +179,17 @@ mysql --host=127.0.0.1 --user=YOUR_DB_USER --password mDosthi \
 - **Mode Flags**: Supports `--individual` (`--standalone`) and `--shared` (`--shared=/path/to/tomcat9`) in `setup.sh`, and `-Mode auto|individual|shared` in `setup.ps1`, in addition to `SHARED_TOMCAT_HOME`. Passing `--shared` / `-Mode shared` auto-detects `../eDosthi codebases/DEVELOPMENT/eDosthi/Tomcat9` when `SHARED_TOMCAT_HOME` is unset (and fails explicitly if no shared Tomcat is found).
 - **RMI & HTTP Defaults**: Defaults `LEGACY_RMI_PORT=1100` so M-Dosthi's RMI service works with both Individual Tomcat (`:8081`) and Shared Tomcat (`:8080`) without conflicting with `eDosthi-BL` (`1099`), and sets `@TOMCAT_HTTP_PORT@` in `apps/web/config.info.template` (`8081` in Individual mode, `8080` in Shared mode).
 - **Context Descriptors**: Creates the root `Tomcat9 -> tools/tomcat9` symlink (Unix) and writes `<Context docBase="..." reloadable="false" />` into:
-  1. [M-Dosthi-Codebase/tools/tomcat9/conf/Catalina/localhost/M-Dosthi.xml](CodeBase/M-Dosthi-Codebase/tools/tomcat9/conf/Catalina/localhost/M-Dosthi.xml#L1) (Individual Tomcat)
-  2. [eDosthi/Tomcat9/conf/Catalina/localhost/M-Dosthi.xml](CodeBase/eDosthi%20codebases/DEVELOPMENT/eDosthi/Tomcat9/conf/Catalina/localhost/M-Dosthi.xml#L1) (Shared Tomcat, when `--shared` / `-Mode shared` or `SHARED_TOMCAT_HOME` is used)
+  1. [M-Dosthi-Codebase/tools/tomcat9/conf/Catalina/localhost/mDosthi.xml](CodeBase/M-Dosthi-Codebase/tools/tomcat9/conf/Catalina/localhost/mDosthi.xml#L1) (Individual Tomcat)
+  2. [eDosthi/Tomcat9/conf/Catalina/localhost/mDosthi.xml](CodeBase/eDosthi%20codebases/DEVELOPMENT/eDosthi/Tomcat9/conf/Catalina/localhost/mDosthi.xml#L1) (Shared Tomcat, when `--shared` / `-Mode shared` or `SHARED_TOMCAT_HOME` is used)
 
 #### 3. External Context Config Lookup: [projinfo.java](CodeBase/M-Dosthi-Codebase/services/legacy/servlet-src/WEB-INF/classes/src/projinfo.java#L38-L112)
-In `eDosthi`, `new projinfo("")` opened `new FileInputStream("config.info")`. In `M-Dosthi`, because `/M-Dosthi` is loaded from `M-Dosthi-Codebase/apps/web` via `M-Dosthi.xml` in both Individual Tomcat and Shared Tomcat, [projinfo.java](CodeBase/M-Dosthi-Codebase/services/legacy/servlet-src/WEB-INF/classes/src/projinfo.java#L39-L49) resolves `config.info` from the deployed class/JAR path (`configFromWebappLocation`):
+In `eDosthi`, `new projinfo("")` opened `new FileInputStream("config.info")`. In `M-Dosthi`, because `/mDosthi` is loaded from `M-Dosthi-Codebase/apps/web` via `mDosthi.xml` in both Individual Tomcat and Shared Tomcat, [projinfo.java](CodeBase/M-Dosthi-Codebase/services/legacy/servlet-src/WEB-INF/classes/src/projinfo.java#L39-L49) resolves `config.info` from the deployed class/JAR path (`configFromWebappLocation`):
 ```java
 String configPath = p + "config.info";
 if (p.length() == 0) {
 	String catalinaBase = System.getProperty("catalina.base", "");
 	if (catalinaBase.length() > 0) {
-		configPath = catalinaBase + "/webapps/M-Dosthi/config.info";
+		configPath = catalinaBase + "/webapps/mDosthi/config.info";
 	}
 	if (!new File(configPath).isFile()) {
 		configPath = configFromWebappLocation(configPath);
@@ -207,8 +207,8 @@ FileInputStream gblfin = new FileInputStream(configPath);
 - **Port Overrides**: Allows overriding M-Dosthi Individual Tomcat's HTTP port (`TOMCAT_HTTP_PORT`, default `8081`) and shutdown port (`TOMCAT_SHUTDOWN_PORT`, default `8006`) in `tools/tomcat9/conf/server.xml`.
 - **`start`**:
   - Verifies `blport` matches in `apps/web/config.info` and `services/legacy/runtime/gblinfo.inf` (`1100`).
-  - In **Individual mode** (`--individual`), ensures `tools/tomcat9/conf/Catalina/localhost/M-Dosthi.xml` is configured and starts M-Dosthi's Individual Tomcat (`tools/tomcat9/bin/startup.sh`, tracked via `tools/tomcat9/logs/tomcat.pid`) if not already running.
-  - In **Shared mode** (`--shared`), verifies `conf/Catalina/localhost/M-Dosthi.xml` exists in the Shared Tomcat and leaves the Shared Tomcat lifecycle external.
+  - In **Individual mode** (`--individual`), ensures `tools/tomcat9/conf/Catalina/localhost/mDosthi.xml` is configured and starts M-Dosthi's Individual Tomcat (`tools/tomcat9/bin/startup.sh`, tracked via `tools/tomcat9/logs/tomcat.pid`) if not already running.
+  - In **Shared mode** (`--shared`), verifies `conf/Catalina/localhost/mDosthi.xml` exists in the Shared Tomcat and leaves the Shared Tomcat lifecycle external.
   - Starts M-Dosthi's RMI server (`1100`, tracked via `services/legacy/runtime/iMediXBusinessLogic.pid`) if not already running.
 - **`stop`**:
   - In **Individual mode**, gracefully stops M-Dosthi's Individual Tomcat (`:8081`) and M-Dosthi's RMI server (`:1100`).
@@ -271,8 +271,8 @@ GeneralSqlLogPath = /path/to/M-Dosthi-Codebase/services/legacy/runtime/GenSqlLog
 02) blip = 127.0.0.1
 03) blport = 1100
 04) gblroot = /path/to/M-Dosthi-Codebase/apps/web
-05) gblhome = http://localhost:8080/M-Dosthi
-06) gbltelemedix = /M-Dosthi
+05) gblhome = http://localhost:8080/mDosthi
+06) gbltelemedix = /mDosthi
 07) gblsip = 127.0.0.1
 08) gbltemp = /path/to/M-Dosthi-Codebase/apps/web/temp
 ```
@@ -379,7 +379,7 @@ export SHARED_TOMCAT_HOME="CodeBase/eDosthi codebases/DEVELOPMENT/eDosthi/Tomcat
 # Stop M-Dosthi Individual Tomcat (:8081) and M-Dosthi RMI (:1100)
 CodeBase/M-Dosthi-Codebase/scripts/legacy.sh stop --individual
 
-# Stop Shared Tomcat (:8080, serving /eDosthi and /M-Dosthi)
+# Stop Shared Tomcat (:8080, serving /eDosthi and /mDosthi)
 "$SHARED_TOMCAT_HOME/bin/shutdown.sh"
 
 # Stop eDosthi RMI (port 1099)
@@ -396,8 +396,8 @@ lsof -iTCP -sTCP:LISTEN -P -n | grep -E "3306|8080|8081|1099|1100|9090|3001"
 
 # 2. Verify HTTP 200 on Shared Tomcat (:8080), M-Dosthi Individual Tomcat (:8081), and Flutter Web (:3001)
 curl -I http://localhost:8080/eDosthi/
-curl -I http://localhost:8080/M-Dosthi/
-curl -I http://localhost:8081/M-Dosthi/
+curl -I http://localhost:8080/mDosthi/
+curl -I http://localhost:8081/mDosthi/
 curl -I http://127.0.0.1:3001/
 ```
 
@@ -411,10 +411,10 @@ Use this path when you only want to run **M-Dosthi** on its own bundled Tomcat (
 | Setting | Value | Where Configured |
 | :--- | :--- | :--- |
 | **Tomcat Directory** | `M-Dosthi-Codebase/Tomcat9` (`-> tools/tomcat9`) | Created by `scripts/setup.sh` |
-| **HTTP Port & URL** | `8081` (`http://localhost:8081/M-Dosthi/`) | [tools/tomcat9/conf/server.xml](CodeBase/M-Dosthi-Codebase/tools/tomcat9/conf/server.xml#L71) |
+| **HTTP Port & URL** | `8081` (`http://localhost:8081/mDosthi/`) | [tools/tomcat9/conf/server.xml](CodeBase/M-Dosthi-Codebase/tools/tomcat9/conf/server.xml#L71) |
 | **Shutdown Port** | `8006` | [tools/tomcat9/conf/server.xml](CodeBase/M-Dosthi-Codebase/tools/tomcat9/conf/server.xml#L22) |
 | **M-Dosthi RMI Port** | `1100` (`blport`) | `apps/web/config.info` & `services/legacy/runtime/gblinfo.inf` |
-| **Context Descriptor** | `tools/tomcat9/conf/Catalina/localhost/M-Dosthi.xml` | Auto-generated pointing `docBase` to `apps/web` |
+| **Context Descriptor** | `tools/tomcat9/conf/Catalina/localhost/mDosthi.xml` | Auto-generated pointing `docBase` to `apps/web` |
 
 ### macOS / Linux Commands
 ```bash
@@ -433,7 +433,7 @@ cd CodeBase/M-Dosthi-Codebase
 
 # 3. Check status & verify HTTP 200
 ./scripts/legacy.sh status --individual
-curl -I http://localhost:8081/M-Dosthi/
+curl -I http://localhost:8081/mDosthi/
 
 # 4. Stop Individual Tomcat (:8081) and M-Dosthi RMI (:1100)
 ./scripts/legacy.sh stop --individual
