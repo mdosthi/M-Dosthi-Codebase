@@ -40,7 +40,7 @@ flutter build web --release \
   --dart-define=API_HOST=edosthi.in/mdosthi-api
 ```
 
-Deploy `build/web/` to Shared Tomcat via `conf/Catalina/localhost/mDosthi-app.xml`. See [docs/server-setup-guide.md](../../docs/server-setup-guide.md) for the full upload and mount commands.
+Deploy `build/web/` to Shared Tomcat via `conf/Catalina/localhost/mDosthi-app.xml` (Tomcat auto-deploys within ~10 seconds with zero restart). When uploading over slow VPN, exclude `canvaskit/` (loaded automatically from Google's CDN) and large `Video1.mp4`/`Video2.mp4` and rate-limit `rsync` with `--bwlimit=40 --partial`. See [docs/server-setup-guide.md](../../docs/server-setup-guide.md) for the exact upload and mount commands.
 
 ## Project Areas
 

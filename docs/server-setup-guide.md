@@ -637,7 +637,8 @@ Apache2 Reverse Proxy (/etc/apache2/sites-available/edosthi.in.conf)
 | **Existing eDosthi API** | `http://172.16.98.116:9090/api/` | `https://edosthi.in/api/` *(unchanged)* |
 | **mDosthi Legacy Web (Shared Tomcat)** | `http://172.16.98.116:8080/mDosthi/` | `https://edosthi.in/mDosthi/` *(verified HTTP 200)* |
 | **mDosthi Spring Boot API (`:9091`)** | `http://172.16.98.116:9091/` | `https://edosthi.in/mdosthi-api/` *(verified HTTP 403 on protected root)* |
-| **mDosthi Flutter Web** | `http://172.16.98.116:8080/mDosthi-app/` | `https://edosthi.in/mDosthi-app/` *(mounted via `mDosthi-app.xml`)* |
+| **mDosthi Flutter Web** | `http://172.16.98.116:8080/mDosthi-app/` | `https://edosthi.in/mDosthi-app/` *(verified HTTP 200, auto-deployed via `mDosthi-app.xml`)* |
+| **eDosthi Flutter Client** | Local Mac dev: `http://127.0.0.1:3002/` (`eDosthi codebases/Downloads/tathyanu codebase and database /btp`) | Targets `https://edosthi.in/api/` *(mobile APK / local web; not mounted on Tomcat by default)* |
 | **mDosthi Individual Tomcat (Guide B)** | `http://172.16.98.116:8081/mDosthi/` | Requires proxy rule to `127.0.0.1:8081/mDosthi/` |
 
 > [!NOTE]
@@ -702,28 +703,56 @@ echo $! > "$MDOSTHI/api.pid"
 ```
 
 ### 8.3 Build Flutter Web Release Bundle (On Mac) & Mount at `https://edosthi.in/mDosthi-app/`
-On **your local Mac**:
+On **your local Mac** (excludes `canvaskit/` which Flutter loads from Google's CDN automatically, excludes large `Video1.mp4`/`Video2.mp4` for fast initial launch, and rate-limits to `40 KB/s` so slow OpenVPN links never time out):
 ```bash
 cd /Users/dipayanrana/Desktop/CodeBase/M-Dosthi-Codebase/apps/mobile
 flutter build web --release \
   --base-href=/mDosthi-app/ \
   --dart-define=API_HOST=edosthi.in/mdosthi-api
 
-tar -czf /tmp/mdosthi_flutter_web.tar.gz -C build/web .
-rsync -av --partial --progress --timeout=30 \
-  -e "ssh -o ServerAliveInterval=10 -o ServerAliveCountMax=3" \
-  /tmp/mdosthi_flutter_web.tar.gz \
-  sadmin@172.16.98.116:/tmp/mdosthi_flutter_web.tar.gz
+ssh sadmin@172.16.98.116 "mkdir -p /home/sadmin/M-Dosthi-Codebase/apps/mobile/build/web" && \
+rsync -avz --partial --progress --bwlimit=40 --timeout=60 \
+  -e "ssh -o ServerAliveInterval=15 -o ServerAliveCountMax=4" \
+  --exclude='canvaskit/' \
+  --exclude='assets/assets/Video1.mp4' \
+  --exclude='assets/assets/Video2.mp4' \
+  "/Users/dipayanrana/Desktop/CodeBase/M-Dosthi-Codebase/apps/mobile/build/web/" \
+  "sadmin@172.16.98.116:/home/sadmin/M-Dosthi-Codebase/apps/mobile/build/web/"
 ```
-On **the server (`sadmin@edosthisrv`)**:
+*(Optional later upload for the two large in-app MP4s: re-run the same `rsync` with `--bwlimit=40` targeting `assets/assets/Video1.mp4` and `Video2.mp4`.)*
+
+Mount via Shared Tomcat auto-deploy from your **Mac Terminal** (Tomcat scans `conf/Catalina/localhost/` every ~10 seconds — **zero Tomcat restart needed**):
 ```bash
-mkdir -p /home/sadmin/M-Dosthi-Codebase/apps/mobile/build/web && \
-tar -xzf /tmp/mdosthi_flutter_web.tar.gz -C /home/sadmin/M-Dosthi-Codebase/apps/mobile/build/web && \
-rm -f /tmp/mdosthi_flutter_web.tar.gz && \
-echo '<Context docBase="/home/sadmin/M-Dosthi-Codebase/apps/mobile/build/web" reloadable="false" />' \
+ssh -t sadmin@172.16.98.116 '
+echo "<Context docBase=\"/home/sadmin/M-Dosthi-Codebase/apps/mobile/build/web\" reloadable=\"false\" />" \
   | sudo tee /home/sadmin/edosthi/web/Tomcat9/conf/Catalina/localhost/mDosthi-app.xml && \
-sleep 4 && \
+sleep 12 && \
 curl -sk -o /dev/null -w "mDosthi Flutter Web HTTPS -> HTTP %{http_code}\n" -H "Host: edosthi.in" https://127.0.0.1/mDosthi-app/
+'
+```
+
+### 8.4 Optional `systemd` Service for M-Dosthi API (`:9091`)
+Create `/etc/systemd/system/mdosthi-api.service`:
+```ini
+[Unit]
+Description=mDosthi Spring Boot REST API (Port 9091, JDK 25)
+After=network.target mysql.service
+
+[Service]
+Type=simple
+User=sadmin
+WorkingDirectory=/home/sadmin/M-Dosthi-Codebase/services/api
+EnvironmentFile=/home/sadmin/M-Dosthi-Codebase/.env
+ExecStart=/opt/jdk-25/bin/java -jar -Dserver.port=9091 /home/sadmin/M-Dosthi-Codebase/services/api/target/saMiX-0.0.1-SNAPSHOT.jar
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+Enable:
+```bash
+sudo systemctl daemon-reload && sudo systemctl enable mdosthi-api
 ```
 
 ---
