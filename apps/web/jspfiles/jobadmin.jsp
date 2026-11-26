@@ -15,7 +15,7 @@
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 			<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
 			<link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
-			<link rel="stylesheet" href="../bootstrap/css/index.css?v=2.0">
+			<link rel="stylesheet" href="../bootstrap/css/index.css?v=6.0">
 			<script src="../bootstrap/jquery-2.2.1.min.js"></script>
 			<script src="../bootstrap/js/bootstrap.min.js"></script>
 			<script src="../bootstrap/js/bootstrap.js"></script>
@@ -86,7 +86,7 @@
 					border-left-color: rgba(59, 130, 246, 0.4) !important; /* Blue for Center & Depts */
 				}
 				a.list-group-item[href*="center"]:hover, a.list-group-item[href*="departments"]:hover {
-					border-left-color: #3b82f6 !important;
+					border-left-color: #138A4E !important;
 					background: linear-gradient(90deg, rgba(59, 130, 246, 0.05), rgba(255, 255, 255, 0.95)) !important;
 				}
 
@@ -136,9 +136,9 @@
 					border-color: #a855f7 !important;
 				}
 				a.list-group-item[href*="center"]:hover .badge, a.list-group-item[href*="departments"]:hover .badge {
-					background: #3b82f6 !important;
+					background: #138A4E !important;
 					color: #fff !important;
-					border-color: #3b82f6 !important;
+					border-color: #138A4E !important;
 				}
 				a.list-group-item[href*="regque"]:hover .badge, a.list-group-item[href*="users"]:hover .badge, a.list-group-item[href*="Active"]:hover .badge, a.list-group-item[href*="CreateLogin"]:hover .badge, a.list-group-item[href*="rctControl"]:hover .badge, a.list-group-item[href*="druglist"]:hover .badge, a.list-group-item[href*="consentControl"]:hover .badge {
 					background: #0d9488 !important;
@@ -474,7 +474,7 @@
 							var itemHtml = 
 								'<div class="list-group-item" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; margin-bottom: 6px; border-radius: 6px; border: 1px solid #e3e8f0; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">' +
 								'    <span style="font-weight: 600; font-size: 13px; color: #1e293b;">' +
-								'        <span class="glyphicon glyphicon-phone" style="margin-right: 8px; color: #4f46e5;"></span>' +
+								'        <span class="glyphicon glyphicon-phone" style="margin-right: 8px; color: #138A4E;"></span>' +
 								'        ' + phone +
 								'    </span>' +
 								'    <button type="button" class="btn btn-danger btn-xs remove-recipient-btn" data-phone="' + phone + '" style="padding: 3px 7px; border-radius: 4px; border: none; background-color: #ef4444; color: white; display: flex; align-items: center; justify-content: center;">' +

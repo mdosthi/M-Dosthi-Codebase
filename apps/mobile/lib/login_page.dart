@@ -451,7 +451,7 @@ class _LoginPageState extends State<LoginPage>
                       ),
                       child: const Icon(
                         Icons.help_outline_rounded,
-                        color: BrandColors.navy,
+                        color: BrandColors.tealDark,
                         size: 22,
                       ),
                     ),
@@ -493,7 +493,7 @@ class _LoginPageState extends State<LoginPage>
                   child: ElevatedButton(
                     onPressed: () => Navigator.of(ctx).pop(),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: BrandColors.navy,
+                      backgroundColor: BrandColors.teal,
                       foregroundColor: Colors.white,
                       shape: const StadiumBorder(),
                       padding: const EdgeInsets.symmetric(
@@ -905,14 +905,14 @@ class _LoginPageState extends State<LoginPage>
   }) {
     final chips = isBn
         ? const [
-            (Icons.translate_rounded, 'বাংলা ও ইংরেজি'),
-            (Icons.mic_none_rounded, 'চ্যাট ও ভয়েস'),
-            (Icons.favorite_border_rounded, 'সহমর্মী যত্ন'),
+            (Icons.translate_rounded, 'বাংলা ও ইংরেজি', BrandColors.teal),
+            (Icons.mic_none_rounded, 'চ্যাট ও ভয়েস', BrandColors.cyanTeal),
+            (Icons.favorite_border_rounded, 'সহমর্মী যত্ন', BrandColors.blue),
           ]
         : const [
-            (Icons.translate_rounded, 'English & বাংলা'),
-            (Icons.mic_none_rounded, 'Chat & Voice'),
-            (Icons.favorite_border_rounded, 'Supportive Care'),
+            (Icons.translate_rounded, 'English & বাংলা', BrandColors.teal),
+            (Icons.mic_none_rounded, 'Chat & Voice', BrandColors.cyanTeal),
+            (Icons.favorite_border_rounded, 'Supportive Care', BrandColors.blue),
           ];
 
     const partnerItems = [
@@ -928,14 +928,14 @@ class _LoginPageState extends State<LoginPage>
       ),
       (
         'assets/images/icmr.png',
-        'Funded By',
+        'Sponsored By',
         'ICMR',
       ),
     ];
 
     final double titleSize = isCompact
-        ? (isTablet ? 23 : 19.5)
-        : (isShortDesktop ? 24 : 28);
+        ? (isTablet ? 21 : 18)
+        : (isShortDesktop ? 21 : 24);
 
     return Column(
       crossAxisAlignment:
@@ -950,8 +950,8 @@ class _LoginPageState extends State<LoginPage>
         SizedBox(height: isCompact ? 14 : (isShortDesktop ? 12 : 20)),
         Text(
           isBn
-              ? 'ভিজিটের মাঝে আন্তরিক যত্ন ও মানসিক সহায়তা'
-              : 'Warm Support Between Clinic Visits',
+              ? 'ম্যালিগন্যান্সি-সম্পর্কিত মানসিক কষ্ট ও চাপ উপশমের উদ্যোগ'
+              : 'Malignancy related Distress and Other Stress Healing Initiative',
           textAlign: isCompact ? TextAlign.center : TextAlign.left,
           style: BrandTypography.heading(
             fontSize: titleSize,
@@ -992,11 +992,11 @@ class _LoginPageState extends State<LoginPage>
                     color: Colors.white.withValues(alpha: 0.90),
                     borderRadius: BorderRadius.circular(999),
                     border: Border.all(
-                      color: BrandColors.teal.withValues(alpha: 0.25),
+                      color: c.$3.withValues(alpha: 0.28),
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: BrandColors.navy.withValues(alpha: 0.04),
+                        color: BrandColors.navy.withValues(alpha: 0.05),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
                       ),
@@ -1005,7 +1005,7 @@ class _LoginPageState extends State<LoginPage>
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(c.$1, size: 15, color: BrandColors.tealDark),
+                      Icon(c.$1, size: 15, color: c.$3),
                       const SizedBox(width: 6),
                       Text(
                         c.$2,
@@ -1126,7 +1126,7 @@ class _LoginPageState extends State<LoginPage>
                         height: 132,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: BrandColors.teal.withValues(alpha: 0.22),
+                          color: BrandColors.green.withValues(alpha: 0.28),
                         ),
                       ),
                     ),
@@ -1204,7 +1204,7 @@ class _LoginPageState extends State<LoginPage>
                                 style: BrandTypography.body(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w700,
-                                  color: const Color(0xFFB2F5EA),
+                                  color: const Color(0xFFA7F3D0),
                                 ).copyWith(letterSpacing: 0.8),
                               ),
                               const SizedBox(height: 2),
@@ -1252,7 +1252,7 @@ class _LoginPageState extends State<LoginPage>
                     Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFEFF8FB),
+                        color: const Color(0xFFECFDF5),
                         borderRadius: BorderRadius.circular(13),
                         border: Border.all(
                           color: BrandColors.navy.withValues(alpha: 0.09),
@@ -1275,15 +1275,16 @@ class _LoginPageState extends State<LoginPage>
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 9),
                                   decoration: BoxDecoration(
-                                    color: active
-                                        ? BrandColors.navy
-                                        : Colors.transparent,
+                                    gradient: active
+                                        ? BrandColors.activeTabGradient
+                                        : null,
+                                    color: active ? null : Colors.transparent,
                                     borderRadius: BorderRadius.circular(9),
                                     boxShadow: active
                                         ? [
                                             BoxShadow(
-                                              color: BrandColors.navy
-                                                  .withValues(alpha: 0.24),
+                                              color: BrandColors.teal
+                                                  .withValues(alpha: 0.26),
                                               blurRadius: 10,
                                               offset: const Offset(0, 3),
                                             ),
@@ -1297,8 +1298,8 @@ class _LoginPageState extends State<LoginPage>
                                         opt.icon,
                                         size: 16,
                                         color: active
-                                            ? const Color(0xFF5EEAD4)
-                                            : const Color(0xFF4F6880),
+                                            ? const Color(0xFFC7F9CC)
+                                            : const Color(0xFF3E6351),
                                       ),
                                       const SizedBox(width: 6),
                                       Flexible(
@@ -1312,7 +1313,7 @@ class _LoginPageState extends State<LoginPage>
                                                 : FontWeight.w600,
                                             color: active
                                                 ? Colors.white
-                                                : const Color(0xFF4F6880),
+                                                : const Color(0xFF3E6351),
                                           ),
                                         ),
                                       ),
@@ -1388,7 +1389,7 @@ class _LoginPageState extends State<LoginPage>
                       style: BrandTypography.body(
                         fontSize: 11.5,
                         fontWeight: FontWeight.w700,
-                        color: const Color(0xFF47627B),
+                        color: const Color(0xFF3A5C4A),
                       ).copyWith(letterSpacing: 0.5),
                     ),
                     const SizedBox(height: 6),
@@ -1419,7 +1420,7 @@ class _LoginPageState extends State<LoginPage>
                                 width: 34,
                                 height: 34,
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFFE6F8F7),
+                                  color: const Color(0xFFE6F7EE),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: const Icon(
@@ -1444,7 +1445,7 @@ class _LoginPageState extends State<LoginPage>
                                   )
                                 : null,
                             filled: true,
-                            fillColor: const Color(0xFFFAFEFF),
+                            fillColor: const Color(0xFFF8FDFB),
                             contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 16, vertical: 15),
                             enabledBorder: OutlineInputBorder(
@@ -1458,7 +1459,7 @@ class _LoginPageState extends State<LoginPage>
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
                               borderSide: const BorderSide(
-                                color: BrandColors.blue,
+                                color: BrandColors.teal,
                                 width: 1.8,
                               ),
                             ),
@@ -1474,7 +1475,7 @@ class _LoginPageState extends State<LoginPage>
                       style: BrandTypography.body(
                         fontSize: 11.5,
                         fontWeight: FontWeight.w700,
-                        color: const Color(0xFF47627B),
+                        color: const Color(0xFF3A5C4A),
                       ).copyWith(letterSpacing: 0.5),
                     ),
                     const SizedBox(height: 6),
@@ -1505,12 +1506,12 @@ class _LoginPageState extends State<LoginPage>
                             width: 34,
                             height: 34,
                             decoration: BoxDecoration(
-                              color: const Color(0xFFE6F8F7),
+                              color: BrandColors.cyanBg,
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: const Icon(
                               Icons.lock_outline_rounded,
-                              color: BrandColors.tealDark,
+                              color: BrandColors.cyanTeal,
                               size: 19,
                             ),
                           ),
@@ -1538,7 +1539,7 @@ class _LoginPageState extends State<LoginPage>
                           ),
                         ),
                         filled: true,
-                        fillColor: const Color(0xFFFAFEFF),
+                        fillColor: const Color(0xFFF8FDFB),
                         contentPadding: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 15),
                         enabledBorder: OutlineInputBorder(
@@ -1551,7 +1552,7 @@ class _LoginPageState extends State<LoginPage>
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(14),
                           borderSide: const BorderSide(
-                            color: BrandColors.blue,
+                            color: BrandColors.teal,
                             width: 1.8,
                           ),
                         ),
@@ -1582,8 +1583,8 @@ class _LoginPageState extends State<LoginPage>
                           borderRadius: BorderRadius.circular(14),
                           boxShadow: [
                             BoxShadow(
-                              color: BrandColors.blue.withValues(
-                                alpha: _isHoveringLoginBtn ? 0.30 : 0.22,
+                              color: BrandColors.teal.withValues(
+                                alpha: _isHoveringLoginBtn ? 0.32 : 0.22,
                               ),
                               blurRadius: _isHoveringLoginBtn ? 22 : 14,
                               offset: const Offset(0, 6),
@@ -1665,11 +1666,11 @@ class _LoginPageState extends State<LoginPage>
                             width: 7,
                             height: 7,
                             decoration: BoxDecoration(
-                              color: BrandColors.teal,
+                              color: BrandColors.green,
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: BrandColors.teal.withValues(alpha: 0.25),
+                                  color: BrandColors.green.withValues(alpha: 0.28),
                                   spreadRadius: 3,
                                 ),
                               ],
@@ -1679,7 +1680,7 @@ class _LoginPageState extends State<LoginPage>
                           const Icon(
                             Icons.verified_user_outlined,
                             size: 14,
-                            color: BrandColors.tealDark,
+                            color: BrandColors.cyanTeal,
                           ),
                           const SizedBox(width: 6),
                           Flexible(

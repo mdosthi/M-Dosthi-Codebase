@@ -239,7 +239,7 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/toastr.css">
 	<!--<link rel="stylesheet" href="../bootstrap/jquery.dataTables.min.css">-->
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/dataTables.bootstrap.min.css">
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=4.0">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=6.0">
 
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/jquery-ui.min.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/vc/vc.css?"+n>
@@ -330,11 +330,11 @@ box-shadow: 0px 0px 8px 3px #ccc;
 	.header-block {text-align:center;}
 	.header-block .req-const {margin: 20px 0;}
 	.default-pat-home{
-		border: 1px solid #337ab7;
+		border: 1px solid #138A4E;
 		margin: 20px;
 		padding: 20px;
 		color: #ffffff;
-		background: #337ab7;
+		background: #138A4E;
 	}
 	#modalrelationsgiplist .modal-header, #modalrelationsgiplist .modal-footer{
 		background: #1e83d9;

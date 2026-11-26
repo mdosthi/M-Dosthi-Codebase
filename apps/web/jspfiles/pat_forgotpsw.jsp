@@ -25,7 +25,7 @@
 body {
     background: linear-gradient(180deg, var(--color-ice, #E0F7FA) 0%, #FFFFFF 100%);
     font-family: var(--font-body, 'Inter', sans-serif);
-    color: var(--color-navy, #0B2D6B);
+    color: var(--color-navy, #0B3B78);
     min-height: 100vh;
     margin: 0;
     padding: 24px 16px;
@@ -44,10 +44,10 @@ body {
     box-shadow: 0 14px 36px rgba(11, 45, 107, 0.10);
     padding: 28px 26px !important;
 }
-.im-login-form h2 { font-family: var(--font-heading, 'Poppins', sans-serif); color: var(--color-navy, #0B2D6B); margin-top: 4px; }
+.im-login-form h2 { font-family: var(--font-heading, 'Poppins', sans-serif); color: var(--color-navy, #0B3B78); margin-top: 4px; }
 .im-login-form .capcode { max-width: 100%; height: auto; }
 .btn-primary, input[type="submit"] {
-    background: var(--gradient-cta, linear-gradient(135deg, #0B2D6B 0%, #007BFF 50%, #00BFA6 100%));
+    background: var(--gradient-cta, linear-gradient(135deg, #0D6B44 0%, #138A4E 52%, #0097A7 100%));
     border: none;
     border-radius: 999px;
 }

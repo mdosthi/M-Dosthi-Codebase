@@ -7,10 +7,10 @@ import 'doctor_monitoring_page.dart';
 import 'wellbeing_service.dart';
 
 class _PatientsColors {
-  static const primaryGreen = BrandColors.navy;
-  static const deepGreen = BrandColors.navyDark;
+  static const primaryGreen = BrandColors.teal;
+  static const deepGreen = BrandColors.tealDark;
   static const pageBackground = BrandColors.pageBg;
-  static const stripeRow = Color(0xFFF0FAFC);
+  static const stripeRow = Color(0xFFEDF8F2);
   static const rowHover = BrandColors.ice;
   static const focusRing = BrandColors.teal;
   static const textPrimary = BrandColors.navy;

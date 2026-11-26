@@ -397,7 +397,7 @@ $(document).ready(function(){
             var messageDiv = '<div class="chat-message" style="margin-bottom: 15px; padding: 12px; border-radius: 10px; ';
             
             if (message.sender_type === 'patient') {
-                messageDiv += 'background-color: #e3f2fd; border-left: 4px solid #2196f3;">';
+                messageDiv += 'background-color: #E9F8F0; border-left: 4px solid #0097A7;">';
             } else if (message.sender_type === 'bot') {
                 messageDiv += 'background-color: #f3e5f5; border-left: 4px solid #9c27b0;">';
             } else if (message.sender_type === 'system') {
@@ -592,7 +592,7 @@ $(document).ready(function(){
                 color = '#28a745';
                 break;
             case 'active':
-                color = '#007bff';
+                color = '#0097A7';
                 break;
             case 'terminated':
                 color = '#dc3545';
@@ -921,7 +921,7 @@ if (patId != null && !patId.isEmpty()) {
             </div>
             <div class='modal-body'>
                 <!-- Patient Info -->
-                <div id='chatModalPatientInfo' style='margin-bottom: 15px; padding: 10px; background-color: #e3f2fd; border-radius: 5px; font-weight: bold;'></div>
+                <div id='chatModalPatientInfo' style='margin-bottom: 15px; padding: 10px; background-color: #E9F8F0; border-radius: 5px; font-weight: bold;'></div>
                 
                 <!-- Controls -->
                 <div style='margin-bottom: 20px; background-color: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #dee2e6;'>
@@ -1052,7 +1052,7 @@ if (patId != null && !patId.isEmpty()) {
             </div>
             <div class='modal-body'>
                 <!-- Patient Info -->
-                <div id='assignTestPatientInfo' style='margin-bottom: 15px; padding: 10px; background-color: #e3f2fd; border-radius: 5px; font-weight: bold;'></div>
+                <div id='assignTestPatientInfo' style='margin-bottom: 15px; padding: 10px; background-color: #E9F8F0; border-radius: 5px; font-weight: bold;'></div>
                 
                 <div class='alert alert-info'>
                     <i class='fa fa-info-circle'></i> Select one or more assessment forms to assign to this patient. The patient will be able to view and complete these forms from their mobile app.

@@ -341,7 +341,7 @@ function goBack()
 <div class="col-sm-8 col-sm-offset-2">
 <div class="well" style="min-width: 750px;">
 <center><FONT SIZE="+2" COLOR="FIREBRICK">Edit <%=uid%>'s Details </font></center>
-	<A class="btn" onClick="goBack()" Style="color:white;float:right; background:#337ab7; font-weight:bold; text-decoration:none; ">&nbsp;BACK&nbsp;</A>
+	<A class="btn" onClick="goBack()" Style="color:white;float:right; background:#138A4E; font-weight:bold; text-decoration:none; ">&nbsp;BACK&nbsp;</A>
 <FORM METHOD=GET Name=profile ACTION="saveeditusr.jsp" onSubmit="return actnow();">
 <center><h5 style="color:blue">USER ID &emsp;&emsp;&emsp;&emsp;<strong><%=uid %></strong></h5>  </center>
 <INPUT class="form-control" TYPE="hidden" NAME="uid" Value = "<%=uid %>" />

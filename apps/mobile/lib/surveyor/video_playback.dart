@@ -36,7 +36,7 @@ class VideoPlayerScreen extends StatelessWidget {
       description: "video_tobacco_cessation_part1_desc",
       url: "assets/Video1.mp4",
       duration: "2:45",
-      gradientColors: [const Color(0xFF1A2980), const Color(0xFF26D0CE)],
+      gradientColors: [const Color(0xFF14532D), const Color(0xFF10B981)],
     ),
     VideoModel(
       id: "video_coping_urges_part2",

@@ -22,7 +22,7 @@
 				<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/toastr.css">
 				<!--<link rel="stylesheet" href="../bootstrap/jquery.dataTables.min.css">-->
 				<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/dataTables.bootstrap.min.css">
-				<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=4.0">
+				<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=6.0">
 
 				<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/jquery-ui.min.css">
 				<link rel="stylesheet" href="<%=request.getContextPath()%>/vc/vc.css?" +n>
@@ -84,7 +84,7 @@
 					font-weight: 700;
 					text-align: center;
 					font-family: 'Poppins', sans-serif;
-					color: var(--brand-navy, #0B2D6B);
+					color: var(--brand-navy, #0B3B78);
 					margin: 0;
 				}
 

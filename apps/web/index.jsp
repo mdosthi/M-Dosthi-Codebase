@@ -17,7 +17,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="#0B2D6B">
+	<meta name="theme-color" content="#0D6B44">
 	<title>mDosthi</title>
 
 	<link rel="icon" type="image/png" sizes="32x32" href="<%=ctx%>/images/icons/mdosthi-favicon-32.png?v=4">
@@ -27,8 +27,8 @@
 
 	<link rel="stylesheet" href="<%=ctx%>/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<%=ctx%>/bootstrap/font-awesome-4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="<%=ctx%>/style/mdosthi-brand-tokens.css?v=5">
-	<link rel="stylesheet" href="<%=ctx%>/style/mdosthi-login.css?v=4">
+	<link rel="stylesheet" href="<%=ctx%>/style/mdosthi-brand-tokens.css?v=6">
+	<link rel="stylesheet" href="<%=ctx%>/style/mdosthi-login.css?v=5">
 </head>
 <body>
 
@@ -89,7 +89,7 @@
 					<div class="md-partner-item">
 						<img src="<%=ctx%>/images/icmr.png" alt="ICMR">
 						<div class="md-partner-text">
-							<span class="md-partner-role">Funded By</span>
+							<span class="md-partner-role">Sponsored By</span>
 							<span class="md-partner-name">ICMR</span>
 						</div>
 					</div>
@@ -181,7 +181,7 @@
 						<i class="fa fa-question-circle" aria-hidden="true"></i> Staff Sign-In Help
 					</h4>
 				</div>
-				<div class="modal-body" style="padding:20px 22px; font-size:13.5px; color:#2C435A; line-height:1.6;">
+				<div class="modal-body" style="padding:20px 22px; font-size:13.5px; color:var(--color-body-ink, #1E3A34); line-height:1.6;">
 					<p style="margin-bottom:10px;">
 						<strong style="color:var(--color-navy);">Who Can Sign In Here:</strong> This web portal is reserved for <strong>Administrators</strong>, <strong>Psychologists</strong>, and <strong>Doctors</strong>.
 					</p>
@@ -192,8 +192,8 @@
 						<strong style="color:var(--color-navy);">Shared Workstations:</strong> Always sign out from the top-right bar after completing your session.
 					</p>
 				</div>
-				<div class="modal-footer" style="border-top:1px solid rgba(11,45,107,0.08); padding:12px 22px;">
-					<button type="button" class="btn btn-primary" data-dismiss="modal" style="background:var(--color-navy); border:none; border-radius:999px; padding:7px 20px; font-family:var(--font-heading); font-weight:600;">Got it</button>
+				<div class="modal-footer" style="border-top:1px solid rgba(13,107,68,0.10); padding:12px 22px;">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" style="background:var(--color-teal, #138A4E); border:none; border-radius:999px; padding:7px 20px; font-family:var(--font-heading); font-weight:600;">Got it</button>
 				</div>
 			</div>
 		</div>

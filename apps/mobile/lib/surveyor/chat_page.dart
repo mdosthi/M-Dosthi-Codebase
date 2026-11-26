@@ -575,9 +575,9 @@ class _ChatPageState extends State<ChatPage> {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.blue.shade50,
+                    color: Colors.green.shade50,
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.blue.shade200),
+                    border: Border.all(color: Colors.green.shade200),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -587,7 +587,7 @@ class _ChatPageState extends State<ChatPage> {
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue.shade700,
+                          color: Colors.green.shade700,
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -596,7 +596,7 @@ class _ChatPageState extends State<ChatPage> {
                         style: TextStyle(
                           fontSize: 12,
                           fontStyle: FontStyle.italic,
-                          color: Colors.blue.shade600,
+                          color: Colors.green.shade600,
                         ),
                       ),
                     ],
@@ -1317,7 +1317,7 @@ class _ChatPageState extends State<ChatPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
                 color: isUser
-                    ? BrandColors.navy
+                    ? BrandColors.tealDark
                     : isSystem
                         ? Colors.amber.shade50
                         : hasCodeBlock
@@ -1377,7 +1377,7 @@ class _ChatPageState extends State<ChatPage> {
             const SizedBox(width: 8),
             CircleAvatar(
               radius: 18,
-              backgroundColor: BrandColors.navy,
+              backgroundColor: BrandColors.tealDark,
               child: const Icon(
                 Icons.person_rounded,
                 size: 18,
@@ -1459,7 +1459,7 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           CircleAvatar(
             radius: 16,
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.green.shade700,
             child: const Icon(
               Icons.smart_toy,
               size: 16,
@@ -1559,7 +1559,7 @@ class _ChatPageState extends State<ChatPage> {
       builder: (context, child) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: BrandColors.navy,
+            backgroundColor: BrandColors.tealDark,
             foregroundColor: Colors.white,
             elevation: 1,
             title: Row(
@@ -1603,7 +1603,7 @@ class _ChatPageState extends State<ChatPage> {
           ),
           body: isLoading
               ? const Center(
-                  child: CircularProgressIndicator(color: BrandColors.navy))
+                  child: CircularProgressIndicator(color: BrandColors.teal))
               : !isEnrolledInRCT
                   ? _buildNotEnrolledView()
                   : errorMessage != null
@@ -1631,7 +1631,7 @@ class _ChatPageState extends State<ChatPage> {
                                 ElevatedButton(
                                   onPressed: _initializeChat,
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: BrandColors.navy,
+                                    backgroundColor: BrandColors.teal,
                                     foregroundColor: Colors.white,
                                   ),
                                   child: Text(languageService.isBengali
@@ -1657,14 +1657,14 @@ class _ChatPageState extends State<ChatPage> {
                                           Container(
                                             padding: const EdgeInsets.all(24),
                                             decoration: BoxDecoration(
-                                              color: BrandColors.navy
-                                                  .withOpacity(0.08),
+                                              color: BrandColors.teal
+                                                  .withOpacity(0.10),
                                               shape: BoxShape.circle,
                                             ),
                                             child: const Icon(
                                               Icons.smart_toy_rounded,
                                               size: 80,
-                                              color: BrandColors.navy,
+                                              color: BrandColors.teal,
                                             ),
                                           ),
                                           const SizedBox(height: 24),
@@ -1708,7 +1708,7 @@ class _ChatPageState extends State<ChatPage> {
                                             ),
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor:
-                                                  BrandColors.navy,
+                                                  BrandColors.teal,
                                               foregroundColor: Colors.white,
                                               padding:
                                                   const EdgeInsets.symmetric(

@@ -4,20 +4,20 @@
   max-width: 1440px;
   margin: 0 auto;
   padding: 28px;
-  background: linear-gradient(180deg, #E0F7FA 0%, #F4FBFC 45%, #FFFFFF 100%);
-  color: #263746;
+  background: linear-gradient(180deg, #E9F8F0 0%, #F3FBF7 45%, #FFFFFF 100%);
+  color: #1E3A34;
 }
 
 .patient-monitoring .monitoring-header {
   margin: -28px -28px 26px;
   padding: 28px;
-  border-bottom: 1px solid #d9e4eb;
+  border-bottom: 1px solid #CDEBD9;
   background: #ffffff;
 }
 
 .patient-monitoring .monitoring-header h2 {
   margin: 0 0 8px;
-  color: var(--color-navy, #0B2D6B);
+  color: var(--color-navy, #0B3B78);
   font-size: 28px;
   font-weight: 700;
 }
@@ -31,9 +31,9 @@
   display: inline-block;
   margin-top: 12px !important;
   padding: 8px 12px;
-  border-left: 3px solid var(--color-blue, #007BFF);
-  background: var(--color-ice, #E0F7FA);
-  color: var(--color-navy, #0B2D6B);
+  border-left: 3px solid var(--color-blue, #0097A7);
+  background: var(--color-ice, #E9F8F0);
+  color: var(--color-navy, #0B3B78);
 }
 
 .patient-monitoring .monitoring-list-summary {
@@ -42,14 +42,14 @@
   gap: 8px;
   margin-top: 16px;
   padding: 8px 12px;
-  border: 1px solid #d9e4eb;
+  border: 1px solid #CDEBD9;
   border-radius: 6px;
-  background: #f5f9fb;
-  color: var(--color-navy, #0B2D6B);
+  background: #F3FBF7;
+  color: var(--color-navy, #0B3B78);
 }
 
 .patient-monitoring .monitoring-summary-label {
-  color: #637784;
+  color: #4B6B63;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: .04em;
@@ -64,7 +64,7 @@
 
 .patient-monitoring .monitoring-list-heading p {
   margin: 5px 0 0;
-  color: #587080;
+  color: #4B6B63;
   font-size: 13px;
   font-weight: 400;
 }
@@ -79,23 +79,23 @@
   position: absolute;
   top: 13px;
   left: 13px;
-  color: #6b7d88;
+  color: #4B6B63;
 }
 
 .patient-monitoring .monitoring-search input {
   width: 100%;
   min-height: 40px;
   padding: 8px 12px 8px 36px;
-  border: 1px solid #c8d6df;
+  border: 1px solid #B8DFC9;
   border-radius: 5px;
-  color: #263746;
+  color: #1E3A34;
   font-weight: 400;
 }
 
 .patient-monitoring .monitoring-search input:focus {
   outline: 0;
-  border-color: var(--color-teal, #00BFA6);
-  box-shadow: 0 0 0 3px rgba(0, 191, 166, .14);
+  border-color: var(--color-teal, #138A4E);
+  box-shadow: 0 0 0 3px rgba(19, 138, 78, .14);
 }
 
 .patient-monitoring .monitoring-patient-table {
@@ -105,7 +105,7 @@
 .patient-monitoring .monitoring-patient-table thead th {
   padding: 14px 16px;
   border-bottom: 0;
-  background: var(--color-navy, #0B2D6B);
+  background: var(--color-navy, #0B3B78);
   color: #fff;
   font-size: 12px;
   font-weight: 700;
@@ -163,7 +163,7 @@
   padding: 16px 18px;
   border: 0;
   background: #e8f2f7;
-  color: var(--color-navy, #0B2D6B);
+  color: var(--color-navy, #0B3B78);
   font-weight: 600;
 }
 
@@ -197,15 +197,15 @@
 
 .patient-monitoring .form-control {
   min-height: 42px;
-  border: 1px solid #c8d6df;
+  border: 1px solid #B8DFC9;
   border-radius: 5px;
   box-shadow: none;
   transition: border-color .15s ease, box-shadow .15s ease;
 }
 
 .patient-monitoring .form-control:focus {
-  border-color: var(--color-teal, #00BFA6);
-  box-shadow: 0 0 0 3px rgba(0, 191, 166, .14);
+  border-color: var(--color-teal, #138A4E);
+  box-shadow: 0 0 0 3px rgba(19, 138, 78, .14);
 }
 
 .patient-monitoring textarea.form-control {
@@ -279,7 +279,7 @@
 
 .patient-monitoring .education-card h4 {
   margin-top: 0;
-  color: var(--color-navy, #0B2D6B);
+  color: var(--color-navy, #0B3B78);
 }
 
 @media (max-width: 767px) {

@@ -309,8 +309,15 @@ class _HamburgerMenuState extends State<HamburgerMenu> {
               itemBuilder: (BuildContext context, int index) {
                 // Regular menu items
                 return ListTile(
-                  leading: Icon(widget.icons[index]),
-                  title: Text(widget.pageTitles[index]),
+                  leading: Icon(widget.icons[index], color: BrandColors.tealDark),
+                  title: Text(
+                    widget.pageTitles[index],
+                    style: BrandTypography.body(
+                      fontSize: 14.5,
+                      fontWeight: FontWeight.w500,
+                      color: BrandColors.navy,
+                    ),
+                  ),
                   onTap: () => _handleMenuItemTap(context, index),
                 );
               },

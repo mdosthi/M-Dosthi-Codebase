@@ -143,7 +143,7 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/toastr.css">		
 	<!--<link rel="stylesheet" href="../bootstrap/jquery.dataTables.min.css">-->
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/dataTables.bootstrap.min.css">
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=3.0">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=6.0">
 
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/jquery-ui.min.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/vc/vc.css?"+n>
@@ -175,7 +175,7 @@
 		margin: 20px;
 		padding: 20px;
 		color: #ffffff;
-		background: var(--color-navy, #0B2D6B);		
+		background: var(--color-navy, #0B3B78);		
 	}
 </style>
 
@@ -514,7 +514,7 @@ $(".req-const-btn").click(function(){
 		text-decoration: none;
 	}
 	ul.doctors li a.active{
-		background-color: var(--color-navy, #0B2D6B);
+		background-color: var(--color-navy, #0B3B78);
 		color: white;
 	}
 	</style>

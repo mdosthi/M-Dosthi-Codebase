@@ -76,7 +76,7 @@
 					<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/toastr.css">
 					<!--<link rel="stylesheet" href="../bootstrap/jquery.dataTables.min.css">-->
 					<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/dataTables.bootstrap.min.css">
-					<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=3.0">
+					<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=6.0">
 
 					<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/jquery-ui.min.css">
 					<link rel="stylesheet" href="<%=request.getContextPath()%>/vc/vc.css?" +n>
@@ -692,7 +692,7 @@
 												statusBg = "rgba(16,185,129,0.1)";
 												statusText = "Received";
 											} else if (log.status === "SUCCESS" || log.status === "SENT") {
-												statusColor = "#4f46e5";
+												statusColor = "#138A4E";
 												statusBg = "rgba(79,70,229,0.1)";
 												statusText = "Sent";
 											} else if (log.status === "DELIVERED") {

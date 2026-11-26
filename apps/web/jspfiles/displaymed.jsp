@@ -576,7 +576,7 @@ table.table:hover
 .rct-not_enrolled {
     background: #f8f9fa;
     border-color: #5bc0de;
-    color: #1976d2;
+    color: #0D6B44;
 }
 
 .rct-unknown {
@@ -932,7 +932,7 @@ table.table:hover
                     <small><i class="fa fa-flask"></i> This patient is enrolled in the CHATBOT study.</small>
                 </p>
             <%} else if(rctFlag == 0) { %>
-                <p style="margin: 5px 0 0 0; color: #1976d2;">
+                <p style="margin: 5px 0 0 0; color: #0D6B44;">
                     <small><i class="fa fa-stethoscope"></i> This patient is not enrolled in CHATBOT study.</small>
                 </p>
             <%} else { %>

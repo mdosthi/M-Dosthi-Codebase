@@ -1,7 +1,7 @@
 /* ==========================================================================
    mDosthi Official Brand Design System
-   Palette: Navy (#0B2D6B), Blue (#007BFF), Teal (#00BFA6),
-            Green (#8BC34A), Ice Light (#E0F7FA)
+   Palette: Navy (#14532D), Blue (#1E8E5A), Teal (#10B981),
+            Green (#4CAF50), Ice Light (#E6F7EE)
    Typography: Poppins (Headings), Inter (Body), Lora (Subtitles/Subtext)
    ========================================================================== */
 
@@ -26,31 +26,32 @@
 }
 
 :root {
-  /* Core Brand Palette */
-  --brand-navy: #0B2D6B;
-  --brand-blue: #007BFF;
-  --brand-teal: #00BFA6;
-  --brand-green: #8BC34A;
-  --brand-light: #E0F7FA;
+  /* Core 5-Color Brand Logo Palette */
+  --brand-navy: #083A82;
+  --brand-blue: #0E76BC;
+  --brand-cyan-teal: #0BA5AE;
+  --brand-teal: #129A58;
+  --brand-green: #6AC242;
+  --brand-light: #E8F8F1;
 
   /* Extended Harmony Tokens */
-  --brand-navy-dark: #071F4A;
-  --brand-teal-dark: #00897B;
-  --brand-emerald: #138D75;
-  --brand-green-dark: #558B2F;
-  --brand-mint-bg: #DFF5E8;
+  --brand-navy-dark: #052659;
+  --brand-teal-dark: #0D7A46;
+  --brand-emerald: #129A58;
+  --brand-green-dark: #4E9A32;
+  --brand-mint-bg: #D6F5E3;
   --brand-surface: #FFFFFF;
-  --brand-page-bg: #F2FAFC;
-  --brand-text-body: #2C435A;
-  --brand-text-muted: #5A7188;
-  --brand-border: rgba(11, 45, 107, 0.10);
+  --brand-page-bg: #F3FAF8;
+  --brand-text-body: #1F3B4D;
+  --brand-text-muted: #4A6875;
+  --brand-border: rgba(11, 165, 174, 0.16);
 
-  /* Gradients */
-  --brand-cta-gradient: linear-gradient(92deg, #0B2D6B 0%, #007BFF 38%, #00BFA6 74%, #6CC24A 100%);
-  --brand-cta-gradient-hover: linear-gradient(92deg, #082354 0%, #0069D9 38%, #00A892 74%, #5BB33A 100%);
-  --brand-hero-bg: radial-gradient(circle at 12% 15%, rgba(224, 247, 250, 0.95) 0%, rgba(242, 250, 252, 0.7) 45%, #FFFFFF 100%);
-  --brand-soft-shadow: 0 14px 36px rgba(11, 45, 107, 0.08);
-  --brand-pill-shadow: 0 8px 24px rgba(11, 45, 107, 0.09);
+  /* Gradients (Full Logo Spectrum: Deep Navy -> Clinical Blue -> Cyan-Teal -> Emerald -> Leaf Green) */
+  --brand-cta-gradient: linear-gradient(92deg, #129A58 0%, #0BA5AE 46%, #0E76BC 82%, #083A82 100%);
+  --brand-cta-gradient-hover: linear-gradient(92deg, #0D7A46 0%, #088E96 46%, #0A5E99 82%, #052659 100%);
+  --brand-hero-bg: radial-gradient(circle at 10% 14%, rgba(232, 248, 241, 0.96) 0%, rgba(230, 247, 248, 0.72) 45%, #FFFFFF 100%);
+  --brand-soft-shadow: 0 14px 36px rgba(8, 58, 130, 0.08);
+  --brand-pill-shadow: 0 8px 24px rgba(14, 118, 188, 0.09);
 
   /* Typography */
   --font-heading: 'Poppins', 'Poppins-Fallback', 'Segoe UI', sans-serif;
@@ -108,7 +109,7 @@ body.mdosthi-branded {
   border-radius: 999px;
   padding: 10px 18px 10px 24px;
   box-shadow: var(--brand-pill-shadow);
-  border: 1px solid rgba(0, 191, 166, 0.20);
+  border: 1px solid rgba(16, 185, 129, 0.20);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -137,7 +138,7 @@ body.mdosthi-branded {
 .mdosthi-nav-divider {
   width: 1.5px;
   height: 34px;
-  background: rgba(11, 45, 107, 0.16);
+  background: rgba(20, 83, 45, 0.16);
   display: inline-block;
 }
 
@@ -178,7 +179,7 @@ body.mdosthi-branded {
 .mdosthi-nav-links>li>a:hover,
 .mdosthi-nav-links>li>a:focus {
   color: var(--brand-teal-dark);
-  background: rgba(224, 247, 250, 0.65);
+  background: rgba(230, 247, 238, 0.65);
 }
 
 .mdosthi-nav-links>li>a:hover i {
@@ -214,8 +215,8 @@ body.mdosthi-branded {
   background: #FFFFFF;
   border-radius: 18px;
   padding: 8px;
-  box-shadow: 0 18px 40px rgba(11, 45, 107, 0.14);
-  border: 1px solid rgba(0, 191, 166, 0.20);
+  box-shadow: 0 18px 40px rgba(20, 83, 45, 0.14);
+  border: 1px solid rgba(16, 185, 129, 0.20);
   z-index: 1100;
 }
 
@@ -253,7 +254,7 @@ body.mdosthi-branded {
   display: none;
   background: var(--brand-light);
   color: var(--brand-navy);
-  border: 1px solid rgba(0, 123, 255, 0.2);
+  border: 1px solid rgba(30, 142, 90, 0.2);
   border-radius: 12px;
   padding: 8px 12px;
   font-size: 18px;
@@ -286,7 +287,7 @@ body.mdosthi-branded {
   background: var(--brand-cta-gradient);
   color: #FFFFFF !important;
   border: none;
-  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.24);
+  box-shadow: 0 8px 20px rgba(30, 142, 90, 0.24);
 }
 
 .btn-mdosthi-support:hover,
@@ -294,7 +295,7 @@ body.mdosthi-branded {
   background: var(--brand-cta-gradient-hover);
   color: #FFFFFF !important;
   transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(0, 191, 166, 0.30);
+  box-shadow: 0 12px 26px rgba(16, 185, 129, 0.30);
 }
 
 /* 2. Learn More (Outlined Blue/Navy Pill) */
@@ -302,7 +303,7 @@ body.mdosthi-branded {
   background: #FFFFFF;
   color: var(--brand-navy) !important;
   border: 1.8px solid var(--brand-blue);
-  box-shadow: 0 4px 14px rgba(11, 45, 107, 0.06);
+  box-shadow: 0 4px 14px rgba(20, 83, 45, 0.06);
 }
 
 .btn-mdosthi-learn:hover,
@@ -310,7 +311,7 @@ body.mdosthi-branded {
   background: var(--brand-light);
   color: var(--brand-navy) !important;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.14);
+  box-shadow: 0 8px 20px rgba(30, 142, 90, 0.14);
 }
 
 /* 3. Donate (Soft Healing Green Pill) */
@@ -393,7 +394,7 @@ body.mdosthi-branded {
   align-items: center;
   gap: 18px;
   background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(0, 191, 166, 0.22);
+  border: 1px solid rgba(16, 185, 129, 0.22);
   border-radius: 24px;
   padding: 14px 20px;
   box-shadow: var(--brand-soft-shadow);
@@ -429,9 +430,9 @@ body.mdosthi-branded {
   flex-wrap: wrap;
   gap: 18px;
   padding: 12px 18px;
-  background: rgba(224, 247, 250, 0.55);
+  background: rgba(230, 247, 238, 0.55);
   border-radius: 18px;
-  border: 1px solid rgba(0, 123, 255, 0.12);
+  border: 1px solid rgba(30, 142, 90, 0.12);
 }
 
 .mdosthi-partner-item {
@@ -449,7 +450,7 @@ body.mdosthi-branded {
   border-radius: 8px;
   background: #FFFFFF;
   padding: 3px;
-  box-shadow: 0 2px 8px rgba(11, 45, 107, 0.08);
+  box-shadow: 0 2px 8px rgba(20, 83, 45, 0.08);
 }
 
 /* Clinical & Patient Login Card */
@@ -457,8 +458,8 @@ body.mdosthi-branded {
   background: #FFFFFF;
   border-radius: 28px;
   padding: 32px 30px;
-  box-shadow: 0 20px 50px rgba(11, 45, 107, 0.11);
-  border: 1.5px solid rgba(0, 191, 166, 0.22);
+  box-shadow: 0 20px 50px rgba(20, 83, 45, 0.11);
+  border: 1.5px solid rgba(16, 185, 129, 0.22);
   position: relative;
   overflow: hidden;
 }
@@ -530,7 +531,7 @@ body.mdosthi-branded {
   height: 48px;
   padding: 0 16px 0 44px;
   border-radius: 14px;
-  border: 1.5px solid rgba(11, 45, 107, 0.16);
+  border: 1.5px solid rgba(20, 83, 45, 0.16);
   background: #F8FCFD;
   font-family: var(--font-body);
   font-size: 14.5px;
@@ -541,7 +542,7 @@ body.mdosthi-branded {
 .mdosthi-input:focus {
   background: #FFFFFF;
   border-color: var(--brand-blue);
-  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.12);
+  box-shadow: 0 0 0 4px rgba(30, 142, 90, 0.12);
   outline: none;
 }
 
@@ -557,7 +558,7 @@ body.mdosthi-branded {
   letter-spacing: 0.3px;
   border: none;
   cursor: pointer;
-  box-shadow: 0 10px 24px rgba(11, 45, 107, 0.20);
+  box-shadow: 0 10px 24px rgba(20, 83, 45, 0.20);
   transition: all 0.25s ease;
   margin-top: 6px;
 }
@@ -577,7 +578,7 @@ body.mdosthi-branded {
   padding: 20px 24px;
   margin: 18px 0 44px;
   box-shadow: var(--brand-pill-shadow);
-  border: 1px solid rgba(0, 191, 166, 0.20);
+  border: 1px solid rgba(16, 185, 129, 0.20);
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 12px;
@@ -589,7 +590,7 @@ body.mdosthi-branded {
   align-items: center;
   gap: 12px;
   padding: 8px 12px;
-  border-right: 1.5px solid rgba(11, 45, 107, 0.10);
+  border-right: 1.5px solid rgba(20, 83, 45, 0.10);
   text-decoration: none !important;
   transition: transform 0.2s ease;
 }
@@ -624,9 +625,9 @@ body.mdosthi-branded {
 }
 
 .mdosthi-section-alt {
-  background: linear-gradient(180deg, rgba(224, 247, 250, 0.45) 0%, rgba(255, 255, 255, 0.9) 100%);
-  border-top: 1px solid rgba(0, 191, 166, 0.14);
-  border-bottom: 1px solid rgba(0, 191, 166, 0.14);
+  background: linear-gradient(180deg, rgba(230, 247, 238, 0.45) 0%, rgba(255, 255, 255, 0.9) 100%);
+  border-top: 1px solid rgba(16, 185, 129, 0.14);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.14);
 }
 
 .mdosthi-section-header {
@@ -672,14 +673,14 @@ body.mdosthi-branded {
   background: #FFFFFF;
   border-radius: 22px;
   padding: 26px 24px;
-  border: 1px solid rgba(11, 45, 107, 0.09);
+  border: 1px solid rgba(20, 83, 45, 0.09);
   box-shadow: var(--brand-soft-shadow);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .mdosthi-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 18px 42px rgba(11, 45, 107, 0.12);
+  box-shadow: 0 18px 42px rgba(20, 83, 45, 0.12);
 }
 
 .mdosthi-card-icon {
@@ -723,7 +724,7 @@ body.mdosthi-branded {
   border-radius: 28px;
   padding: 22px;
   box-shadow: var(--brand-soft-shadow);
-  border: 1.5px solid rgba(0, 191, 166, 0.20);
+  border: 1.5px solid rgba(16, 185, 129, 0.20);
   text-align: center;
 }
 
@@ -781,7 +782,7 @@ body.mdosthi-branded {
 
   .mdosthi-feature-pill {
     border-right: none;
-    border-bottom: 1px solid rgba(11, 45, 107, 0.08);
+    border-bottom: 1px solid rgba(20, 83, 45, 0.08);
   }
 
   .mdosthi-cards-grid {
@@ -810,7 +811,7 @@ body.mdosthi-branded {
     display: none;
     width: 100%;
     padding-top: 12px;
-    border-top: 1px solid rgba(11, 45, 107, 0.08);
+    border-top: 1px solid rgba(20, 83, 45, 0.08);
   }
 
   .mdosthi-nav-collapse.open {

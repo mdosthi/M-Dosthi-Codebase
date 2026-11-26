@@ -39,7 +39,7 @@ class ReadableLibraryScreen extends StatelessWidget {
       descriptionBn:
           "তামাকাসক্তি বুঝতে এবং ধূমপান ছাড়ার ধাপে ধাপে পদ্ধতি জানতে সাহায্য করার জন্য একটি বিস্তারিত নির্দেশিকা।",
       url: "assets/1.pdf",
-      gradientColors: [Color(0xFFe65c00), Color(0xFFF9D423)],
+      gradientColors: [Color(0xFF0D6B44), Color(0xFF6CC24A)],
     ),
     ReadableModel(
       id: "2nd pdf",
@@ -50,7 +50,7 @@ class ReadableLibraryScreen extends StatelessWidget {
       descriptionBn:
           "তামাক বর্জন প্রক্রিয়া, লক্ষণ এবং সহায়তা পরিচিতি তুলে ধরে শিক্ষামূলক পোস্টার।",
       url: "assets/2.pdf",
-      gradientColors: [Color(0xFF11998e), Color(0xFF38ef7d)],
+      gradientColors: [Color(0xFF138A4E), Color(0xFF0097A7)],
     ),
     ReadableModel(
       id: "3rd pdf",
@@ -61,7 +61,7 @@ class ReadableLibraryScreen extends StatelessWidget {
       descriptionBn:
           "তামাক নিয়ন্ত্রণ সংক্রান্ত বিশ্ব স্বাস্থ্য সংস্থার সরকারি প্রকাশনা এবং পরিসংখ্যান।",
       url: "assets/3.pdf",
-      gradientColors: [Color(0xFF1A2980), Color(0xFF26D0CE)],
+      gradientColors: [Color(0xFF0B3B78), Color(0xFF0097A7)],
     ),
     ReadableModel(
       id: "4th pdf",
@@ -72,7 +72,7 @@ class ReadableLibraryScreen extends StatelessWidget {
       descriptionBn:
           "ধূমপান, শিশা এবং চিবানো তামাকের স্বাস্থ্যের প্রভাব নিয়ে আলোচনা করা একটি নির্দেশিকা, সঙ্গে মোকাবিলার উপায়।",
       url: "assets/4.pdf",
-      gradientColors: [Color(0xFF8e2de2), Color(0xFF4a00e0)],
+      gradientColors: [Color(0xFF0D7A5F), Color(0xFF4CAF50)],
     ),
     ReadableModel(
       id: "5th pdf",
@@ -83,7 +83,7 @@ class ReadableLibraryScreen extends StatelessWidget {
       descriptionBn:
           "বর্জন কর্মসূচির জন্য সাধারণ নির্দেশিকা তুলে ধরে আদর্শ স্ট্যান্ডি উপস্থাপনা নির্দেশিকা।",
       url: "assets/5.pdf",
-      gradientColors: [Color(0xFFff00cc), Color(0xFF333399)],
+      gradientColors: [Color(0xFF0B3B78), Color(0xFF138A4E)],
     ),
   ];
 

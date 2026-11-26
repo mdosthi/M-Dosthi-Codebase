@@ -54,7 +54,7 @@
   .char-counter { font-size: .78rem; color: #888; }
   .mode-badge { font-size: .78rem; padding: 2px 10px; border-radius: 12px; font-weight: 600; }
   .badge-tmpl   { background: #dcfce7; color: #166534; }
-  .badge-custom { background: #eff6ff; color: #1e40af; }
+  .badge-custom { background: #E9F8F0; color: #0D6B44; }
 
   .policy-note {
     margin-top: 10px; font-size: .78rem; color: #92400e;
@@ -239,7 +239,7 @@ try {
               <% if (lastStatus == null) { %>
                 <span style="color:#aaa">—</span>
               <% } else if ("read".equals(lastStatus)) { %>
-                <span style="background:#dbeafe;color:#1e40af;padding:2px 8px;border-radius:12px;font-size:.78rem">&#128065; read</span>
+                <span style="background:#D6F5E3;color:#0D6B44;padding:2px 8px;border-radius:12px;font-size:.78rem">&#128065; read</span>
               <% } else if ("delivered".equals(lastStatus)) { %>
                 <span style="background:#dcfce7;color:#166534;padding:2px 8px;border-radius:12px;font-size:.78rem">&#10004;&#10004; delivered</span>
               <% } else if ("sent".equals(lastStatus)) { %>

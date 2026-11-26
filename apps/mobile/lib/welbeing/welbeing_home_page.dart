@@ -190,7 +190,7 @@ class WelbeingHomePage extends StatelessWidget {
                             title: LanguageService().getText('sleep_hygiene'),
                             subtitle:
                                 'Log sleep timing, quality, and night awakenings.',
-                            color: Colors.indigo.shade600,
+                            color: BrandColors.teal,
                             destination: const PatientWellbeingPage(
                                 tab: WellbeingTab.sleepHygiene),
                           ),
@@ -200,7 +200,7 @@ class WelbeingHomePage extends StatelessWidget {
                             title: LanguageService().getText('mood_activity'),
                             subtitle:
                                 'Track mood, activities, and daily routines.',
-                            color: Colors.orange.shade700,
+                            color: BrandColors.cyanTeal,
                             destination: const PatientWellbeingPage(
                                 tab: WellbeingTab.moodActivity),
                           ),
@@ -210,7 +210,7 @@ class WelbeingHomePage extends StatelessWidget {
                             title: LanguageService().getText('education'),
                             subtitle:
                                 'Learn about mood, CBT, and cognitive distortions.',
-                            color: Colors.teal.shade700,
+                            color: BrandColors.blue,
                             destination: const EducationPage(),
                           ),
                         ],

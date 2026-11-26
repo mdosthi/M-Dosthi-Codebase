@@ -4,8 +4,8 @@ import '../theme/brand_theme.dart';
 import 'wellbeing_service.dart';
 
 class _ScreeningHistoryColors {
-  static const primary = BrandColors.blue;
-  static const deepGreen = BrandColors.navy;
+  static const primary = BrandColors.teal;
+  static const deepGreen = BrandColors.tealDark;
   static const page = BrandColors.pageBg;
   static const line = BrandColors.borderSubtle;
   static const softGreen = BrandColors.ice;

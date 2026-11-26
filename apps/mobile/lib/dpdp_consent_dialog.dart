@@ -261,7 +261,7 @@ mDOSTHI একটি AI (কৃত্রিম বুদ্ধিমত্তা
                 children: [
                   Checkbox(
                     value: _isChecked,
-                    activeColor: BrandColors.navy,
+                    activeColor: BrandColors.teal,
                     onChanged: _isSubmitting
                         ? null
                         : (val) => setState(() => _isChecked = val ?? false),
@@ -286,7 +286,7 @@ mDOSTHI একটি AI (কৃত্রিম বুদ্ধিমত্তা
                   onPressed:
                       (_isChecked && !_isSubmitting) ? _submitConsent : null,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: BrandColors.navy,
+                    backgroundColor: BrandColors.teal,
                     disabledBackgroundColor: Colors.grey.shade300,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(

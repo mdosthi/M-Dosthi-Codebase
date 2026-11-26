@@ -406,7 +406,7 @@ class _DoctorMonitoringPageState extends State<DoctorMonitoringPage> {
                                 const Icon(Icons.check_circle_outline_rounded),
                             label: const Text('Save Action'),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: BrandColors.navy,
+                              backgroundColor: BrandColors.teal,
                               foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(vertical: 14),
                             ),

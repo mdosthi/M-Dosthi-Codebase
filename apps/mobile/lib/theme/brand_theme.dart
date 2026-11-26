@@ -1,48 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// Official mDosthi Brand Design Tokens:
-/// Navy (#0B2D6B), Blue (#007BFF), Teal (#00BFA6),
-/// Green (#8BC34A), and Ice (#E0F7FA).
+/// Official mDosthi 5-Color Brand Logo Design Tokens:
+/// Deep Navy (#083A82), Clinical Blue (#0E76BC), Medical Cyan-Teal (#0BA5AE),
+/// Brand Emerald (#129A58), Fresh Leaf Green (#6AC242), and Soft Mint (#E8F8F1).
 class BrandColors {
   BrandColors._();
 
-  static const Color navy = Color(0xFF0B2D6B);
-  static const Color blue = Color(0xFF007BFF);
-  static const Color teal = Color(0xFF00BFA6);
-  static const Color green = Color(0xFF8BC34A);
-  static const Color ice = Color(0xFFE0F7FA);
+  static const Color navy = Color(0xFF083A82);
+  static const Color blue = Color(0xFF0E76BC);
+  static const Color cyanTeal = Color(0xFF0BA5AE);
+  static const Color teal = Color(0xFF129A58);
+  static const Color green = Color(0xFF6AC242);
+  static const Color ice = Color(0xFFE8F8F1);
   static const Color light = ice;
 
-  static const Color navyDark = Color(0xFF071F4A);
-  static const Color tealDark = Color(0xFF00897B);
-  static const Color emerald = Color(0xFF138D75);
-  static const Color mintBg = Color(0xFFDFF5E8);
-  static const Color donateText = Color(0xFF0E6B50);
-  static const Color bodyInk = Color(0xFF2C435A);
-  static const Color mutedInk = Color(0xFF5A7188);
-  static const Color pageBg = Color(0xFFF3FAFC);
-  static const Color borderSubtle = Color(0xFFD6EEF2);
+  static const Color navyDark = Color(0xFF052659);
+  static const Color tealDark = Color(0xFF0D7A46);
+  static const Color emerald = Color(0xFF129A58);
+  static const Color cyanBg = Color(0xFFE6F7F8);
+  static const Color mintBg = Color(0xFFD6F5E3);
+  static const Color donateText = Color(0xFF0D7A46);
+  static const Color bodyInk = Color(0xFF1F3B4D);
+  static const Color mutedInk = Color(0xFF4A6875);
+  static const Color pageBg = Color(0xFFF3FAF8);
+  static const Color borderSubtle = Color(0xFFCBEAD9);
 
-  /// Primary CTA Gradient: linear-gradient(135deg, #0B2D6B 0%, #007BFF 50%, #00BFA6 100%)
+  /// Primary CTA Gradient: linear-gradient(135deg, #129A58 0%, #0BA5AE 54%, #0E76BC 100%)
   static const LinearGradient ctaGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      navy,
-      blue,
       teal,
+      cyanTeal,
+      blue,
     ],
-    stops: [0.0, 0.5, 1.0],
+    stops: [0.0, 0.54, 1.0],
   );
 
+  /// Hero Header Gradient (Full Logo Spectrum: Navy -> Clinical Blue -> Cyan-Teal -> Emerald)
   static const LinearGradient heroHeaderGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
       navy,
-      Color(0xFF0D4A8A),
-      tealDark,
+      blue,
+      cyanTeal,
+      teal,
+    ],
+    stops: [0.0, 0.34, 0.68, 1.0],
+  );
+
+  static const LinearGradient activeTabGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      teal,
+      cyanTeal,
     ],
   );
 
@@ -51,7 +65,7 @@ class BrandColors {
     end: Alignment.bottomCenter,
     colors: [
       ice,
-      Color(0xFFF5FCFD),
+      Color(0xFFF2FAFC),
       Colors.white,
     ],
   );
@@ -118,11 +132,11 @@ class BrandTheme {
       useMaterial3: true,
       scaffoldBackgroundColor: BrandColors.pageBg,
       colorScheme: const ColorScheme.light(
-        primary: BrandColors.navy,
+        primary: BrandColors.teal,
         onPrimary: Colors.white,
         primaryContainer: BrandColors.ice,
         onPrimaryContainer: BrandColors.navy,
-        secondary: BrandColors.teal,
+        secondary: BrandColors.blue,
         onSecondary: Colors.white,
         secondaryContainer: BrandColors.mintBg,
         onSecondaryContainer: BrandColors.navy,
@@ -144,7 +158,7 @@ class BrandTheme {
         bodySmall: BrandTypography.subtitle(fontSize: 13),
       ),
       appBarTheme: AppBarTheme(
-        backgroundColor: BrandColors.navy,
+        backgroundColor: BrandColors.tealDark,
         foregroundColor: Colors.white,
         elevation: 0,
         titleTextStyle: BrandTypography.heading(
@@ -155,7 +169,7 @@ class BrandTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: BrandColors.navy,
+          backgroundColor: BrandColors.teal,
           foregroundColor: Colors.white,
           textStyle: BrandTypography.heading(fontSize: 14.5, fontWeight: FontWeight.w600, color: Colors.white),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
@@ -163,16 +177,16 @@ class BrandTheme {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: BrandColors.navy,
-          side: const BorderSide(color: BrandColors.blue, width: 1.4),
+          foregroundColor: BrandColors.tealDark,
+          side: const BorderSide(color: BrandColors.teal, width: 1.4),
           textStyle: BrandTypography.heading(fontSize: 14, fontWeight: FontWeight.w600),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: BrandColors.blue,
-          textStyle: BrandTypography.heading(fontSize: 14, fontWeight: FontWeight.w600, color: BrandColors.blue),
+          foregroundColor: BrandColors.tealDark,
+          textStyle: BrandTypography.heading(fontSize: 14, fontWeight: FontWeight.w600, color: BrandColors.tealDark),
         ),
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
@@ -184,7 +198,7 @@ class BrandTheme {
       ),
       checkboxTheme: CheckboxThemeData(
         fillColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) return BrandColors.navy;
+          if (states.contains(WidgetState.selected)) return BrandColors.teal;
           return null;
         }),
       ),
@@ -193,15 +207,15 @@ class BrandTheme {
         fillColor: BrandColors.pageBg,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: BrandColors.navy.withOpacity(0.16)),
+          borderSide: BorderSide(color: BrandColors.teal.withOpacity(0.22)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: BrandColors.navy.withOpacity(0.16)),
+          borderSide: BorderSide(color: BrandColors.teal.withOpacity(0.22)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: BrandColors.blue, width: 1.8),
+          borderSide: const BorderSide(color: BrandColors.teal, width: 1.8),
         ),
       ),
       drawerTheme: const DrawerThemeData(

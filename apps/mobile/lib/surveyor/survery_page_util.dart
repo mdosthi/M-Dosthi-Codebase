@@ -203,7 +203,7 @@ class SurveyorPageUtilState extends State<SurveyorPageUtil> {
       decoration: BoxDecoration(
         gradient: hasActiveSession
             ? const LinearGradient(
-                colors: [BrandColors.tealDark, BrandColors.navy],
+                colors: [BrandColors.tealDark, BrandColors.teal, BrandColors.blue],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               )
@@ -211,7 +211,7 @@ class SurveyorPageUtilState extends State<SurveyorPageUtil> {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: BrandColors.blue.withOpacity(0.24),
+            color: BrandColors.teal.withOpacity(0.26),
             blurRadius: 14,
             offset: const Offset(0, 6),
           ),
@@ -801,7 +801,7 @@ class SurveyorPageUtilState extends State<SurveyorPageUtil> {
                               _buildGridActionCard(
                                 icon: Icons.assignment_turned_in_rounded,
                                 title: languageService.getText('takeTest'),
-                                color: Colors.indigo.shade600,
+                                color: Colors.green.shade700,
                                 onTap: () {
                                   Navigator.push(
                                     context,
@@ -843,7 +843,7 @@ class SurveyorPageUtilState extends State<SurveyorPageUtil> {
                                 icon: Icons.privacy_tip_rounded,
                                 title:
                                     languageService.getText('withdraw_consent'),
-                                color: Colors.blueGrey.shade600,
+                                color: BrandColors.mutedInk,
                                 onTap: _withdrawDpdpConsent,
                               ),
                             ],
@@ -871,7 +871,7 @@ class SurveyorPageUtilState extends State<SurveyorPageUtil> {
                       _loadChatStatus();
                     }
                   },
-                  backgroundColor: BrandColors.navy,
+                  backgroundColor: BrandColors.teal,
                   foregroundColor: Colors.white,
                   elevation: 4,
                   tooltip: languageService.getText('chat_with_mdosthi'),

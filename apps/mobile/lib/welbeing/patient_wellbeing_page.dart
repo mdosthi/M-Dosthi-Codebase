@@ -138,7 +138,7 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
       label: Text(label),
       selected: selected,
       onSelected: (_) => onSelected(),
-      selectedColor: BrandColors.navy.withOpacity(0.14),
+      selectedColor: BrandColors.teal.withOpacity(0.14),
       labelStyle: GoogleFonts.poppins(fontWeight: FontWeight.w600),
     );
   }
@@ -577,7 +577,7 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
                             onSelected: (_) =>
                                 setState(() => _selectedMood = mood),
                             selectedColor:
-                                BrandColors.navy.withOpacity(0.15),
+                                BrandColors.teal.withOpacity(0.15),
                             labelStyle:
                                 GoogleFonts.poppins(fontWeight: FontWeight.w600),
                           );

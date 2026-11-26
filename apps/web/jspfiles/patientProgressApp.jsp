@@ -303,7 +303,7 @@
 
         .badge-video {
             background-color: rgba(59, 130, 246, 0.1);
-            color: #1d4ed8;
+            color: #0D6B44;
         }
 
         .badge-other {
@@ -327,7 +327,7 @@
         }
 
         .btn-blue {
-            background-color: #2563eb;
+            background-color: #138A4E;
             color: #ffffff;
             font-weight: 600;
             border: none;
@@ -342,7 +342,7 @@
         }
 
         .btn-blue:hover {
-            background-color: #1d4ed8;
+            background-color: #0D6B44;
             color: #ffffff;
             text-decoration: none;
         }

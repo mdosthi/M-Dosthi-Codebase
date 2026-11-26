@@ -111,7 +111,7 @@
 						<!--<link rel="stylesheet" href="../bootstrap/jquery.dataTables.min.css">-->
 						<link rel="stylesheet"
 							href="<%=request.getContextPath()%>/bootstrap/dataTables.bootstrap.min.css">
-						<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=4.0">
+						<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=6.0">
 
 						<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/jquery-ui.min.css">
 						<link rel="stylesheet" href="<%=request.getContextPath()%>/vc/vc.css?" +n>
@@ -930,7 +930,7 @@ Author: Sayantan Patra
 														style="display: flex; justify-content: space-between; margin-bottom: 6px;">
 														<span style="color: var(--text-muted);">Patients who got
 															messages:</span>
-														<strong style="color: #4f46e5;"><span
+														<strong style="color: #138A4E;"><span
 																id="waNotifiedRotCount">0</span> patients</strong>
 													</div>
 													<div
@@ -1145,7 +1145,7 @@ Author: Sayantan Patra
 													statusBg = "rgba(16,185,129,0.1)";
 													statusText = "Received";
 												} else if (log.status === "SUCCESS" || log.status === "SENT") {
-													statusColor = "#4f46e5";
+													statusColor = "#138A4E";
 													statusBg = "rgba(79,70,229,0.1)";
 													statusText = "Sent";
 												} else if (log.status === "DELIVERED") {
@@ -1464,7 +1464,7 @@ function openPipelineQueueModal() {
         var html = '<div class="row" style="margin-bottom:16px;text-align:center;">'
             + '<div class="col-sm-3"><div style="background:#fff3e0;border-radius:8px;padding:12px;border:1px solid #e67e22;">'
             + '<div style="font-size:28px;font-weight:bold;color:#e67e22;">'+(c.pending||0)+'</div><div style="color:#888;">Pending</div></div></div>'
-            + '<div class="col-sm-3"><div style="background:#e3f2fd;border-radius:8px;padding:12px;border:1px solid #2980b9;">'
+            + '<div class="col-sm-3"><div style="background:#E9F8F0;border-radius:8px;padding:12px;border:1px solid #2980b9;">'
             + '<div style="font-size:28px;font-weight:bold;color:#2980b9;">'+(c.running||0)+'</div><div style="color:#888;">Running</div></div></div>'
             + '<div class="col-sm-3"><div style="background:#e8f5e9;border-radius:8px;padding:12px;border:1px solid #27ae60;">'
             + '<div style="font-size:28px;font-weight:bold;color:#27ae60;">'+(c.completed||0)+'</div><div style="color:#888;">Completed</div></div></div>'

@@ -93,10 +93,10 @@
 		}
 		.ui-widget-content.ui-dialog
 		{
-		border: 3px solid #337ab7;
+		border: 3px solid #138A4E;
 		}
 		.ui-dialog-titlebar {
-			background:#337ab7;
+			background:#138A4E;
 			color: #fff;
 		}
 		.ui-widget.ui-widget-content{z-index:1055 !important;}

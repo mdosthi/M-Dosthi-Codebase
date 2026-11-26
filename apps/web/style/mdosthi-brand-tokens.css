@@ -1,25 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400;1,500&family=Poppins:wght@500;600;700;800&display=swap');
 
 :root {
-	/* Official mDosthi Brand Palette */
-	--color-navy: #0B2D6B;
-	--color-navy-dark: #071F4A;
-	--color-blue: #007BFF;
-	--color-teal: #00BFA6;
-	--color-teal-dark: #00897B;
-	--color-emerald: #138D75;
-	--color-green: #8BC34A;
-	--color-ice: #E0F7FA;
-	--color-mint-bg: #DFF5E8;
-	--color-page-bg: #F3FAFC;
-	--color-body-ink: #2C435A;
-	--color-muted-ink: #5A7188;
-	--color-border-subtle: #D6EEF2;
+	/* Official mDosthi 5-Color Brand Logo Palette
+	   Deep Navy (#083A82), Clinical Blue (#0E76BC), Medical Cyan-Teal (#0BA5AE),
+	   Brand Emerald (#129A58), Fresh Leaf Green (#6AC242), Soft Mint (#E8F8F1) */
+	--color-navy: #083A82;
+	--color-navy-dark: #052659;
+	--color-blue: #0E76BC;
+	--color-cyan-teal: #0BA5AE;
+	--color-teal: #129A58;
+	--color-teal-dark: #0D7A46;
+	--color-emerald: #129A58;
+	--color-green: #6AC242;
+	--color-ice: #E8F8F1;
+	--color-cyan-bg: #E6F7F8;
+	--color-mint-bg: #D6F5E3;
+	--color-page-bg: #F3FAF8;
+	--color-body-ink: #1F3B4D;
+	--color-muted-ink: #4A6875;
+	--color-border-subtle: #CBEAD9;
 
-	/* Brand Gradients */
-	--gradient-cta: linear-gradient(135deg, #0B2D6B 0%, #007BFF 50%, #00BFA6 100%);
-	--gradient-hero: linear-gradient(135deg, #0B2D6B 0%, #0D4A8A 55%, #00897B 100%);
-	--gradient-page: linear-gradient(180deg, #E0F7FA 0%, #F6FCFD 45%, #FFFFFF 100%);
+	/* Brand Gradients (Full Logo Spectrum: Green-Led Clinical Support + Teal + Blue + Navy) */
+	--gradient-cta: linear-gradient(135deg, #129A58 0%, #0BA5AE 54%, #0E76BC 100%);
+	--gradient-cta-hover: linear-gradient(135deg, #0D7A46 0%, #088E96 54%, #0A5E99 100%);
+	--gradient-hero: linear-gradient(135deg, #083A82 0%, #0E76BC 34%, #0BA5AE 68%, #129A58 100%);
+	--gradient-active-tab: linear-gradient(135deg, #129A58 0%, #0BA5AE 100%);
+	--gradient-page: linear-gradient(180deg, #E8F8F1 0%, #F2FAFC 48%, #FFFFFF 100%);
 
 	/* Typography */
 	--font-heading: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;

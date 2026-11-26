@@ -154,7 +154,7 @@ class _ChatHistoryPageState extends State<ChatHistoryPage> {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.blue.shade100,
+                    color: Colors.green.shade100,
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8),
                       topRight: Radius.circular(8),
@@ -249,7 +249,7 @@ class _ChatHistoryPageState extends State<ChatHistoryPage> {
           if (!isUser) ...[
             CircleAvatar(
               radius: 12,
-              backgroundColor: isSystem ? Colors.orange : Colors.blue,
+              backgroundColor: isSystem ? Colors.orange : Colors.green.shade700,
               child: Icon(
                 isSystem ? Icons.info : Icons.smart_toy,
                 size: 12,
@@ -263,7 +263,7 @@ class _ChatHistoryPageState extends State<ChatHistoryPage> {
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
                 color: isUser
-                    ? Colors.blue.shade500
+                    ? Colors.green.shade500
                     : isSystem
                         ? Colors.orange.shade100
                         : Colors.grey.shade200,
@@ -336,7 +336,7 @@ class _ChatHistoryPageState extends State<ChatHistoryPage> {
       case 'active':
         return Colors.green;
       case 'completed':
-        return Colors.blue;
+        return Colors.green.shade700;
       case 'canceled':
         return Colors.red;
       default:
@@ -471,7 +471,7 @@ class _ChatHistoryPageState extends State<ChatHistoryPage> {
                   Text(
                     languageService.getText('tap_to_view_messages'),
                     style: TextStyle(
-                      color: Colors.blue.shade600,
+                      color: Colors.green.shade600,
                       fontSize: 12,
                     ),
                   ),
@@ -479,7 +479,7 @@ class _ChatHistoryPageState extends State<ChatHistoryPage> {
                   Icon(
                     Icons.arrow_forward_ios,
                     size: 12,
-                    color: Colors.blue.shade600,
+                    color: Colors.green.shade600,
                   ),
                 ],
               ),

@@ -10,7 +10,7 @@
 	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="<%=request.getContextPath()%>/style/mdosthi-brand-tokens.css" />
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/style/mdosthi-brand-tokens.css?v=6" />
   	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/captcha.css" />	
 
   <script src="<%=request.getContextPath()%>/bootstrap/jquery-2.2.1.min.js"></script>
@@ -18,9 +18,9 @@
 	<script src="<%=request.getContextPath()%>/bootstrap/captcha.js"></script>
 <style>
 body {
-    background: linear-gradient(180deg, var(--color-ice, #E0F7FA) 0%, #FFFFFF 100%);
+    background: linear-gradient(180deg, var(--color-ice, #E6F7EE) 0%, #F2FBF6 48%, #FFFFFF 100%);
     font-family: var(--font-body, 'Inter', sans-serif);
-    color: var(--color-navy, #0B2D6B);
+    color: var(--color-navy, #0B3B78);
     min-height: 100vh;
     margin: 0;
     padding: 24px 16px;
@@ -35,14 +35,14 @@ body {
     float: none !important;
     background: #FFFFFF;
     border-radius: 20px;
-    border: 1.5px solid rgba(0, 191, 166, 0.25);
-    box-shadow: 0 14px 36px rgba(11, 45, 107, 0.10);
+    border: 1.5px solid rgba(19, 138, 78, 0.25);
+    box-shadow: 0 14px 36px rgba(13, 107, 68, 0.10);
     padding: 28px 26px !important;
 }
-.im-login-form h2 { font-family: var(--font-heading, 'Poppins', sans-serif); color: var(--color-navy, #0B2D6B); margin-top: 4px; }
-.im-login-form a { color: var(--color-blue, #007BFF); }
+.im-login-form h2 { font-family: var(--font-heading, 'Poppins', sans-serif); color: var(--color-navy, #0B3B78); margin-top: 4px; }
+.im-login-form a { color: var(--color-teal, #138A4E); }
 .im-login-form .btn-primary, .im-login-form input[type="submit"] {
-    background: var(--gradient-cta, linear-gradient(135deg, #0B2D6B 0%, #007BFF 50%, #00BFA6 100%));
+    background: var(--gradient-cta, linear-gradient(135deg, #0D6B44 0%, #138A4E 52%, #0097A7 100%));
     border: none;
     border-radius: 999px;
     width: 100%;
