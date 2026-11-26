@@ -21,7 +21,7 @@ String UPLOAD_DIRECTORY = request.getRealPath("/data/"+pid+"/");
 //String oFileName=pid+cdate+"new"+ext;
 //String nFileName=pid+cdate+ftype+"new"+ext;
 String url = request.getScheme()+"://" + request.getServerName() + ":" + request.getServerPort();
-url =url+"/M-Dosthi/"+"servlet/largefileupload";
+url =url+"/mDosthi/"+"servlet/largefileupload";
 
 
 //out.println("pid : "+pid+" ftype : "+ftype+" desc : "+desc+" lname : "+lname+" doc_name : "+doc_name+" cdate : "+cdate+" currdate : "+currdate+"ext : "+ext+"  ext1 : "+ext1+" UPLOAD-DIRECTORY : "+UPLOAD_DIRECTORY+"URL : "+url);

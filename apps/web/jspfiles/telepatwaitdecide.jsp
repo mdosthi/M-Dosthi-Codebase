@@ -42,7 +42,7 @@ out.println(userid+" : "+utype);
 		int ans = rcajob.decideTelePatWait(pids,obj);
 		if(ans==1){
 		//out.println("spids"+"="+pids + "<br>");
-		out.println("<script>alert('Decison recorded Successfully');window.location.href='/M-Dosthi/';</script>");
+		out.println("<script>alert('Decison recorded Successfully');window.location.href='/mDosthi/';</script>");
 		//out.println("<center><Font size=+2 color=blue><b>Decison recorded Successfully</b></Font></center><BR>");
 		//out.println("<center><A href=telewaitbrowse.jsp?rccode="+rcode+"><Font size=+1 color=blue>Browser Patient wait Queue</Font></A></center>");
 		}else{

@@ -94,7 +94,7 @@ function Ensure-ContextDescriptor($TargetTomcat) {
   $DocBase = [System.Security.SecurityElement]::Escape("$Fwd/apps/web")
   $Expected = "<Context docBase=`"$DocBase`" reloadable=`"false`" />"
   $ConfigDir = Join-Path $TargetTomcat 'conf/Catalina/localhost'
-  $Descriptor = Join-Path $ConfigDir 'M-Dosthi.xml'
+  $Descriptor = Join-Path $ConfigDir 'mDosthi.xml'
   if ((Test-Path $Descriptor) -and ((Get-Content $Descriptor -Raw).Trim() -eq $Expected)) {
     return
   }
@@ -218,7 +218,7 @@ function Start-LegacyStack {
   }
 
   if ($SharedTomcatHome) {
-    $sharedDesc = Join-Path $Tomcat 'conf/Catalina/localhost/M-Dosthi.xml'
+    $sharedDesc = Join-Path $Tomcat 'conf/Catalina/localhost/mDosthi.xml'
     if (-not (Test-Path $sharedDesc)) {
       throw "Missing shared Tomcat context descriptor ($sharedDesc). Run scripts/setup.ps1 -Mode shared first."
     }
@@ -266,11 +266,11 @@ function Start-LegacyStack {
 
   if ($SharedTomcatHome) {
     $port = Get-TomcatHttpPort $Tomcat '8080'
-    Write-Host "Started. Web UI: http://localhost:$port/M-Dosthi/ (RMI port $serverRmiPort)"
+    Write-Host "Started. Web UI: http://localhost:$port/mDosthi/ (RMI port $serverRmiPort)"
     Write-Host "Mode: Shared Tomcat ($Tomcat) - Tomcat lifecycle is externally managed."
   } else {
     $port = Get-TomcatHttpPort $IndividualTomcat '8081'
-    Write-Host "Started. Web UI: http://localhost:$port/M-Dosthi/ (RMI port $serverRmiPort)"
+    Write-Host "Started. Web UI: http://localhost:$port/mDosthi/ (RMI port $serverRmiPort)"
     Write-Host "Mode: M-Dosthi Individual Tomcat ($IndividualTomcat)"
   }
 }
@@ -289,13 +289,13 @@ function Show-LegacyStatus {
     Write-Host 'M-Dosthi RMI:               STOPPED'
   }
   if (Test-IndividualTomcatRunning) {
-    Write-Host "M-Dosthi Individual Tomcat: RUNNING (PID $((Get-Content $TomcatPidFile -First 1).Trim()), http://localhost:$indPort/M-Dosthi/)"
+    Write-Host "M-Dosthi Individual Tomcat: RUNNING (PID $((Get-Content $TomcatPidFile -First 1).Trim()), http://localhost:$indPort/mDosthi/)"
   } else {
-    Write-Host "M-Dosthi Individual Tomcat: STOPPED (configured for http://localhost:$indPort/M-Dosthi/)"
+    Write-Host "M-Dosthi Individual Tomcat: STOPPED (configured for http://localhost:$indPort/mDosthi/)"
   }
   if ($SharedTomcatHome) {
     $shPort = Get-TomcatHttpPort $Tomcat '8080'
-    Write-Host "Shared Tomcat:              EXTERNAL (configured for http://localhost:$shPort/M-Dosthi/ at $Tomcat)"
+    Write-Host "Shared Tomcat:              EXTERNAL (configured for http://localhost:$shPort/mDosthi/ at $Tomcat)"
   }
 }
 

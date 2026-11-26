@@ -156,7 +156,7 @@ function myFunction(val)
 	//alert(val.testId);
 	console.log("Sync obj:"+val);
 	var url="arogyam.jsp?testId="+val;
-	var ajax_load = "<img class='loading' src='/M-Dosthi/images/loading.gif' alt='loading...'>";
+	var ajax_load = "<img class='loading' src='/mDosthi/images/loading.gif' alt='loading...'>";
 	$("body").html(ajax_load).load(url);
 	//alert($(this).attr("json")+"");
 

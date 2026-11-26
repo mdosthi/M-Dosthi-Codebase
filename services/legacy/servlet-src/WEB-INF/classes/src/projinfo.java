@@ -40,7 +40,7 @@ public class projinfo{
 			if (p.length() == 0) {
 				String catalinaBase = System.getProperty("catalina.base", "");
 				if (catalinaBase.length() > 0) {
-					configPath = catalinaBase + "/webapps/M-Dosthi/config.info";
+					configPath = catalinaBase + "/webapps/mDosthi/config.info";
 				}
 				if (!new File(configPath).isFile()) {
 					configPath = configFromWebappLocation(configPath);

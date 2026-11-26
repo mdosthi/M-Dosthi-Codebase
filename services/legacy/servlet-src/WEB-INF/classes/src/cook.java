@@ -6,7 +6,7 @@ import java.net.*;
 public class cook{
 	
 	//String gbltelemedix="/iMediX-Care";
-	String gbltelemedix="/M-Dosthi";
+	String gbltelemedix="/mDosthi";
 	//String gbltelemedix="/";
 	PACSEncryption encDec = new PACSEncryption("");
 	projinfo pinfo=new projinfo("");

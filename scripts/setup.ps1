@@ -79,7 +79,7 @@ $ExpectedContext = "<Context docBase=`"$DocBase`" reloadable=`"false`" />"
 
 function Write-ContextDescriptor($TargetTomcat) {
   $configDir = Join-Path $TargetTomcat 'conf/Catalina/localhost'
-  $descriptor = Join-Path $configDir 'M-Dosthi.xml'
+  $descriptor = Join-Path $configDir 'mDosthi.xml'
   if ((Test-Path $descriptor) -and ((Get-Content $descriptor -Raw).Trim() -eq $ExpectedContext)) {
     return
   }
@@ -121,6 +121,6 @@ foreach ($c in 'java', 'javac', 'mvn', 'mysql', 'flutter') {
 Write-Host "Configured M-Dosthi Individual Tomcat: $IndividualTomcatHome"
 if ($SharedTomcatHome) {
   Write-Host "Configured M-Dosthi in Shared Tomcat:  $TomcatHome"
-  Write-Host 'Restart that Tomcat to load the /M-Dosthi context, or run scripts/legacy.ps1 -Mode individual to use M-Dosthi''s own Tomcat.'
+  Write-Host 'Restart that Tomcat to load the /mDosthi context, or run scripts/legacy.ps1 -Mode individual to use M-Dosthi''s own Tomcat.'
 }
 Write-Host 'Done. See docs/setup.md for the next steps.'

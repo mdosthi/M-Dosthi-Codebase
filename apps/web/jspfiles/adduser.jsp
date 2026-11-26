@@ -620,7 +620,7 @@ function checkAgreement(theForm) {
 </form>
 </div>	<!-- "well" -->
 
-<br><br><a href="https://csjitsi.iitkgp.ac.in/M-Dosthi/" style="text-decoration: none"><h3><strong>HOME</strong></h3></a> 
+<br><br><a href="https://csjitsi.iitkgp.ac.in/mDosthi/" style="text-decoration: none"><h3><strong>HOME</strong></h3></a> 
 </div>	<!-- "col-sm-5" -->
 
 </div><!-- "row" -->

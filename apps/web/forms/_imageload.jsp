@@ -30,9 +30,9 @@
 	<script src="../bootstrap/jquery-2.2.1.min.js"></script>
 	<!--<script src="../bootstrap/js/bootstrap.min.js"></script>
 	<script src="../bootstrap/js/bootstrap-filestyle.min.js"></script>-->
-	<link rel="stylesheet" href="/M-Dosthi/bootstrap/bootstrap-datetimepicker.min.css">
-	<script src="/M-Dosthi/bootstrap/bootstrap-datetimepicker.min.js"></script>
-	<script src="/M-Dosthi/bootstrap/bootstrap-datetimepicker.pt-BR.js"></script>
+	<link rel="stylesheet" href="/mDosthi/bootstrap/bootstrap-datetimepicker.min.css">
+	<script src="/mDosthi/bootstrap/bootstrap-datetimepicker.min.js"></script>
+	<script src="/mDosthi/bootstrap/bootstrap-datetimepicker.pt-BR.js"></script>
 	<script src="<%=request.getContextPath()%>/bootstrap/html2canvas.js" type="text/javascript"></script>
 	<SCRIPT LANGUAGE="JavaScript" SRC="../includes/script1.js"></SCRIPT>
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/jquery-ui.css">
@@ -168,7 +168,7 @@ $(document).ready(function(){
 						$("#reportUpload")[0].reset();
 							$("#reportUpload").append("<div class='uploading-report'>Uploading.....</div>");
 						//$.post("../largefileupload/savepatchlfupload.jsp",{ftype:""+$("#Lftype").val()+"",ext:""+fileExtd+"",docName:""+$("#LdocName").val()+"",lname:""+$("#Llname").val()+"",desc:""+$("#Ldes").val()+""},function(data){
-							$.post("/M-Dosthi/servlet/largefileupload",{stream:"<%=patid%>&"+$("#Lftype").val()+"&"+$("#Ldes").val()+"&"+$("#Llname").val()+"&"+$("#LdocName").val()+"&<%=currdate%>&<%=cdate%>&"+fileExtd.substring(1)+""},function(data){
+							$.post("/mDosthi/servlet/largefileupload",{stream:"<%=patid%>&"+$("#Lftype").val()+"&"+$("#Ldes").val()+"&"+$("#Llname").val()+"&"+$("#LdocName").val()+"&<%=currdate%>&<%=cdate%>&"+fileExtd.substring(1)+""},function(data){
 							console.log("<%=patid%>&"+$("#Lftype").val()+"&"+$("#Ldes").val()+"&"+$("#Llname").val()+"&"+$("#LdocName").val()+"&<%=currdate%>&<%=cdate%>&"+fileExtd.substring(1)+"");
 							$(".uploadedReport").html(ajax_load).load("recordmenu_new.jsp");
 							$(".uploading-report").remove();
