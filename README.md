@@ -26,6 +26,7 @@ M-Dosthi is a healthcare application monorepo containing the legacy JSP/Tomcat s
 | Run the Flutter app and Spring API | [Flutter and API quick start](#quick-start-flutter-and-api) | Login and server-backed features need a reachable API and a compatible, populated database. |
 | Run the older JSP website | [Legacy JSP quick start](#quick-start-legacy-jsp-system) | This is a separate application path using Tomcat, Java RMI, and its own legacy configuration. |
 | Run M-Dosthi beside eDosthi | [All-in-One Setup & Shared Tomcat Guide](docs/all-in-one-setup-and-shared-tomcat-guide.md) | Complete end-to-end setup, DB backup restore, and line-by-line Shared Tomcat implementation. |
+| Deploy to Linux Server (`edosthi.in`) | [Production Server Setup Guide](docs/server-setup-guide.md) | Dual eDosthi + mDosthi deployment behind Apache2 HTTPS (`https://edosthi.in/mDosthi/`, `/mdosthi-api/` on `:9091`, `/mDosthi-app/`). |
 | Run annotation tools | [Annotation package guide](services/annotate/README.md) | Requires Python and, for model-backed work, Ollama. |
 | Understand services and data flow | [Architecture guide](docs/architecture.md) | The legacy site and Flutter/API application are not the same backend. |
 
@@ -369,6 +370,7 @@ For detailed diagnostics and additional cases, see [setup troubleshooting](docs/
 - [Setup instructions](docs/setup.md): platform prerequisites, database preparation, commands, troubleshooting.
 - [Architecture](docs/architecture.md): component relationships and data flow.
 - [All-in-One Setup & Shared Tomcat Guide](docs/all-in-one-setup-and-shared-tomcat-guide.md): complete native setup, MySQL backup restoration, run commands, and line-by-line Shared Tomcat implementation from eDosthi to M-Dosthi.
+- [Production Server Setup Guide](docs/server-setup-guide.md): end-to-end Linux server deployment alongside live eDosthi behind Apache2 HTTPS (`/mDosthi/`, `/mdosthi-api/` on `:9091`, `/mDosthi-app/`).
 - [Database Inspection Guide](docs/database-inspection-guide.md): general MySQL CLI and SQL reference for checking databases, schemas, tables, columns, indexes, and sizes.
 - [Shared Tomcat changes](docs/shared-tomcat-changes.md): summary and setup notes for hosting M-Dosthi alongside eDosthi.
 - [API guide](docs/api.md): service endpoints and contracts.
