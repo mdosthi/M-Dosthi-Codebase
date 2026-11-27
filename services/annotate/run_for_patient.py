@@ -15,7 +15,7 @@ For every chat session found for the patient the script:
 
 DB connection:
     Env vars ANNOTATE_DB_HOST / _PORT / _NAME / _USER / _PASS override defaults.
-    Default: M-Dosthi_merged  /  root  /  Root@1234!
+    Default: M-Dosthi_merged  /  root  /  (empty; set ANNOTATE_DB_PASS)
 
 Reliability:
   * All writes for one session happen inside a single transaction
@@ -84,7 +84,7 @@ _DB_CONFIG = {
     "port":    int(os.environ.get("ANNOTATE_DB_PORT", "3306")),
     "db":      os.environ.get("ANNOTATE_DB_NAME", "M-Dosthi_merged"),
     "user":    os.environ.get("ANNOTATE_DB_USER", "root"),
-    "passwd":  os.environ.get("ANNOTATE_DB_PASS", "Root@1234!"),
+    "passwd":  os.environ.get("ANNOTATE_DB_PASS", ""),
     "charset": "utf8mb4",
     # autocommit stays on for plain reads; per-session write blocks
     # explicitly open a transaction with conn.begin() and commit/rollback.

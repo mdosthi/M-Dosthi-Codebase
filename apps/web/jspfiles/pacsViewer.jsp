@@ -82,7 +82,7 @@ String testListHTML = "";
 </head>
 <script>
 $(document).ready(function(){
-/*var loadUrl = "https://imedix.iitkgp.ac.in/PACS/ShowViewerExt.aspx?StudyUID=1.3.12.2.1107.5.2.10.17467.30000009070812353389000000001&uid=9vmxeQvy/Lk=&pwd=9vmxeQvy/Lk=";
+/*var loadUrl = "https://imedix.iitkgp.ac.in/PACS/ShowViewerExt.aspx?StudyUID=<study-uid>&uid=<encrypted-uid>&pwd=<encrypted-pwd>";
 	var ajax_load = "<img class='loading' src='<%=request.getContextPath()%>/images/loading.gif' alt='loading...'>";
 	//	$("#pacsViewer").html(ajax_load).load(loadUrl);
 	$("#pacsViewer").html(ajax_load);

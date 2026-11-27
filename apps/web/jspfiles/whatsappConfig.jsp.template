@@ -1,0 +1,21 @@
+<%-- WhatsApp Business API credentials template — copy to whatsappConfig.jsp (gitignored)
+     or provide values via environment variables from the Meta Developer Console. --%>
+<%!
+    // ── WhatsApp Business API config ──────────────────────────────────────
+    // From Meta Developer Console → Your App → WhatsApp → API Setup
+    static final String WA_PHONE_NUMBER_ID  = System.getenv("IMEDIX_WHATSAPP_PHONE_NUMBER_ID") != null
+        ? System.getenv("IMEDIX_WHATSAPP_PHONE_NUMBER_ID") : "";
+    static final String WA_ACCESS_TOKEN     = System.getenv("IMEDIX_WHATSAPP_ACCESS_TOKEN") != null
+        ? System.getenv("IMEDIX_WHATSAPP_ACCESS_TOKEN") : "";
+    static final String WA_API_VERSION      = "v25.0";
+
+    // Must match the verify token configured in your Meta webhook
+    static final String WA_VERIFY_TOKEN     = System.getenv("IMEDIX_WHATSAPP_VERIFY_TOKEN") != null
+        ? System.getenv("IMEDIX_WHATSAPP_VERIFY_TOKEN") : "";
+
+    // Graph API base URL
+    static final String WA_API_BASE         = "https://graph.facebook.com/" + WA_API_VERSION;
+
+    // Template language code (change to en_IN or hi if needed)
+    static final String WA_TEMPLATE_LANG    = "en_US";
+%>

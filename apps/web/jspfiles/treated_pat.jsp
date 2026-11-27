@@ -28,8 +28,11 @@
 public Connection mySqlcon(){
 	Connection con=null;
 	  try{
-		Class.forName("com.mysql.jdbc.Driver").newInstance();;
-		con=DriverManager.getConnection("jdbc:mysql://localhost:3306/imedixdb_ccode_modf","root","1234");
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+		String dbUrl = System.getenv("LEGACY_DB_URL") != null ? System.getenv("LEGACY_DB_URL") : "jdbc:mysql://localhost:3306/mDosthi";
+		String dbUser = System.getenv("LEGACY_DB_USERNAME") != null ? System.getenv("LEGACY_DB_USERNAME") : "root";
+		String dbPass = System.getenv("LEGACY_DB_PASSWORD") != null ? System.getenv("LEGACY_DB_PASSWORD") : "";
+		con=DriverManager.getConnection(dbUrl, dbUser, dbPass);
 		return con;
 		}
 		catch(Exception ex){con=null;}

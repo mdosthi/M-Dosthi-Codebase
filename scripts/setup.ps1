@@ -73,6 +73,8 @@ function Render($Template, $Target) {
 }
 Render 'services/legacy/runtime/gblinfo.inf.template' 'services/legacy/runtime/gblinfo.inf'
 Render 'apps/web/config.info.template' 'apps/web/config.info'
+Render 'apps/web/WEB-INF/classes/mail.properties.template' 'apps/web/WEB-INF/classes/mail.properties'
+Render 'apps/web/jspfiles/whatsappConfig.jsp.template' 'apps/web/jspfiles/whatsappConfig.jsp'
 
 $DocBase = [System.Security.SecurityElement]::Escape("$Fwd/apps/web")
 $ExpectedContext = "<Context docBase=`"$DocBase`" reloadable=`"false`" />"

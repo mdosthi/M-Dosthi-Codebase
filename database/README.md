@@ -12,7 +12,7 @@ These files are not imported automatically by the application. Before importing 
 Example review command:
 
 ```bash
-mysql --user YOUR_USER --password YOUR_DATABASE < database/snapshots/imedixdb5.sql
+mysql --user=YOUR_USER --database=YOUR_DATABASE -p < database/snapshots/imedixdb5.sql
 ```
 
 Do not place database passwords in shell history, documentation, or committed configuration. SQL snapshots may contain patient or other sensitive data and should be handled according to the project's data-protection requirements.

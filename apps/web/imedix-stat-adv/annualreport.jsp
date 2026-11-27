@@ -9,7 +9,9 @@
 <%
     try{
         Class.forName("com.mysql.jdbc.Driver").newInstance();
-        connection = DriverManager.getConnection(connectionURL, "root", "1234");
+        String dbUser = System.getenv("LEGACY_DB_USERNAME") != null ? System.getenv("LEGACY_DB_USERNAME") : "root";
+        String dbPass = System.getenv("LEGACY_DB_PASSWORD") != null ? System.getenv("LEGACY_DB_PASSWORD") : "";
+        connection = DriverManager.getConnection(connectionURL, dbUser, dbPass);
         if(!connection.isClosed()){
             mysqlconn = connection.createStatement();
         }else{

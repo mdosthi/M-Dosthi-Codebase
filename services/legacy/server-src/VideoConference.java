@@ -53,10 +53,10 @@ public class VideoConference extends UnicastRemoteObject implements VideoConfere
 		
 		pinfo=p;
 		mydb= new dball(pinfo);
-		username = "Wbdhfw";
-		password = "SMS@hfw1";
-		senderId = "something";
-		secureKey = "somekey";
+		username = System.getenv("VIDCONF_USERNAME") != null ? System.getenv("VIDCONF_USERNAME") : "";
+		password = System.getenv("VIDCONF_PASSWORD") != null ? System.getenv("VIDCONF_PASSWORD") : "";
+		senderId = System.getenv("VIDCONF_SENDER_ID") != null ? System.getenv("VIDCONF_SENDER_ID") : "";
+		secureKey = System.getenv("VIDCONF_SECURE_KEY") != null ? System.getenv("VIDCONF_SECURE_KEY") : "";
     }
 
 	@Override

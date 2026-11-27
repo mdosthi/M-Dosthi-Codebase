@@ -51,12 +51,12 @@ public class SmsApi{
      public int useProxy;
      */
         /**
-		 * //https:///www.bulksmsgateway.in/sendmessage.php?
-		 * user=technocratz&
-		 * password=TechnoTC123!&
+		 * //https://your-sms-gateway.example.com/sendmessage.php?
+		 * user=<sms-user>&
+		 * password=<sms-password>&
 		 * message=Your TEXT MESSAGE&
-		 * sender=TLHLTH&
-		 * mobile=9831303340&
+		 * sender=SENDER&
+		 * mobile=<mobile-number>&
 		 * type=3
 
 	 * Send Single text SMS
@@ -134,7 +134,7 @@ public class SmsApi{
             else System.out.println("Skipping Proxy");
 			*/
 			client.getConnectionManager().getSchemeRegistry().register(scheme);
-			//http://203.212.70.200/smpp/sendsms?username=telrad&password=telrad123&to=8336908xxx&from=TELRAD&text=<<your Approved Template>>
+			// Example: http://<sms-host>/smpp/sendsms?username=<user>&password=<pass>&to=<phone>&from=<sender>&text=<<your Approved Template>>
 			String params = "username="+smsUser;
 			params += "&password="+smsPassword;
 			params += "&to="+mobileNumber;

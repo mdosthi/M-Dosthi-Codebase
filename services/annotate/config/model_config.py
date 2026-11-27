@@ -17,7 +17,7 @@ OLLAMA_EMBED_URL: str = "http://localhost:11434/api/embeddings"
 OLLAMA_EMBED_MODEL: str = "embeddinggemma:300m-qat-q4_0"
 
 # Groq
-GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "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")
+GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
 GROQ_URL: str = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_MODEL: str = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
 

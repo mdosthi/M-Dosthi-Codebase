@@ -11,7 +11,7 @@ The authenticated API surface is under `/api/monitoring`. Doctor operations requ
 Before the first API launch, from the repository root, apply the annotation pipeline queue schema to the same database configured by `SPRING_DATASOURCE_URL`:
 
 ```bash
-mysql --host=127.0.0.1 --user=DB_MIGRATION_USER --password mDosthi \
+mysql --host=127.0.0.1 --user=DB_MIGRATION_USER --database=mDosthi -p \
   < services/api/src/main/resources/db/manual/V20261029_01__pipeline_job_queue.sql
 ```
 
