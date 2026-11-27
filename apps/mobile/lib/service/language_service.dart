@@ -111,11 +111,15 @@ class LanguageService extends ChangeNotifier {
       'select_doc_read': 'Select a document to read inside the app.',
       'video_library': 'Video Library',
       'educational_videos': 'Educational Videos',
-      'select_video_learn': 'Select a resource below to learn about tobacco cessation.',
+      'select_video_learn':
+          'Select a resource below to learn about tobacco cessation.',
       'video_tobacco_cessation_part1_title': 'Tobacco Cessation Guide - Part 1',
-      'video_tobacco_cessation_part1_desc': 'Understand the biological effects of tobacco and learn the first steps to successful quitting.',
-      'video_coping_urges_part2_title': 'Coping with Urges and Withdrawal - Part 2',
-      'video_coping_urges_part2_desc': 'Practical behavioral strategies to handle cravings and manage common withdrawal symptoms.',
+      'video_tobacco_cessation_part1_desc':
+          'Understand the biological effects of tobacco and learn the first steps to successful quitting.',
+      'video_coping_urges_part2_title':
+          'Coping with Urges and Withdrawal - Part 2',
+      'video_coping_urges_part2_desc':
+          'Practical behavioral strategies to handle cravings and manage common withdrawal symptoms.',
       // Chat-related translations
       'chat_with_mdosthi': 'Chat with mDosthi',
       'chat_history': 'Chat History',
@@ -396,10 +400,18 @@ class LanguageService extends ChangeNotifier {
       'show_tests': 'পরীক্ষাগুলি দেখান',
       'submission': 'জমা',
       'date': 'তারিখ',
+      'Patient Monitoring': 'রোগী পর্যবেক্ষণ',
+      'Review Distress Status, Therapy Change and Metastasis Update':
+          'মানসিক চাপের অবস্থা, চিকিৎসার পরিবর্তন এবং মেটাস্ট্যাসিসের তথ্য পর্যালোচনা করুন।',
       'Patient Well-being': 'আপনার সুস্থতা',
-      'Track sleep, mood, activities, and supportive education.': 'ঘুম, মেজাজ, কার্যকলাপ এবং সহায়ক শিক্ষা ট্র্যাক করুন।',
-      'Log sleep timing, quality, and night awakenings.': 'ঘুমের সময়, মান এবং রাতে জেগে ওঠা লগ করুন।',
-      'Learn about mood, CBT, and cognitive distortions.': 'মেজাজ, CBT এবং চিন্তার বিকৃতি সম্পর্কে জানুন।',
+      'Track sleep, mood, activities, and supportive education.':
+          'ঘুম, মেজাজ, কার্যকলাপ এবং সহায়ক শিক্ষা ট্র্যাক করুন।',
+      'Log sleep timing, quality, and night awakenings.':
+          'ঘুমের সময়, মান এবং রাতে জেগে ওঠা লগ করুন।',
+      'Track mood, activities, and daily routines.':
+          'মেজাজ, কার্যকলাপ এবং দৈনন্দিন অভ্যাস পর্যবেক্ষণ করুন।',
+      'Learn about mood, CBT, and cognitive distortions.':
+          'মেজাজ, CBT এবং চিন্তার বিকৃতি সম্পর্কে জানুন।',
       'Choose time': 'সময় নির্বাচন করুন',
       'submit': 'জমা দিন',
       'video': 'ভিডিও',
@@ -410,11 +422,15 @@ class LanguageService extends ChangeNotifier {
       'select_doc_read': 'অ্যাপের ভিতরে পড়ার জন্য একটি নথি নির্বাচন করুন।',
       'video_library': 'ভিডিও লাইব্রেরি',
       'educational_videos': 'শিক্ষামূলক ভিডিও',
-      'select_video_learn': 'তামাক বর্জন সম্পর্কে জানতে নিচের একটি ভিডিও নির্বাচন করুন।',
+      'select_video_learn':
+          'তামাক বর্জন সম্পর্কে জানতে নিচের একটি ভিডিও নির্বাচন করুন।',
       'video_tobacco_cessation_part1_title': 'তামাক বর্জন নির্দেশিকা - পার্ট ১',
-      'video_tobacco_cessation_part1_desc': 'তামাকের জৈবিক প্রভাবগুলি বুঝুন এবং সফলভাবে তামাক বর্জনের প্রথম পদক্ষেপগুলি শিখুন।',
-      'video_coping_urges_part2_title': 'তীব্র আকাঙ্ক্ষা এবং প্রত্যাহারজনিত লক্ষণ মোকাবিলা - পার্ট ২',
-      'video_coping_urges_part2_desc': 'তীব্র আকাঙ্ক্ষা পরিচালনা করতে এবং সাধারণ প্রত্যাহারজনিত লক্ষণগুলি সামলাতে ব্যবহারিক আচরণগত কৌশল।',
+      'video_tobacco_cessation_part1_desc':
+          'তামাকের জৈবিক প্রভাবগুলি বুঝুন এবং সফলভাবে তামাক বর্জনের প্রথম পদক্ষেপগুলি শিখুন।',
+      'video_coping_urges_part2_title':
+          'তীব্র আকাঙ্ক্ষা এবং প্রত্যাহারজনিত লক্ষণ মোকাবিলা - পার্ট ২',
+      'video_coping_urges_part2_desc':
+          'তীব্র আকাঙ্ক্ষা পরিচালনা করতে এবং সাধারণ প্রত্যাহারজনিত লক্ষণগুলি সামলাতে ব্যবহারিক আচরণগত কৌশল।',
       // Chat-related translations in Bengali
       'chat_with_mdosthi': 'mDosthi এর সাথে চ্যাট',
       'chat_history': 'চ্যাট হিস্ট্রি',

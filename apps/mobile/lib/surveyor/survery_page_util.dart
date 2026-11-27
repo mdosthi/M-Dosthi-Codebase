@@ -203,7 +203,11 @@ class SurveyorPageUtilState extends State<SurveyorPageUtil> {
       decoration: BoxDecoration(
         gradient: hasActiveSession
             ? const LinearGradient(
-                colors: [BrandColors.tealDark, BrandColors.teal, BrandColors.blue],
+                colors: [
+                  BrandColors.tealDark,
+                  BrandColors.teal,
+                  BrandColors.blue
+                ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               )
@@ -286,9 +290,13 @@ class SurveyorPageUtilState extends State<SurveyorPageUtil> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        hasActiveSession 
-                            ? (languageService.isBengali ? "সেশন সচল রয়েছে - পুনরায় শুরু করতে চাপুন" : "Active session - tap to resume conversation")
-                            : (languageService.isBengali ? "স্বাস্থ্য সংক্রান্ত সাহায্য এবং পরামর্শ পান" : "Get instant support & answers for your health"),
+                        hasActiveSession
+                            ? (languageService.isBengali
+                                ? "সেশন সচল রয়েছে - পুনরায় শুরু করতে চাপুন"
+                                : "Active session - tap to resume conversation")
+                            : (languageService.isBengali
+                                ? "স্বাস্থ্য সংক্রান্ত সাহায্য এবং পরামর্শ পান"
+                                : "Get instant support & answers for your health"),
                         style: GoogleFonts.poppins(
                           fontSize: 12,
                           color: Colors.white.withOpacity(0.85),
@@ -380,7 +388,9 @@ class SurveyorPageUtilState extends State<SurveyorPageUtil> {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        languageService.isBengali ? "আপনার আগের কথোপকথনগুলি দেখুন" : "View your past conversations with mDosthi",
+                        languageService.isBengali
+                            ? "আপনার আগের কথোপকথনগুলি দেখুন"
+                            : "View your past conversations with mDosthi",
                         style: GoogleFonts.poppins(
                           fontSize: 11,
                           color: Colors.grey.shade500,
@@ -542,8 +552,12 @@ class SurveyorPageUtilState extends State<SurveyorPageUtil> {
                     }
                   },
                   icon: Icon(
-                    hasActiveSession ? Icons.chat_rounded : Icons.chat_bubble_outline_rounded,
-                    color: hasActiveSession ? Colors.green.shade600 : Colors.grey.shade700,
+                    hasActiveSession
+                        ? Icons.chat_rounded
+                        : Icons.chat_bubble_outline_rounded,
+                    color: hasActiveSession
+                        ? Colors.green.shade600
+                        : Colors.grey.shade700,
                   ),
                   tooltip: languageService.getText('chat_with_mdosthi'),
                 ),
@@ -552,8 +566,9 @@ class SurveyorPageUtilState extends State<SurveyorPageUtil> {
               Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: TextButton.icon(
-                  onPressed: () {
-                    languageService.toggleLanguage();
+                  onPressed: () async {
+                    await languageService.toggleLanguage();
+                    if (mounted) setState(() {});
                   },
                   icon: const Icon(Icons.language_rounded, size: 16),
                   label: Text(
@@ -567,7 +582,8 @@ class SurveyorPageUtilState extends State<SurveyorPageUtil> {
                     foregroundColor: BrandColors.navy,
                     // ignore: deprecated_member_use
                     backgroundColor: BrandColors.navy.withOpacity(0.08),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -647,7 +663,8 @@ class SurveyorPageUtilState extends State<SurveyorPageUtil> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.all(isTiny ? 18.0 : 24.0),
+                                    padding:
+                                        EdgeInsets.all(isTiny ? 18.0 : 24.0),
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
@@ -658,7 +675,8 @@ class SurveyorPageUtilState extends State<SurveyorPageUtil> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                languageService.getText('welcome'),
+                                                languageService
+                                                    .getText('welcome'),
                                                 style: GoogleFonts.poppins(
                                                   fontSize: isTiny ? 22 : 26,
                                                   fontWeight: FontWeight.bold,
@@ -786,7 +804,7 @@ class SurveyorPageUtilState extends State<SurveyorPageUtil> {
                             children: [
                               _buildGridActionCard(
                                 icon: Icons.monitor_heart_rounded,
-                                title: 'Well-Being',
+                                title: languageService.getText('Well-Being'),
                                 color: BrandColors.tealDark,
                                 onTap: () {
                                   Navigator.push(

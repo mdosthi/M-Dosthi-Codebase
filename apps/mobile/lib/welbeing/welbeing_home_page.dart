@@ -83,15 +83,17 @@ class WelbeingHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isClinician = LoginPage.isClinician;
+    final languageService = LanguageService();
 
     return AnimatedBuilder(
-      animation: LanguageService(),
+      animation: languageService,
       builder: (context, _) => Scaffold(
         backgroundColor: BrandColors.pageBg,
         appBar: AppBar(
           title: Text(
-            'Well-Being',
-            style: BrandTypography.heading(fontSize: 20, fontWeight: FontWeight.w700),
+            languageService.getText('Well-Being'),
+            style: BrandTypography.heading(
+                fontSize: 20, fontWeight: FontWeight.w700),
           ),
           centerTitle: false,
           backgroundColor: Colors.white,
@@ -130,9 +132,11 @@ class WelbeingHomePage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      isClinician
-                                          ? 'Patient Monitoring'
-                                          : 'Patient Well-being',
+                                      languageService.getText(
+                                        isClinician
+                                            ? 'Patient Monitoring'
+                                            : 'Patient Well-being',
+                                      ),
                                       style: BrandTypography.heading(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w700,
@@ -141,9 +145,11 @@ class WelbeingHomePage extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 8),
                                     Text(
-                                      isClinician
-                                          ? 'Review Distress Status, Therapy Change and Metastasis Update'
-                                          : 'Track sleep, mood, activities, and supportive education.',
+                                      languageService.getText(
+                                        isClinician
+                                            ? 'Review Distress Status, Therapy Change and Metastasis Update'
+                                            : 'Track sleep, mood, activities, and supportive education.',
+                                      ),
                                       style: BrandTypography.body(
                                         color: Colors.white.withOpacity(0.92),
                                         fontSize: 13,
@@ -177,9 +183,10 @@ class WelbeingHomePage extends StatelessWidget {
                           _buildSectionCard(
                             context,
                             icon: Icons.monitor_heart_rounded,
-                            title: 'Patient Monitoring',
-                            subtitle:
-                                'Review Distress Status, Therapy Change and Metastasis Update',
+                            title:
+                                languageService.getText('Patient Monitoring'),
+                            subtitle: languageService.getText(
+                                'Review Distress Status, Therapy Change and Metastasis Update'),
                             color: Colors.red.shade600,
                             destination: const DoctorPatientListPage(),
                           )
@@ -188,8 +195,8 @@ class WelbeingHomePage extends StatelessWidget {
                             context,
                             icon: Icons.bedtime_rounded,
                             title: LanguageService().getText('sleep_hygiene'),
-                            subtitle:
-                                'Log sleep timing, quality, and night awakenings.',
+                            subtitle: languageService.getText(
+                                'Log sleep timing, quality, and night awakenings.'),
                             color: BrandColors.teal,
                             destination: const PatientWellbeingPage(
                                 tab: WellbeingTab.sleepHygiene),
@@ -198,8 +205,8 @@ class WelbeingHomePage extends StatelessWidget {
                             context,
                             icon: Icons.psychology_alt_rounded,
                             title: LanguageService().getText('mood_activity'),
-                            subtitle:
-                                'Track mood, activities, and daily routines.',
+                            subtitle: languageService.getText(
+                                'Track mood, activities, and daily routines.'),
                             color: BrandColors.cyanTeal,
                             destination: const PatientWellbeingPage(
                                 tab: WellbeingTab.moodActivity),
@@ -208,8 +215,8 @@ class WelbeingHomePage extends StatelessWidget {
                             context,
                             icon: Icons.school_rounded,
                             title: LanguageService().getText('education'),
-                            subtitle:
-                                'Learn about mood, CBT, and cognitive distortions.',
+                            subtitle: languageService.getText(
+                                'Learn about mood, CBT, and cognitive distortions.'),
                             color: BrandColors.blue,
                             destination: const EducationPage(),
                           ),
