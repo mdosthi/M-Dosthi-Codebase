@@ -672,7 +672,7 @@ if (surveyName != null && !surveyName.isEmpty()) {
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 10px;
-    border-left: 4px solid #337ab7;
+    border-left: 4px solid #138A4E;
 }
 
 .audio-title {

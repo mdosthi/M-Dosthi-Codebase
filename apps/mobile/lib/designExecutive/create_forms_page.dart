@@ -141,10 +141,10 @@ class _CreateFormsPageState extends State<CreateFormsPage> {
                 DropdownButton<String>(
                   value: selectedType,
                   icon: const Icon(Icons.arrow_drop_down),
-                  style: const TextStyle(color: Colors.blue, fontSize: 18),
+                  style: const TextStyle(color: Colors.green, fontSize: 18),
                   underline: Container(
                     height: 2,
-                    color: Colors.blue,
+                    color: Colors.green.shade700,
                   ),
                   items: <String>[
                     'Single Choice',

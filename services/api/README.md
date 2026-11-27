@@ -45,6 +45,13 @@ scripts/api.sh
 
 The configured port is `9090`. Configure `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, and `SPRING_DATASOURCE_PASSWORD` in the root `.env`. Use a dedicated non-root MySQL account and ensure the account exists and has access to the configured schema. Direct Maven or IDE launches do not load the root `.env` automatically.
 
+## Production Server Deployment (Alongside eDosthi on `:9090`)
+
+On servers where existing `eDosthi/API` already occupies port `9090` (`/api/`):
+1. Apply both `src/main/resources/db/manual/V20261029_01__pipeline_job_queue.sql` and `src/main/resources/db/manual/V20261113_01__complete_api_schema.sql` to `mDosthi`.
+2. Build the fat JAR with JDK 25 (`./mvnw -q package -DskipTests`) and run on port **`9091`** (`java -jar -Dserver.port=9091 target/saMiX-0.0.1-SNAPSHOT.jar`) with `SPRING_DATASOURCE_*`, `SECRETKEY`, and `OLLAMA_*` loaded from the root `.env`.
+3. Reverse-proxy `/mdosthi-api/` → `http://127.0.0.1:9091/` in Apache2/Nginx (leaving `/api/` → `127.0.0.1:9090/api/` untouched). See [docs/server-setup-guide.md](../../docs/server-setup-guide.md).
+
 ## Optional chat speech
 
 The Flutter chatbot can read persisted English assistant messages aloud using Ollama's speech-only `/v1/audio/speech` API and the `phonon` model (local by default). This is separate from the existing Ollama chat/generation calls; response generation, conversation context, and clinical safety handling are unchanged. The speech endpoint accepts only an assistant message ID, verifies that its session belongs to the authenticated patient, and returns uncached `audio/wav` bytes. No message text is logged or written to temporary files.

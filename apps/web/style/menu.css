@@ -1,5 +1,5 @@
 body {
-	background: #F6FAFE;
+	background: #F3FBF7;
 	background-image:url(../images/txture3.jpg);
 	margin: 0;
 	padding: 0;
@@ -27,7 +27,7 @@ ul ol {
 	border-bottom: 1px solid #eee;
 	margin: 0 0 2px 0;
 	padding: 3px;
-	color: #1275d3;
+	color: #0D6B44;
 	display: inline;
 	font-size: 85%;
 	font-weight: bold;
@@ -52,7 +52,7 @@ ul ul li {
 
 a {
 	border-bottom: 1px solid #eee;
-	color: #1275d3;
+	color: #0D6B44;
 	display: block;
 	font-weight: bold;
 	margin: 0 0 0 13px;
@@ -76,9 +76,9 @@ a:focus {
 }
 
 .tableb {
-	background-color: #F6FAFE;
+	background-color: #F3FBF7;
 	border-collapse: collapse;
-	border: 2px solid #8ABAEA;
+	border: 2px solid #7CC9A1;
 }
 
 

@@ -1,6 +1,6 @@
 <%@page contentType="text/html" import="imedix.rcCentreInfo,imedix.Decryptcenter,java.text.SimpleDateFormat, imedix.rcDisplayData,imedix.rcUserInfo,imedix.layout,java.io.*,imedix.cook,imedix.rcPatqueueInfo,imedix.rcDataEntryFrm,imedix.rcUserInfo,imedix.dataobj,imedix.rcVideoConference, java.util.*, imedix.projinfo" %>
 <html>
-<title>iMediX</title>
+<title>mDosthi</title>
 <script>
 		var d = new Date();
 		var n = d.getMilliseconds();
@@ -232,11 +232,14 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" sizes="32x32" href="<%=request.getContextPath()%>/images/icons/mdosthi-favicon-32.png?v=4" />
+	<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/images/icons/mdosthi-favicon.png?v=4" />
+	<link rel="alternate icon" type="image/x-icon" href="<%=request.getContextPath()%>/favicon.ico?v=4" />
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/toastr.css">
 	<!--<link rel="stylesheet" href="../bootstrap/jquery.dataTables.min.css">-->
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/dataTables.bootstrap.min.css">
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=2.0">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=6.0">
 
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/jquery-ui.min.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/vc/vc.css?"+n>
@@ -327,11 +330,11 @@ box-shadow: 0px 0px 8px 3px #ccc;
 	.header-block {text-align:center;}
 	.header-block .req-const {margin: 20px 0;}
 	.default-pat-home{
-		border: 1px solid #337ab7;
+		border: 1px solid #138A4E;
 		margin: 20px;
 		padding: 20px;
 		color: #ffffff;
-		background: #337ab7;
+		background: #138A4E;
 	}
 	#modalrelationsgiplist .modal-header, #modalrelationsgiplist .modal-footer{
 		background: #1e83d9;
@@ -534,8 +537,7 @@ function selectFamilyMember(){
         <div class="row header">
             <div class="col-md-3 brand-container">
                 <a href="<%=request.getContextPath()%>/jspfiles/home" class="brand-link">
-                    <img class="logo-img logo1" src="<%=request.getContextPath()%>/images/imlogo.jpg" />
-                    <span class="brand-text">M-Dosthi</span>
+                    <img class="header-horiz-logo" src="<%=request.getContextPath()%>/images/mdosthi-horizontal-logo.png" alt="mDosthi" />
                 </a>
             </div>          	
 			<div class="col-md-8">

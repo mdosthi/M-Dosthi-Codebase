@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'theme/brand_theme.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'login_page.dart';
@@ -208,7 +209,7 @@ mDOSTHI একটি AI (কৃত্রিম বুদ্ধিমত্তা
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
               decoration: const BoxDecoration(
-                color: Color(0xFF1B5E20),
+                color: BrandColors.navy,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
               ),
               child: const Column(
@@ -260,7 +261,7 @@ mDOSTHI একটি AI (কৃত্রিম বুদ্ধিমত্তা
                 children: [
                   Checkbox(
                     value: _isChecked,
-                    activeColor: const Color(0xFF1B5E20),
+                    activeColor: BrandColors.teal,
                     onChanged: _isSubmitting
                         ? null
                         : (val) => setState(() => _isChecked = val ?? false),
@@ -285,7 +286,7 @@ mDOSTHI একটি AI (কৃত্রিম বুদ্ধিমত্তা
                   onPressed:
                       (_isChecked && !_isSubmitting) ? _submitConsent : null,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1B5E20),
+                    backgroundColor: BrandColors.teal,
                     disabledBackgroundColor: Colors.grey.shade300,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'doctor_patient_list_page.dart';
 import 'education_page.dart';
 import 'patient_wellbeing_page.dart';
 import '../login_page.dart';
 import '../service/language_service.dart';
+import '../theme/brand_theme.dart';
 
 class WelbeingHomePage extends StatelessWidget {
   const WelbeingHomePage({super.key});
@@ -53,18 +53,18 @@ class WelbeingHomePage extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: GoogleFonts.outfit(
+                      style: BrandTypography.heading(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
-                        color: Colors.grey.shade800,
+                        color: BrandColors.navy,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       subtitle,
-                      style: GoogleFonts.outfit(
+                      style: BrandTypography.body(
                         fontSize: 12,
-                        color: Colors.grey.shade600,
+                        color: BrandColors.mutedInk,
                         height: 1.4,
                       ),
                     ),
@@ -87,104 +87,139 @@ class WelbeingHomePage extends StatelessWidget {
     return AnimatedBuilder(
       animation: LanguageService(),
       builder: (context, _) => Scaffold(
-        backgroundColor: Colors.grey.shade50,
+        backgroundColor: BrandColors.pageBg,
         appBar: AppBar(
           title: Text(
             'Well-Being',
-            style: GoogleFonts.outfit(fontWeight: FontWeight.w700),
+            style: BrandTypography.heading(fontSize: 20, fontWeight: FontWeight.w700),
           ),
           centerTitle: false,
           backgroundColor: Colors.white,
-          foregroundColor: Colors.grey.shade900,
+          foregroundColor: BrandColors.navy,
           elevation: 0,
         ),
         body: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(18),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Color(0xFF1B5E20), Color(0xFF2E7D32)],
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final double w = constraints.maxWidth;
+              final bool isWide = w >= 720;
+              final bool isSmall = w < 380;
+              final double emblemBox = isSmall ? 46 : 56;
+              return SingleChildScrollView(
+                padding: EdgeInsets.symmetric(
+                  horizontal: isWide ? 24 : 16,
+                  vertical: 16,
+                ),
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 920),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(isSmall ? 15 : 18),
+                          decoration: BoxDecoration(
+                            gradient: BrandColors.heroHeaderGradient,
+                            borderRadius: BorderRadius.circular(22),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      isClinician
+                                          ? 'Patient Monitoring'
+                                          : 'Patient Well-being',
+                                      style: BrandTypography.heading(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: isSmall ? 19 : 22,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      isClinician
+                                          ? 'Review Distress Status, Therapy Change and Metastasis Update'
+                                          : 'Track sleep, mood, activities, and supportive education.',
+                                      style: BrandTypography.body(
+                                        color: Colors.white.withOpacity(0.92),
+                                        fontSize: 13,
+                                        height: 1.4,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Container(
+                                padding: const EdgeInsets.all(7),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: Image.asset(
+                                  'assets/images/mdosthi-emblem.png',
+                                  width: emblemBox,
+                                  height: emblemBox,
+                                  fit: BoxFit.contain,
+                                  errorBuilder: (_, __, ___) =>
+                                      const SizedBox.shrink(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 18),
+                        if (isClinician)
+                          _buildSectionCard(
+                            context,
+                            icon: Icons.monitor_heart_rounded,
+                            title: 'Patient Monitoring',
+                            subtitle:
+                                'Review Distress Status, Therapy Change and Metastasis Update',
+                            color: Colors.red.shade600,
+                            destination: const DoctorPatientListPage(),
+                          )
+                        else ...[
+                          _buildSectionCard(
+                            context,
+                            icon: Icons.bedtime_rounded,
+                            title: LanguageService().getText('sleep_hygiene'),
+                            subtitle:
+                                'Log sleep timing, quality, and night awakenings.',
+                            color: BrandColors.teal,
+                            destination: const PatientWellbeingPage(
+                                tab: WellbeingTab.sleepHygiene),
+                          ),
+                          _buildSectionCard(
+                            context,
+                            icon: Icons.psychology_alt_rounded,
+                            title: LanguageService().getText('mood_activity'),
+                            subtitle:
+                                'Track mood, activities, and daily routines.',
+                            color: BrandColors.cyanTeal,
+                            destination: const PatientWellbeingPage(
+                                tab: WellbeingTab.moodActivity),
+                          ),
+                          _buildSectionCard(
+                            context,
+                            icon: Icons.school_rounded,
+                            title: LanguageService().getText('education'),
+                            subtitle:
+                                'Learn about mood, CBT, and cognitive distortions.',
+                            color: BrandColors.blue,
+                            destination: const EducationPage(),
+                          ),
+                        ],
+                      ],
                     ),
-                    borderRadius: BorderRadius.circular(22),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        isClinician
-                            ? 'Patient Monitoring'
-                            : 'Patient Well-being',
-                        style: GoogleFonts.outfit(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 22,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        isClinician
-                            ? 'Review Distress Status, Therapy Change and Metastasis Update'
-                            : 'Track sleep, mood, activities, and supportive education.',
-                        style: GoogleFonts.outfit(
-                          color: Colors.white.withOpacity(0.9),
-                          fontSize: 13,
-                          height: 1.4,
-                        ),
-                      ),
-                    ],
                   ),
                 ),
-                const SizedBox(height: 18),
-                if (isClinician)
-                  _buildSectionCard(
-                    context,
-                    icon: Icons.monitor_heart_rounded,
-                    title: 'Patient Monitoring',
-                    subtitle:
-                        'Review Distress Status, Therapy Change and Metastasis Update',
-                    color: Colors.red.shade600,
-                    destination: const DoctorPatientListPage(),
-                  )
-                else ...[
-                  _buildSectionCard(
-                    context,
-                    icon: Icons.bedtime_rounded,
-                    title: LanguageService().getText('sleep_hygiene'),
-                    subtitle:
-                        'Log sleep timing, quality, and night awakenings.',
-                    color: Colors.indigo.shade600,
-                    destination: const PatientWellbeingPage(
-                        tab: WellbeingTab.sleepHygiene),
-                  ),
-                  _buildSectionCard(
-                    context,
-                    icon: Icons.psychology_alt_rounded,
-                    title: LanguageService().getText('mood_activity'),
-                    subtitle: 'Track mood, activities, and daily routines.',
-                    color: Colors.orange.shade700,
-                    destination: const PatientWellbeingPage(
-                        tab: WellbeingTab.moodActivity),
-                  ),
-                  _buildSectionCard(
-                    context,
-                    icon: Icons.school_rounded,
-                    title: LanguageService().getText('education'),
-                    subtitle:
-                        'Learn about mood, CBT, and cognitive distortions.',
-                    color: Colors.teal.shade700,
-                    destination: const EducationPage(),
-                  ),
-                ],
-              ],
-            ),
+              );
+            },
           ),
         ),
       ),

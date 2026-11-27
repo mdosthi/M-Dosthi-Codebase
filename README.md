@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="apps/web/images/mdosthi-primary-logo.png" alt="mDosthi — Digital Health &amp; Well-Being · Healthcare as Homecare" width="540" />
+</p>
+
 # M-Dosthi
 
 M-Dosthi is a healthcare application monorepo containing the legacy JSP/Tomcat system, a Flutter client, a Spring Boot REST API, and a Python annotation pipeline. The system has more than one application path: the legacy web application uses its Java RMI business logic, while the Flutter client calls the Spring Boot API. They have separate configuration and may use different MySQL schemas.
@@ -22,6 +26,7 @@ M-Dosthi is a healthcare application monorepo containing the legacy JSP/Tomcat s
 | Run the Flutter app and Spring API | [Flutter and API quick start](#quick-start-flutter-and-api) | Login and server-backed features need a reachable API and a compatible, populated database. |
 | Run the older JSP website | [Legacy JSP quick start](#quick-start-legacy-jsp-system) | This is a separate application path using Tomcat, Java RMI, and its own legacy configuration. |
 | Run M-Dosthi beside eDosthi | [All-in-One Setup & Shared Tomcat Guide](docs/all-in-one-setup-and-shared-tomcat-guide.md) | Complete end-to-end setup, DB backup restore, and line-by-line Shared Tomcat implementation. |
+| Deploy to Linux Server (`edosthi.in`) | [Production Server Setup Guide](docs/server-setup-guide.md) | Dual eDosthi + mDosthi deployment behind Apache2 HTTPS (`https://edosthi.in/mDosthi/`, `/mdosthi-api/` on `:9091`, `/mDosthi-app/`). |
 | Run annotation tools | [Annotation package guide](services/annotate/README.md) | Requires Python and, for model-backed work, Ollama. |
 | Understand services and data flow | [Architecture guide](docs/architecture.md) | The legacy site and Flutter/API application are not the same backend. |
 
@@ -251,7 +256,7 @@ Windows (PowerShell):
 powershell -ExecutionPolicy Bypass -File scripts/legacy.ps1 run
 ```
 
-After the legacy build artifacts are ready, on later starts use `scripts/legacy.sh start` (or `scripts/legacy.ps1 start` on Windows) instead of rebuilding. Keep the terminal open. Open the URL printed by the script (Individual Tomcat defaults to `http://localhost:8081/M-Dosthi/`, Shared Tomcat defaults to `http://localhost:8080/M-Dosthi/`). Both Individual and Shared modes default the M-Dosthi RMI port to `1100` so it does not collide with eDosthi (`1099`). Set `LEGACY_RMI_ADVERTISE_HOST` to a reachable address when clients connect from another machine.
+After the legacy build artifacts are ready, on later starts use `scripts/legacy.sh start` (or `scripts/legacy.ps1 start` on Windows) instead of rebuilding. Keep the terminal open. Open the URL printed by the script (Individual Tomcat defaults to `http://localhost:8081/mDosthi/`, Shared Tomcat defaults to `http://localhost:8080/mDosthi/`). Both Individual and Shared modes default the M-Dosthi RMI port to `1100` so it does not collide with eDosthi (`1099`). Set `LEGACY_RMI_ADVERTISE_HOST` to a reachable address when clients connect from another machine.
 
 The API and legacy build/runtime can use JDK 25. Set `JAVA_HOME` separately in each terminal if you run both Java services; do not try to run both from a single terminal environment. See [the legacy build notes](docs/setup.md#legacy-clean-checkout-limitation) if `scripts/legacy.sh run` fails on a clean checkout because a required artifact is missing.
 
@@ -278,10 +283,10 @@ The runner reads the legacy database configuration, applies only pending migrati
 
 M-Dosthi bundles its own Tomcat 9 in `tools/tomcat9` (symlinked at `Tomcat9 -> tools/tomcat9` on macOS/Linux) so you can run M-Dosthi independently of `eDosthi` — or side-by-side with `eDosthi`'s Shared Tomcat (`:8080`) without port conflicts:
 
-- **HTTP port:** `8081` (`http://localhost:8081/M-Dosthi/`)
+- **HTTP port:** `8081` (`http://localhost:8081/mDosthi/`)
 - **Shutdown port:** `8006` (keeps `8005` free for Shared Tomcat)
 - **RMI business-logic port:** `1100` (keeps `1099` free for `eDosthi-BL`)
-- **Context descriptor:** `tools/tomcat9/conf/Catalina/localhost/M-Dosthi.xml` (auto-created pointing `docBase` to `apps/web`)
+- **Context descriptor:** `tools/tomcat9/conf/Catalina/localhost/mDosthi.xml` (auto-created pointing `docBase` to `apps/web`)
 
 #### 1. Setup & Build (macOS / Linux)
 ```bash
@@ -303,7 +308,7 @@ scripts/legacy.sh start --individual
 scripts/legacy.sh status --individual
 
 # Verify HTTP response
-curl -I http://localhost:8081/M-Dosthi/
+curl -I http://localhost:8081/mDosthi/
 
 # Stop Individual Tomcat (:8081) + M-Dosthi RMI (:1100)
 scripts/legacy.sh stop --individual
@@ -326,7 +331,7 @@ powershell -ExecutionPolicy Bypass -File scripts/legacy.ps1 stop -Mode individua
 
 ### Shared Tomcat Guide (Alongside eDosthi on `:8080`)
 
-To host M-Dosthi in an existing Shared Tomcat 9 instance as well (or instead), configure the [shared Tomcat workflow](docs/setup.md#run-m-dosthi-in-an-existing-tomcat-9). Pass `--shared` (or set `SHARED_TOMCAT_HOME`) to `scripts/setup.sh` and `scripts/legacy.sh` (or `-Mode shared` on Windows). M-Dosthi's scripts will register the `/M-Dosthi` context and manage only the M-Dosthi RMI process in shared mode; they will not start or shut down the shared Tomcat, and do not modify eDosthi application files.
+To host M-Dosthi in an existing Shared Tomcat 9 instance as well (or instead), configure the [shared Tomcat workflow](docs/setup.md#run-m-dosthi-in-an-existing-tomcat-9). Pass `--shared` (or set `SHARED_TOMCAT_HOME`) to `scripts/setup.sh` and `scripts/legacy.sh` (or `-Mode shared` on Windows). M-Dosthi's scripts will register the `/mDosthi` context and manage only the M-Dosthi RMI process in shared mode; they will not start or shut down the shared Tomcat, and do not modify eDosthi application files.
 
 ## Database And Configuration Safety
 
@@ -365,6 +370,7 @@ For detailed diagnostics and additional cases, see [setup troubleshooting](docs/
 - [Setup instructions](docs/setup.md): platform prerequisites, database preparation, commands, troubleshooting.
 - [Architecture](docs/architecture.md): component relationships and data flow.
 - [All-in-One Setup & Shared Tomcat Guide](docs/all-in-one-setup-and-shared-tomcat-guide.md): complete native setup, MySQL backup restoration, run commands, and line-by-line Shared Tomcat implementation from eDosthi to M-Dosthi.
+- [Production Server Setup Guide](docs/server-setup-guide.md): end-to-end Linux server deployment alongside live eDosthi behind Apache2 HTTPS (`/mDosthi/`, `/mdosthi-api/` on `:9091`, `/mDosthi-app/`).
 - [Database Inspection Guide](docs/database-inspection-guide.md): general MySQL CLI and SQL reference for checking databases, schemas, tables, columns, indexes, and sizes.
 - [Shared Tomcat changes](docs/shared-tomcat-changes.md): summary and setup notes for hosting M-Dosthi alongside eDosthi.
 - [API guide](docs/api.md): service endpoints and contracts.

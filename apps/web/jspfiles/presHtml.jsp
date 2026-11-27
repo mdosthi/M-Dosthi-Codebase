@@ -71,7 +71,7 @@
 		HtmlConverter.convertToPdf(htmlString,new FileOutputStream(pdfDest), converterProperties);
 		String mesg = "Dear " +patname + ",\nPlease find attached prescription filled in by the assigned doctor. For more details login into the system.";
 		Email email = new Email(request.getRealPath("/"));
-		fileGenErrors += email.SendWA(emailid,"iMediX Prescription",mesg,tempFullFileName);
+		fileGenErrors += email.SendWA(emailid,"mDosthi Prescription",mesg,tempFullFileName);
 		//pdfDest.delete();
 		System.out.println("pdf creation done. Emailed");
 		fileGenErrors = " Prescription created and Emailed : ";

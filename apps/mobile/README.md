@@ -27,7 +27,20 @@ flutter run -d web-server --web-hostname 127.0.0.1 --web-port 3001 \
 
 Open the local URL Flutter prints. Keep the Flutter process running during use. For an Android emulator, use `API_HOST=10.0.2.2:9090`; for a physical device, use the development computer's LAN hostname/IP.
 
-`API_HOST` accepts only the hostname and port; the client uses HTTP. Never add credentials or patient data to Dart source, command-line arguments, or committed files.
+`API_HOST` accepts a host/port (or `host/path-prefix` when reverse-proxied); on Web, `LoginPage.protocol` automatically uses `https` when served over HTTPS and `http` otherwise. Never add credentials or patient data to Dart source, command-line arguments, or committed files.
+
+## Production Web Release Build (HTTPS Subpath + Reverse-Proxied API)
+
+To host Flutter Web at `https://edosthi.in/mDosthi-app/` talking to the mDosthi API proxied at `https://edosthi.in/mdosthi-api/` (port `9091` on the server):
+
+```bash
+cd apps/mobile
+flutter build web --release \
+  --base-href=/mDosthi-app/ \
+  --dart-define=API_HOST=edosthi.in/mdosthi-api
+```
+
+Deploy `build/web/` to Shared Tomcat via `conf/Catalina/localhost/mDosthi-app.xml` (Tomcat auto-deploys within ~10 seconds with zero restart). When uploading over slow VPN, exclude `canvaskit/` (loaded automatically from Google's CDN) and large `Video1.mp4`/`Video2.mp4` and rate-limit `rsync` with `--bwlimit=40 --partial`. See [docs/server-setup-guide.md](../../docs/server-setup-guide.md) for the exact upload and mount commands.
 
 ## Project Areas
 

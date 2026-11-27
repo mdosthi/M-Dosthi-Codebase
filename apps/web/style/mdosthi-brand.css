@@ -1,0 +1,846 @@
+/* ==========================================================================
+   mDosthi Official Brand Design System
+   Palette: Navy (#14532D), Blue (#1E8E5A), Teal (#10B981),
+            Green (#4CAF50), Ice Light (#E6F7EE)
+   Typography: Poppins (Headings), Inter (Body), Lora (Subtitles/Subtext)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Poppins:wght@500;600;700;800&display=swap');
+
+@font-face {
+  font-family: 'Poppins-Fallback';
+  src: url('../bootstrap/fonts/poppins/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Poppins-Fallback';
+  src: url('../bootstrap/fonts/poppins/Poppins-Medium.ttf') format('truetype');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Poppins-Fallback';
+  src: url('../bootstrap/fonts/poppins/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+:root {
+  /* Core 5-Color Brand Logo Palette */
+  --brand-navy: #083A82;
+  --brand-blue: #0E76BC;
+  --brand-cyan-teal: #0BA5AE;
+  --brand-teal: #129A58;
+  --brand-green: #6AC242;
+  --brand-light: #E8F8F1;
+
+  /* Extended Harmony Tokens */
+  --brand-navy-dark: #052659;
+  --brand-teal-dark: #0D7A46;
+  --brand-emerald: #129A58;
+  --brand-green-dark: #4E9A32;
+  --brand-mint-bg: #D6F5E3;
+  --brand-surface: #FFFFFF;
+  --brand-page-bg: #F3FAF8;
+  --brand-text-body: #1F3B4D;
+  --brand-text-muted: #4A6875;
+  --brand-border: rgba(11, 165, 174, 0.16);
+
+  /* Gradients (Full Logo Spectrum: Deep Navy -> Clinical Blue -> Cyan-Teal -> Emerald -> Leaf Green) */
+  --brand-cta-gradient: linear-gradient(92deg, #129A58 0%, #0BA5AE 46%, #0E76BC 82%, #083A82 100%);
+  --brand-cta-gradient-hover: linear-gradient(92deg, #0D7A46 0%, #088E96 46%, #0A5E99 82%, #052659 100%);
+  --brand-hero-bg: radial-gradient(circle at 10% 14%, rgba(232, 248, 241, 0.96) 0%, rgba(230, 247, 248, 0.72) 45%, #FFFFFF 100%);
+  --brand-soft-shadow: 0 14px 36px rgba(8, 58, 130, 0.08);
+  --brand-pill-shadow: 0 8px 24px rgba(14, 118, 188, 0.09);
+
+  /* Typography */
+  --font-heading: 'Poppins', 'Poppins-Fallback', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Poppins-Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-subtitle: 'Lora', Georgia, 'Times New Roman', serif;
+}
+
+/* Base Typography Rules */
+body.mdosthi-branded {
+  font-family: var(--font-body);
+  color: var(--brand-text-body);
+  background: var(--brand-hero-bg);
+  line-height: 1.6;
+  margin: 0;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.mdosthi-branded h1,
+.mdosthi-branded h2,
+.mdosthi-branded h3,
+.mdosthi-branded h4,
+.mdosthi-branded h5,
+.mdosthi-branded h6,
+.brand-heading {
+  font-family: var(--font-heading);
+  color: var(--brand-navy);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.brand-subtitle,
+.mdosthi-lora {
+  font-family: var(--font-subtitle);
+  color: var(--brand-navy);
+}
+
+/* ==========================================================================
+   Website Navigation Header (Horizontal Logo + 6 Links + Get Support CTA)
+   ========================================================================== */
+.mdosthi-header-wrap {
+  position: sticky;
+  top: 12px;
+  z-index: 1050;
+  padding: 0 20px;
+  margin-top: 12px;
+}
+
+.mdosthi-navbar {
+  max-width: 1260px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 999px;
+  padding: 10px 18px 10px 24px;
+  box-shadow: var(--brand-pill-shadow);
+  border: 1px solid rgba(16, 185, 129, 0.20);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.mdosthi-nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none !important;
+  flex-shrink: 0;
+}
+
+.mdosthi-nav-brand img {
+  height: 50px;
+  width: auto;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+.mdosthi-nav-brand:hover img {
+  transform: scale(1.03);
+}
+
+.mdosthi-nav-divider {
+  width: 1.5px;
+  height: 34px;
+  background: rgba(20, 83, 45, 0.16);
+  display: inline-block;
+}
+
+.mdosthi-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mdosthi-nav-links>li {
+  position: relative;
+}
+
+.mdosthi-nav-links>li>a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 13px;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--brand-navy);
+  border-radius: 999px;
+  text-decoration: none !important;
+  transition: all 0.22s ease;
+  position: relative;
+}
+
+.mdosthi-nav-links>li>a i {
+  font-size: 15px;
+  color: var(--brand-navy);
+  transition: color 0.22s ease;
+}
+
+.mdosthi-nav-links>li>a:hover,
+.mdosthi-nav-links>li>a:focus {
+  color: var(--brand-teal-dark);
+  background: rgba(230, 247, 238, 0.65);
+}
+
+.mdosthi-nav-links>li>a:hover i {
+  color: var(--brand-teal);
+}
+
+.mdosthi-nav-links>li.active>a {
+  color: var(--brand-emerald);
+}
+
+.mdosthi-nav-links>li.active>a i {
+  color: var(--brand-emerald);
+}
+
+.mdosthi-nav-links>li.active>a::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 3px;
+  height: 2.5px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--brand-teal), var(--brand-green));
+}
+
+/* Resources Dropdown */
+.mdosthi-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 235px;
+  background: #FFFFFF;
+  border-radius: 18px;
+  padding: 8px;
+  box-shadow: 0 18px 40px rgba(20, 83, 45, 0.14);
+  border: 1px solid rgba(16, 185, 129, 0.20);
+  z-index: 1100;
+}
+
+.mdosthi-dropdown:hover .mdosthi-dropdown-menu,
+.mdosthi-dropdown.open .mdosthi-dropdown-menu {
+  display: block;
+}
+
+.mdosthi-dropdown-menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--brand-navy);
+  border-radius: 12px;
+  text-decoration: none !important;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.mdosthi-dropdown-menu a i {
+  color: var(--brand-teal);
+  width: 16px;
+  text-align: center;
+}
+
+.mdosthi-dropdown-menu a:hover {
+  background: var(--brand-light);
+  color: var(--brand-navy);
+}
+
+.mdosthi-mobile-toggle {
+  display: none;
+  background: var(--brand-light);
+  color: var(--brand-navy);
+  border: 1px solid rgba(30, 142, 90, 0.2);
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 18px;
+}
+
+/* ==========================================================================
+   Brand UI Buttons: Get Support, Learn More, Donate
+   ========================================================================== */
+.btn-mdosthi-support,
+.btn-mdosthi-learn,
+.btn-mdosthi-donate {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+/* 1. Get Support (Primary Gradient Pill) */
+.btn-mdosthi-support {
+  background: var(--brand-cta-gradient);
+  color: #FFFFFF !important;
+  border: none;
+  box-shadow: 0 8px 20px rgba(30, 142, 90, 0.24);
+}
+
+.btn-mdosthi-support:hover,
+.btn-mdosthi-support:focus {
+  background: var(--brand-cta-gradient-hover);
+  color: #FFFFFF !important;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(16, 185, 129, 0.30);
+}
+
+/* 2. Learn More (Outlined Blue/Navy Pill) */
+.btn-mdosthi-learn {
+  background: #FFFFFF;
+  color: var(--brand-navy) !important;
+  border: 1.8px solid var(--brand-blue);
+  box-shadow: 0 4px 14px rgba(20, 83, 45, 0.06);
+}
+
+.btn-mdosthi-learn:hover,
+.btn-mdosthi-learn:focus {
+  background: var(--brand-light);
+  color: var(--brand-navy) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(30, 142, 90, 0.14);
+}
+
+/* 3. Donate (Soft Healing Green Pill) */
+.btn-mdosthi-donate {
+  background: var(--brand-mint-bg);
+  color: #0E6B50 !important;
+  border: 1.5px solid rgba(139, 195, 74, 0.50);
+  box-shadow: 0 4px 14px rgba(139, 195, 74, 0.14);
+}
+
+.btn-mdosthi-donate:hover,
+.btn-mdosthi-donate:focus {
+  background: #CEEFDC;
+  color: #09523C !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(139, 195, 74, 0.24);
+}
+
+.btn-mdosthi-sm {
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+/* ==========================================================================
+   Hero, Portal Login Card, and Brand Showcase Sections
+   ========================================================================== */
+.mdosthi-container {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.mdosthi-hero {
+  padding: 36px 0 28px;
+  position: relative;
+}
+
+.mdosthi-hero-grid {
+  display: grid;
+  grid-template-columns: 1.32fr 0.88fr;
+  gap: 34px;
+  align-items: center;
+}
+
+.mdosthi-primary-logo-img {
+  max-width: 520px;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 14px;
+}
+
+.mdosthi-hero-lead {
+  font-family: var(--font-subtitle);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--brand-navy);
+  margin: 8px 0 18px;
+  max-width: 620px;
+}
+
+.mdosthi-hero-copy {
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  color: var(--brand-text-body);
+  max-width: 620px;
+  margin-bottom: 22px;
+}
+
+.mdosthi-cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 26px;
+}
+
+.mdosthi-healing-banner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(16, 185, 129, 0.22);
+  border-radius: 24px;
+  padding: 14px 20px;
+  box-shadow: var(--brand-soft-shadow);
+  margin-bottom: 20px;
+}
+
+.mdosthi-healing-banner img.healing-svg {
+  max-width: 340px;
+  width: 100%;
+  height: auto;
+}
+
+.mdosthi-health-badges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mdosthi-health-badges img {
+  width: 46px;
+  height: 46px;
+  transition: transform 0.22s ease;
+}
+
+.mdosthi-health-badges img:hover {
+  transform: translateY(-3px) scale(1.06);
+}
+
+/* Partner Institutions Strip */
+.mdosthi-partners {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 12px 18px;
+  background: rgba(230, 247, 238, 0.55);
+  border-radius: 18px;
+  border: 1px solid rgba(30, 142, 90, 0.12);
+}
+
+.mdosthi-partner-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-navy);
+}
+
+.mdosthi-partner-item img {
+  height: 42px;
+  width: auto;
+  border-radius: 8px;
+  background: #FFFFFF;
+  padding: 3px;
+  box-shadow: 0 2px 8px rgba(20, 83, 45, 0.08);
+}
+
+/* Clinical & Patient Login Card */
+.mdosthi-login-card {
+  background: #FFFFFF;
+  border-radius: 28px;
+  padding: 32px 30px;
+  box-shadow: 0 20px 50px rgba(20, 83, 45, 0.11);
+  border: 1.5px solid rgba(16, 185, 129, 0.22);
+  position: relative;
+  overflow: hidden;
+}
+
+.mdosthi-login-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: var(--brand-cta-gradient);
+}
+
+.mdosthi-login-header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.mdosthi-login-header img {
+  width: 78px;
+  height: 78px;
+  margin-bottom: 10px;
+}
+
+.mdosthi-login-header h2 {
+  font-size: 24px;
+  margin: 0 0 4px;
+  color: var(--brand-navy);
+}
+
+.mdosthi-login-header p {
+  font-family: var(--font-subtitle);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--brand-text-muted);
+  margin: 0;
+}
+
+.mdosthi-field {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.mdosthi-field label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-navy);
+  margin-bottom: 6px;
+}
+
+.mdosthi-input-wrap {
+  position: relative;
+}
+
+.mdosthi-input-wrap i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--brand-teal-dark);
+  font-size: 16px;
+}
+
+.mdosthi-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px 0 44px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(20, 83, 45, 0.16);
+  background: #F8FCFD;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  color: var(--brand-navy);
+  transition: all 0.2s ease;
+}
+
+.mdosthi-input:focus {
+  background: #FFFFFF;
+  border-color: var(--brand-blue);
+  box-shadow: 0 0 0 4px rgba(30, 142, 90, 0.12);
+  outline: none;
+}
+
+.mdosthi-login-submit {
+  width: 100%;
+  height: 50px;
+  border-radius: 999px;
+  background: var(--brand-cta-gradient);
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(20, 83, 45, 0.20);
+  transition: all 0.25s ease;
+  margin-top: 6px;
+}
+
+.mdosthi-login-submit:hover {
+  background: var(--brand-cta-gradient-hover);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   5-Item Feature Icons Bar (Emotional Support, Counselling, Mental Wellness,
+   Care Guidance, Support Community)
+   ========================================================================== */
+.mdosthi-feature-strip {
+  background: #FFFFFF;
+  border-radius: 26px;
+  padding: 20px 24px;
+  margin: 18px 0 44px;
+  box-shadow: var(--brand-pill-shadow);
+  border: 1px solid rgba(16, 185, 129, 0.20);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  align-items: center;
+}
+
+.mdosthi-feature-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-right: 1.5px solid rgba(20, 83, 45, 0.10);
+  text-decoration: none !important;
+  transition: transform 0.2s ease;
+}
+
+.mdosthi-feature-pill:last-child {
+  border-right: none;
+}
+
+.mdosthi-feature-pill:hover {
+  transform: translateY(-2px);
+}
+
+.mdosthi-feature-pill img {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.mdosthi-feature-pill span {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--brand-navy);
+}
+
+/* ==========================================================================
+   Content Sections: About, Mascot AI Support, Resources, Community, Contact
+   ========================================================================== */
+.mdosthi-section {
+  padding: 44px 0;
+}
+
+.mdosthi-section-alt {
+  background: linear-gradient(180deg, rgba(230, 247, 238, 0.45) 0%, rgba(255, 255, 255, 0.9) 100%);
+  border-top: 1px solid rgba(16, 185, 129, 0.14);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.14);
+}
+
+.mdosthi-section-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 34px;
+}
+
+.mdosthi-eyebrow {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: var(--brand-light);
+  color: var(--brand-teal-dark);
+  font-family: var(--font-heading);
+  font-size: 12.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 10px;
+}
+
+.mdosthi-section-header h2 {
+  font-size: 32px;
+  margin: 0 0 10px;
+}
+
+.mdosthi-section-header p {
+  font-family: var(--font-subtitle);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--brand-text-muted);
+  margin: 0;
+}
+
+.mdosthi-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.mdosthi-card {
+  background: #FFFFFF;
+  border-radius: 22px;
+  padding: 26px 24px;
+  border: 1px solid rgba(20, 83, 45, 0.09);
+  box-shadow: var(--brand-soft-shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.mdosthi-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 42px rgba(20, 83, 45, 0.12);
+}
+
+.mdosthi-card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: var(--brand-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.mdosthi-card-icon img {
+  width: 38px;
+  height: 38px;
+}
+
+.mdosthi-card h3 {
+  font-size: 19px;
+  margin: 0 0 8px;
+}
+
+.mdosthi-card p {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  color: var(--brand-text-muted);
+  margin: 0;
+}
+
+/* Robot Mascot & Healthcare Illustration Showcase */
+.mdosthi-mascot-grid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.mdosthi-illustration-frame {
+  background: #FFFFFF;
+  border-radius: 28px;
+  padding: 22px;
+  box-shadow: var(--brand-soft-shadow);
+  border: 1.5px solid rgba(16, 185, 129, 0.20);
+  text-align: center;
+}
+
+.mdosthi-illustration-frame img {
+  max-width: 100%;
+  max-height: 340px;
+  width: auto;
+  height: auto;
+  border-radius: 18px;
+}
+
+/* Footer */
+.mdosthi-footer {
+  background: var(--brand-navy);
+  color: rgba(255, 255, 255, 0.88);
+  padding: 40px 0 28px;
+  margin-top: 36px;
+}
+
+.mdosthi-footer a {
+  color: var(--brand-light);
+}
+
+.mdosthi-footer a:hover {
+  color: var(--brand-teal);
+}
+
+/* Official Printable Document Letterhead */
+.mdosthi-doc-letterhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 3px solid var(--brand-teal);
+  margin-bottom: 14px;
+  background: #FFFFFF;
+}
+
+.mdosthi-doc-letterhead img {
+  height: 64px;
+  width: auto;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1080px) {
+
+  .mdosthi-hero-grid,
+  .mdosthi-mascot-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mdosthi-feature-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mdosthi-feature-pill {
+    border-right: none;
+    border-bottom: 1px solid rgba(20, 83, 45, 0.08);
+  }
+
+  .mdosthi-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 920px) {
+  .mdosthi-navbar {
+    border-radius: 24px;
+    flex-wrap: wrap;
+    padding: 12px 18px;
+  }
+
+  .mdosthi-nav-divider {
+    display: none;
+  }
+
+  .mdosthi-mobile-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mdosthi-nav-collapse {
+    display: none;
+    width: 100%;
+    padding-top: 12px;
+    border-top: 1px solid rgba(20, 83, 45, 0.08);
+  }
+
+  .mdosthi-nav-collapse.open {
+    display: block;
+  }
+
+  .mdosthi-nav-links {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+
+  .mdosthi-dropdown-menu {
+    position: static;
+    box-shadow: none;
+    background: var(--brand-page-bg);
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .mdosthi-feature-strip,
+  .mdosthi-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mdosthi-healing-banner {
+    flex-direction: column;
+  }
+}

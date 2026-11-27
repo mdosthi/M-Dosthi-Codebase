@@ -149,9 +149,26 @@
 				session.setAttribute("psw",randomCode);
 			}
 			else{
-				// Patient record was already created above (id = rcdef.InsertMedWithoutDocAssign(...)).
-				// No verified email/phone just means no portal login account is created here;
-				// that is not a registration failure, so don't show an alarming error to the user.
+				String rawPhone = request.getParameter("phone");
+				loginObj.add("uid", id);
+				loginObj.add("pwd", id);
+				loginObj.add("name", request.getParameter("pat_name"));
+				loginObj.add("crtdate", myDate.getCurrentDateMySql());
+				loginObj.add("center", "VBCR019");
+				loginObj.add("userid", id);
+				loginObj.add("type", "PAT");
+				loginObj.add("active", "Y");
+				loginObj.add("available", "Y");
+				loginObj.add("referral", "Y");
+				loginObj.add("verified", "A");
+				loginObj.add("verifemail", "N");
+				loginObj.add("verifphone", "N");
+				loginObj.add("consent", "N");
+				if (rawPhone != null && !rawPhone.trim().isEmpty()) {
+					loginObj.add("phone", rawPhone.trim());
+				}
+				rcuinfo.InsertRegUsers(loginObj, null);
+				session.setAttribute("psw", id);
 			}
 			cookx.addCookie("patid",id,response);
 			cookx.addCookie("patname",pname,response);

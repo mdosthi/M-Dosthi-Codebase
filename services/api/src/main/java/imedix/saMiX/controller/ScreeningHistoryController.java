@@ -27,9 +27,7 @@ import imedix.saMiX.helper.JwtUtil;
  * newest first, plus a per-instrument 4/8/12-week follow-up schedule.
  * Doctors and psychologists only; doctors are restricted to their assigned patients.
  */
-@CrossOrigin(origins = "*", allowedHeaders = "*")
-@RestController
-@RequestMapping("/api/user")
+// Disabled standalone controller: /api/user/get-screening-history is served by UserController + PatientScreeningReportService.
 public class ScreeningHistoryController {
 
     private static final String[] ANSWER_LABELS = {

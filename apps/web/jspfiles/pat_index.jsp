@@ -76,7 +76,7 @@
 					<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/toastr.css">
 					<!--<link rel="stylesheet" href="../bootstrap/jquery.dataTables.min.css">-->
 					<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/dataTables.bootstrap.min.css">
-					<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=2.0">
+					<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=6.0">
 
 					<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/jquery-ui.min.css">
 					<link rel="stylesheet" href="<%=request.getContextPath()%>/vc/vc.css?" +n>
@@ -329,9 +329,10 @@
 							<div class="row header">
 								<div class="col-sm-3 brand-container">
 									<a href="<%=request.getContextPath()%>/jspfiles/home" class="brand-link">
-										<img class="logo-img logo"
-											src="<%=request.getContextPath()%>/images/imlogo.jpg" />
-										<span class="brand-text">M-Dosthi</span>
+										<img class="header-horiz-logo"
+											src="<%=request.getContextPath()%>/images/mdosthi-horizontal-logo.png"
+											alt="mDosthi"
+											style="height:46px; max-height:46px; width:auto; max-width:190px; object-fit:contain;" />
 									</a>
 								</div>
 
@@ -691,7 +692,7 @@
 												statusBg = "rgba(16,185,129,0.1)";
 												statusText = "Received";
 											} else if (log.status === "SUCCESS" || log.status === "SENT") {
-												statusColor = "#4f46e5";
+												statusColor = "#138A4E";
 												statusBg = "rgba(79,70,229,0.1)";
 												statusText = "Sent";
 											} else if (log.status === "DELIVERED") {

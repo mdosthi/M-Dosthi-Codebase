@@ -135,7 +135,7 @@
 
                     .status-sent {
                         background-color: rgba(59, 130, 246, 0.1);
-                        color: #1d4ed8;
+                        color: #0D6B44;
                     }
 
                     .status-delivered {
@@ -182,7 +182,7 @@
 
                     .source-bulk {
                         background-color: rgba(59, 130, 246, 0.1);
-                        color: #1d4ed8;
+                        color: #0D6B44;
                         border: 1px solid rgba(59, 130, 246, 0.2);
                     }
 

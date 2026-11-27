@@ -29,7 +29,7 @@ for candidate_root in "$REAL_CATALINA_HOME/.." "$REAL_CATALINA_HOME/../.."; do
 done
 
 if [ -n "$MDOSTHI_ROOT" ]; then
-  descriptor="$CATALINA_BASE/conf/Catalina/localhost/M-Dosthi.xml"
+  descriptor="$CATALINA_BASE/conf/Catalina/localhost/mDosthi.xml"
   docbase_xml="$(printf '%s' "$MDOSTHI_ROOT/apps/web" | sed 's/&/\&amp;/g; s/"/\&quot;/g; s/</\&lt;/g; s/>/\&gt;/g')"
   expected="<Context docBase=\"$docbase_xml\" reloadable=\"false\" />"
   if [ ! -f "$descriptor" ] || [ "$(tr -d '\r\n' < "$descriptor")" != "$expected" ]; then

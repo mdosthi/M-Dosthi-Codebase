@@ -1,276 +1,323 @@
-<%
-if(session.getAttribute("uid")==null || session.getAttribute("uid")=="");
-else if(String.valueOf(session.getAttribute("utype")).equalsIgnoreCase("pat"))
-	response.sendRedirect(response.encodeRedirectURL("jspfiles/patient?templateid=1&menuid=head1&dest=patientAlldata&id="+session.getAttribute("uid")));
-else
-	response.sendRedirect("jspfiles/home");
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+	<% Object uidAttr=session.getAttribute("uid"); if (uidAttr !=null && !uidAttr.toString().isEmpty()) { String
+		utypeVal=String.valueOf(session.getAttribute("utype")); String
+		patDest="jspfiles/patient?templateid=1&menuid=head1&dest=patientAlldata&id=" + uidAttr; String
+		staffDest="jspfiles/home" ; response.sendRedirect(response.encodeRedirectURL("pat".equalsIgnoreCase(utypeVal) ?
+		patDest : staffDest)); return; } Integer hitsCount=(Integer) application.getAttribute("hitCounter");
+		application.setAttribute("hitCounter", (hitsCount==null || hitsCount==0) ? 1 : hitsCount + 1); String
+		ctx=request.getContextPath(); %>
+		<!DOCTYPE html>
+		<html lang="en">
 
-%>
-      <%
-      	String visitStatus = "";
-		Integer hitsCount = (Integer)application.getAttribute("hitCounter");
-		if( hitsCount ==null || hitsCount == 0 ) {
-			/* First visit */
-			visitStatus = "Welcome to M-Dosthi!";
-			hitsCount = 1;
-		} else {
-			/* return visit */
-			visitStatus = "Total "+hitsCount+" users visited to M-Dosthi!";
-			hitsCount += 1;
-		}
-		application.setAttribute("hitCounter", hitsCount);
-      %>
+		<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="theme-color" content="#0D6B44">
+			<title>mDosthi</title>
 
+			<link rel="icon" type="image/png" sizes="32x32" href="<%=ctx%>/images/icons/mdosthi-favicon-32.png?v=4">
+			<link rel="icon" type="image/png" sizes="256x256" href="<%=ctx%>/images/icons/mdosthi-favicon.png?v=4">
+			<link rel="shortcut icon" type="image/x-icon" href="<%=ctx%>/favicon.ico?v=4">
+			<link rel="apple-touch-icon" sizes="180x180" href="<%=ctx%>/images/icons/mdosthi-apple-touch-icon.png?v=4">
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>mDosthi</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/svg+xml" href="<%=request.getContextPath()%>/images/icons/m-dosthi-favicon.svg"/>
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/bootstrap/font-awesome-4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/bootstrap/css/animate.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/bootstrap/css/hamburgers.min.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/bootstrap/css/select2.min.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/bootstrap/css/util.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/bootstrap/css/main.css">
+			<link rel="stylesheet" href="<%=ctx%>/bootstrap/css/bootstrap.min.css">
+			<link rel="stylesheet" href="<%=ctx%>/bootstrap/font-awesome-4.7.0/css/font-awesome.min.css">
+			<link rel="stylesheet" href="<%=ctx%>/style/mdosthi-brand-tokens.css?v=6">
+			<link rel="stylesheet" href="<%=ctx%>/style/mdosthi-login.css?v=5">
+		</head>
 
+		<body>
 
-	<style>
-		.footer{		  
-		  font-size: 12px;		  
-		  letter-spacing: 1px;
-		  transition: .5s;
-   
-		}
-		.footer:hover{
-		  letter-spacing: 3px;
-		}
-	  </style>
-
-
-</head>
-<body>
-	
-	<div class="limiter hidden-xs">
-		<div class="container-login100">
-			<div class="wrap-login100">
-				<div class="col-md-8 col-65" style=" padding: 15px 15px 15px 15px;">
-					<div class="features-details">
-						<div class="features-title">
-							<div style="text-shadow: 3px 3px #a1a3a5;font-family:Georgia, 'Times New Roman', Times, serif  ;font-size: 90px;color: #0099ff;">M-Dosthi</div>
-						</div>
+			<!-- Top Bar (Aligned 1-to-1 with post-login .header navbar) -->
+			<header class="md-topbar">
+				<div class="md-topbar-inner">
+					<div class="md-topbar-left">
+						<img src="<%=ctx%>/images/mdosthi-horizontal-logo.png" alt="mDosthi" class="md-topbar-logo">
+						<span class="md-topbar-divider" aria-hidden="true"></span>
+						<span class="md-portal-pill">
+							<i class="fa fa-shield" aria-hidden="true"></i>
+							Admin &amp; Clinical Portal
+						</span>
 					</div>
-					<%-- <div class="login100-pic "  >
-						<img src="images/aiimsk.png" style="border-radius:10% ;max-width: 20%;" alt="IMG">
-					</div>
-					<div class="login100-pic "  >
-						<img src="images/iitkgp.png" style="border-radius:10% ;max-width: 20%;" alt="IMG">
-					</div> --%>
-
-
-					<%-- <div class="login100-pic " style="text-align: center;">
-					    <img src="images/aiimsk.png" alt="Image 1" style="display: inline-block; width: 200px; margin-right: 10px;">
-					    <img src="images/iitkgp.png" alt="Image 2" style="display: inline-block; width: 200px;">
-					</div> --%>
-					<div style="display: flex; justify-content: center; align-items: center; gap: 30px; width: 100%;">
-					    <div class="image-box login100-pic" style="flex: 1; max-width: 220px;">
-					        <img src="images/aiimsk.png" alt="Image 1" style="border-radius:10%; width: 100%; height: auto;">
-					    </div>
-					    <div class="image-box login100-pic" style="flex: 1; max-width: 220px;">
-					        <img src="images/iitkgp.png" alt="Image 2" style="border-radius:10%; width: 100%; height: auto;">
-					    </div>
-					</div>
-
-
-					<%-- <div class="login100-pic "  >
-						<img src="images/icmr.png" style="border-radius:10% ;max-width: 6%;" alt="IMG">
-					</div>  --%>
-					<div class="features-details">
-						<div class="features-title">
-							<div class="login100-pic "style="text-shadow: 2px 1px #a1a3a5;font-size: 20px;color: brown;">Sponsored by ICMR
-							<img src="images/icmr.png" style="border-radius:10% ;max-width: 6%;margin-left: 15px;" alt="IMG">
-
-
-							</div>
-							<%-- <div style="color: #A52A2A"></p>Ramakrishna Mission Home of Service<br>
-							Varanasi</div> --%>
-						</div>
-						<!--<div class="features-title">
-							An Open-Source Telemedicine System
-						</div>
-						<div class="row features">
-						  <div class="col-md-6"><div class="features-list">Telemedicine</div></div>
-						  <div class="col-md-6"><div class="features-list">Digital Healthcare</div></div>
-						  <div class="col-md-6"><div class="features-list">Tele Consultation</div></div>
-						  <div class="col-md-6"><div class="features-list">Electronic Health Records Monitoring</div></div>					 
-						</div>-->
-					
-					</div>	
+					<button type="button" class="md-help-btn" data-toggle="modal" data-target="#mdHelpModal"
+						title="Sign-in help">
+						<i class="fa fa-question-circle" aria-hidden="true"></i>
+						<span>Help</span>
+					</button>
 				</div>
+			</header>
 
-				<div class="col-md-4 col-35">
-					<div class="login100-pic js-tilt" data-tilt>
-						<img src="images/mDosthi-logo.jpg" alt="mDosthi">
+			<!-- Main Workspace -->
+			<main class="md-main">
+				<div class="md-split-grid">
+
+					<!-- Left Clinical Brand Column -->
+					<section class="md-showcase-col" aria-label="mDosthi Clinical Workspace">
+						<img src="<%=ctx%>/images/mdosthi-primary-logo.png"
+							alt="mDosthi — Digital Health &amp; Well-Being · Healthcare as Homecare"
+							class="md-primary-logo">
+
+						<h1 class="md-hero-title">Administration &amp; Clinical Care Workspace</h1>
+						<p class="md-hero-sub">
+							Dedicated portal for administrators, psychologists, and doctors to manage operations, review
+							patient progress, and coordinate care.
+						</p>
+
+						<div class="md-quick-chips">
+							<span class="md-quick-chip"><i class="fa fa-sliders" aria-hidden="true"></i> Portal
+								Administration</span>
+							<span class="md-quick-chip"><i class="fa fa-comments-o" aria-hidden="true"></i>
+								Psychological Care</span>
+							<span class="md-quick-chip"><i class="fa fa-user-md" aria-hidden="true"></i> Doctor
+								Consultations</span>
+						</div>
+
+						<div class="md-partners-bar">
+							<div class="md-partner-item">
+								<img src="<%=ctx%>/images/iitkgp.png" alt="IIT Kharagpur">
+								<div class="md-partner-text">
+									<span class="md-partner-role">Developed By</span>
+									<span class="md-partner-name">IIT Kharagpur</span>
+								</div>
+							</div>
+							<div class="md-partner-item">
+								<img src="<%=ctx%>/images/aiimsk.png" alt="AIIMS Kalyani">
+								<div class="md-partner-text">
+									<span class="md-partner-role">Collaborated With</span>
+									<span class="md-partner-name">AIIMS Kalyani</span>
+								</div>
+							</div>
+							<div class="md-partner-item">
+								<img src="<%=ctx%>/images/icmr.png" alt="ICMR">
+								<div class="md-partner-text">
+									<span class="md-partner-role">Sponsored By</span>
+									<span class="md-partner-name">ICMR</span>
+								</div>
+							</div>
+						</div>
+					</section>
+
+					<!-- Right Sign-In Card (Matched Branded Header Template) -->
+					<section class="md-login-col" aria-label="Portal Sign In">
+						<div class="md-login-card">
+							<div class="md-login-header">
+								<div class="md-login-header-inner">
+									<div class="md-emblem-wrap js-tilt" data-tilt>
+										<img src="<%=ctx%>/images/mdosthi-emblem.png" alt="mDosthi Emblem">
+									</div>
+									<div class="md-header-copy">
+										<span class="md-header-kicker">mDosthi Workspace</span>
+										<h2 class="md-card-title">Staff Sign In</h2>
+										<p class="md-card-subtitle">For Administrators, Psychologists &amp; Doctors</p>
+									</div>
+								</div>
+							</div>
+							<div class="md-login-body">
+								<!-- Role Tabs: Admin | Psychologist | Doctor -->
+								<div class="md-role-tabs" role="tablist" aria-label="Select Staff Role">
+									<button type="button" class="md-role-tab active" data-role="adm">
+										<i class="fa fa-cog" aria-hidden="true"></i> Admin
+									</button>
+									<button type="button" class="md-role-tab" data-role="psy">
+										<i class="fa fa-heart-o" aria-hidden="true"></i> Psychologist
+									</button>
+									<button type="button" class="md-role-tab" data-role="doc">
+										<i class="fa fa-user-md" aria-hidden="true"></i> Doctor
+									</button>
+								</div>
+
+								<!-- Login Form (Preserves exact POST -> jspfiles/login_n.jsp contract) -->
+								<form method="POST" action="jspfiles/login_n.jsp" name="frmLog" id="mdLoginForm"
+									role="form" novalidate>
+									<div class="md-error-alert login-msg" id="mdErrorAlert" role="alert"></div>
+
+									<div class="md-field">
+										<label for="uid">Username</label>
+										<div class="md-input-wrap">
+											<span class="md-input-icon-badge" aria-hidden="true"><i
+													class="fa fa-user-o"></i></span>
+											<input class="md-input" type="text" name="uid" id="uid"
+												placeholder="Enter Admin username" autocomplete="username" autofocus>
+											<button type="button" class="md-input-action" id="mdClearUid"
+												title="Clear username" style="display:none;">
+												<i class="fa fa-times-circle" aria-hidden="true"></i>
+											</button>
+										</div>
+									</div>
+
+									<div class="md-field">
+										<label for="pwd">Password</label>
+										<div class="md-input-wrap">
+											<span class="md-input-icon-badge" aria-hidden="true"><i
+													class="fa fa-lock"></i></span>
+											<input class="md-input" type="password" name="pwd" id="pwd"
+												placeholder="Enter your password" autocomplete="current-password">
+											<button type="button" class="md-input-action" id="mdTogglePwd"
+												title="Show password" aria-label="Toggle password visibility">
+												<i class="fa fa-eye-slash" aria-hidden="true"></i>
+											</button>
+										</div>
+									</div>
+
+									<button class="md-submit-btn subm-btn" type="submit" id="mdSubmitBtn">
+										<span id="mdSubmitLabel">Sign In</span>
+										<i class="fa fa-arrow-right" id="mdSubmitIcon" aria-hidden="true"></i>
+									</button>
+								</form>
+
+								<div class="md-trust-bar">
+									<span class="md-trust-dot" aria-hidden="true"></span>
+									<i class="fa fa-shield" aria-hidden="true"></i>
+									<span>Authorized Clinical &amp; Admin Access</span>
+								</div>
+							</div>
+						</div>
+					</section>
+
+				</div>
+			</main>
+
+			<!-- Concise Sign-In Help Modal -->
+			<div class="modal fade" id="mdHelpModal" tabindex="-1" role="dialog" aria-labelledby="mdHelpModalLabel">
+				<div class="modal-dialog" role="document" style="max-width:460px;">
+					<div class="modal-content" style="border-radius:22px; overflow:hidden; border:none;">
+						<div class="modal-header"
+							style="background:var(--gradient-cta); color:#FFFFFF; border:none; padding:16px 22px;">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"
+								style="color:#FFFFFF; opacity:0.9;">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="mdHelpModalLabel"
+								style="font-family:var(--font-heading); font-weight:700; color:#FFFFFF;">
+								<i class="fa fa-question-circle" aria-hidden="true"></i> Staff Sign-In Help
+							</h4>
+						</div>
+						<div class="modal-body"
+							style="padding:20px 22px; font-size:13.5px; color:var(--color-body-ink, #1E3A34); line-height:1.6;">
+							<p style="margin-bottom:10px;">
+								<strong style="color:var(--color-navy);">Who Can Sign In Here:</strong> This web portal
+								is reserved for <strong>Administrators</strong>, <strong>Psychologists</strong>, and
+								<strong>Doctors</strong>.
+							</p>
+							<p style="margin-bottom:10px;">
+								<strong style="color:var(--color-navy);">Patient Access:</strong> Patients sign in
+								through the <strong>mDosthi App</strong>.
+							</p>
+							<p style="margin-bottom:14px;">
+								<strong style="color:var(--color-navy);">Shared Workstations:</strong> Always sign out
+								from the top-right bar after completing your session.
+							</p>
+							<div style="background:var(--color-page-bg, #F3FAF8); border:1px solid var(--color-border-subtle, #CBEAD9); border-radius:14px; padding:12px 14px; font-size:13px; line-height:1.55;">
+								<p style="margin-bottom:6px; color:var(--color-navy); font-weight:600;">
+									<i class="fa fa-university" aria-hidden="true" style="color:var(--color-teal-dark, #0D7A46); margin-right:6px;"></i>Developed and designed at Computer Science &amp; Engineering Department, IIT Kharagpur
+								</p>
+								<p style="margin-bottom:0; color:var(--color-body-ink, #1F3B4D);">
+									<strong style="color:var(--color-navy);">Contact:</strong> Prof. Jayanta Mukhopadhyay,
+									<a href="mailto:jay@cse.iitkgp.ac.in" style="color:var(--color-blue, #0E76BC); font-weight:500; text-decoration:underline;">jay@cse.iitkgp.ac.in</a>,
+									Phone: <a href="tel:+913222283484" style="color:var(--color-blue, #0E76BC); font-weight:500; text-decoration:none;">+91-3222-283484</a>
+								</p>
+							</div>
+						</div>
+						<div class="modal-footer" style="border-top:1px solid rgba(13,107,68,0.10); padding:12px 22px;">
+							<button type="button" class="btn btn-primary" data-dismiss="modal"
+								style="background:var(--color-teal, #138A4E); border:none; border-radius:999px; padding:7px 20px; font-family:var(--font-heading); font-weight:600;">Got
+								it</button>
+						</div>
 					</div>
-				<form class="login100-form validate-form" METHOD="POST" ACTION="jspfiles/login_n.jsp" name="frmLog" role = "form" >
-					<!--<span class="login100-form-title">
-						 M-Dosthi Login
-					</span>-->
-					<span class="login-msg"></span>
-					<div class="wrap-input100 validate-input" data-validate = "Valid username is required">
-						<input class="input100" type="text" name="uid" id="uid" placeholder = "Username"  >
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
-						</span>
-					</div>
-
-					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input class="input100" type="password" name="pwd" id="pwd" placeholder="Password">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-lock" aria-hidden="true"></i>
-						</span>
-					</div>				
-
-
-					<div class="container-login100-form-btn">
-						<input class="login100-form-btn subm-btn" type="submit" value="Login"/>
-					</div>
-
-				</form>
-				<!--<div class='welcome-title'><%=visitStatus%></div>
-					<div class='sys-details'>
-						A Linux Based Multi-Tier Telemedicine System.
-			</div>				
-			</div>-->
+				</div>
 			</div>
-		</div>
-	</div>
-	
-	
 
-<nav class="hidden-xs footer" style="height: fit-content;">
-            <span ><center>
-	<b><u>M-Dosthi Telemedicine System</u></b><br>
-	Developed and designed at Computer Science & Engineering Department, <b>IIT Kharagpur</b></br>
-	<b>Contact: Prof. Jayanta Mukhopadhyay, <a href="mailto:jay@cse.iitkgp.ac.in">jay@cse.iitkgp.ac.in</a>, Phone: +91-3222-283484</b>
-	</center></span>
+			<script src="<%=ctx%>/bootstrap/jquery-2.2.1.min.js"></script>
+			<script src="<%=ctx%>/bootstrap/js/popper.js"></script>
+			<script src="<%=ctx%>/bootstrap/js/bootstrap.min.js"></script>
+			<script src="<%=ctx%>/bootstrap/js/tilt.jquery.min.js"></script>
+			<script>
+				(function ($) {
+					if ($.fn.tilt) {
+						$('.js-tilt').tilt({ scale: 1.06 });
+					}
 
-    </nav>	
-	</div>
+					var rolePlaceholders = {
+						adm: 'Enter Admin username',
+						psy: 'Enter Psychologist username',
+						doc: 'Enter Doctor username'
+					};
 
+					$('.md-role-tab').on('click', function () {
+						var key = $(this).attr('data-role');
+						$('.md-role-tab').removeClass('active');
+						$(this).addClass('active');
+						if (rolePlaceholders[key]) {
+							$('#uid').attr('placeholder', rolePlaceholders[key]).focus();
+						}
+					});
 
+					function showError(msg) {
+						$('#mdErrorAlert').html('<i class="fa fa-exclamation-triangle" aria-hidden="true"></i><span>' + msg + '</span>').addClass('visible');
+					}
+					function clearError() {
+						$('#mdErrorAlert').removeClass('visible').html('');
+					}
 
-<div class="col-sm-12 sk hidden visible-xs" style="background:#fff;border-radius:5px;">
-<div class="surajit hidden-sm" ><br><br>
-<%-- <center><img src="images/imlogo.jpg" class="hidden-sm visible-xs img-responsive" height="100px" width="100px"></center><br> --%>
-<%-- <div style="display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%;">
-					    <div class="image-box login100-pic" style="flex: 1; max-width: 150px;">
-					        <img src="images/aiimsk.png" alt="Image 1" style="border-radius:10%; width: 100%; height: auto;">
-					    </div>
-					    <div class="image-box login100-pic" style="flex: 1; max-width: 150px;">
-					        <img src="images/iitkgp.png" alt="Image 2" style="border-radius:10%; width: 100%; height: auto;">
-					    </div>
-					</div> --%>
-	<center>
-	<div >
-	    <div class="image-box login100-pic" style="display: inline-block; margin-right: 2px;">
-	        <img src="images/aiimsk.png" alt="Image 1" style="flex: 1;border-radius:10%; max-width: 50px;">
-	    </div>
-	    <div class="image-box login100-pic" style="display: inline-block;">
-	        <img src="images/iitkgp.png" alt="Image 2" style="flex: 1;border-radius:10%; max-width: 50px;">
-	    </div>
-	</div>
-	</center>
+					$('#uid').on('input', function () {
+						clearError();
+						$('#mdClearUid').toggle($(this).val().length > 0);
+					});
+					$('#pwd').on('input', clearError);
 
- <form METHOD="POST" ACTION="jspfiles/login_n.jsp" Name="frmLog" class = " well bs-example bs-example-form " role = "form">
- 	<span class="login-msg"></span>
- <center><div class = "input-group input-group-lg"><span class=" glyphicon glyphicon-plus-sign blue"></span><span class="input-lg"><strong>M-Dosthi L</strong>ogin</span>
-      </div></center><br>
-      <div class = "input-group">
-         <span class = "input-group-addon" data-toggle="tooltip" data-placement="top" title="Enter Mail-Id" ><span class="glyphicon glyphicon-user"></span></span>
-         <input type = "text" name="uid" id="uid" class = "form-control" placeholder = "Username">
-      </div><br>
-	  <div class = "input-group">
-         <span class = "input-group-addon" data-toggle="tooltip" data-placement="top" title="Enter Password" ><span class="glyphicon glyphicon-lock"></span></span>
-         <input type = "password" name="pwd" id="pwd" class = "form-control" placeholder = "Password">
-      </div><br>
+					$('#mdClearUid').on('click', function () {
+						$('#uid').val('').focus();
+						$(this).hide();
+						clearError();
+					});
 
-	  	  <div class="row">
-	  <div class="col-sm-9">
-	  <div class = "input-group" style="margin: auto;">
-          <button type="submit" class="btn btn-primary btn-block" style="padding: 6px 50px;">Login</button>
-      </div>
-	  </div><!--col-sm-5-->
-	  <!--<br><div class="col-sm-3" style="margin: auto;display: table;"><a href="forms/pat_reg.jsp" style="font-size:15px"><b>New Patient Registration</b></a>-->
-    <br>
-  </form>
-  
-	  </div><!--col-sm-2-->
-     </div><!--col-sm-5-->
+					$('#mdTogglePwd').on('click', function () {
+						var $pwd = $('#pwd');
+						var isHidden = $pwd.attr('type') === 'password';
+						$pwd.attr('type', isHidden ? 'text' : 'password');
+						$(this).attr('title', isHidden ? 'Hide password' : 'Show password');
+						$(this).find('i').toggleClass('fa-eye-slash', !isHidden).toggleClass('fa-eye', isHidden);
+					});
 
-	   <!-- <br><div class="well">A Linux Based Open Source Multi-Tier Secure Telemedicine System
-to provide internet based management support to hospitals/doctor</div> -->
-	<br><div class="well" style="text-align: center;"><b><u>M-Dosthi Telemedicine System</u></b><br>
-		Developed and designed at Computer Science & Engineering Department, <b>IIT Kharagpur</b></br>
-		<b>Contact: Prof. Jayanta Mukhopadhyay, <a href="mailto:jay@cse.iitkgp.ac.in">jay@cse.iitkgp.ac.in</a>, Phone: +91-3222-283484</b></div>
-  <br><center><div style="color:red;">*Recommened Browser- Google Chrome(version-84.0.4147.125 or above)</div></center>
-	  </div>
+					$('#mdLoginForm').on('submit', function (e) {
+						e.preventDefault();
+						clearError();
+						var uidVal = $.trim($('#uid').val());
+						var pwdVal = $.trim($('#pwd').val());
+						if (!uidVal || !pwdVal) {
+							showError('Please enter both username and password.');
+							(!uidVal ? $('#uid') : $('#pwd')).focus();
+							return;
+						}
+						var $btn = $('#mdSubmitBtn');
+						$btn.prop('disabled', true);
+						$('#mdSubmitLabel').text('Signing in...');
+						$('#mdSubmitIcon').attr('class', 'fa fa-spinner fa-spin');
 
+						$.ajax({
+							type: 'POST',
+							url: 'jspfiles/login_n.jsp',
+							data: $(this).serialize(),
+							success: function (data) {
+								if (data.trim() == '0') {
+									showError('Wrong username or password. Please try again.');
+									$btn.prop('disabled', false);
+									$('#mdSubmitLabel').text('Sign In');
+									$('#mdSubmitIcon').attr('class', 'fa fa-arrow-right');
+								} else {
+									location.reload();
+								}
+							},
+							error: function () {
+								showError('Unable to sign in right now. Please check server status and try again.');
+								$btn.prop('disabled', false);
+								$('#mdSubmitLabel').text('Sign In');
+								$('#mdSubmitIcon').attr('class', 'fa fa-arrow-right');
+							}
+						});
+					});
+				})(jQuery);
+			</script>
+		</body>
 
-
-</div>
-</div><!--col-sm-4 sk-->
-
-
-
-
-	<script src="<%=request.getContextPath()%>/bootstrap/jquery-2.2.1.min.js"></script>
-	<script src="<%=request.getContextPath()%>/bootstrap/js/popper.js"></script>
-	<script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap.min.js"></script>
-	<script src="<%=request.getContextPath()%>/bootstrap/js/select2.min.js"></script>
-	<script src="<%=request.getContextPath()%>/bootstrap/js/tilt.jquery.min.js"></script>
-	<script >
-		$('.js-tilt').tilt({
-			scale: 1.1
-		})
-	</script>
-<!--===============================================================================================-->
-	<script src="<%=request.getContextPath()%>/bootstrap/js/login.js"></script>
-
-
-
-<script>
-	// this is the id of the form
-	$("form").submit(function(e) {
-
-	    e.preventDefault(); // avoid to execute the actual submit of the form.
-	    var form = $(this);
-	    var url = "jspfiles/login_n.jsp";
-	    //alert(form.serialize());
-	    $(".login-msg").html("");
-	    $.ajax({
-	           type: "POST",
-	           url: url,
-	           data: form.serialize(), // serializes the form's elements.
-	           success: function(data)
-	           {
-	           		//alert(data);
-					//console.log(data);
-	               if(data.trim()==0)
-	               		$(".login-msg").html("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Wrong username and password");
-			else
-	               		location.reload();
-	           }
-	         });
-
-	    
-	});
-
-</script>	
-</body>
-</html>
+		</html>

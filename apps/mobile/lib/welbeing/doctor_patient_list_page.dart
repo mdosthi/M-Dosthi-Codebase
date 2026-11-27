@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/brand_theme.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../login_page.dart';
@@ -6,14 +7,14 @@ import 'doctor_monitoring_page.dart';
 import 'wellbeing_service.dart';
 
 class _PatientsColors {
-  static const primaryGreen = Color(0xFF226A27);
-  static const deepGreen = Color(0xFF123F16);
-  static const pageBackground = Color(0xFFEDF5ED);
-  static const stripeRow = Color(0xFFF3F8F3);
-  static const rowHover = Color(0xFFDCEEDC);
-  static const focusRing = Color(0xFF7BC47F);
-  static const textPrimary = Color(0xFF0F1A10);
-  static const textMuted = Color(0xFF4B5B4C);
+  static const primaryGreen = BrandColors.teal;
+  static const deepGreen = BrandColors.tealDark;
+  static const pageBackground = BrandColors.pageBg;
+  static const stripeRow = Color(0xFFEDF8F2);
+  static const rowHover = BrandColors.ice;
+  static const focusRing = BrandColors.teal;
+  static const textPrimary = BrandColors.navy;
+  static const textMuted = BrandColors.mutedInk;
   static const white = Color(0xFFFFFFFF);
 }
 

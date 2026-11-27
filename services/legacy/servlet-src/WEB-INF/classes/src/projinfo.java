@@ -2,75 +2,75 @@ package imedix;
 
 import java.io.*;
 
-public class projinfo{
-	 public String gblcentercode="";
-	 public String blip="";
-	 public String blport="";
-	 public String gblroot="";	
-	 public String gblhome="";
-	 public String gbltelemedix="";
-	 public String gblsip="";
-	 public String gbltemp="";
-	 public String gblPageRow="";
-	 public String gbldata="";
-	 public String LargeFileSaveLayer="";
-	 public String PACSServiceURL="";
-	 public String PACSuid="";
-	 public String PACSpass="";
-	 public String PACSurl="";
-	 public String PACSAcceptingIP="";
-	 public String EmailURL="";
-	 public String SMSURL="";
-	 public String maxFileUploadLimit="";
-	 public String vidServerUrl="";
+public class projinfo {
+	public String gblcentercode = "";
+	public String blip = "";
+	public String blport = "";
+	public String gblroot = "";
+	public String gblhome = "";
+	public String gbltelemedix = "";
+	public String gblsip = "";
+	public String gbltemp = "";
+	public String gblPageRow = "";
+	public String gbldata = "";
+	public String LargeFileSaveLayer = "";
+	public String PACSServiceURL = "";
+	public String PACSuid = "";
+	public String PACSpass = "";
+	public String PACSurl = "";
+	public String PACSAcceptingIP = "";
+	public String EmailURL = "";
+	public String SMSURL = "";
+	public String maxFileUploadLimit = "";
+	public String vidServerUrl = "";
 
-	public projinfo( String path){
+	public projinfo(String path) {
 		setvalue(path);
-	}	
-	
-	public void setvalue( String p)
-    {   	
-		String gblarray[] = new String [128];	
-		int gblindex=0;
-		int gblcount=0;
-		String gblstr="";
+	}
+
+	public void setvalue(String p) {
+		String gblarray[] = new String[128];
+		int gblindex = 0;
+		int gblcount = 0;
+		String gblstr = "";
 		try {
-			//FileInputStream gblfin = new FileInputStream(p+"/config.info");
+			// FileInputStream gblfin = new FileInputStream(p+"/config.info");
 			String configPath = p + "config.info";
 			if (p.length() == 0) {
 				String catalinaBase = System.getProperty("catalina.base", "");
 				if (catalinaBase.length() > 0) {
-					configPath = catalinaBase + "/webapps/M-Dosthi/config.info";
+					configPath = catalinaBase + "/webapps/mDosthi/config.info";
 				}
 				if (!new File(configPath).isFile()) {
 					configPath = configFromWebappLocation(configPath);
 				}
 			}
 			FileInputStream gblfin = new FileInputStream(configPath);
-			System.out.println("Config path:--->"+configPath);
-			do{
+			System.out.println("Config path:--->" + configPath);
+			do {
 				gblindex = gblfin.read();
-				if((char) gblindex != '\n') gblstr = gblstr + (char) gblindex;
+				if ((char) gblindex != '\n')
+					gblstr = gblstr + (char) gblindex;
 				else {
-					gblarray[gblcount++]=gblstr;
-					gblstr="";
-					}
-			}while(gblindex != -1);
-	   	    	
-			for (gblindex=0; gblindex<gblcount; gblindex++) {
-				gblstr =gblarray[gblindex].substring(gblarray[gblindex].indexOf('=')+1);
-				gblarray[gblindex] = gblstr.trim();		
-								
-	//			System.out.println(gblarray[gblindex]);
+					gblarray[gblcount++] = gblstr;
+					gblstr = "";
+				}
+			} while (gblindex != -1);
+
+			for (gblindex = 0; gblindex < gblcount; gblindex++) {
+				gblstr = gblarray[gblindex].substring(gblarray[gblindex].indexOf('=') + 1);
+				gblarray[gblindex] = gblstr.trim();
+
+				// System.out.println(gblarray[gblindex]);
 			}
-			
-			int c=0;
+
+			int c = 0;
 			/* Don't Change the Order of these variables */
 			gblcentercode = gblarray[c++];
 			blip = gblarray[c++];
 			blport = gblarray[c++];
 			gblroot = gblarray[c++];
-			gblhome = gblarray[c++];	
+			gblhome = gblarray[c++];
 			gbltelemedix = gblarray[c++];
 			gblsip = gblarray[c++];
 			gbltemp = gblarray[c++];
@@ -85,11 +85,10 @@ public class projinfo{
 			SMSURL = gblarray[c++];
 			maxFileUploadLimit = gblarray[c++];
 			vidServerUrl = gblarray[c++];
-		}
-	    catch ( Exception e) {
+		} catch (Exception e) {
 			System.out.println("projInfo.java error:-");
-	    	System.out.println(e.toString());
-	    }
+			System.out.println(e.toString());
+		}
 	}
 
 	private String configFromWebappLocation(String fallbackPath) {

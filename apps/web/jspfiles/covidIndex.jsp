@@ -46,7 +46,7 @@
 
     /* Handle on hover */
     .question-list::-webkit-scrollbar-thumb:hover {
-      background: #337ab7; 
+      background: #138A4E; 
     }
     /* Custom scroll CSS END */
         
@@ -56,7 +56,7 @@
         overflow-x: auto;
         overflow-y: hidden;
         background: #eef;
-        border-bottom: 2px solid #337ab7;      
+        border-bottom: 2px solid #138A4E;      
     }
     .q-no{
         padding: 2px 10px;
@@ -65,12 +65,12 @@
         margin: 0 2px;
     }
     .q-no.active{
-        background: #337ab7;
+        background: #138A4E;
         color: #fff;
         border: 1px solid #ecffff;        
     }
     .user-status{
-        border: 1px solid #337ab7;
+        border: 1px solid #138A4E;
         margin-left: 1%;
         margin-top: 10px;
         margin-bottom: 10px;        
@@ -78,7 +78,7 @@
     .user-status .title{
         font-size:18px; 
         text-align:center;
-        background: #337ab7;
+        background: #138A4E;
         color: #fff;    
     }
     hr{

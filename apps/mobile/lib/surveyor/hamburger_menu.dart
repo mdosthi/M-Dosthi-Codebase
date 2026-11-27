@@ -6,6 +6,7 @@ import 'package:mdosthi_app/main.dart';
 import 'dart:io';
 
 import '../EditProfilePage.dart';
+import '../theme/brand_theme.dart';
 
 class HamburgerMenu extends StatefulWidget {
   final String userName;
@@ -263,10 +264,42 @@ class _HamburgerMenuState extends State<HamburgerMenu> {
       child: Column(
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text(loginAccount),
-            accountEmail: Text("Username - ${widget.email}"),
-            currentAccountPicture: const CircleAvatar(
-              child: Icon(Icons.person),
+            decoration: const BoxDecoration(
+              gradient: BrandColors.heroHeaderGradient,
+            ),
+            accountName: Text(
+              loginAccount,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: BrandTypography.heading(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
+            ),
+            accountEmail: Text(
+              "Username - ${widget.email}",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: BrandTypography.body(
+                fontSize: 12.5,
+                color: BrandColors.ice,
+              ),
+            ),
+            currentAccountPicture: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              ),
+              child: Image.asset(
+                'assets/images/mdosthi-emblem.png',
+                fit: BoxFit.contain,
+                errorBuilder: (_, __, ___) => const Icon(
+                  Icons.health_and_safety_rounded,
+                  color: BrandColors.navy,
+                ),
+              ),
             ),
           ),
           Expanded(
@@ -276,8 +309,15 @@ class _HamburgerMenuState extends State<HamburgerMenu> {
               itemBuilder: (BuildContext context, int index) {
                 // Regular menu items
                 return ListTile(
-                  leading: Icon(widget.icons[index]),
-                  title: Text(widget.pageTitles[index]),
+                  leading: Icon(widget.icons[index], color: BrandColors.tealDark),
+                  title: Text(
+                    widget.pageTitles[index],
+                    style: BrandTypography.body(
+                      fontSize: 14.5,
+                      fontWeight: FontWeight.w500,
+                      color: BrandColors.navy,
+                    ),
+                  ),
                   onTap: () => _handleMenuItemTap(context, index),
                 );
               },

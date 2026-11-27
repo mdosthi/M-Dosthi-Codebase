@@ -9,7 +9,8 @@
 		"doc",
 		"adm",
 		"usr",
-		"pat"
+		"pat",
+		"psy"
 	],
 	"org.apache.jsp.jspfiles.index1_jsp": [
 		"doc",
@@ -221,7 +222,8 @@
 		"adm",
 		"usr",
 		"doc",
-		"pat"
+		"pat",
+		"psy"
 	],
 	"org.apache.jsp.forms.addfamilymumber_jsp": [
 		"adm",

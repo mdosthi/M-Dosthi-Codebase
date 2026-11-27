@@ -324,7 +324,7 @@ Keep the same `SHARED_TOMCAT_HOME` (or `--shared`) when running build/start/stop
 ```bash
 export JAVA_HOME=/path/to/jdk-11
 scripts/legacy.sh build --shared
-# Restart the shared Tomcat now so it loads the built /M-Dosthi app.
+# Restart the shared Tomcat now so it loads the built /mDosthi app.
 scripts/legacy.sh start --shared
 ```
 
@@ -345,7 +345,7 @@ Read [the annotation package README](../services/annotate/README.md) for support
 | Port | Service | Notes |
 |---:|---|---|
 | 3306 | MySQL | Local default; may be changed in JDBC URLs. |
-| 8080 | Shared Tomcat | Shared Tomcat default (serves `/eDosthi` and `/M-Dosthi` when configured). |
+| 8080 | Shared Tomcat | Shared Tomcat default (serves `/eDosthi` and `/mDosthi` when configured). |
 | 8081 | Individual Tomcat | M-Dosthi bundled Tomcat (`tools/tomcat9`, shutdown `8006`, configurable via `TOMCAT_HTTP_PORT`). |
 | 1100 | Java RMI | M-Dosthi RMI default in both Individual and Shared modes (avoids collision with eDosthi `1099`). |
 | 9090 | Spring Boot API | Flutter app's default API port. |

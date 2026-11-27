@@ -28,7 +28,7 @@
         cursor: pointer;
     }
     .view-btn:hover {
-        background-color: #337ab7;
+        background-color: #138A4E;
     }
     .modal-body {
         max-height: 70vh;
@@ -284,7 +284,7 @@
         transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     }
     .chat-control-input:focus {
-        border-color: var(--primary, #4f46e5) !important;
+        border-color: var(--primary, #138A4E) !important;
         outline: 0;
         box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15) !important;
     }
@@ -321,13 +321,13 @@
         user-select: none;
     }
     .day-chip input[type="checkbox"]:checked + .day-chip-label {
-        background-color: var(--primary, #4f46e5) !important;
-        border-color: var(--primary, #4f46e5) !important;
+        background-color: var(--primary, #138A4E) !important;
+        border-color: var(--primary, #138A4E) !important;
         color: white !important;
         box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
     }
     .day-chip input[type="checkbox"]:focus + .day-chip-label {
-        outline: 2px solid var(--primary, #4f46e5);
+        outline: 2px solid var(--primary, #138A4E);
         outline-offset: 2px;
     }
     .day-chip-label:hover {
@@ -1046,7 +1046,7 @@
             
             // Set background color based on sender type
             if (message.sender_type === 'patient') {
-                messageDiv += 'background-color: #e3f2fd; border-left: 4px solid #2196f3;">';
+                messageDiv += 'background-color: #E9F8F0; border-left: 4px solid #0097A7;">';
             } else if (message.sender_type === 'bot') {
                 messageDiv += 'background-color: #f3e5f5; border-left: 4px solid #9c27b0;">';
             } else if (message.sender_type === 'system') {
@@ -1125,7 +1125,7 @@
                 color = '#28a745';
                 break;
             case 'active':
-                color = '#007bff';
+                color = '#0097A7';
                 break;
             case 'terminated':
                 color = '#dc3545';

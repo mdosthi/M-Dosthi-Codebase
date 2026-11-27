@@ -253,7 +253,7 @@ flutter:
 # Flutter Launcher Icons configuration - THIS MUST BE AT ROOT LEVEL
 flutter_launcher_icons:
   android: true
-  ios: false
-  image_path: "assets/icons/eDosthi.png"
+  ios: true
+  image_path: "assets/icons/mDosthi.png"
   adaptive_icon_background: "#FFFFFF"
-  adaptive_icon_foreground: "assets/icons/eDosthi.png"
+  adaptive_icon_foreground: "assets/icons/mDosthi.png"

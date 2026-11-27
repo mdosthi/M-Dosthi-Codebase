@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:async';
 import '../service/language_service.dart';
 import '../login_page.dart';
+import '../theme/brand_theme.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert' show utf8, jsonEncode, jsonDecode;
 import '../chat/assistant_speech_player.dart';
@@ -574,9 +575,9 @@ class _ChatPageState extends State<ChatPage> {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.blue.shade50,
+                    color: Colors.green.shade50,
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.blue.shade200),
+                    border: Border.all(color: Colors.green.shade200),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -586,7 +587,7 @@ class _ChatPageState extends State<ChatPage> {
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue.shade700,
+                          color: Colors.green.shade700,
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -595,7 +596,7 @@ class _ChatPageState extends State<ChatPage> {
                         style: TextStyle(
                           fontSize: 12,
                           fontStyle: FontStyle.italic,
-                          color: Colors.blue.shade600,
+                          color: Colors.green.shade600,
                         ),
                       ),
                     ],
@@ -977,12 +978,12 @@ class _ChatPageState extends State<ChatPage> {
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Icon(icon, size: 16, color: const Color(0xFF1B5E20).withOpacity(0.7)),
+          Icon(icon, size: 16, color: BrandColors.navy.withOpacity(0.7)),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               label,
-              style: GoogleFonts.outfit(
+              style: GoogleFonts.poppins(
                 fontSize: 13,
                 color: Colors.grey.shade700,
                 fontWeight: FontWeight.w500,
@@ -991,7 +992,7 @@ class _ChatPageState extends State<ChatPage> {
           ),
           Text(
             value,
-            style: GoogleFonts.outfit(
+            style: GoogleFonts.poppins(
               fontSize: 13,
               fontWeight: FontWeight.w600,
               color: Colors.black87,
@@ -1019,9 +1020,9 @@ class _ChatPageState extends State<ChatPage> {
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFFE8F5E9),
+        color: BrandColors.ice,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFC8E6C9)),
+        border: Border.all(color: BrandColors.borderSubtle),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.02),
@@ -1036,16 +1037,16 @@ class _ChatPageState extends State<ChatPage> {
           Row(
             children: [
               const Icon(Icons.info_outline_rounded,
-                  color: Color(0xFF1B5E20), size: 20),
+                  color: BrandColors.navy, size: 20),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   languageService.isBengali
                       ? 'চ্যাট সেশনের নিয়মাবলী'
                       : 'Your Chat Limits',
-                  style: GoogleFonts.outfit(
+                  style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
-                    color: const Color(0xFF1B5E20),
+                    color: BrandColors.navy,
                     fontSize: 15,
                   ),
                 ),
@@ -1056,22 +1057,22 @@ class _ChatPageState extends State<ChatPage> {
                 decoration: BoxDecoration(
                   color: currentDailyUsage >= dailyLimit
                       ? Colors.red.shade100
-                      : const Color(0xFFA5D6A7).withOpacity(0.4),
+                      : BrandColors.teal.withOpacity(0.4),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
                     color: currentDailyUsage >= dailyLimit
                         ? Colors.red.shade300
-                        : const Color(0xFF81C784),
+                        : BrandColors.green,
                   ),
                 ),
                 child: Text(
                   '$currentDailyUsage/$dailyLimit ${languageService.isBengali ? "আজ" : "Today"}',
-                  style: GoogleFonts.outfit(
+                  style: GoogleFonts.poppins(
                     fontSize: 11,
                     fontWeight: FontWeight.bold,
                     color: currentDailyUsage >= dailyLimit
                         ? Colors.red.shade700
-                        : const Color(0xFF1B5E20),
+                        : BrandColors.navy,
                   ),
                 ),
               ),
@@ -1083,11 +1084,11 @@ class _ChatPageState extends State<ChatPage> {
               borderRadius: BorderRadius.circular(4),
               child: LinearProgressIndicator(
                 value: currentDailyUsage / dailyLimit,
-                backgroundColor: const Color(0xFFC8E6C9).withOpacity(0.5),
+                backgroundColor: BrandColors.borderSubtle.withOpacity(0.5),
                 valueColor: AlwaysStoppedAnimation<Color>(
                   currentDailyUsage >= dailyLimit
                       ? Colors.red
-                      : const Color(0xFF2E7D32),
+                      : BrandColors.tealDark,
                 ),
                 minHeight: 6,
               ),
@@ -1157,7 +1158,7 @@ class _ChatPageState extends State<ChatPage> {
 
     Color progressColor;
     if (progress < 0.7) {
-      progressColor = const Color(0xFF2E7D32);
+      progressColor = BrandColors.tealDark;
     } else if (progress < 0.9) {
       progressColor = Colors.orange;
     } else {
@@ -1166,7 +1167,7 @@ class _ChatPageState extends State<ChatPage> {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      color: const Color(0xFFF1F8F5),
+      color: BrandColors.pageBg,
       child: Row(
         children: [
           Icon(Icons.timer_rounded, size: 16, color: progressColor),
@@ -1179,7 +1180,7 @@ class _ChatPageState extends State<ChatPage> {
                   languageService.isBengali
                       ? 'সেশন সময়সীমা: আর $remainingMinutes মিনিট বাকি আছে'
                       : 'Session Time: ${remainingMinutes}min remaining',
-                  style: GoogleFonts.outfit(
+                  style: GoogleFonts.poppins(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                     color: progressColor,
@@ -1295,7 +1296,7 @@ class _ChatPageState extends State<ChatPage> {
               backgroundColor: isSystem
                   ? Colors.amber
                   : isBot
-                      ? const Color(0xFF00796B)
+                      ? BrandColors.teal
                       : Colors.grey,
               child: Icon(
                 isSystem
@@ -1316,12 +1317,12 @@ class _ChatPageState extends State<ChatPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
                 color: isUser
-                    ? const Color(0xFF1B5E20)
+                    ? BrandColors.tealDark
                     : isSystem
                         ? Colors.amber.shade50
                         : hasCodeBlock
                             ? Colors.grey.shade900
-                            : const Color(0xFFF1F8F5),
+                            : BrandColors.pageBg,
                 borderRadius: isUser
                     ? const BorderRadius.only(
                         topLeft: Radius.circular(16),
@@ -1351,7 +1352,7 @@ class _ChatPageState extends State<ChatPage> {
                   const SizedBox(height: 4),
                   Text(
                     DateFormat('HH:mm').format(message.timestamp),
-                    style: GoogleFonts.outfit(
+                    style: GoogleFonts.poppins(
                       color: isUser
                           ? Colors.white70
                           : hasCodeBlock
@@ -1376,7 +1377,7 @@ class _ChatPageState extends State<ChatPage> {
             const SizedBox(width: 8),
             CircleAvatar(
               radius: 18,
-              backgroundColor: const Color(0xFF1B5E20),
+              backgroundColor: BrandColors.tealDark,
               child: const Icon(
                 Icons.person_rounded,
                 size: 18,
@@ -1393,7 +1394,7 @@ class _ChatPageState extends State<ChatPage> {
     if (!hasCodeBlock) {
       return Text(
         content,
-        style: GoogleFonts.outfit(
+        style: GoogleFonts.poppins(
           color: isUser ? Colors.white : Colors.black87,
           fontSize: 15,
         ),
@@ -1458,7 +1459,7 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           CircleAvatar(
             radius: 16,
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.green.shade700,
             child: const Icon(
               Icons.smart_toy,
               size: 16,
@@ -1558,17 +1559,31 @@ class _ChatPageState extends State<ChatPage> {
       builder: (context, child) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: const Color(0xFF1B5E20),
+            backgroundColor: BrandColors.tealDark,
             foregroundColor: Colors.white,
             elevation: 1,
-            title: Text(
-              languageService.isBengali
-                  ? 'ই-দোস্তির সাথে চ্যাট'
-                  : 'Chat with mDosthi',
-              style: GoogleFonts.outfit(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+            title: Row(
+              children: [
+                const CircleAvatar(
+                  radius: 16,
+                  backgroundColor: Colors.white,
+                  backgroundImage: AssetImage('assets/icons/mdosthi-favicon.png'),
+                ),
+                const SizedBox(width: 10),
+                Flexible(
+                  child: Text(
+                    languageService.isBengali
+                        ? 'এম-দোস্তির সাথে চ্যাট'
+                        : 'Chat with mDosthi',
+                    overflow: TextOverflow.ellipsis,
+                    style: BrandTypography.heading(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 19,
+                    ),
+                  ),
+                ),
+              ],
             ),
             actions: [
               if (isSessionActive && isEnrolledInRCT)
@@ -1578,7 +1593,7 @@ class _ChatPageState extends State<ChatPage> {
                       color: Colors.white),
                   label: Text(
                     languageService.isBengali ? 'সেশন শেষ' : 'End Chat',
-                    style: GoogleFonts.outfit(
+                    style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
@@ -1588,7 +1603,7 @@ class _ChatPageState extends State<ChatPage> {
           ),
           body: isLoading
               ? const Center(
-                  child: CircularProgressIndicator(color: Color(0xFF1B5E20)))
+                  child: CircularProgressIndicator(color: BrandColors.teal))
               : !isEnrolledInRCT
                   ? _buildNotEnrolledView()
                   : errorMessage != null
@@ -1605,7 +1620,7 @@ class _ChatPageState extends State<ChatPage> {
                                   languageService.isBengali
                                       ? 'ত্রুটি ঘটেছে'
                                       : 'Chat Error',
-                                  style: GoogleFonts.outfit(
+                                  style: GoogleFonts.poppins(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -1616,7 +1631,7 @@ class _ChatPageState extends State<ChatPage> {
                                 ElevatedButton(
                                   onPressed: _initializeChat,
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF1B5E20),
+                                    backgroundColor: BrandColors.teal,
                                     foregroundColor: Colors.white,
                                   ),
                                   child: Text(languageService.isBengali
@@ -1642,14 +1657,14 @@ class _ChatPageState extends State<ChatPage> {
                                           Container(
                                             padding: const EdgeInsets.all(24),
                                             decoration: BoxDecoration(
-                                              color: const Color(0xFF1B5E20)
-                                                  .withOpacity(0.08),
+                                              color: BrandColors.teal
+                                                  .withOpacity(0.10),
                                               shape: BoxShape.circle,
                                             ),
                                             child: const Icon(
                                               Icons.smart_toy_rounded,
                                               size: 80,
-                                              color: Color(0xFF1B5E20),
+                                              color: BrandColors.teal,
                                             ),
                                           ),
                                           const SizedBox(height: 24),
@@ -1657,7 +1672,7 @@ class _ChatPageState extends State<ChatPage> {
                                             languageService.isBengali
                                                 ? 'mDosthi এর সাথে বার্তালাপ শুরু করুন'
                                                 : 'Start a conversation with mDosthi',
-                                            style: GoogleFonts.outfit(
+                                            style: GoogleFonts.poppins(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.grey.shade800,
@@ -1669,7 +1684,7 @@ class _ChatPageState extends State<ChatPage> {
                                             languageService.isBengali
                                                 ? 'আপনার যেকোনো স্বাস্থ্য জিজ্ঞাসার জন্য সাহায্য ও উত্তর পান'
                                                 : 'Get support and answers to your health questions',
-                                            style: GoogleFonts.outfit(
+                                            style: GoogleFonts.poppins(
                                               fontSize: 14,
                                               color: Colors.grey.shade500,
                                             ),
@@ -1686,14 +1701,14 @@ class _ChatPageState extends State<ChatPage> {
                                               languageService.isBengali
                                                   ? 'আলাপ শুরু করুন'
                                                   : 'Start Chat',
-                                              style: GoogleFonts.outfit(
+                                              style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15,
                                               ),
                                             ),
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor:
-                                                  const Color(0xFF1B5E20),
+                                                  BrandColors.teal,
                                               foregroundColor: Colors.white,
                                               padding:
                                                   const EdgeInsets.symmetric(
@@ -1720,26 +1735,26 @@ class _ChatPageState extends State<ChatPage> {
                                 Container(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 16, vertical: 10),
-                                  color: const Color(0xFFE8F5E9),
+                                  color: BrandColors.ice,
                                   child: Row(
                                     children: [
                                       const Icon(Icons.circle,
-                                          color: Color(0xFF2E7D32), size: 10),
+                                          color: BrandColors.tealDark, size: 10),
                                       const SizedBox(width: 8),
                                       Text(
                                         languageService.isBengali
                                             ? 'চ্যাট সক্রিয় রয়েছে'
                                             : 'Chat Active',
-                                        style: GoogleFonts.outfit(
+                                        style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.bold,
-                                          color: const Color(0xFF1B5E20),
+                                          color: BrandColors.navy,
                                           fontSize: 13,
                                         ),
                                       ),
                                       const Spacer(),
                                       Text(
                                         'ID: ${currentSessionId?.substring(0, 8) ?? ''}',
-                                        style: GoogleFonts.outfit(
+                                        style: GoogleFonts.poppins(
                                             fontSize: 11,
                                             color: Colors.grey.shade600),
                                       ),

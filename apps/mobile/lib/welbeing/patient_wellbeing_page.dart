@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/brand_theme.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../service/language_service.dart';
 
@@ -113,10 +114,10 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(bedtime ? 'Bedtime' : 'Wake up',
-                      style: GoogleFonts.outfit(fontSize: 12)),
+                      style: GoogleFonts.poppins(fontSize: 12)),
                   Text(value.isEmpty ? 'Choose time' : value,
                       overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.outfit(fontWeight: FontWeight.w700)),
+                      style: GoogleFonts.poppins(fontWeight: FontWeight.w700)),
                 ],
               ),
             ),
@@ -137,8 +138,8 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
       label: Text(label),
       selected: selected,
       onSelected: (_) => onSelected(),
-      selectedColor: const Color(0xFF1B5E20).withOpacity(0.14),
-      labelStyle: GoogleFonts.outfit(fontWeight: FontWeight.w600),
+      selectedColor: BrandColors.teal.withOpacity(0.14),
+      labelStyle: GoogleFonts.poppins(fontWeight: FontWeight.w600),
     );
   }
 
@@ -314,7 +315,7 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title,
-              style: GoogleFonts.outfit(
+              style: GoogleFonts.poppins(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                   color: Colors.grey.shade900)),
@@ -365,7 +366,7 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
             LanguageService().getText(
               _showSleep ? 'sleep_hygiene' : 'mood_activity',
             ),
-            style: GoogleFonts.outfit(fontWeight: FontWeight.w700),
+            style: GoogleFonts.poppins(fontWeight: FontWeight.w700),
           ),
         ),
         body: SafeArea(
@@ -401,21 +402,21 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 14, vertical: 12),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFE8F5E9),
+                          color: BrandColors.ice,
                           borderRadius: BorderRadius.circular(14),
                         ),
                         child: Row(
                           children: [
                             const Icon(Icons.hourglass_bottom_rounded,
-                                color: Color(0xFF2E7D32)),
+                                color: BrandColors.tealDark),
                             const SizedBox(width: 10),
-                            Text('Time asleep', style: GoogleFonts.outfit()),
+                            Text('Time asleep', style: GoogleFonts.poppins()),
                             const Spacer(),
                             Text(
                               _sleepDurationController.text.isEmpty
                                   ? 'Set both times'
                                   : _sleepDurationController.text,
-                              style: GoogleFonts.outfit(
+                              style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w700),
                             ),
                           ],
@@ -424,7 +425,7 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
                       const SizedBox(height: 12),
                       Text('How did you sleep?',
                           style:
-                              GoogleFonts.outfit(fontWeight: FontWeight.w700)),
+                              GoogleFonts.poppins(fontWeight: FontWeight.w700)),
                       const SizedBox(height: 6),
                       Wrap(
                         spacing: 8,
@@ -451,7 +452,7 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
                       const SizedBox(height: 12),
                       Text('How often did you wake?',
                           style:
-                              GoogleFonts.outfit(fontWeight: FontWeight.w700)),
+                              GoogleFonts.poppins(fontWeight: FontWeight.w700)),
                       const SizedBox(height: 6),
                       Wrap(
                         spacing: 8,
@@ -476,7 +477,7 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
                       const SizedBox(height: 12),
                       Text('Difficulty falling or staying asleep',
                           style:
-                              GoogleFonts.outfit(fontWeight: FontWeight.w700)),
+                              GoogleFonts.poppins(fontWeight: FontWeight.w700)),
                       const SizedBox(height: 6),
                       Wrap(
                         spacing: 8,
@@ -515,14 +516,14 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
                               label: const Text('Save Sleep Record'))),
                       const SizedBox(height: 12),
                       Text('Recent sleep history',
-                          style: GoogleFonts.outfit(
+                          style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w700,
                               color: Colors.grey.shade800)),
                       const SizedBox(height: 8),
                       if (_sleepRecords.isEmpty)
                         Text('No sleep records yet.',
                             style:
-                                GoogleFonts.outfit(color: Colors.grey.shade600))
+                                GoogleFonts.poppins(color: Colors.grey.shade600))
                       else
                         ..._sleepRecords.take(3).map((item) => Container(
                               margin: const EdgeInsets.only(bottom: 8),
@@ -536,19 +537,19 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text('${item['date']} • ${item['quality']}',
-                                      style: GoogleFonts.outfit(
+                                      style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w600)),
                                   Text(
                                       'Bedtime: ${item['bedTime']} • Wake: ${item['wakeUpTime']}',
-                                      style: GoogleFonts.outfit()),
+                                      style: GoogleFonts.poppins()),
                                   Text(
                                       'Duration: ${item['sleepDuration']} • Awakenings: ${item['awakenings']}',
-                                      style: GoogleFonts.outfit()),
+                                      style: GoogleFonts.poppins()),
                                   if ((item['notes'] ?? '')
                                       .toString()
                                       .isNotEmpty)
                                     Text('Notes: ${item['notes']}',
-                                        style: GoogleFonts.outfit(
+                                        style: GoogleFonts.poppins(
                                             color: Colors.grey.shade700)),
                                 ],
                               ),
@@ -576,9 +577,9 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
                             onSelected: (_) =>
                                 setState(() => _selectedMood = mood),
                             selectedColor:
-                                const Color(0xFF1B5E20).withOpacity(0.15),
+                                BrandColors.teal.withOpacity(0.15),
                             labelStyle:
-                                GoogleFonts.outfit(fontWeight: FontWeight.w600),
+                                GoogleFonts.poppins(fontWeight: FontWeight.w600),
                           );
                         }).toList(),
                       ),
@@ -612,14 +613,14 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
                               label: const Text('Save Mood'))),
                       const SizedBox(height: 12),
                       Text('Mood history',
-                          style: GoogleFonts.outfit(
+                          style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w700,
                               color: Colors.grey.shade800)),
                       const SizedBox(height: 8),
                       if (_moodRecords.isEmpty)
                         Text('No mood entries yet.',
                             style:
-                                GoogleFonts.outfit(color: Colors.grey.shade600))
+                                GoogleFonts.poppins(color: Colors.grey.shade600))
                       else
                         ..._moodRecords.take(3).map((item) => Container(
                               margin: const EdgeInsets.only(bottom: 8),
@@ -633,18 +634,18 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text('${item['date']} • ${item['mood']}',
-                                      style: GoogleFonts.outfit(
+                                      style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w600)),
                                   if ((item['intensity'] ?? '')
                                       .toString()
                                       .isNotEmpty)
                                     Text('Intensity: ${item['intensity']}',
-                                        style: GoogleFonts.outfit()),
+                                        style: GoogleFonts.poppins()),
                                   if ((item['notes'] ?? '')
                                       .toString()
                                       .isNotEmpty)
                                     Text('Notes: ${item['notes']}',
-                                        style: GoogleFonts.outfit(
+                                        style: GoogleFonts.poppins(
                                             color: Colors.grey.shade700)),
                                 ],
                               ),
@@ -709,14 +710,14 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
                               label: const Text('Add Activity'))),
                       const SizedBox(height: 12),
                       Text('Activities',
-                          style: GoogleFonts.outfit(
+                          style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w700,
                               color: Colors.grey.shade800)),
                       const SizedBox(height: 8),
                       if (_activities.isEmpty)
                         Text('No activities added yet.',
                             style:
-                                GoogleFonts.outfit(color: Colors.grey.shade600))
+                                GoogleFonts.poppins(color: Colors.grey.shade600))
                       else
                         ..._activities.take(4).map((activity) => Container(
                               margin: const EdgeInsets.only(bottom: 8),
@@ -736,16 +737,16 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
                                       children: [
                                         Text(
                                             '${activity['title']} • ${activity['category']}',
-                                            style: GoogleFonts.outfit(
+                                            style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w600)),
                                         Text(
                                             '${activity['date']} • ${activity['time']} • ${activity['duration']}',
-                                            style: GoogleFonts.outfit()),
+                                            style: GoogleFonts.poppins()),
                                         if ((activity['notes'] ?? '')
                                             .toString()
                                             .isNotEmpty)
                                           Text('Notes: ${activity['notes']}',
-                                              style: GoogleFonts.outfit(
+                                              style: GoogleFonts.poppins(
                                                   color: Colors.grey.shade700)),
                                       ],
                                     ),
@@ -776,14 +777,14 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
                           children: [
                             const SizedBox(height: 6),
                             Text(sectionTitle,
-                                style: GoogleFonts.outfit(
+                                style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w700,
                                     color: Colors.grey.shade800)),
                             const SizedBox(height: 6),
                             if (items.isEmpty)
                               Text(
                                   'No ${sectionTitle.toLowerCase()} activities.',
-                                  style: GoogleFonts.outfit(
+                                  style: GoogleFonts.poppins(
                                       color: Colors.grey.shade600))
                             else
                               ...items.map((item) => Container(
@@ -804,12 +805,12 @@ class _PatientWellbeingPageState extends State<PatientWellbeingPage> {
                                             children: [
                                               Text(
                                                   '${item['title']} • ${item['category']}',
-                                                  style: GoogleFonts.outfit(
+                                                  style: GoogleFonts.poppins(
                                                       fontWeight:
                                                           FontWeight.w600)),
                                               Text(
                                                   '${item['date']} • ${item['time']} • ${item['duration']}',
-                                                  style: GoogleFonts.outfit()),
+                                                  style: GoogleFonts.poppins()),
                                             ],
                                           ),
                                         ),

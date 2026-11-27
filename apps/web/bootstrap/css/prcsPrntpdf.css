@@ -3,26 +3,43 @@
     -webkit-print-color-adjust: exact;
     padding: 10px;
     font-size:12px !important;
+    font-family: 'Inter', sans-serif;
+    color: #0B3B78;
+}
+
+.mdosthi-doc-letterhead{
+    padding: 8px 14px;
+    margin-bottom: 10px;
+    border-bottom: 2.5px solid #138A4E;
+    background: #FFFFFF;
+}
+
+.mdosthi-doc-letterhead img{
+    height: 64px;
+    width: auto;
 }
 
 .title{
-	    font-size: 14px !important;
-    border: 1px solid #4daaf5;
+    font-size: 14px !important;
+    border: 1px solid #0B3B78;
+    border-left: 4px solid #138A4E;
     -webkit-print-color-adjust: exact;
-    color: #000;
+    color: #0B3B78;
+    background-color: #E0F7FA;
     font-weight: 600;
-    padding: 4px;
+    padding: 5px 8px;
     margin: 4px;
 }
 
 .title2{
     top:0px;
-	    font-size: 14px !important;
-    border: 1px solid #4daaf5;
+    font-size: 14px !important;
+    border: 1px solid #0B3B78;
+    border-left: 4px solid #138A4E;
     -webkit-print-color-adjust: exact;
-    color: #000;
+    color: #0B3B78;
     font-weight: 600;
-    padding: 4px;
+    padding: 5px 8px;
     margin: 4px;
 }
 .diagn,.advice,.medinice,.apptdate{
@@ -73,7 +90,7 @@ table{
 	.pat-info-prcs,.pres-heading,.pres-heading2,.chiefComp,.clinicalNotes{display:block !important;}
 
 
-	.dispres fieldset{border: 1px solid #5ba9ec !important;}
+	.dispres fieldset{border: 1px solid #0B3B78 !important;}
 	.list-group{margin-bottom:0px;}
 	.dispres > div{margin-bottom:12px;}
 	.hospitalName-div{display:none;}

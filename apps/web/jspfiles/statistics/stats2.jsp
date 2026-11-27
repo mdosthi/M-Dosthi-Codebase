@@ -9,7 +9,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/images/icons/imedix.ico"/>
+	<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/images/icons/mdosthi-favicon-32.png?v=4"/>
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/toastr.css">
 	<!--<link rel="stylesheet" href="../bootstrap/jquery.dataTables.min.css">-->
@@ -93,10 +93,10 @@
 		}
 		.ui-widget-content.ui-dialog
 		{
-		border: 3px solid #337ab7;
+		border: 3px solid #138A4E;
 		}
 		.ui-dialog-titlebar {
-			background:#337ab7;
+			background:#138A4E;
 			color: #fff;
 		}
 		.ui-widget.ui-widget-content{z-index:1055 !important;}

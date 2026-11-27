@@ -143,7 +143,7 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/toastr.css">		
 	<!--<link rel="stylesheet" href="../bootstrap/jquery.dataTables.min.css">-->
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/dataTables.bootstrap.min.css">
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=6.0">
 
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/jquery-ui.min.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/vc/vc.css?"+n>
@@ -166,16 +166,16 @@
 	    width: 20px;
 		height: 16px;
 	}
-	.left>div.active{border:2px solid #607D8B;background: #eef;color: #333;}	
+	.left>div.active{border:2px solid var(--color-teal, #00BFA6);background: var(--color-ice, #E0F7FA);color: #333;}	
 	.pat-home .main-body, .pat-home .main-body>div{padding: 15px !important;}
 	.header-block {text-align:center;}
 	.header-block .req-const {margin: 20px 0;}
 	.default-pat-home{
-		border: 1px solid #337ab7;
+		border: 1px solid var(--color-teal, #00BFA6);
 		margin: 20px;
 		padding: 20px;
 		color: #ffffff;
-		background: #337ab7;		
+		background: var(--color-navy, #0B3B78);		
 	}
 </style>
 
@@ -376,7 +376,7 @@ $(".req-const-btn").click(function(){
         <div class="row header">
             
             <div class="col-sm-3">
-                <a href = "javascript:window.location.reload(true)" onclick ><img class="img-responsive logo" src="<%=request.getContextPath()%>/images/imlogo.jpg" /></a>
+                <a href = "javascript:window.location.reload(true)" onclick class="brand-link"><img class="header-horiz-logo" src="<%=request.getContextPath()%>/images/mdosthi-horizontal-logo.png" alt="mDosthi" style="height:46px; max-height:46px; width:auto; max-width:190px; object-fit:contain;" /></a>
             </div>
             
             <div class="col-sm-8 header-block">
@@ -514,7 +514,7 @@ $(".req-const-btn").click(function(){
 		text-decoration: none;
 	}
 	ul.doctors li a.active{
-		background-color: #5b7ba8;
+		background-color: var(--color-navy, #0B3B78);
 		color: white;
 	}
 	</style>

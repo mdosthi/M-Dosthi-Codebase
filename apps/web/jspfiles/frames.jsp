@@ -1,6 +1,6 @@
 <%@page contentType="text/html" import="imedix.layout,java.io.*" %>
 <head>
-	<LINK REL="SHORTCUT ICON" HREF="../images/icon.ico"> 
+	<LINK REL="SHORTCUT ICON" HREF="../images/icons/mdosthi-favicon.png"> 
 </head>
 <% 	
 

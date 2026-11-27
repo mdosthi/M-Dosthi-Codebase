@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login_page.dart';
+import 'theme/brand_theme.dart';
 import 'backend/database_helper.dart';
 import 'surveyor/survery_page_util.dart';
 import 'admin/admin_page_util.dart';
@@ -36,10 +37,11 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return const AppTimeTracker(
+    return AppTimeTracker(
       child: MaterialApp(
-        title: 'Login App',
-        home: SplashScreen(),
+        title: 'mDosthi',
+        theme: BrandTheme.lightTheme,
+        home: const SplashScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );
@@ -231,21 +233,20 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     // Brief splash UI shown while checking / refreshing session
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            CircularProgressIndicator(),
-            SizedBox(height: 20),
-            Text(
-              'mDosthi',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(211, 2, 4, 138),
-              ),
+      body: Container(
+        decoration: const BoxDecoration(gradient: BrandColors.softPageGradient),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 28),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                MdosthiPrimaryLogo(maxWidth: 300),
+                SizedBox(height: 28),
+                CircularProgressIndicator(color: BrandColors.teal),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../theme/brand_theme.dart';
 import 'wellbeing_service.dart';
 
 class _ScreeningHistoryColors {
-  static const primary = Color(0xFF226A27);
-  static const deepGreen = Color(0xFF123F16);
-  static const page = Color(0xFFEDF5ED);
-  static const line = Color(0xFFDCE6DD);
-  static const softGreen = Color(0xFFE5F1E5);
-  static const ink = Color(0xFF173B22);
+  static const primary = BrandColors.teal;
+  static const deepGreen = BrandColors.tealDark;
+  static const page = BrandColors.pageBg;
+  static const line = BrandColors.borderSubtle;
+  static const softGreen = BrandColors.ice;
+  static const ink = BrandColors.navy;
 }
 
 class ScreeningScheduleCard extends StatelessWidget {
@@ -472,10 +473,10 @@ class _PatientScreeningReportPageState
       primary: _ScreeningHistoryColors.primary,
       onPrimary: Colors.white,
       secondary: _ScreeningHistoryColors.deepGreen,
-      tertiary: const Color(0xFF3D8050),
+      tertiary: BrandColors.teal,
       surface: Colors.white,
       onSurface: _ScreeningHistoryColors.ink,
-      onSurfaceVariant: const Color(0xFF4B5B4C),
+      onSurfaceVariant: BrandColors.mutedInk,
       outlineVariant: _ScreeningHistoryColors.line,
       primaryContainer: _ScreeningHistoryColors.softGreen,
       onPrimaryContainer: _ScreeningHistoryColors.deepGreen,
@@ -537,20 +538,38 @@ class _PatientScreeningReportPageState
                 ? const Center(child: CircularProgressIndicator())
                 : RefreshIndicator(
                     onRefresh: () => _loadHistory(),
-                    child: ListView(
-                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 28),
-                      children: [
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 920),
+                        child: ListView(
+                          padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 12),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                border: const Border(
+                                  bottom: BorderSide(
+                                      color: BrandColors.teal, width: 2.5),
+                                ),
+                              ),
+                              child: const Align(
+                                alignment: Alignment.centerLeft,
+                                child: MdosthiHorizontalLogo(
+                                  height: 36,
+                                  maxWidth: 160,
+                                  alignment: Alignment.centerLeft,
+                                ),
+                              ),
+                            ),
                         Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [
-                                _ScreeningHistoryColors.deepGreen,
-                                _ScreeningHistoryColors.primary,
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
+                            gradient: BrandColors.ctaGradient,
                             borderRadius: BorderRadius.circular(22),
                           ),
                           child: Column(
@@ -816,6 +835,8 @@ class _PatientScreeningReportPageState
                             ),
                           ),
                       ],
+                    ),
+                      ),
                     ),
                   ),
           );

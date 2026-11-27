@@ -30,5 +30,5 @@ for %%R in ("%CATALINA_HOME%\.." "%CATALINA_HOME%\..\..") do (
 if defined MDOSTHI_ROOT (
   set "MDOSTHI_DOCBASE=%MDOSTHI_ROOT:\=/%/apps/web"
   if not exist "%CATALINA_BASE%\conf\Catalina\localhost" mkdir "%CATALINA_BASE%\conf\Catalina\localhost"
-  >"%CATALINA_BASE%\conf\Catalina\localhost\M-Dosthi.xml" echo ^<Context docBase="%MDOSTHI_DOCBASE%" reloadable="false" /^>
+  >"%CATALINA_BASE%\conf\Catalina\localhost\mDosthi.xml" echo ^<Context docBase="%MDOSTHI_DOCBASE%" reloadable="false" /^>
 )

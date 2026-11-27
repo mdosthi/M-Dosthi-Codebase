@@ -16,18 +16,18 @@ table {
 .tablea {
 		text-align:left;
 		font-weight: bold;
-		color:#0000FF;
-		border: 2px solid #8ABAEA;
+		color:#0D6B44;
+		border: 2px solid #7CC9A1;
 		}
 		
 
 .tableb {
 		font-family: serif;
 		font-weight: bold;
-		color:#0000FF;
-		background-color: #F6FAFE;
+		color:#0D6B44;
+		background-color: #F3FBF7;
 		border-collapse: collapse;
-		border: 2px solid #8ABAEA;
+		border: 2px solid #7CC9A1;
 		}
 
 h1,h6,h3{color:RED;
@@ -53,23 +53,23 @@ TABLE.tabh
      font-family: Tahoma, Verdana, sans-serif;
      font-size:10pt;
      border-style:solid;
-     border-color:#66CCFF;
+     border-color:#0097A7;
      border-width:1px;
 	
   }
 
 TR.tab3
   { 
-	background-color:#E4F0FE;
+	background-color:#E9F8F0;
 	border-style:solid;
     border-width:1px;
-	color:#330066;
+	color:#0B3B78;
 	font-weight: normal;
   }
   
   TR.tab4
   { 
-	background-color:#F2F7FE;
+	background-color:#F3FBF7;
 	border-style:solid;
     border-width:1px;
 	color:BLUE;

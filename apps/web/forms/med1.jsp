@@ -166,7 +166,7 @@ return districtList;
 }
 .dialog-btn-primary:hover,.dialog-btn-primary:focus{
 	color: #fff;
-	background-color: #337ab7;
+	background-color: #138A4E;
 	border-color: #2e6da4;
 	    outline: none;
 }
