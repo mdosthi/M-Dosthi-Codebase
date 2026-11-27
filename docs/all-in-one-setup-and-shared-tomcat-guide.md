@@ -104,10 +104,10 @@ Start-Service MySQL80
 
 ### Step 3.1: Create the `eDosthi` and `mDosthi` Schemas
 ```bash
-mysql --host=127.0.0.1 --user=YOUR_DB_USER --password -e "
+mysql --host=127.0.0.1 --user=YOUR_DB_USER -p <<'SQL'
 CREATE DATABASE IF NOT EXISTS eDosthi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE DATABASE IF NOT EXISTS mDosthi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-"
+SQL
 ```
 
 ### Step 3.2: Normalize Backup Definer and Import into `eDosthi` and `mDosthi`
@@ -120,20 +120,20 @@ LC_ALL=C sed 's/DEFINER=`root`@`%`/DEFINER=`root`@`localhost`/g' \
   > /tmp/eDosthi_backup_clean.sql
 
 # 2. Import backup into eDosthi database
-mysql --host=127.0.0.1 --user=YOUR_DB_USER --password eDosthi < /tmp/eDosthi_backup_clean.sql
+mysql --host=127.0.0.1 --user=YOUR_DB_USER --database=eDosthi -p < /tmp/eDosthi_backup_clean.sql
 
 # 3. Import backup into mDosthi database
-mysql --host=127.0.0.1 --user=YOUR_DB_USER --password mDosthi < /tmp/eDosthi_backup_clean.sql
+mysql --host=127.0.0.1 --user=YOUR_DB_USER --database=mDosthi -p < /tmp/eDosthi_backup_clean.sql
 
 # 4. Apply M-Dosthi screening & monitoring migrations to mDosthi
 for f in CodeBase/M-Dosthi-Codebase/database/migrations/*.sql; do
-  mysql --host=127.0.0.1 --user=YOUR_DB_USER --password mDosthi < "$f"
+  mysql --host=127.0.0.1 --user=YOUR_DB_USER --database=mDosthi -p < "$f"
 done
 
 # 5. Apply Spring Boot API pipeline queue & complete longitudinal schema
-mysql --host=127.0.0.1 --user=YOUR_DB_USER --password mDosthi \
+mysql --host=127.0.0.1 --user=YOUR_DB_USER --database=mDosthi -p \
   < CodeBase/M-Dosthi-Codebase/services/api/src/main/resources/db/manual/V20261029_01__pipeline_job_queue.sql
-mysql --host=127.0.0.1 --user=YOUR_DB_USER --password mDosthi \
+mysql --host=127.0.0.1 --user=YOUR_DB_USER --database=mDosthi -p \
   < CodeBase/M-Dosthi-Codebase/services/api/src/main/resources/db/manual/V20261113_01__complete_api_schema.sql
 ```
 

@@ -4,8 +4,28 @@
 !.env.example
 *.keystore
 *.jks
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+credentials.json
+service-account*.json
+.mcp.json
 services/legacy/runtime/gblinfo.inf
 apps/web/config.info
+apps/web/WEB-INF/classes/mail.properties
+apps/web/jspfiles/whatsappConfig.jsp
+apps/web/jspfiles/erpPatient.json
+tools/tomcat9/bin/config.info
+*.pid
+onnect
+cookies.txt
+.claude/settings.local.json
+**/.claude/settings.local.json
+*.dump
+*.sql.gz
 
 # Local-only material: runtimes, backups, data, old copies (keep bundled M-Dosthi Tomcat 9)
 /tools/*
@@ -60,6 +80,8 @@ services/legacy/runtime/SystemLog/
 services/legacy/runtime/GenSqlLog/
 services/legacy/runtime/temp/
 services/legacy/runtime/Backup/
+services/legacy/runtime/runtime-data/
+services/legacy/runtime/@PROJECT_ROOT@/
 
 # Python
 .venv/
@@ -74,6 +96,8 @@ build/
 dist/
 services/annotate/annotate_logs/
 services/annotate/data/logs/
+services/annotate/examples/data/logs/
+services/annotate/examples/llm_logs/
 
 # Flutter / Dart
 apps/mobile/.dart_tool/

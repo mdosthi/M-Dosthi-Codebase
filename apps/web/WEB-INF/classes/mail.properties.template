@@ -1,0 +1,13 @@
+mailRelayServer=127.0.0.1
+mailPort=25
+useSSL=False
+useAuthentication=True
+mailedByUser=your-mail-user@example.com
+mailedByUserPassword=change-me
+smsURL=https://your-sms-gateway.example.com/sendsms
+smsUser=your-sms-user
+smsPassword=change-me
+smsSender=SENDER
+useProxy=0
+proxyIP=x.x.x.x
+proxyPort=0

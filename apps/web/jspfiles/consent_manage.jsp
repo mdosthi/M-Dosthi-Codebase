@@ -28,17 +28,21 @@
         return;
     }
 
-    // Default connection parameters (with fallbacks)
-    String dbURL = "jdbc:mysql://localhost:3306/M-Dosthi_merged?useUnicode=true&characterEncoding=UTF-8";
-    String dbUser = "root";
-    String dbPass = "Soumya@1234";
+    // Default connection parameters (with env/gblinfo.inf overrides)
+    String dbURL = System.getenv("LEGACY_DB_URL") != null ? System.getenv("LEGACY_DB_URL") : "jdbc:mysql://localhost:3306/mDosthi?useUnicode=true&characterEncoding=UTF-8";
+    String dbUser = System.getenv("LEGACY_DB_USERNAME") != null ? System.getenv("LEGACY_DB_USERNAME") : "root";
+    String dbPass = System.getenv("LEGACY_DB_PASSWORD") != null ? System.getenv("LEGACY_DB_PASSWORD") : "";
     String dbDriver = "com.mysql.cj.jdbc.Driver";
 
     // Dynamically load database configuration from gblinfo.inf if available
     try {
         String realPath = request.getRealPath("/");
         File webappDir = new File(realPath);
-        File blInf = new File(webappDir.getParentFile().getParentFile(), "M-Dosthi-BL/gblinfo.inf");
+        File repoRoot = webappDir.getParentFile().getParentFile();
+        File blInf = new File(repoRoot, "services/legacy/runtime/gblinfo.inf");
+        if (!blInf.exists()) {
+            blInf = new File(repoRoot, "M-Dosthi-BL/gblinfo.inf");
+        }
         if (!blInf.exists()) {
             blInf = new File("M-Dosthi-BL/gblinfo.inf");
         }

@@ -224,9 +224,9 @@ Database snapshots/backups are intentionally not distributed in Git. Obtain the 
 Example import commands (the password is prompted, not placed in shell history):
 
 ```bash
-mysql --host=127.0.0.1 --user=YOUR_USER --password mDosthi < /secure/path/to/approved-api-dump.sql
-mysql --host=127.0.0.1 --user=YOUR_USER --password mDosthi < /secure/path/to/approved-legacy-dump.sql
-mysql --host=127.0.0.1 --user=YOUR_USER --password mDosthi < services/api/src/main/resources/db/manual/V20261029_01__pipeline_job_queue.sql
+mysql --host=127.0.0.1 --user=YOUR_USER --database=mDosthi -p < /secure/path/to/approved-api-dump.sql
+mysql --host=127.0.0.1 --user=YOUR_USER --database=mDosthi -p < /secure/path/to/approved-legacy-dump.sql
+mysql --host=127.0.0.1 --user=YOUR_USER --database=mDosthi -p < services/api/src/main/resources/db/manual/V20261029_01__pipeline_job_queue.sql
 ```
 
 Only import schemas you actually have and intend to use. Do not assume the API and legacy application can share a database simply because both use MySQL; confirm the schema and tables in the supplied dump first.

@@ -17,7 +17,7 @@ String PACSurl = (pinfo.PACSurl);
 String showViewExt = "http://10.5.29.87:2015/ShowViewerExt.aspx?StudyUID=1.3.12.2.1107.5.2.10.17467.30000009041405495870300000001" + "&uid=" + penc.PACSEncryptionString(uid,pass) + "&pwd=" + penc.PACSEncryptionString(uid,pass);
 String viewReport = "http://10.5.29.87:2015/ViewReportExt.aspx?StudyUID=1.3.12.2.1107.5.2.10.17467.30000009041405495870300000007"  + "&uid=" + penc.PACSEncryptionString(uid,pass) + "&pwd=" + penc.PACSEncryptionString(uid,pass);
 String viewNotes = "http://10.5.29.87:2015/ViewNotesExt.aspx?StudyUID=1.3.12.2.1107.5.2.10.17467.30000009041405495870300000007" + "&uid=" + penc.PACSEncryptionString(uid,pass) + "&pwd=" + penc.PACSEncryptionString(uid,pass);
-String tt = "http://10.5.29.87:2015/ViewNotesExt.aspx?StudyUID=1.3.12.2.1107.5.2.10.17467.30000009041405495870300000007&uid=9vmxeQvy/Lk=&pwd=9vmxeQvy/Lk=";
+String tt = "http://10.5.29.87:2015/ViewNotesExt.aspx?StudyUID=1.3.12.2.1107.5.2.10.17467.30000009041405495870300000007&uid=" + penc.PACSEncryptionString(uid,pass) + "&pwd=" + penc.PACSEncryptionString(uid,pass);
 %>
 
 <%!

@@ -99,6 +99,8 @@ render() { # template -> target (only if target is missing)
 }
 render services/legacy/runtime/gblinfo.inf.template services/legacy/runtime/gblinfo.inf
 render apps/web/config.info.template apps/web/config.info
+render apps/web/WEB-INF/classes/mail.properties.template apps/web/WEB-INF/classes/mail.properties
+render apps/web/jspfiles/whatsappConfig.jsp.template apps/web/jspfiles/whatsappConfig.jsp
 
 DOCBASE_XML="$(printf '%s' "$ROOT/apps/web" | sed 's/&/\&amp;/g; s/"/\&quot;/g; s/</\&lt;/g; s/>/\&gt;/g')"
 EXPECTED_CONTEXT="<Context docBase=\"$DOCBASE_XML\" reloadable=\"false\" />"

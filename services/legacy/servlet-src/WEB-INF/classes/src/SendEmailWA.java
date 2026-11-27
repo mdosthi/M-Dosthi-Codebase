@@ -1,4 +1,5 @@
 package imedixservlets;
+
 //iMediX_IN
 import java.io.*;
 import java.util.*;
@@ -95,7 +96,7 @@ public class SendEmailWA extends HttpServlet {
       String host = mailRelayServer; //"10.3.103.129";
 
       String senderName = from;
-      String senderPassword = mailedByUserPassword; //"TeleMed@4321";
+      String senderPassword = mailedByUserPassword;
 
       // Get system properties
       properties2 = System.getProperties();
@@ -176,4 +177,4 @@ public class SendEmailWA extends HttpServlet {
 
       }
    }
-} 
+}

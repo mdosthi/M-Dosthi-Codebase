@@ -66,9 +66,9 @@ public class httpUploadFromAppl{
 		try{
 		
 		System.setProperty("javax.net.ssl.trustStore", "D:/iMediX Business Logic/server/imedixserver.keystore");
-		System.setProperty("javax.net.ssl.trustStorePassword",  "teleadmin12");
+		System.setProperty("javax.net.ssl.trustStorePassword", System.getenv("SSL_TRUSTSTORE_PASSWORD") != null ? System.getenv("SSL_TRUSTSTORE_PASSWORD") : "");
 		System.setProperty("javax.net.ssl.keyStore", "D:/iMediX Business Logic/server/imedixserver.keystore");
-		System.setProperty("javax.net.ssl.keyStorePassword",  "teleadmin12");
+		System.setProperty("javax.net.ssl.keyStorePassword", System.getenv("SSL_KEYSTORE_PASSWORD") != null ? System.getenv("SSL_KEYSTORE_PASSWORD") : "");
 		System.setProperty("java.protocol.handler.pkgs","com.sun.net.ssl.internal.www.protocol");
 		System.setProperty("javax.net.debug","ssl,handshake");
 		

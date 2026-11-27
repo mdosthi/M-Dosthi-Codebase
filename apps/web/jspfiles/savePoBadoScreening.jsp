@@ -87,7 +87,7 @@
 
         String dbUrl = dbValue("gbldburl", "jdbc:mysql://localhost:3306/M-Dosthi_merged?useUnicode=true&characterEncoding=UTF-8", request);
         String dbUser = dbValue("gbldbusername", "root", request);
-        String dbPassword = dbValue("gbldbpasswd", "Soumya@1234", request);
+        String dbPassword = dbValue("gbldbpasswd", "", request);
         String dbDriver = dbValue("gbldbjdbccriver", "com.mysql.cj.jdbc.Driver", request);
         Class.forName(dbDriver);
         connection = DriverManager.getConnection(dbUrl + (dbUrl.contains("?") ? "&" : "?") + "useSSL=false", dbUser, dbPassword);
