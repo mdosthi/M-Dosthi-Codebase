@@ -105,12 +105,13 @@ EXPECTED_CONTEXT="<Context docBase=\"$DOCBASE_XML\" reloadable=\"false\" />"
 
 write_context_descriptor() {
   target_tomcat="$1"
-  descriptor="$target_tomcat/conf/Catalina/localhost/M-Dosthi.xml"
-  if [ -f "$descriptor" ] && [ "$(tr -d '\r\n' < "$descriptor")" = "$EXPECTED_CONTEXT" ]; then
-    return 0
-  fi
   mkdir -p "$target_tomcat/conf/Catalina/localhost"
-  printf '%s\n' "$EXPECTED_CONTEXT" > "$descriptor"
+  for context_name in M-Dosthi mDosthi; do
+    descriptor="$target_tomcat/conf/Catalina/localhost/$context_name.xml"
+    if [ ! -f "$descriptor" ] || [ "$(tr -d '\r\n' < "$descriptor")" != "$EXPECTED_CONTEXT" ]; then
+      printf '%s\n' "$EXPECTED_CONTEXT" > "$descriptor"
+    fi
+  done
 }
 
 # Always configure M-Dosthi's own individual Tomcat
@@ -171,6 +172,6 @@ check flutter "only for apps/mobile"
 echo "Configured M-Dosthi Individual Tomcat: $INDIVIDUAL_TOMCAT_HOME (and $ROOT/Tomcat9)"
 if [ -n "$SHARED_TOMCAT_HOME" ]; then
   echo "Configured M-Dosthi in Shared Tomcat:  $TOMCAT_HOME"
-  echo "Restart that Shared Tomcat to load the /M-Dosthi context, or run scripts/legacy.sh --individual to use M-Dosthi's own Tomcat."
+  echo "Restart that Shared Tomcat to load the /mDosthi context, or run scripts/legacy.sh --individual to use M-Dosthi's own Tomcat."
 fi
 echo "Done. See docs/setup.md for the next steps."

@@ -293,11 +293,11 @@ Commands (pass `--individual` [default] or `--shared` / `SHARED_TOMCAT_HOME` on 
 | `scripts/legacy.sh run` | Builds and restarts the stack; with `--shared` / `SHARED_TOMCAT_HOME`, leaves Shared Tomcat running and restarts only M-Dosthi RMI. |
 | `scripts/legacy.sh status` | Shows live PID and port status for M-Dosthi RMI, Individual Tomcat (`:8081`), and (with `--shared`) Shared Tomcat (`:8080`). |
 
-The Individual Tomcat defaults to `http://localhost:8081/M-Dosthi/` (shutdown port `8006`, configurable via `TOMCAT_HTTP_PORT` / `TOMCAT_SHUTDOWN_PORT`), while Shared Tomcat typically uses `http://localhost:8080/M-Dosthi/`. Both default M-Dosthi's RMI port (`blport`) to `1100`. Check the ports and stop any conflicting services before starting.
+The Individual Tomcat defaults to `http://localhost:8081/mDosthi/` (shutdown port `8006`, configurable via `TOMCAT_HTTP_PORT` / `TOMCAT_SHUTDOWN_PORT`), while Shared Tomcat typically uses `http://localhost:8080/mDosthi/`. The setup also keeps `/M-Dosthi/` as a compatibility alias. Both default M-Dosthi's RMI port (`blport`) to `1100`. Check the ports and stop any conflicting services before starting.
 
 ### Run M-Dosthi in an existing Tomcat 9
 
-Use this workflow when eDosthi already runs in Tomcat 9 and you want M-Dosthi served by the same Tomcat instance as well as (or instead of) M-Dosthi's Individual Tomcat, without changing eDosthi application source. `SHARED_TOMCAT_HOME` (or `--shared` / `-Mode shared`) must point to the Tomcat 9 installation directory (the directory containing `bin/`, `conf/`, and `lib/`). The setup script adds only `conf/Catalina/localhost/M-Dosthi.xml` to that Tomcat and points it at this checkout's `apps/web` (while also configuring M-Dosthi's Individual Tomcat in `tools/tomcat9`); it does not edit eDosthi source or its application files. If eDosthi's Tomcat installation is inside its repository, this adds a Tomcat deployment descriptor there; use a Tomcat installation outside that repository if you need to keep every file in it untouched.
+Use this workflow when eDosthi already runs in Tomcat 9 and you want M-Dosthi served by the same Tomcat instance as well as (or instead of) M-Dosthi's Individual Tomcat, without changing eDosthi application source. `SHARED_TOMCAT_HOME` (or `--shared` / `-Mode shared`) must point to the Tomcat 9 installation directory (the directory containing `bin/`, `conf/`, and `lib/`). The setup script adds `mDosthi.xml` and the compatibility descriptor `M-Dosthi.xml` to that Tomcat, both pointing to this checkout's `apps/web` (while also configuring M-Dosthi's Individual Tomcat in `tools/tomcat9`); it does not edit eDosthi source or its application files. If eDosthi's Tomcat installation is inside its repository, this adds Tomcat deployment descriptors there; use a Tomcat installation outside that repository if you need to keep every file in it untouched.
 
 Linux/macOS or Git Bash:
 
@@ -313,9 +313,9 @@ $env:SHARED_TOMCAT_HOME = 'C:\path\to\tomcat9'
 powershell -ExecutionPolicy Bypass -File scripts/setup.ps1 -Mode shared
 ```
 
-Setup writes the M-Dosthi context descriptor into both M-Dosthi's Individual Tomcat (`tools/tomcat9`) and the shared Tomcat configuration. Configure the generated local files and build the web application before restarting the shared Tomcat to deploy `/M-Dosthi`; do not use M-Dosthi's script to restart or stop that Tomcat:
+Setup writes both `/mDosthi` and compatibility `/M-Dosthi` context descriptors into M-Dosthi's Individual Tomcat (`tools/tomcat9`) and the shared Tomcat configuration. Configure the generated local files and build the web application before restarting the shared Tomcat to deploy `/mDosthi`; do not use M-Dosthi's script to restart or stop that Tomcat:
 
-- In `apps/web/config.info`, set `gblhome` to the externally reachable M-Dosthi URL (`http://localhost:8080/M-Dosthi` for Shared Tomcat, `http://localhost:8081/M-Dosthi` for Individual Tomcat). Set `gbltelemedix` to `/M-Dosthi`.
+- In `apps/web/config.info`, set `gblhome` to the externally reachable M-Dosthi URL (`http://localhost:8080/mDosthi` for Shared Tomcat, `http://localhost:8081/mDosthi` for Individual Tomcat). Set `gbltelemedix` to `/mDosthi`.
 - In **both** `apps/web/config.info` and `services/legacy/runtime/gblinfo.inf`, set `blport` to the same unused RMI port (default `1100`; override at setup with `LEGACY_RMI_PORT`). Ensure firewall rules permit the selected port as required. `scripts/legacy.sh start` and `scripts/legacy.ps1 start` check that the two configured port values match.
 - Confirm M-Dosthi's DB credentials, temp/log paths, and integrations are configured for its intended environment. These are separate from the shared Tomcat and should not be assumed to match eDosthi's.
 
@@ -328,7 +328,7 @@ scripts/legacy.sh build --shared
 scripts/legacy.sh start --shared
 ```
 
-`scripts/legacy.sh stop` stops only the M-Dosthi RMI process in shared-Tomcat mode. The script tracks its own RMI process by PID so it does not terminate eDosthi's service. The servlet build uses the shared Tomcat's `lib/servlet-api.jar`. If the legacy RMI service was started by an older script version and has no M-Dosthi PID file, stop that known M-Dosthi process once before using the updated script; do not terminate Java processes by matching the shared jar name. The web UI should be available at the `gblhome` URL, commonly `http://localhost:8080/M-Dosthi/` for local testing.
+`scripts/legacy.sh stop` stops only the M-Dosthi RMI process in shared-Tomcat mode. The script tracks its own RMI process by PID so it does not terminate eDosthi's service. The servlet build uses the shared Tomcat's `lib/servlet-api.jar`. If the legacy RMI service was started by an older script version and has no M-Dosthi PID file, stop that known M-Dosthi process once before using the updated script; do not terminate Java processes by matching the shared jar name. The web UI should be available at the `gblhome` URL, commonly `http://localhost:8080/mDosthi/` for local testing.
 
 The Spring Boot API is not deployed inside Tomcat 9; it remains a separate process on its configured port. The Flutter/API workflow is independent of this shared JSP deployment.
 
@@ -363,5 +363,5 @@ Read [the annotation package README](../services/annotate/README.md) for support
 - **Flutter web asset manifest is missing:** stop the stale Flutter process, run `flutter pub get`, then start Flutter again from `apps/mobile` and open the new URL it prints.
 - **`JDK 11 or later with javac required`:** set `JAVA_HOME` to a JDK installation. The legacy build uses dynamic RMI stubs and does not invoke `rmic`.
 - **Tomcat or RMI port is occupied:** inspect listeners on the configured HTTP port and the RMI port in both M-Dosthi config files. For a shared Tomcat, leave Tomcat running and choose an unused M-Dosthi RMI port. Do not kill unrelated Java processes indiscriminately.
-- **M-Dosthi does not appear in the shared Tomcat:** confirm `SHARED_TOMCAT_HOME` points at the right Tomcat 9 installation, that `conf/Catalina/localhost/M-Dosthi.xml` points to the M-Dosthi `apps/web` directory, and that Tomcat was restarted after setup.
+- **M-Dosthi does not appear in the shared Tomcat:** confirm `SHARED_TOMCAT_HOME` points at the right Tomcat 9 installation, that `conf/Catalina/localhost/mDosthi.xml` points to the M-Dosthi `apps/web` directory, and that Tomcat was restarted after setup.
 - **Legacy rebuild errors for absent classes:** see the clean-checkout limitation above; local ignored build output may have hidden the missing artifact.

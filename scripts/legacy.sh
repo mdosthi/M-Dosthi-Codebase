@@ -117,14 +117,15 @@ JAVA_BIN="$JAVA_HOME/bin/java"
 
 ensure_context_descriptor() {
   target_tomcat="$1"
-  descriptor="$target_tomcat/conf/Catalina/localhost/M-Dosthi.xml"
   docbase_xml="$(printf '%s' "$ROOT/apps/web" | sed 's/&/\&amp;/g; s/"/\&quot;/g; s/</\&lt;/g; s/>/\&gt;/g')"
   expected="<Context docBase=\"$docbase_xml\" reloadable=\"false\" />"
-  if [ -f "$descriptor" ] && [ "$(tr -d '\r\n' < "$descriptor")" = "$expected" ]; then
-    return 0
-  fi
   mkdir -p "$target_tomcat/conf/Catalina/localhost"
-  printf '%s\n' "$expected" > "$descriptor"
+  for context_name in M-Dosthi mDosthi; do
+    descriptor="$target_tomcat/conf/Catalina/localhost/$context_name.xml"
+    if [ ! -f "$descriptor" ] || [ "$(tr -d '\r\n' < "$descriptor")" != "$expected" ]; then
+      printf '%s\n' "$expected" > "$descriptor"
+    fi
+  done
 }
 
 configure_individual_tomcat_ports() {
@@ -249,8 +250,8 @@ start() {
   fi
 
   if [ -n "$SHARED_TOMCAT_HOME" ]; then
-    [ -f "$TOMCAT/conf/Catalina/localhost/M-Dosthi.xml" ] || {
-      echo "Missing shared Tomcat context descriptor ($TOMCAT/conf/Catalina/localhost/M-Dosthi.xml). Run scripts/setup.sh --shared first." >&2
+    [ -f "$TOMCAT/conf/Catalina/localhost/mDosthi.xml" ] || {
+      echo "Missing shared Tomcat context descriptor ($TOMCAT/conf/Catalina/localhost/mDosthi.xml). Run scripts/setup.sh --shared first." >&2
       exit 1
     }
   else
@@ -285,10 +286,10 @@ start() {
 
   PORT="$(grep -v '<!--' "$TOMCAT/conf/server.xml" | grep -oE '<Connector port="[0-9]+" protocol="HTTP/1.1"' | grep -oE '[0-9]+' | head -1)"
   if [ -n "$SHARED_TOMCAT_HOME" ]; then
-    echo "Started. Web UI: http://localhost:${PORT:-8080}/M-Dosthi/ (RMI port $SERVER_RMI_PORT)"
+    echo "Started. Web UI: http://localhost:${PORT:-8080}/mDosthi/ (RMI port $SERVER_RMI_PORT)"
     echo "Mode: Shared Tomcat ($TOMCAT) - Tomcat lifecycle is externally managed."
   else
-    echo "Started. Web UI: http://localhost:${PORT:-8081}/M-Dosthi/ (RMI port $SERVER_RMI_PORT)"
+    echo "Started. Web UI: http://localhost:${PORT:-8081}/mDosthi/ (RMI port $SERVER_RMI_PORT)"
     echo "Mode: M-Dosthi Individual Tomcat ($INDIVIDUAL_TOMCAT)"
   fi
 }
@@ -302,16 +303,16 @@ status() {
     echo "M-Dosthi RMI:               STOPPED"
   fi
   if is_individual_tomcat_running; then
-    echo "M-Dosthi Individual Tomcat: RUNNING (PID $(cat "$TOMCAT_PID_FILE"), http://localhost:${IND_PORT:-8081}/M-Dosthi/)"
+    echo "M-Dosthi Individual Tomcat: RUNNING (PID $(cat "$TOMCAT_PID_FILE"), http://localhost:${IND_PORT:-8081}/mDosthi/)"
   else
-    echo "M-Dosthi Individual Tomcat: STOPPED (configured for http://localhost:${IND_PORT:-8081}/M-Dosthi/)"
+    echo "M-Dosthi Individual Tomcat: STOPPED (configured for http://localhost:${IND_PORT:-8081}/mDosthi/)"
   fi
   if [ -n "$SHARED_TOMCAT_HOME" ]; then
     SH_PORT="$(grep -v '<!--' "$TOMCAT/conf/server.xml" | grep -oE '<Connector port="[0-9]+" protocol="HTTP/1.1"' | grep -oE '[0-9]+' | head -1)"
     if [ -s "$TOMCAT/logs/tomcat.pid" ] && is_pid_alive "$(cat "$TOMCAT/logs/tomcat.pid")"; then
-      echo "Shared Tomcat:              RUNNING (PID $(cat "$TOMCAT/logs/tomcat.pid"), http://localhost:${SH_PORT:-8080}/M-Dosthi/)"
+      echo "Shared Tomcat:              RUNNING (PID $(cat "$TOMCAT/logs/tomcat.pid"), http://localhost:${SH_PORT:-8080}/mDosthi/)"
     else
-      echo "Shared Tomcat:              EXTERNAL / PID UNKNOWN (configured for http://localhost:${SH_PORT:-8080}/M-Dosthi/ at $TOMCAT)"
+      echo "Shared Tomcat:              EXTERNAL / PID UNKNOWN (configured for http://localhost:${SH_PORT:-8080}/mDosthi/ at $TOMCAT)"
     fi
   fi
 }

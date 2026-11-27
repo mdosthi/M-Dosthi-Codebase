@@ -3,7 +3,7 @@
 	%>
 	<%@ include file="..//includes/chkcook.jsp" %>
 		<html>
-		<title>iMediXcare</title>
+		<title>mDosthi</title>
 		<script>
 			var d = new Date();
 			var n = d.getMilliseconds();
@@ -107,7 +107,7 @@
 						<!--<link rel="stylesheet" href="../bootstrap/jquery.dataTables.min.css">-->
 						<link rel="stylesheet"
 							href="<%=request.getContextPath()%>/bootstrap/dataTables.bootstrap.min.css">
-						<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=2.0">
+						<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/index.css?v=2.1">
 
 						<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/jquery-ui.min.css">
 						<link rel="stylesheet" href="<%=request.getContextPath()%>/vc/vc.css?" +n>
