@@ -203,10 +203,20 @@
 								<strong style="color:var(--color-navy);">Patient Access:</strong> Patients sign in
 								through the <strong>mDosthi App</strong>.
 							</p>
-							<p style="margin-bottom:0;">
+							<p style="margin-bottom:14px;">
 								<strong style="color:var(--color-navy);">Shared Workstations:</strong> Always sign out
 								from the top-right bar after completing your session.
 							</p>
+							<div style="background:var(--color-page-bg, #F3FAF8); border:1px solid var(--color-border-subtle, #CBEAD9); border-radius:14px; padding:12px 14px; font-size:13px; line-height:1.55;">
+								<p style="margin-bottom:6px; color:var(--color-navy); font-weight:600;">
+									<i class="fa fa-university" aria-hidden="true" style="color:var(--color-teal-dark, #0D7A46); margin-right:6px;"></i>Developed and designed at Computer Science &amp; Engineering Department, IIT Kharagpur
+								</p>
+								<p style="margin-bottom:0; color:var(--color-body-ink, #1F3B4D);">
+									<strong style="color:var(--color-navy);">Contact:</strong> Prof. Jayanta Mukhopadhyay,
+									<a href="mailto:jay@cse.iitkgp.ac.in" style="color:var(--color-blue, #0E76BC); font-weight:500; text-decoration:underline;">jay@cse.iitkgp.ac.in</a>,
+									Phone: <a href="tel:+913222283484" style="color:var(--color-blue, #0E76BC); font-weight:500; text-decoration:none;">+91-3222-283484</a>
+								</p>
+							</div>
 						</div>
 						<div class="modal-footer" style="border-top:1px solid rgba(13,107,68,0.10); padding:12px 22px;">
 							<button type="button" class="btn btn-primary" data-dismiss="modal"

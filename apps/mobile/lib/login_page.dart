@@ -435,7 +435,7 @@ class _LoginPageState extends State<LoginPage>
         backgroundColor: Colors.white,
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 440),
-          child: Padding(
+          child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -487,6 +487,8 @@ class _LoginPageState extends State<LoginPage>
                       ? 'প্রথমবার লগইন করার সময় তথ্য সুরক্ষার জন্য সম্মতি প্রদান করতে হবে।'
                       : 'First-time users review a brief consent prompt before continuing.',
                 ),
+                const SizedBox(height: 10),
+                const _HelpContactTile(),
                 const SizedBox(height: 18),
                 Align(
                   alignment: Alignment.centerRight,
@@ -1886,6 +1888,82 @@ class _HelpInfoTile extends StatelessWidget {
                     fontSize: 12.5,
                     color: BrandColors.bodyInk,
                     height: 1.4,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _HelpContactTile extends StatelessWidget {
+  const _HelpContactTile();
+
+  @override
+  Widget build(BuildContext context) {
+    final baseStyle = BrandTypography.body(
+      fontSize: 12.5,
+      color: BrandColors.bodyInk,
+      height: 1.45,
+    );
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: BrandColors.pageBg,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(
+          color: BrandColors.teal.withValues(alpha: 0.22),
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.contact_mail_outlined,
+            size: 19,
+            color: BrandColors.tealDark,
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Developed and designed at Computer Science & Engineering Department, IIT Kharagpur',
+                  style: BrandTypography.heading(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                    color: BrandColors.navy,
+                    height: 1.35,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                SelectableText.rich(
+                  TextSpan(
+                    style: baseStyle,
+                    children: [
+                      TextSpan(
+                        text: 'Contact: ',
+                        style: baseStyle.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: BrandColors.navy,
+                        ),
+                      ),
+                      const TextSpan(text: 'Prof. Jayanta Mukhopadhyay, '),
+                      TextSpan(
+                        text: 'jay@cse.iitkgp.ac.in',
+                        style: baseStyle.copyWith(
+                          color: BrandColors.blue,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.underline,
+                          decorationColor: BrandColors.blue,
+                        ),
+                      ),
+                      const TextSpan(text: ', Phone: +91-3222-283484'),
+                    ],
                   ),
                 ),
               ],
